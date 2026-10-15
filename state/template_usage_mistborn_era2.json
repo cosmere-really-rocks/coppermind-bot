@@ -1,0 +1,856 @@
+{
+  "total_pages": 568,
+  "templates": {
+    "Mistborn": {
+      "pages": 534,
+      "examples": [
+        "A Hero for All Ages",
+        "A. Hexaldweth",
+        "Abrem",
+        "Adawathwyn",
+        "Admiral Daal"
+      ]
+    },
+    "complete": {
+      "pages": 473,
+      "examples": [
+        "A Hero for All Ages",
+        "A. Hexaldweth",
+        "Abrem",
+        "Adawathwyn",
+        "Admiral Daal"
+      ]
+    },
+    "book ref": {
+      "pages": 427,
+      "examples": [
+        "Abrem",
+        "Adawathwyn",
+        "Admiral Daal",
+        "Admiral Daal's warship",
+        "Adolin Kholin"
+      ]
+    },
+    "character": {
+      "pages": 311,
+      "examples": [
+        "A. Hexaldweth",
+        "Abrem",
+        "Adawathwyn",
+        "Admiral Daal",
+        "Adolin Kholin"
+      ]
+    },
+    "date": {
+      "pages": 213,
+      "examples": [
+        "A Hero for All Ages",
+        "A. Hexaldweth",
+        "Adawathwyn",
+        "Admiral Daal",
+        "Allard and Daughters Solicitors"
+      ]
+    },
+    "file ref": {
+      "pages": 142,
+      "examples": [
+        "A Hero for All Ages",
+        "A. Hexaldweth",
+        "Allomancer Jak and the Pits of Eltania",
+        "Alloran Feltri",
+        "Andromedine Hukainly"
+      ]
+    },
+    "quote": {
+      "pages": 133,
+      "examples": [
+        "A. Hexaldweth",
+        "Admiral Daal",
+        "Adolin Kholin",
+        "Ahlstrom Tower",
+        "Allik Neverfar"
+      ]
+    },
+    "cat tag": {
+      "pages": 83,
+      "examples": [
+        "Admiral Daal's warship",
+        "Alicago",
+        "Ambersair",
+        "Barrington carriage",
+        "Bastion (Scadrial)"
+      ]
+    },
+    "partial": {
+      "pages": 74,
+      "examples": [
+        "Adolin Kholin",
+        "Allik Neverfar",
+        "Ashwinna Tekiel",
+        "Bands of Mourning",
+        "Clan Estates"
+      ]
+    },
+    "rpg ref": {
+      "pages": 65,
+      "examples": [
+        "Adolin Kholin",
+        "All Sliver's Night",
+        "Allard and Daughters Solicitors",
+        "Ashwinna Tekiel",
+        "Bilming"
+      ]
+    },
+    "wob ref": {
+      "pages": 64,
+      "examples": [
+        "Adolin Kholin",
+        "Allriandre Durkel",
+        "Bands of Mourning",
+        "Bloody Tan",
+        "Book of Nails"
+      ]
+    },
+    "for": {
+      "pages": 58,
+      "examples": [
+        "Adolin Kholin",
+        "Allik Neverfar",
+        "Bands of Mourning",
+        "Bilming",
+        "Brill"
+      ]
+    },
+    "map ref": {
+      "pages": 52,
+      "examples": [
+        "Alendel",
+        "Bilming",
+        "Callingfale",
+        "Canton of Cartography",
+        "Channerel Range"
+      ]
+    },
+    "tag+": {
+      "pages": 50,
+      "examples": [
+        "Adawathwyn",
+        "Adolin Kholin",
+        "Armal",
+        "Blome",
+        "Burl (character)"
+      ]
+    },
+    "tag": {
+      "pages": 40,
+      "examples": [
+        "Adolin Kholin",
+        "Clamps",
+        "Dalinar Kholin",
+        "Dao",
+        "Darkwater"
+      ]
+    },
+    "image": {
+      "pages": 39,
+      "examples": [
+        "Adolin Kholin",
+        "Allik Neverfar",
+        "Bands of Mourning",
+        "Bilming",
+        "Bloody Tan"
+      ]
+    },
+    "settlement": {
+      "pages": 37,
+      "examples": [
+        "Alendel",
+        "Bilming",
+        "Callingfale",
+        "Corbeau",
+        "Covingtar"
+      ]
+    },
+    "business": {
+      "pages": 35,
+      "examples": [
+        "Allard and Daughters Solicitors",
+        "Ashweather Carriage and Coach",
+        "Basin Bill's Old Time Pub & Playhouse",
+        "Basin Tires",
+        "Bastion (Scadrial)"
+      ]
+    },
+    "sidequote": {
+      "pages": 35,
+      "examples": [
+        "Adolin Kholin",
+        "Armal",
+        "Aunt Gin",
+        "Bilming",
+        "Blantach"
+      ]
+    },
+    "update": {
+      "pages": 34,
+      "examples": [
+        "Adolin Kholin",
+        "Claude Aradel",
+        "Dalinar Kholin",
+        "Dumad",
+        "Edwarn Ladrian"
+      ]
+    },
+    "architecture": {
+      "pages": 31,
+      "examples": [
+        "Ahlstrom Tower",
+        "Clarvonne's Theater",
+        "Coolerim Playhouse",
+        "Counselor's Cup",
+        "Delight Day Spa"
+      ]
+    },
+    "columns": {
+      "pages": 24,
+      "examples": [
+        "Allik Neverfar",
+        "Bilming",
+        "Dalinar Kholin",
+        "Elendel",
+        "Elendel Basin"
+      ]
+    },
+    "group": {
+      "pages": 24,
+      "examples": [
+        "Argien-Ohr Financial Circle",
+        "Baz-Kor",
+        "Canton of Cartography",
+        "Cobblers",
+        "Cobblesguild"
+      ]
+    },
+    "ref": {
+      "pages": 23,
+      "examples": [
+        "Adolin Kholin",
+        "Corbeau",
+        "Dalinar Kholin",
+        "Dao",
+        "Demoux (city)"
+      ]
+    },
+    "Mistborn Era 2": {
+      "pages": 22,
+      "examples": [
+        "Allard and Daughters Solicitors",
+        "Delight Day Spa",
+        "Elariel Yearly Spring Salon",
+        "Elendel Explorer's League",
+        "Foundation Chronicle"
+      ]
+    },
+    "culture": {
+      "pages": 20,
+      "examples": [
+        "All Sliver's Night",
+        "Allomantic Agreement of '94",
+        "Day of Ascent",
+        "Day of Founding",
+        "Elariel Yearly Spring Salon"
+      ]
+    },
+    "location": {
+      "pages": 20,
+      "examples": [
+        "Carlo's Bend",
+        "Clan Estates",
+        "Conrad Delta",
+        "Dampmere Park",
+        "Dampmere Road"
+      ]
+    },
+    "item": {
+      "pages": 15,
+      "examples": [
+        "Ambersair",
+        "Bands of Mourning",
+        "Compass of Spirits",
+        "Glint",
+        "Granger 28"
+      ]
+    },
+    "geography": {
+      "pages": 12,
+      "examples": [
+        "Alicago",
+        "Channerel Range",
+        "Faleast Range",
+        "Hammondar Bay",
+        "Human (River)"
+      ]
+    },
+    "expand": {
+      "pages": 10,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Dumad",
+        "Preservers",
+        "Shallan Davar"
+      ]
+    },
+    "mistborn": {
+      "pages": 10,
+      "examples": [
+        "Ahlstrom Tower",
+        "Arintol",
+        "Deniers of Masks",
+        "Fed",
+        "Galabris Menthon"
+      ]
+    },
+    "FULLPAGENAME": {
+      "pages": 9,
+      "examples": [
+        "A Hero for All Ages",
+        "Ironsights",
+        "Sentinel of Truth",
+        "Shallan Davar",
+        "The Den of the Survivor"
+      ]
+    },
+    "bws ref": {
+      "pages": 9,
+      "examples": [
+        "Allomancer Jak and the Pits of Eltania",
+        "Dalinar Kholin",
+        "Miles Dagouter",
+        "Mistborn (series)",
+        "Ranette"
+      ]
+    },
+    "holder": {
+      "pages": 9,
+      "examples": [
+        "Adawathwyn",
+        "Bastien Severington",
+        "Claude Aradel",
+        "Dalinar Kholin",
+        "Edwarn Ladrian"
+      ]
+    },
+    "literature": {
+      "pages": 9,
+      "examples": [
+        "A Hero for All Ages",
+        "Docksithium",
+        "Sentinel of Truth",
+        "The Den of the Survivor",
+        "The Elendel Daily"
+      ]
+    },
+    "theory": {
+      "pages": 9,
+      "examples": [
+        "Bloody Tan",
+        "Citizen Magistrates",
+        "High Imperial",
+        "Ironspine Building",
+        "Joshin Yomen"
+      ]
+    },
+    "url ref": {
+      "pages": 9,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Harmonium",
+        "Mistborn (series)",
+        "Rick Stranger"
+      ]
+    },
+    "''{{FULLPAGENAME}}''": {
+      "pages": 8,
+      "examples": [
+        "A Hero for All Ages",
+        "Ironsights",
+        "Sentinel of Truth",
+        "The Den of the Survivor",
+        "The Elendel Daily"
+      ]
+    },
+    "cite": {
+      "pages": 7,
+      "examples": [
+        "Channerel Range",
+        "Embrier",
+        "House Innate",
+        "Kaladin",
+        "Marasi Colms"
+      ]
+    },
+    "noble house": {
+      "pages": 7,
+      "examples": [
+        "House Demoux",
+        "House Hammondess",
+        "House Harms",
+        "House Innate",
+        "House Ladrian"
+      ]
+    },
+    "vehicle": {
+      "pages": 7,
+      "examples": [
+        "Admiral Daal's warship",
+        "Barrington carriage",
+        "Breaknaught",
+        "Brunstell",
+        "Ironsights"
+      ]
+    },
+    "Stormlight": {
+      "pages": 6,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Ghostbloods",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "book": {
+      "pages": 6,
+      "examples": [
+        "Allomancer Jak and the Pits of Eltania",
+        "Book of Nails",
+        "Shadows of Self",
+        "The Alloy of Law",
+        "The Bands of Mourning"
+      ]
+    },
+    "books": {
+      "pages": 6,
+      "examples": [
+        "Allomancer Jak and the Pits of Eltania",
+        "Mistborn (series)",
+        "Shadows of Self",
+        "The Alloy of Law",
+        "The Bands of Mourning"
+      ]
+    },
+    "epigraph ref": {
+      "pages": 6,
+      "examples": [
+        "Dalinar Kholin",
+        "Elendel",
+        "Harmony",
+        "MeLaan",
+        "Preservers"
+      ]
+    },
+    "meta/done": {
+      "pages": 6,
+      "examples": [
+        "Mistborn/Statistical analysis",
+        "Shadows of Self/Statistical analysis",
+        "The Alloy of Law/Statistical analysis",
+        "The Bands of Mourning/Statistical analysis",
+        "The Lost Metal"
+      ]
+    },
+    "msh ref": {
+      "pages": 6,
+      "examples": [
+        "Elendel",
+        "Harmony",
+        "Preservers",
+        "Southern Scadrian",
+        "Spook"
+      ]
+    },
+    "event": {
+      "pages": 5,
+      "examples": [
+        "Kelesina Shores's party",
+        "Lady ZoBell's party",
+        "Truefast",
+        "Winsting Innate's auction",
+        "Yomen-Ostlin wedding dinner"
+      ]
+    },
+    "meta/partial": {
+      "pages": 5,
+      "examples": [
+        "Allomancer Jak and the Pits of Eltania",
+        "Mistborn (series)",
+        "Shadows of Self",
+        "The Alloy of Law",
+        "The Bands of Mourning"
+      ]
+    },
+    "reddit ref": {
+      "pages": 5,
+      "examples": [
+        "B. Sablerfils",
+        "Buissonommes",
+        "Larskpur",
+        "Shadows of Self",
+        "The Lost Metal"
+      ]
+    },
+    "uncanonical": {
+      "pages": 5,
+      "examples": [
+        "Hemalurgic chimera",
+        "Kelesina Shores's party",
+        "Kelesina Shores's steward",
+        "Kelsier's seon",
+        "Wayne's mother"
+      ]
+    },
+    "Rosharan date": {
+      "pages": 4,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "icon": {
+      "pages": 4,
+      "examples": [
+        "Summary:Shadows of Self",
+        "Summary:The Alloy of Law",
+        "Summary:The Bands of Mourning",
+        "Summary:The Lost Metal"
+      ]
+    },
+    "lifeform": {
+      "pages": 4,
+      "examples": [
+        "Destroyer",
+        "Hemalurgic chimera",
+        "Ornisaur",
+        "Roseweather"
+      ]
+    },
+    "row": {
+      "pages": 4,
+      "examples": [
+        "Summary:Shadows of Self",
+        "Summary:The Alloy of Law",
+        "Summary:The Bands of Mourning",
+        "Summary:The Lost Metal"
+      ]
+    },
+    "summaries": {
+      "pages": 4,
+      "examples": [
+        "Summary:Shadows of Self",
+        "Summary:The Alloy of Law",
+        "Summary:The Bands of Mourning",
+        "Summary:The Lost Metal"
+      ]
+    },
+    "tor ref": {
+      "pages": 4,
+      "examples": [
+        "Feder Tower",
+        "Shadows of Self",
+        "The Bands of Mourning",
+        "The Lost Metal"
+      ]
+    },
+    "17s ref": {
+      "pages": 3,
+      "examples": [
+        "Hammondar Bay",
+        "House Lekal",
+        "The Elendel Daily"
+      ]
+    },
+    "chart": {
+      "pages": 3,
+      "examples": [
+        "House Harms",
+        "House Innate",
+        "House Ladrian"
+      ]
+    },
+    "chart/wrap": {
+      "pages": 3,
+      "examples": [
+        "House Harms",
+        "House Innate",
+        "House Ladrian"
+      ]
+    },
+    "cosmere": {
+      "pages": 3,
+      "examples": [
+        "Harmony",
+        "Prasanva",
+        "Silajana"
+      ]
+    },
+    "demoted": {
+      "pages": 3,
+      "examples": [
+        "Evanotype",
+        "Pewternaut",
+        "Trell (Trellism)"
+      ]
+    },
+    "food": {
+      "pages": 3,
+      "examples": [
+        "Logshine",
+        "Pectin-Ade",
+        "Vif Sparkle Tonic"
+      ]
+    },
+    "Date": {
+      "pages": 2,
+      "examples": [
+        "Allik Neverfar",
+        "Elendel"
+      ]
+    },
+    "anchor": {
+      "pages": 2,
+      "examples": [
+        "Mistborn (series)",
+        "Wan ShaiLu"
+      ]
+    },
+    "magic": {
+      "pages": 2,
+      "examples": [
+        "Excisor",
+        "Twinborn"
+      ]
+    },
+    "map": {
+      "pages": 2,
+      "examples": [
+        "Hanlanaze",
+        "Thermoli"
+      ]
+    },
+    "metal": {
+      "pages": 2,
+      "examples": [
+        "Harmonium",
+        "Trellium"
+      ]
+    },
+    "nation": {
+      "pages": 2,
+      "examples": [
+        "Elendel Basin",
+        "Malwish Consortium"
+      ]
+    },
+    "rosharan date": {
+      "pages": 2,
+      "examples": [
+        "Dalinar Kholin",
+        "Ghostbloods"
+      ]
+    },
+    "sots ref": {
+      "pages": 2,
+      "examples": [
+        "Book of Nails",
+        "The Bands of Mourning"
+      ]
+    },
+    "stub": {
+      "pages": 2,
+      "examples": [
+        "Independence Tower",
+        "United Tradeworkers Union"
+      ]
+    },
+    "tes ref": {
+      "pages": 2,
+      "examples": [
+        "Ulaam",
+        "Wan ShaiLu"
+      ]
+    },
+    "tweet ref": {
+      "pages": 2,
+      "examples": [
+        "Mistborn (series)",
+        "The Lost Metal"
+      ]
+    },
+    "Architecture": {
+      "pages": 1,
+      "examples": [
+        "Ornisaur Quarry"
+      ]
+    },
+    "Book ref": {
+      "pages": 1,
+      "examples": [
+        "Adolin Kholin"
+      ]
+    },
+    "Business": {
+      "pages": 1,
+      "examples": [
+        "Emotional Allomancy parlors"
+      ]
+    },
+    "Cosmere": {
+      "pages": 1,
+      "examples": [
+        "Men of gold and red"
+      ]
+    },
+    "CoverToC": {
+      "pages": 1,
+      "examples": [
+        "Mistborn (series)"
+      ]
+    },
+    "Mistborn Era 1": {
+      "pages": 1,
+      "examples": [
+        "Mistborn (series)"
+      ]
+    },
+    "PrefixIndex/{{FULLPAGENAME}}/": {
+      "pages": 1,
+      "examples": [
+        "Shallan Davar"
+      ]
+    },
+    "Quote": {
+      "pages": 1,
+      "examples": [
+        "Wayne"
+      ]
+    },
+    "Sidequote": {
+      "pages": 1,
+      "examples": [
+        "Elendel"
+      ]
+    },
+    "The Emperor's Soul": {
+      "pages": 1,
+      "examples": [
+        "Wan ShaiLu"
+      ]
+    },
+    "article ref": {
+      "pages": 1,
+      "examples": [
+        "Handerwym"
+      ]
+    },
+    "cite note": {
+      "pages": 1,
+      "examples": [
+        "Marasi Colms"
+      ]
+    },
+    "date/sa": {
+      "pages": 1,
+      "examples": [
+        "Dalinar Kholin"
+      ]
+    },
+    "dialogue": {
+      "pages": 1,
+      "examples": [
+        "Maraga Dulcet"
+      ]
+    },
+    "disease": {
+      "pages": 1,
+      "examples": [
+        "Chillfever"
+      ]
+    },
+    "edit note": {
+      "pages": 1,
+      "examples": [
+        "Telsin Ladrian"
+      ]
+    },
+    "exemplary": {
+      "pages": 1,
+      "examples": [
+        "Miles Dagouter"
+      ]
+    },
+    "fbstj/mb/writing": {
+      "pages": 1,
+      "examples": [
+        "The Elendel Daily"
+      ]
+    },
+    "meta/stub": {
+      "pages": 1,
+      "examples": [
+        "Book of Nails"
+      ]
+    },
+    "nosnippet": {
+      "pages": 1,
+      "examples": [
+        "Shallan Davar"
+      ]
+    },
+    "notice": {
+      "pages": 1,
+      "examples": [
+        "Ghostbloods"
+      ]
+    },
+    "row/kv": {
+      "pages": 1,
+      "examples": [
+        "Harmony"
+      ]
+    },
+    "rpg-canon": {
+      "pages": 1,
+      "examples": [
+        "Kwylliam Elariel"
+      ]
+    },
+    "shard info": {
+      "pages": 1,
+      "examples": [
+        "Harmony"
+      ]
+    },
+    "small caps": {
+      "pages": 1,
+      "examples": [
+        "Dalinar Kholin"
+      ]
+    },
+    "tress": {
+      "pages": 1,
+      "examples": [
+        "Ulaam"
+      ]
+    },
+    "wp ref": {
+      "pages": 1,
+      "examples": [
+        "Pewternaut"
+      ]
+    }
+  }
+}

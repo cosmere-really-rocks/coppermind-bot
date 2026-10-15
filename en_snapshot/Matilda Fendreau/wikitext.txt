@@ -1,0 +1,12 @@
+{{character
+|residence=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+|introduced=[[Chasmfiend Volume 2]]
+}}
+'''Matilda Fendreau''' is a woman from [[Elendel]]. One day in the year {{date|342|PC}}, she was cleaning out her uncle’s dusty attic when she found several defaced insignia of former [[Final Empire]] soldiers. After tracing the insignia’s origins at the [[National Archives]], Fendreau discovered that they had belonged to members of the [[Lost Regiment]], a group of brave [[skaa]] soldiers who rebelled against the [[Lord Ruler]] and escaped into the [[Crescent Dominance]]. Later, she did an interview with [[The House Record]], and an article was written about the event.{{file ref|CFM2 The House Record broadsheet.png|''The House Record'' broadsheet}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn|Era 2}}

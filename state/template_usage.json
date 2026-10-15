@@ -1,0 +1,319 @@
+{
+  "total_pages": 9,
+  "templates": {
+    "book ref": {
+      "pages": 7,
+      "examples": [
+        "Adolin Kholin",
+        "Ahlstrom Tower",
+        "Allik Neverfar",
+        "Dalinar Kholin",
+        "Elendel"
+      ]
+    },
+    "partial": {
+      "pages": 7,
+      "examples": [
+        "Adolin Kholin",
+        "Allik Neverfar",
+        "Clan Estates",
+        "Dalinar Kholin",
+        "Elendel"
+      ]
+    },
+    "for": {
+      "pages": 6,
+      "examples": [
+        "Adolin Kholin",
+        "Allik Neverfar",
+        "Dalinar Kholin",
+        "Elendel",
+        "Kaladin"
+      ]
+    },
+    "image": {
+      "pages": 6,
+      "examples": [
+        "Adolin Kholin",
+        "Allik Neverfar",
+        "Dalinar Kholin",
+        "Elendel",
+        "Kaladin"
+      ]
+    },
+    "quote": {
+      "pages": 6,
+      "examples": [
+        "Adolin Kholin",
+        "Ahlstrom Tower",
+        "Allik Neverfar",
+        "Dalinar Kholin",
+        "Kaladin"
+      ]
+    },
+    "character": {
+      "pages": 5,
+      "examples": [
+        "Adolin Kholin",
+        "Allik Neverfar",
+        "Dalinar Kholin",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "sidequote": {
+      "pages": 5,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Elendel",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "wob ref": {
+      "pages": 5,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Elendel",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "Rosharan date": {
+      "pages": 4,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "Stormlight": {
+      "pages": 4,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "tag": {
+      "pages": 4,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "tag+": {
+      "pages": 4,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "update": {
+      "pages": 4,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "Mistborn": {
+      "pages": 3,
+      "examples": [
+        "Allik Neverfar",
+        "Clan Estates",
+        "Elendel"
+      ]
+    },
+    "columns": {
+      "pages": 3,
+      "examples": [
+        "Allik Neverfar",
+        "Dalinar Kholin",
+        "Elendel"
+      ]
+    },
+    "expand": {
+      "pages": 3,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Shallan Davar"
+      ]
+    },
+    "ref": {
+      "pages": 3,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin",
+        "Shallan Davar"
+      ]
+    },
+    "rpg ref": {
+      "pages": 3,
+      "examples": [
+        "Adolin Kholin",
+        "Clan Estates",
+        "Elendel"
+      ]
+    },
+    "Date": {
+      "pages": 2,
+      "examples": [
+        "Allik Neverfar",
+        "Elendel"
+      ]
+    },
+    "cat tag": {
+      "pages": 2,
+      "examples": [
+        "Kaladin",
+        "Shallan Davar"
+      ]
+    },
+    "date": {
+      "pages": 2,
+      "examples": [
+        "Allik Neverfar",
+        "Elendel"
+      ]
+    },
+    "epigraph ref": {
+      "pages": 2,
+      "examples": [
+        "Dalinar Kholin",
+        "Elendel"
+      ]
+    },
+    "url ref": {
+      "pages": 2,
+      "examples": [
+        "Adolin Kholin",
+        "Dalinar Kholin"
+      ]
+    },
+    "Book ref": {
+      "pages": 1,
+      "examples": [
+        "Adolin Kholin"
+      ]
+    },
+    "FULLPAGENAME": {
+      "pages": 1,
+      "examples": [
+        "Shallan Davar"
+      ]
+    },
+    "PrefixIndex/{{FULLPAGENAME}}/": {
+      "pages": 1,
+      "examples": [
+        "Shallan Davar"
+      ]
+    },
+    "Sidequote": {
+      "pages": 1,
+      "examples": [
+        "Elendel"
+      ]
+    },
+    "architecture": {
+      "pages": 1,
+      "examples": [
+        "Ahlstrom Tower"
+      ]
+    },
+    "bws ref": {
+      "pages": 1,
+      "examples": [
+        "Dalinar Kholin"
+      ]
+    },
+    "cite": {
+      "pages": 1,
+      "examples": [
+        "Kaladin"
+      ]
+    },
+    "complete": {
+      "pages": 1,
+      "examples": [
+        "Ahlstrom Tower"
+      ]
+    },
+    "date/sa": {
+      "pages": 1,
+      "examples": [
+        "Dalinar Kholin"
+      ]
+    },
+    "file ref": {
+      "pages": 1,
+      "examples": [
+        "Elendel"
+      ]
+    },
+    "holder": {
+      "pages": 1,
+      "examples": [
+        "Dalinar Kholin"
+      ]
+    },
+    "location": {
+      "pages": 1,
+      "examples": [
+        "Clan Estates"
+      ]
+    },
+    "map ref": {
+      "pages": 1,
+      "examples": [
+        "Elendel"
+      ]
+    },
+    "mistborn": {
+      "pages": 1,
+      "examples": [
+        "Ahlstrom Tower"
+      ]
+    },
+    "msh ref": {
+      "pages": 1,
+      "examples": [
+        "Elendel"
+      ]
+    },
+    "nosnippet": {
+      "pages": 1,
+      "examples": [
+        "Shallan Davar"
+      ]
+    },
+    "rosharan date": {
+      "pages": 1,
+      "examples": [
+        "Dalinar Kholin"
+      ]
+    },
+    "settlement": {
+      "pages": 1,
+      "examples": [
+        "Elendel"
+      ]
+    },
+    "small caps": {
+      "pages": 1,
+      "examples": [
+        "Dalinar Kholin"
+      ]
+    }
+  }
+}

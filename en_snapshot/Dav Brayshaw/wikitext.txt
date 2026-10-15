@@ -1,0 +1,14 @@
+{{character
+|profession=Farmer
+|ethnicity=Koloss
+|residence=Drypost
+|world=Scadrial
+|universe=[[Cosmere]]
+|introduced=[[Chasmfiend Volume 2]]
+}}
+'''Dav Brayshaw''' is a farmer in [[Drypost]] on [[Scadrial]]. He is the eldest son of a large [[koloss]]-blooded family. One day in the year {{date|342|PC}}, Dav saw an unmistakable glint in his irrigation trenches. He traced the gold upstream and found quartz deposits in an exposed hillside. After a few days of digging, he uncovered a rich gold vein.{{file ref|CFM2 The House Record broadsheet.png|''The House Record'' broadsheet}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn|Era 2}}

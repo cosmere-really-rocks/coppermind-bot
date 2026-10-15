@@ -1,0 +1,11 @@
+{{architecture
+|city=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+The '''Three Red Peppers''' is a restaurant on [[Village Row]], on the 5th-6th canal. The establishment’s owners are [[Idashlyn]] and [[Penwyl]]. They posted an advertisement in [[The House Record]], stating that they offer a traditional [[Terris]] dining experience.{{rpg ref|cfm2|23}} 
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn Era 2}}

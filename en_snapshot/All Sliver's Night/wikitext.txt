@@ -1,0 +1,11 @@
+{{culture
+|type=Holiday
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+'''All Sliver's Night''' is a post-[[Catacendre|Catacendric]] holiday celebrated in the [[Elendel Basin]] and the north of [[Scadrial]]. It is a [[Sliverism|Sliverist]] holy day where people wear festive [[Inquisitor]] masks and stay out late. The holiday is celebrated on the last night of [[Marsh (month)|Marsh]].{{rpg ref|mbwg|28}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn|era 2}}

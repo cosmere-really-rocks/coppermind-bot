@@ -1,0 +1,35 @@
+{{noble house|name=Innate
+|world=Scadrial
+|universe=[[Cosmere]]
+|books=[[Mistborn Era 2]]
+}}
+'''House Innate''' is a noble family in [[Elendel]].
+
+Notable members include [[Winsting Innate]] and former Governor of Elendel [[Replar Innate]].{{book ref|mb5|4}} 
+
+==Overview & Political standing== 
+House Innate was one of the most powerful noble houses in Elendel. How the Innates made their fortune is unknown, but both Winsting and Replar were know to give out political favors in exchange for money. Additionally, the House seems to have come to prominence after the [[Catacendre]] as no mention is made of their existence during the time of the [[Final Empire]]. Their corruption and the deaths of both primary members of the house in {{date|342|pc}} greatly damaged the its reputation.{{book ref|mb5|18}} As Winsting was an [[Allomancy|Allomancer]], the ability is present in the family bloodline.{{book ref|mb5|1}} Winsting was later murdered by the kandra [[Paalm]].{{cite}}
+==History==
+Following the [[Catacendre]] house Innate established itself as one of the major High-Houses of Elendel. They maintained seats within the city's Senate and held significant property and financial assets throughout the city. The house was known for a notorious tendency to exploit loopholes and bribery.{{cite}}
+==Holdings and Estate==
+House Innate owns a mansion located in one of Elendel's wealthier octants. Winsting's mansion was designed almost entirely for secrecy and security. His vault or safe room features steel doors and reinforced lockboxes. It was used to protect the house's illegal activities from discovery.{{cite}}
+
+==Relationships==
+The house held a coveted Senate vote which was sold for vast sums of money. The main political rival of House Innate is [[House Lekal]].{{book ref|mb5|18}} They compete for economic dominance and political control in Elend. The combat each others control over the city with direct political competition.{{cite}}
+==Legacy & Downfall==
+With Winsting murdered at auction and Replar secretly assassinated by [[Paalm]], the core leadership of the house was effectively wiped out. The public outrage at the exposed corruption punctuated by the arrest of the Governor destroyed what was left of the house's political reputation. Replar's death cleared the way for [[Claude Aradel]] to take the office which shifted Elendel's political structure away from the corruption of nobility.{{cite}}
+== Family Tree ==
+{{chart/wrap|title=House Innate family tree
+|summary=Replar Innate is the head of the house, and Winsting is a criminal, Replar is married to Allri
+|
+{{chart| | ARI |~|~| REP |-|-| WIN | | <!--
+-->|ARI=[[Allri Innate|Allri]]<!--
+-->|REP=[[Replar Innate|Replar]]|boxstyle_ REP  =background-color: #faa;<!--
+-->|WIN=[[Winsting Innate|Winsting]]|boxstyle_ WIN  =background-color: #faa;<!--
+-->}}
+{{chart| | | | | | | | | | | | | | | | }}
+}}
+
+== Notes ==
+<references />
+{{Mistborn|Era 2}}

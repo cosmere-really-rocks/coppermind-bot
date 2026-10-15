@@ -1,0 +1,12 @@
+{{business
+|city=[[Elendel]]
+|services=Solicitors
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+'''Allard and Daughters Solicitors''' is a law firm in [[Elendel]]. During the year {{date|342|PC}}, they sued [[House Erikeller]] because the steel mills owned by that house allegedly had sub-standard safety procedures. As part of their lawsuit, they posted an advertisement in [[The House Record]] urging anyone with knowledge about the safety procedures in these mills to come forth and speak to them.{{rpg ref|cfm2|23}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn Era 2}}

@@ -1,0 +1,14 @@
+{{character
+|residence=Weathering
+|world=Scadrial
+|universe=[[Cosmere]]
+|introduced=[[The Alloy of Law]]
+}}
+Old '''Burlow''' is a man who lives in [[Weathering]] in the [[Roughs]].{{book ref|mb4|13}}
+
+Old Burlow had a daughter who was murdered by [[Pars the Deadman]]. Her corpse was left in the center of Weathering to taunt [[Waxillium Ladrian]], who was hunting Pars.{{book ref|mb4|13}}
+
+== Notes ==
+<references />
+{{complete|[[User:Windrunner|Windrunner]] ([[User talk:Windrunner|talk]]) 14:28, 20 December 2016 (MST)}}
+{{Mistborn|Era 2}}

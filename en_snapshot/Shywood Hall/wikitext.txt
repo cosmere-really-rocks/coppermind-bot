@@ -1,0 +1,11 @@
+{{architecture
+|city=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+'''Shywood Hall''' is an establishment in [[Elendel]]’s 6th octant. The [[Hot Tin Orchestra]] often performs at Shywood Hall. It was mentioned in an article of [[The House Record]] about the Hot Tin Orchestra.{{file ref|CFM2 The House Record broadsheet.png|''The House Record'' broadsheet}}
+
+== Notes == 
+<references />
+{{complete}}
+{{Mistborn|Era 2}}

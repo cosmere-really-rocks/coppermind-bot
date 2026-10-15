@@ -1,0 +1,10 @@
+{{group
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+The '''Elendel Explorer's League''' ('''EEL''') is a group of [[Elendel]] nobility that like exploration. They have a somewhat disreputable reputation. The League often gathers at the [[Silver Voyager club]]. They were mentioned in an edition of [[The House Record]] as being a 'loose affiliation of disenfranchised and disheveled nobility'. The reliability of this statement is unclear, as the article was an advertisement, for the ‘’respectable' and 'quiet' [[Observatory]] on [[Stardial Row]].{{rpg ref|cfm2|23}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn Era 2}}

@@ -1,0 +1,16 @@
+{{character
+|profession={{cat tag|Law enforcement}}
+|residence=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+|introduced=[[Chasmfiend Volume 2]]
+}}
+'''Saral Brink''' is a constable in [[Elendel]]’s first octant on [[Scadrial]].{{ref|group=fn|name=jurisdiction|text=Seeing as to how she investigated the theft at the university, which is located in the first octant, it can be assumed that she works in the first octant too.}} On the morning of the thirteenth of [[Scadrial#Calender|Marsh]] in {{date|342|PC}}, Saral was notified of a theft at the [[Elendel University]]. She arrived on scene and spoke with professor [[A. Hexaldweth]]. The professor told her that someone had smashed in a window of her laboratory and stolen her latest invention. After being asked who she thought had stolen her invention, Hexaldweth pointed at [[Tarcsel Electric]]. Others pointed to the various social clubs at the university. It is unclear what Saral did afterwards or what the result of the investigation was.{{file ref|CFM2 The House Record broadsheet.png|''The House Record'' broadsheet}}
+
+== Notes ==
+; Footnotes
+<references group="fn" />
+; References
+<references />
+{{complete}}
+{{Mistborn|Era 2}}

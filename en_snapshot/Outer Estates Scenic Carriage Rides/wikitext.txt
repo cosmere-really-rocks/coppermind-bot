@@ -1,0 +1,12 @@
+{{business
+|city=[[Elendel]]
+|services=Entertainment
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+'''Outer Estates Scenic Carriage Rides''' is a business that provides scenic carriage rides through [[Elendel]]. Their advertisement in [[The House Record]], 13th of [[Scadrial#Calender|Marsh]] in the year {{date|342|PC}}, mentioned that their rides were perfect for both a romantic date and a family activity.{{rpg ref|cfm2|23}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn Era 2}}

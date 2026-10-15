@@ -1,0 +1,11 @@
+{{location
+|city=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+'''Dampmere Road''' is a road in [[Elendel]]. [[Delight Day Spa]] is located on Dampmere Road.{{rpg ref|cfm2|23}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn|Era 2}}

@@ -1,0 +1,12 @@
+{{character
+|ethnicity=Terris
+|world=Scadrial
+|universe=[[Cosmere]]
+|introduced=[[Chasmfiend Volume 2]]
+}}
+'''Idashlyn''' is one of the two owners of the restaurant the [[Three Red Peppers]] on [[Village Row]] in [[Elendel]]. Together with [[Penwyl]], she posted an advertisement for the restaurant in [[The House Record]].{{rpg ref|cfm2|23}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn Era 2}}

@@ -1,0 +1,15 @@
+{{settlement
+|region=Elendel Basin
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+'''Thermoli''' is an outer village in the [[Elendel Basin]] on [[Scadrial]]. It is located in the far south of the Basin, at the edge of a mountain range that forms part of the border between the Basin and the Southern [[Roughs]]. It is the terminus of a railway line that connects the area to [[Elendel]]. The closest city of note is [[New Seran]], a short distance to the east.{{ref|text=The village is only labelled in an annotation by [[Nazh]] on the version of the [[:File:{{map|Elendel Basin}}|Elendel Basin map]] in ''[[Shadows of Self]]''.}}{{book ref|mb5|9}}
+
+The village is the source of the Thermolian accent, known for its distinctive "v" sounds.{{book ref|mb5|9}}
+
+Professor [[Hanlanaze]] grew up in Thermoli.{{book ref|mb5|9}}
+
+== Notes ==
+<references />
+{{complete|[[User:Big Smooth|Big Smooth]] ([[User talk:Big Smooth|talk]]) 20:49, 9 September 2026 (UTC)}}
+{{Mistborn|Era 2}}

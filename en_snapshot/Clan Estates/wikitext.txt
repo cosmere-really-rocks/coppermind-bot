@@ -1,0 +1,11 @@
+{{location
+|city=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+The '''Clan Estates''' are a cosmopolitan [[koloss]]-blooded district in [[Elendel]] on [[Scadrial]].{{rpg ref|mbwg|66}}
+
+== Notes ==
+<references />
+{{partial}}
+{{Mistborn|era 2}}

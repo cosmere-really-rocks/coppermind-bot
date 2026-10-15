@@ -1,0 +1,11 @@
+{{culture
+|type=Holiday
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+'''Harmontide''' is a post-[[Catacendre|Catacendric]] holiday celebrated during [[Alcett]] in the [[Elendel Basin]] and the north of [[Scadrial]]. It is a midwinter holiday celebrated from the end of [[Tenson]] to the start of Alcett.{{rpg ref|mbwg|28}} Many people get the day off from work on Harmontide.{{file ref|The_Two_Seasons_broadsheet.jpg|''The Two Seasons'' broadsheet}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn|era 2}}

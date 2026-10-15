@@ -1,0 +1,15 @@
+{{character
+|profession=Professor
+|residence=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+|introduced=[[Chasmfiend Volume 2]]
+}}
+{{quote|An invention that will revolutionize personal living|Prof. A. Hexaldweth{{file ref|CFM2 The House Record broadsheet.png|''The House Record'' broadsheet}}}}
+
+Professor '''A. Hexaldweth''' is a professor at [[Elendel University]] on [[Scadrial]]. She attends the school of Engineering. On the morning of the thirteenth of [[Scadrial#Calender|Marsh]] in {{date|342|PC}}, Hexaldweth entered her laboratory to find her newest invention gone, and a locked window smashed inwards. The invention, patent pending, was a device that uses electricity to compress and exchange refrigerating gases on the smallest scale yet seen. She immediately involved the constabulary, reporting the incident to [[Saral Brink]]. After being asked who she thought had stolen her invention, she pointed at [[Tarcsel Electric]]. That company had previously tried to buy the idea from Hexaldweth, but she had refused.{{file ref|CFM2 The House Record broadsheet.png|''The House Record'' broadsheet}} It is unclear what results the constabulary’s investigation yielded.
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn|Era 2}}

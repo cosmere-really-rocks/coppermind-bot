@@ -1,0 +1,16 @@
+{{location
+|map=MBWG Conrad Delta map.jpg
+|region=Conrad Delta
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+
+'''Ruin's Point''' is the second-largest settlement in the [[Conrad Delta]], with a population of a few thousand residents, which is considered small by [[Elendel Basin|Basin]] standards.{{rpg ref|mbwg|189-191}}
+
+==Culture==
+The residents of Ruin's Point refer to themselves as Pointers. They are a communal society, and they take pride in the fact that they democratically settle collective decisions. Most residents of Ruin's Point are [[Koloss#After_the_Catacendre|koloss-blooded]], and often mingle with the local [[koloss]] clans of [[Kovlair]] and [[Dramal]]. At around {{date|300|PC}}, the younger residents had begun taking employment with [[Glitterhollow Expeditions]], an act the town's [[Sliverism|Sliverists]] disapprove of, as they dislike how Glitterhollow profits from history.{{rpg ref|mbwg|189-191}}
+
+== Notes ==
+<references />
+{{partial}}
+{{Mistborn|Era 2}}

@@ -1,0 +1,13 @@
+{{character
+|profession=Musician
+|residence=Elendel
+|world=Scadrial
+|universe=[[Cosmere]]
+|introduced=[[Chasmfiend Volume 2]]
+}}
+'''Andromedine Hukainly''' is a musician and band leader of the popular [[Hot Tin Orchestra]] on [[Scadrial]]. Andromedine is said to mesmerize audiences with an otherworldly talent on her signature clarinet.{{file ref|CFM2 The House Record broadsheet.png|''The House Record'' broadsheet}}
+
+== Notes ==
+<references />
+{{complete}}
+{{Mistborn|Era 2}}

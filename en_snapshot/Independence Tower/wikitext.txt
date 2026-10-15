@@ -1,0 +1,14 @@
+{{architecture
+|city=Bilming
+|world=Scadrial
+|universe=[[Cosmere]]
+}}
+{{update|mb7}}
+'''Independence Tower''' is a skyscraper in [[Bilming]] on [[Scadrial]].{{book ref|mb7|39}} It is often referred to as the '''Shaw''', after [[Kredik Shaw]].{{book ref|mb7|58}}
+== History ==
+The Shaw was built at an unknown point, but by 348 PC, the Set had taken it over as their base. As they rushed to destroy Elendel, they made a rocket, built upon the Shaw, but it didn't work well enough. As [[Waxillium]] neared, they moved the bomb to the Pewternaut, and, in preparation for his arrival, they stationed hundreds of Set soldiers- called the Hidden Guard- in the Shaw. Wax, upon arrival, promptly ripped their forces apart, leaving only ruin in his wake. When he reached the top of the Shaw, he used [[Duralumin]] to fly to the Pewternaut, but in doing so, destroyed the roof of the Shaw, which he had used as an anchor. It is unknown if this damage was repaired, but it seems likely, considering that the building was a prominent symbol across [[Bilming]].
+
+== Notes ==
+<references />
+{{stub}}
+{{Mistborn|Era 2}}
