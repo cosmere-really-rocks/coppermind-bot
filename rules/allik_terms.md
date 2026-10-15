@@ -53,10 +53,13 @@
 ## 阿利克称呼瓦克斯的称号列表（名称繁多名列）
 Metallic One→金属之君 ; Great Metallic One→伟大金属之君 ; Divine One→神圣之君 ; Great Being of Metals→伟大的金属存在 ; Metabolic One→代谢之君 ; Your Magnificence→您的伟岸 ; Tall One→高个之君 ; Remarkable One→卓越之君 ; Persistent One→坚毅之君 ; Blasphemous One→渎神之君 ; Mysterious One→神秘之君 ; Great Wise One→大智之君 ; Wonderful One→奇妙之君 ; His Greatness the Drowsy One→昏沉大帝 ; (截断)Observan- ; (截断)Confusing… ; Decisive One→果断之君 ; Great Metallic Destroyer→伟大金属毁灭者 ; Great Impetuous One→大急之君 ; Great One→大君 ; Thoughtful One→深思之君 ; Unobservant Master→不察之主 ; O Hungry One→饥饿之君 ; Adjective Waxillium→形容词式的瓦克斯利姆
 
-## 待用户定夺的冲突项（核心）
-1. Cosmere：站**三界宙** vs 表**寇斯米尔**
-2. Scadrial：站**司卡德瑞尔** vs 表**斯卡德利亚**
-3. Metallic Arts：站**金属技艺** vs 表**金属艺术**
-4. Marasi Colms：站**玛拉席·科姆斯** vs 表(玛拉茜)
-5. The Bands of Mourning 中文书名（## 站未建）：拟**悼念之带**，待确认
-6. Allik Neverfar 本人译名：拟**阿利克·纳法尔**（音译），待确认
+## 用户裁决（2025-10-16）
+1. **Cosmere / Scadrial / Metallic Arts** → 采用中文站现有译名：**三界宙 / 司卡德瑞尔 / 金属技艺**。
+2. **Marasi Colms** → 中文称谓**跟随原文**：原文用全称处用「玛拉席·科姆斯」，原文只用名/姓处中文也只用「玛拉席」。
+3. **Bands of Mourning、Allik Neverfar** → **专有名词不翻译，保留英文**。
+   - 尽管中文站存在「悼念之带」「阿利克·纳法尔」页面，用户点名不译 → 译文用英文原样，列入 `untranslated_terms`。
+   - 词条本身以英文「Allik Neverfar」命名。
+4. **翻译结果用 JSON 返回**，含 `translation`（中文 wikitext）+ `untranslated_terms`（未翻译专有名词列表）——落地决议 #4。样例见 `en_snapshot/Allik Neverfar/translation.json`。
+
+## 其余音译专名（中文站已有同音页面，保留中文）
+Brunstell→布伦斯德、Wilg→威尔格、Jordis→乔迪丝、Wiestlow→维斯特洛、Bilming→比尔明、Seran Range→瑟兰山脉、New Seran→新瑟兰、unsealed metalminds→未封印金储 —— 均已实查确认中文站有对应页面，可作链接落点。
