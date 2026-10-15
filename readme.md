@@ -149,12 +149,31 @@ coppermind/
 
 ---
 
+# 当前实现状态
+
+- **`scripts/fetch_en.py`**（Python，已跑通）：抓英文站单页/多页 →
+  1. 查当前 revid，与 `state/en_index.json` 比对，**revid 未变则跳过**（决策 C 落地）
+  2. 抓 wikitext 落盘 `en_snapshot/<标题>/wikitext.txt` + `meta.json`
+  3. 用 **mwparserfromhell** 解析提取 templates / files / categories / wikilinks / redirect 目标（**不靠 AI，确定性解析**）
+  4. 识别 redirect 页（`#REDIRECT`）并按自身标题记录 `is_redirect`+`target`
+  5. 更新 `state/en_index.json`
+
+用法：
+```bash
+.venv/bin/python scripts/fetch_en.py <标题...> [--force]
+```
+
+- **文件（images）识别说明**（决策第 7 条）：`[[File:...]]` 直接链接 + `{{image}}` 模板首参 + 任意模板中"像文件名的命名参数值"（如 `character|image=`）。已实测 `Allik Neverfar` 抓全 4 张图。静态分析仍可能漏（文件藏更深模板里），届时靠 meta.json 手动补充。
+- 依赖：`.venv`（requests / cloudscraper / mwparserfromhell）。已实测。
+
+---
+
 # 待办状态总览（更新）
 
 1. ✅ 英→中读取链路已通
 2. ⬜ 中文站 bot 账号（用户+密码）→ 登录 → 有效 CSRF token → `action=edit` 写入
 3. ⬜ 拿到初始译名表（放 `dict/`）
-4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照，见技术决策 C）→ ⬜ 待实现
-5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ⬜ 待实现
+4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照）→ ✅ 已实现（`fetch_en.py`）
+5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ✅ 抓取落盘已实现（`fetch_en.py`）
 6. ⬜ 从 `Allik_Neverfar` 起步做样板词条：转换 + 译名表 + 映射表，用户 review 后再写站
-7. ⬜ 落地并实现：白名单/黑名单/redirect/模板图片校验 等规则
+7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则

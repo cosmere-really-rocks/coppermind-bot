@@ -1,6 +1,11 @@
 # 凭据/密钥 —— 绝不提交
 .env
 
+# Python
+.venv/
+__pycache__/
+*.pyc
+
 # 系统/编辑器
 .DS_Store
 *.swp
