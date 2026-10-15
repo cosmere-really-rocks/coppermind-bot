@@ -95,11 +95,66 @@ API key 在 `.env`（已 gitignore，勿提交）。账号类凭据后续也放 
 
 ---
 
+# 技术决策（用户确认 · 2025-10-15）
+
+## A. 开发语言：Python
+- **主语言用 Python 3**（`.venv` 管理依赖）。理由：绕英文站人机验证的生态在 Python 最强——`cloudscraper`（已验证可绕过 Cloudflare，TLS 指纹伪装），必要时升级 `curl_cffi` / Playwright。
+- 中文站不走人机验证（`X-authkey` 即过），但与英文站用同一套 `requests`/cloudscraper 统一处理。
+- ⚠️ 已装的 `huiji-wiki-bot` **skill 是 Node.js 写的**，与 Python 主栈不一致（见下「F」节评估）。
+
+## B. 抓取落盘（快照）+ 后处理解耦
+- **先抓取落盘，后处理（翻译/写站）**。抓取是联网重活；翻译/写站可完全离线，各自重试不互阻塞。
+- 落盘目录：`en_snapshot/`，每篇一个目录：`<标题>/wikitext.txt` + `<标题>/meta.json`。
+- `meta.json` 里记：`标题`、`revid`（英文站版本号）、`timestamp`、`is_redirect`、`target`（redirect 目标）。
+- 网络问题/中断可断点续跑：重跑自动跳过已抓页面。
+
+## C. 同名同版本判重 = 扁平索引
+- 顶部维护 `state/en_index.json`（扁平，非只靠文件夹判断）：
+
+```json
+{
+  "Allik Neverfar": {"revid": 12345, "ts":"...", "has_wikitext":true, "is_redirect":false, "target":null},
+  "Allik_Neverfar": {"revid": 12344, "ts":"...", "is_redirect":true, "target":"Allik Neverfar"}
+}
+```
+
+- 判重逻辑：`当前英文站 revid == 索引记录的 revid` → **跳过**（决议第 3 条落地）。
+- 优点：快（只对 revid）；redirect 可独立记录；`has_wikitext` 区分"抓过但空"与"没抓"。
+
+## D. 每轮抓取流程
+1. 输入标题清单（或 category → 递归展开，遵循白名单/黑名单）。
+2. 每标题 `query revisions` 取当前 revid。
+3. 与 `en_index.json` 比对：revid 同 → 跳过；否则抓 wikitext 落盘 + 更新索引。
+4. 一轮完成后的产物（`en_index.json` + 快照目录）作为下一阶段（翻译/写站）的输入，下一阶段不再联网抓英文。
+
+## E. 项目目录骨架
+（已搭建，见下）
+```
+coppermind/
+├── readme.md
+├── .env            (gitignore, 凭据)
+├── .gitignore
+├── en_snapshot/    (英文站快照: <标题>/wikitext.txt + meta.json)
+├── state/          (en_index.json 等运行态)
+├── dict/           (译名表 glossary, 初始由用户提供)
+├── scripts/        (python: fetch / translate / write / verify 等)
+└── rules/          (白名单/黑名单/模板映射等配置)
+```
+
+## F. 关于 `huiji-wiki-bot`（Node.js skill）—— 是否需要 Python 版？
+- **现状**：该 skill 是 Node/ESM，封装中文站 MediaWiki API（`x-authkey` + bot 登录/编辑/上传/同步）。
+- **评估**：主栈定为 Python。写站逻辑本就简单（`action=login` → `csrftoken` → `action=edit`），Python 几十行即可复刻，**不必依赖一个 Node 脚本**。
+- **结论**：不急着翻译成 Python。先让 Python 主栈自实现读/写 API；Node skill 可留作参考（其 `api.md`/同步策略有借鉴价值）。若日后需要批量 `sync` 目录上传（大图/模板批量），可再考虑移植。
+- ⬜ 待定：Python 侧写站模块实现后，与 Node skill 的行为对齐（CSRF 会话、重试、`sync` 语义）。
+
+---
+
 # 待办状态总览（更新）
 
 1. ✅ 英→中读取链路已通
 2. ⬜ 中文站 bot 账号（用户+密码）→ 登录 → 有效 CSRF token → `action=edit` 写入
-3. ⬜ 拿到初始译名表
-4. ⬜ 实现/约定：英文站版本号记录（议题见第 3 条）
-5. ⬜ 从 `Allik_Neverfar` 起步做样板词条：转换 + 译名表 + 映射表，用户 review 后再写站
-6. ⬜ 落地竞品比对：白名单/黑名单/redirect/模板图片校验 等规则逐步构建
+3. ⬜ 拿到初始译名表（放 `dict/`）
+4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照，见技术决策 C）→ ⬜ 待实现
+5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ⬜ 待实现
+6. ⬜ 从 `Allik_Neverfar` 起步做样板词条：转换 + 译名表 + 映射表，用户 review 后再写站
+7. ⬜ 落地并实现：白名单/黑名单/redirect/模板图片校验 等规则
