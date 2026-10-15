@@ -57,8 +57,10 @@ def build_dst_template(name_map, tpl):
                 unmapped.append(("__positional__", v))
             continue
         key = str(p.name).strip()
+        # 英文模板有前导撇号别名（如 'residence / 'world），与无撇号版同义，去掉撇号再查。
+        lookup_key = key[1:] if key.startswith("'") else key
         val = str(p.value).strip()
-        keyl = key.lower()
+        keyl = lookup_key.lower()
         if keyl in drop_low:
             continue
         dst_key = lookup.get(keyl)

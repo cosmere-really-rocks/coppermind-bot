@@ -41,14 +41,15 @@
     },
     "drop_always": [
       "unnamed", "merge-family", "hide-family", "hide-world", "image-artist", "earth",
-      "species-ref", "'species", "species-raw", "raw-species",
-      "birthplace-ref", "'birthplace", "birthplace-raw", "raw-birthplace",
-      "residence-ref", "'residence", "residence-raw", "raw-residence",
-      "ethnicity-ref", "'ethnicity", "ethnicity-raw", "raw-ethnicity",
-      "nation-ref", "'nation", "nationality-ref", "nation-raw", "raw-nation",
-      "world-ref", "'world", "world-raw", "raw-world",
+      "species-ref", "species-raw", "raw-species",
+      "birthplace-ref", "birthplace-raw", "raw-birthplace",
+      "residence-ref", "residence-raw", "raw-residence",
+      "ethnicity-ref", "ethnicity-raw", "raw-ethnicity",
+      "nation-ref", "nationality-ref", "nation-raw", "raw-nation",
+      "world-ref", "world-raw", "raw-world",
       "#profession", "{profession"
     ],
+    "_apostrophe_alias": "EN 的 'xxx 前导撇号参数（如 'residence / 'world）是真实值别名，与无撇号版同义。转换器会去掉前导撇号再按 field_map 查找（2025-10-15 修正：这些不是 ref，之前误列入 drop）。",
     "cn_only_fill_manually": {
       "_说明": "以下 CN 参数 EN character 模板无直接来源，翻译/人工阶段填充或留空。",
       "list": [

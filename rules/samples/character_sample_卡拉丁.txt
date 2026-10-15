@@ -1,0 +1,75 @@
+=== 信息框块 ===
+{{Infobox character  <!-- 按照这么写，就能得出右边的结果  -->
+
+| 人名       = 卡拉丁[[category:角色]][[category:POV角色]]
+| 分类       = 风行骑士
+| 图像	         =<Carousel>
+文件:Kaladin Uniform Dark by Botanica.jpg|© [[Botanica]]
+文件:Kaladin Uniform Light by Botanica.jpg|© [[Botanica]]
+</Carousel> <!--[[File:Kaladin Uniform Dark by Botanica.jpg|300px]]-->
+| 图二 = 
+| 图三 = <!--File:Kaladin_paint_portrait.png!-->
+| 图四 =
+| 图像信息  = © [[Botanica]]<!--, [[exmakina]]!-->
+| 发音         = [[Wikipedia:Help:IPA|[ˈkæl·ə·dɪn]]]<br>[[Wikipedia:Wikipedia:Pronunciation_respelling_key|'''<small>KAL</small>'''-a-din]]
+| 原名         = Kaladin
+| 昵称 = 卡尔（Kal）
+| 别名         = 飓风恩护者
+| 其他译名     =
+| 性别        = 男
+| 头衔        = 桥长 '''·''' 军尉
+| 出生时间     = {{date/sa|year=1153}}年末{{17s ref|post|89705|text=Peter Ahlstrom论角色年龄|date=2014-01-26}}     
+| 出生地点     = [[赫斯通]]
+| 死亡时间    = 
+| 死亡地点     =
+
+| 阵营        = [[:category:阿勒斯卡军|阿勒斯卡军]]<small>（[[:category:寇林军|寇林军]]）</small><br>[[第四冲桥队]]<br>[[光辉骑士团]]<small>（[[风行骑士团]]）</small>
+| 种族        = 人类<small>（[[暗眼种]]）</small>
+| 文化        = [[阿勒斯卡#民族|阿勒斯卡人]][[category:阿勒斯卡人]]    
+| 宗教        = [[沃林教]]
+| 职业        = <div class="mw-collapsible mw-collapsed" data-expandtext="显示曾任职业" data-collapsetext="隐藏曾任职业">手术师学徒<br>军人<small>（矛兵）</small><br>冲桥手</div>军人<small>（护卫）</small>{{clear}}
+| 发色        = 黑色
+| 瞳色        = 深褐色 '''·''' 浅蓝色<small>（吸入[[飓光]]后）</small><br>[[file:Kaladin Glowing Eyes by Botanica.gif|200px]]
+| 肤色        = 褐色
+| 服装        = <div class="mw-collapsible mw-collapsed" data-expandtext="显示曾穿服装" data-collapsetext="隐藏曾穿服装">皮甲 '''·''' 黑裤<small>（矛兵）</small>{{book ref|sa1|1}}<br>系带衬衣 '''·''' 皮马甲 '''·''' 裤子 '''·''' 拖鞋<small>（冲桥手）</small>{{book ref|sa1|6}}<br></div>蓝色长外套 '''·''' 衬衣 '''·''' 蓝马甲 '''·''' 腰带 '''·''' 蓝裤 '''·''' 军靴<small>（军尉）</small>{{book ref|sa2|2}}{{clear}}
+| 饰品        = 
+| 武器        = 矛 '''·''' 匕首<br>[[碎瑛刃]]<small>（[[茜芙蕊娜]]）</small>
+| 工具        = 
+| 坐骑        = 
+| 其他补充    = <div class="mw-collapsible mw-collapsed" data-expandtext="显示奴隶烙印" data-collapsetext="隐藏奴隶烙印">[[File:Kaladin's_Brands.svg|150px]]</div>{{clear}}
+
+| 阶职        = [[风行骑士团|风行骑士]]<br>[[碎瑛武士]][[Category:碎瑛武士]]
+| 体系        = [[飓能术]]<small>（束缚 '''·''' 趋引）</small>[[Category:飓能者]]
+| 能力        = [[风行术]]
+| 契约对象    = [[荣灵]]<small>（[[茜芙蕊娜]]）</small>
+
+| 家族        = 
+| 祖先        = 
+| 父亲        = [[李伦]]
+| 母亲        = [[赫希拿]]
+| 亲戚        = 
+| 同辈        = [[提安]]<small>（弟弟）</small>
+| 配偶        =
+| 子嗣        =
+| 继承人      =
+| 后代        =
+| 恋人        =
+| 好友        = 
+| 仇敌        = [[梅里达斯·亚马兰]]<br>[[托洛尔·撒迪亚斯]]
+| 上级        = <div class="mw-collapsible mw-collapsed" data-expandtext="显示曾经的上级" data-collapsetext="隐藏曾经的上级">梅里达斯·亚马兰<br>[[盖兹]]</div>[[达力拿·寇林]]{{clear}}
+| 下属        = [[第四冲桥队]] '''·''' 编入达力拿军的前[[冲桥手]]
+| 师从        = 李伦<small>（医术）</small><br>[[泽奥]]<small>（剑术）</small>
+| 学徒        = 
+| 侍从        = 
+
+| 村镇        = 
+| 城市        = 
+| 国家        = 
+| 世界        = [[柔刹]][[category:柔刹人]]
+| 系列        = [[飓光志]]
+| 小说        = [[王者之路]]<small>（POV + 回忆）</small><br>[[光辉真言]]<small>（POV）</small>
+
+}}
+
+=== 用到的参数 ===
+人名, 分类, 图像, 图二, 图三, 图四, 图像信息, 发音, 原名, 昵称, 别名, 其他译名, 性别, 头衔, 出生时间, 出生地点, 死亡时间, 死亡地点, 阵营, 种族, 文化, 宗教, 职业, 发色, 瞳色, 肤色, 服装, 饰品, 武器, 工具, 坐骑, 其他补充, 阶职, 体系, 能力, 契约对象, 家族, 祖先, 父亲, 母亲, 亲戚, 同辈, 配偶, 子嗣, 继承人, 后代, 恋人, 好友, 仇敌, 上级, 下属, 师从, 学徒, 侍从, 村镇, 城市, 国家, 世界, 系列, 小说
