@@ -1,0 +1,51 @@
+{
+  "_说明": "英文模板参数 -> 中文模板参数 映射表。逐个积累（决策第6条）。key=英文模板名。未被映射的参数会进入 unmapped 报告。",
+  "character": {
+    "src_template": "character",
+    "dst_template": "Infobox character",
+    "field_map": {
+      "image": "图像",
+      "name": "人名",
+      "aliases": "别名",
+      "titles": "头衔",
+      "born": "出生时间",
+      "died": "死亡时间",
+      "birthplace": "出生地点",
+      "religion": "宗教",
+      "profession": "职业",
+      "occupation": "职业",
+      "groups": "阵营",
+      "species": "种族",
+      "abilities": "能力",
+      "bonded": "契约对象",
+      "spouse": "配偶",
+      "Spouse": "配偶",
+      "parents": "父母",
+      "father": "父亲",
+      "mother": "母亲",
+      "siblings": "同辈",
+      "children": "子嗣",
+      "relatives": "亲戚",
+      "ancestors": "祖先",
+      "descendants": "后代",
+      "world": "世界",
+      "universe": "分类",
+      "nationality": "国家",
+      "ethnicity": "民族",
+      "nation": "国家",
+      "residence": "国家",
+      "introduced": "小说"
+    },
+    "drop_always": ["image-artist", "hide-world", "hide-family", "merge-family", "unnamed"],
+    "multi": {
+      "_说明": "同一值可能映射到多个CN参数（如种族+民族），用数组列出候选。见 ethnic 处理。"
+    }
+  },
+  "quote": {
+    "src_template": "quote",
+    "dst_template": "Quote",
+    "field_map": {
+      "_说明": "quote 模板用位置参数1=内容、2=说话人，无需字段映射，按位置保留。"
+    }
+  }
+}
