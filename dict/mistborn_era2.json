@@ -1,0 +1,1781 @@
+{
+  "meta": {
+    "name": "迷雾之子·第二纪元 译名表",
+    "en": "Mistborn Era 2 Glossary",
+    "source": "迷雾之子第二纪元名词表.xls",
+    "source_sheet": "Glossary",
+    "entry_count": 584,
+    "updated": "2026-10-16",
+    "en_fixes": [
+      {
+        "from": "依蓝德 Venture",
+        "to": "Elend Venture",
+        "zh": "依蓝德·泛图尔"
+      },
+      {
+        "from": "依蓝德el City",
+        "to": "Elendel City",
+        "zh": "伊兰黛尔市"
+      }
+    ],
+    "notes": [
+      "英文 key 保留原始大小写/拼写。",
+      "中文人名分隔符已统一为间隔号 ·。",
+      "内容为草稿，仍需逐条核对。"
+    ]
+  },
+  "terms": {
+    "Abrigain": {
+      "zh": "雅布莉甘"
+    },
+    "Adonasium": {
+      "zh": "阿多拿西"
+    },
+    "Hammondar Bay": {
+      "zh": "哈蒙德湾"
+    },
+    "Ahlstrom Tower": {
+      "zh": "奥司托姆塔"
+    },
+    "Ahlstrom Square": {
+      "zh": "奥司托姆广场"
+    },
+    "Aime": {
+      "zh": "艾枚"
+    },
+    "Alendi": {
+      "zh": "艾兰迪"
+    },
+    "Allomancer": {
+      "zh": "熔金术师"
+    },
+    "Allomancy": {
+      "zh": "镕金术"
+    },
+    "Allrianne Cett": {
+      "zh": "奥瑞安妮·塞特"
+    },
+    "Aluminum Gnat": {
+      "zh": "铝虫"
+    },
+    "ettmetal": {
+      "zh": "埃特金属"
+    },
+    "Amaranta": {
+      "zh": "爱玛兰塔"
+    },
+    "lerasium": {
+      "zh": "莱拉金属"
+    },
+    "Varlance": {
+      "zh": "瓦尔兰斯"
+    },
+    "Anamnesor": {
+      "zh": "永世者"
+    },
+    "Annarel": {
+      "zh": "安娜瑞尔"
+    },
+    "Announcer": {
+      "zh": "宣告者"
+    },
+    "Malwish": {
+      "zh": "玛尔维什"
+    },
+    "Anticipation": {
+      "zh": "《期待经》"
+    },
+    "Aradan Yomen": {
+      "zh": "亚拉单·尤门"
+    },
+    "Arbitan": {
+      "zh": "阿比坦"
+    },
+    "Archivist": {
+      "zh": "库藏"
+    },
+    "Arguois Caverns": {
+      "zh": "阿谷瓦山洞"
+    },
+    "Armal": {
+      "zh": "阿玛尔"
+    },
+    "Armies in Motion": {
+      "zh": "《军队行进学》"
+    },
+    "Arts of Scholarship": {
+      "zh": "《学问艺术》"
+    },
+    "Ascendant Warrior": {
+      "zh": "升华战士"
+    },
+    "Well of Ascension": {
+      "zh": "升华之井"
+    },
+    "Ascension": {
+      "zh": "升华"
+    },
+    "Ashmounts": {
+      "zh": "灰山"
+    },
+    "Ashwarren": {
+      "zh": "灰巢"
+    },
+    "Ashweather Cett": {
+      "zh": "灰侯·塞特"
+    },
+    "Aslydin": {
+      "zh": "雅丝婷"
+    },
+    "Aspen Row": {
+      "zh": "山杨树街"
+    },
+    "Atium": {
+      "zh": "天金"
+    },
+    "Audil": {
+      "zh": "奥迪尔"
+    },
+    "Augur": {
+      "zh": "占兆者"
+    },
+    "Bahmen": {
+      "zh": "巴明"
+    },
+    "Barl": {
+      "zh": "巴尔"
+    },
+    "BasMardin": {
+      "zh": "巴司马丁"
+    },
+    "Bedes": {
+      "zh": "贝地斯"
+    },
+    "Beldre": {
+      "zh": "贝尔黛"
+    },
+    "bendalloy": {
+      "zh": "弯管合金"
+    },
+    "Bennitson": {
+      "zh": "班尼特森"
+    },
+    "Blessinf of Stability": {
+      "zh": "稳定的祝福"
+    },
+    "Blessing of Awareness": {
+      "zh": "意识的祝福"
+    },
+    "Blessing of Potency": {
+      "zh": "力量的祝福"
+    },
+    "Blessing of Presence": {
+      "zh": "存在的祝福"
+    },
+    "Block Street": {
+      "zh": "栋街"
+    },
+    "Bloodmaker": {
+      "zh": "制血者"
+    },
+    "Tobal Copper": {
+      "zh": "托瓦尔·红铜"
+    },
+    "Codenames": {
+      "zh": "代号人"
+    },
+    "Bloody Tan": {
+      "zh": "血手谭"
+    },
+    "Boxing": {
+      "zh": "盒金"
+    },
+    "Brass": {
+      "zh": "黄铜"
+    },
+    "Breaknaught": {
+      "zh": "防暴号"
+    },
+    "Breeze / Ladrian": {
+      "zh": "微风（拉德利安）"
+    },
+    "Dulouis": {
+      "zh": "杜琉伊斯"
+    },
+    "Bren": {
+      "zh": "布伦"
+    },
+    "Brill": {
+      "zh": "布利"
+    },
+    "Dug": {
+      "zh": "达格"
+    },
+    "Bronze": {
+      "zh": "青铜"
+    },
+    "Brute": {
+      "zh": "蛮力"
+    },
+    "Burn Lands": {
+      "zh": "炎地"
+    },
+    "butler": {
+      "zh": "管家"
+    },
+    "Cadmium": {
+      "zh": "镉"
+    },
+    "Cadon": {
+      "zh": "卡登"
+    },
+    "Calling of Trust": {
+      "zh": "《信任的天职》"
+    },
+    "Callingfale": {
+      "zh": "考林菲尔"
+    },
+    "Camon": {
+      "zh": "凯蒙"
+    },
+    "Canal Street": {
+      "zh": "运河街"
+    },
+    "Canton of Finance": {
+      "zh": "财务廷"
+    },
+    "Captain Goradel": {
+      "zh": "葛拉道队长"
+    },
+    "Carlo’s Bend": {
+      "zh": "卡罗湾"
+    },
+    "Cazzi": {
+      "zh": "卡西"
+    },
+    "Central Dominance": {
+      "zh": "中央统御区"
+    },
+    "Cett": {
+      "zh": "塞特"
+    },
+    "Cett Mansion": {
+      "zh": "塞特宅邸"
+    },
+    "Chamber of Ascension": {
+      "zh": "升华之室"
+    },
+    "ChanGaar": {
+      "zh": "尘痂"
+    },
+    "Chardees": {
+      "zh": "查迪"
+    },
+    "Charetel": {
+      "zh": "查瑞特"
+    },
+    "Chromium": {
+      "zh": "铬"
+    },
+    "Church of the Survivor": {
+      "zh": "幸存者教会"
+    },
+    "Citizen": {
+      "zh": "公民"
+    },
+    "Clamps": {
+      "zh": "夹钳"
+    },
+    "Clip": {
+      "zh": "夹币"
+    },
+    "Clubs / Cladent": {
+      "zh": "歪脚（克莱登）"
+    },
+    "Coinshot": {
+      "zh": "射币"
+    },
+    "Collapse": {
+      "zh": "崩解"
+    },
+    "Colms": {
+      "zh": "科尔姆斯"
+    },
+    "Commercial District": {
+      "zh": "商业区"
+    },
+    "Compounding": {
+      "zh": "复合力"
+    },
+    "Conclave of Worldbringers": {
+      "zh": "世界引领者秘密会"
+    },
+    "Faceless Immortals": {
+      "zh": "无面不朽者"
+    },
+    "Bleeder": {
+      "zh": "流血者"
+    },
+    "Connecter": {
+      "zh": "联结者"
+    },
+    "Conrad": {
+      "zh": "康那德"
+    },
+    "Constable Brettin": {
+      "zh": "布雷廷警官"
+    },
+    "Contract-breaker": {
+      "zh": "毁约者"
+    },
+    "Conway": {
+      "zh": "康道运河"
+    },
+    "Coolerim": {
+      "zh": "库勒里姆"
+    },
+    "Copper": {
+      "zh": "红铜"
+    },
+    "Copper Strangler": {
+      "zh": "红铜扼杀者"
+    },
+    "Coppercloud": {
+      "zh": "红铜云"
+    },
+    "coppermind": {
+      "zh": "红铜意识"
+    },
+    "Cosmere": {
+      "zh": "寇斯米尔"
+    },
+    "Counselor of Gods": {
+      "zh": "神之顾问"
+    },
+    "Covingtar": {
+      "zh": "柯文塔"
+    },
+    "Cracks": {
+      "zh": "裂口"
+    },
+    "Crasher": {
+      "zh": "迅击者"
+    },
+    "Crenda": {
+      "zh": "可蓝达"
+    },
+    "Crescent Dominance": {
+      "zh": "月牙统御区"
+    },
+    "Culee": {
+      "zh": "库里"
+    },
+    "Dadradah": {
+      "zh": "达得拉达"
+    },
+    "Dampmere Park": {
+      "zh": "达姆皮尔公园"
+    },
+    "Darrelnai": {
+      "zh": "达瑞耐国"
+    },
+    "Sentinel": {
+      "zh": "哨兵"
+    },
+    "Dedri Vasting": {
+      "zh": "戴德利·法司丁"
+    },
+    "Deepness": {
+      "zh": "深闇"
+    },
+    "Seventh Street": {
+      "zh": "第七街"
+    },
+    "Deepness Doctrine": {
+      "zh": "《深闇教义》"
+    },
+    "Demoux": {
+      "zh": "德穆"
+    },
+    "Demoux Promenade": {
+      "zh": "德穆大道"
+    },
+    "Derytatith": {
+      "zh": "泰瑞塔提司山"
+    },
+    "Detor": {
+      "zh": "迪拓"
+    },
+    "Dockson / Dox": {
+      "zh": "多克森（老多）"
+    },
+    "Doctor Murnbru": {
+      "zh": "蒙布鲁医生"
+    },
+    "Donal": {
+      "zh": "多纳尔"
+    },
+    "Doxonar": {
+      "zh": "多克索纳"
+    },
+    "Dridel": {
+      "zh": "隹戴"
+    },
+    "Adawathwyn": {
+      "zh": "埃德瓦斯文"
+    },
+    "Druffel": {
+      "zh": "德鲁菲"
+    },
+    "Dryport": {
+      "zh": "旱港镇"
+    },
+    "Duis": {
+      "zh": "度斯"
+    },
+    "Duralumin": {
+      "zh": "硬铝"
+    },
+    "Duralumin Gnat": {
+      "zh": "硬铝虫"
+    },
+    "Durn": {
+      "zh": "度恩"
+    },
+    "Durton": {
+      "zh": "杜尔顿"
+    },
+    "East Dominance": {
+      "zh": "东方统御区"
+    },
+    "Edwarn Ladrian": {
+      "zh": "埃德温·拉德利安"
+    },
+    "Elariel": {
+      "zh": "埃拉瑞尔"
+    },
+    "Electrum": {
+      "zh": "电金"
+    },
+    "Elend Venture": {
+      "zh": "依蓝德·泛图尔"
+    },
+    "Elendel City": {
+      "zh": "伊兰黛尔市"
+    },
+    "Eleventh Metal": {
+      "zh": "第十一金属"
+    },
+    "VenDell": {
+      "zh": "文戴尔"
+    },
+    "trellium": {
+      "zh": "特雷金属"
+    },
+    "Tinweight Settlement": {
+      "zh": "锡重居地"
+    },
+    "Erikell": {
+      "zh": "艾瑞凯"
+    },
+    "Erikeller": {
+      "zh": "艾瑞凯勒"
+    },
+    "Faceless Immortal": {
+      "zh": "无面永生者"
+    },
+    "Fadrex City": {
+      "zh": "法德瑞斯城"
+    },
+    "Admiral Jonnes": {
+      "zh": "琼斯上将"
+    },
+    "Faleast": {
+      "zh": "法理司特"
+    },
+    "Far Dorest": {
+      "zh": "远多瑞斯特"
+    },
+    "Far Peninsula": {
+      "zh": "远方半岛"
+    },
+    "Faradana": {
+      "zh": "法拉达纳"
+    },
+    "Farmost Dominance": {
+      "zh": "至远统御区"
+    },
+    "Farnsward Dubs": {
+      "zh": "法恩斯华德·达布斯"
+    },
+    "Fatren / Fats": {
+      "zh": "法特伦（阿肥）"
+    },
+    "Feder Canal": {
+      "zh": "费德运河"
+    },
+    "Fedik": {
+      "zh": "费迪克"
+    },
+    "The Drunken Spur": {
+      "zh": "酩酊马刺"
+    },
+    "Fedre": {
+      "zh": "法德雷"
+    },
+    "Feldeu": {
+      "zh": "费狄"
+    },
+    "Fellise": {
+      "zh": "费里斯"
+    },
+    "Felt": {
+      "zh": "柔皮"
+    },
+    "Feltrel": {
+      "zh": "费特瑞"
+    },
+    "Feruchemical metalminds": {
+      "zh": "藏金金属意识"
+    },
+    "Feruchemist": {
+      "zh": "藏金术师"
+    },
+    "Feruchemy": {
+      "zh": "藏金术"
+    },
+    "FhorKood": {
+      "zh": "弗古"
+    },
+    "Field of Rebirth": {
+      "zh": "重生之野"
+    },
+    "Final Ascension": {
+      "zh": "最后升华"
+    },
+    "Final Empire": {
+      "zh": "最后帝国"
+    },
+    "Firesoul": {
+      "zh": "火灵"
+    },
+    "First Contract": {
+      "zh": "初约"
+    },
+    "First Generation": {
+      "zh": "初代"
+    },
+    "Flaw": {
+      "zh": "缺陷"
+    },
+    "Flen": {
+      "zh": "富伦"
+    },
+    "Franson": {
+      "zh": "法兰森"
+    },
+    "Galivan": {
+      "zh": "加利文"
+    },
+    "Gallingskaw": {
+      "zh": "加林斯考"
+    },
+    "Gardre": {
+      "zh": "加尔得"
+    },
+    "Garthwood": {
+      "zh": "加斯伍"
+    },
+    "Garv": {
+      "zh": "加尔佛"
+    },
+    "Gasper": {
+      "zh": "喘息者"
+    },
+    "Geffenry": {
+      "zh": "詹芬利"
+    },
+    "Gemmel": {
+      "zh": "盖穆尔"
+    },
+    "Genedere": {
+      "zh": "珍奈德尔"
+    },
+    "Geormin": {
+      "zh": "吉尔敏"
+    },
+    "Getrue": {
+      "zh": "葛楚"
+    },
+    "Gneorndin Cett": {
+      "zh": "奈容汀·塞特"
+    },
+    "Gneration of Kandra": {
+      "zh": "坎得拉世代"
+    },
+    "God Beyond": {
+      "zh": "远古之神"
+    },
+    "Goradel": {
+      "zh": "葛拉道"
+    },
+    "Grent": {
+      "zh": "葛兰特"
+    },
+    "Gurwraith": {
+      "zh": "葛魅"
+    },
+    "HaDah": {
+      "zh": "哈达"
+    },
+    "Haddek": {
+      "zh": "哈达克"
+    },
+    "Hallant": {
+      "zh": "哈莱特"
+    },
+    "Ham / Hammond": {
+      "zh": "哈姆（哈姆德）"
+    },
+    "Harathdal": {
+      "zh": "哈洛道"
+    },
+    "Hardren": {
+      "zh": "哈德恩"
+    },
+    "Harmony": {
+      "zh": "和谐之主"
+    },
+    "Harrows": {
+      "zh": "劳难"
+    },
+    "Bilming": {
+      "zh": "比尔明"
+    },
+    "Basin": {
+      "zh": "港池"
+    },
+    "Flaming Bunny": {
+      "zh": "烈焰火兔"
+    },
+    "Daal": {
+      "zh": "达尔"
+    },
+    "Hasting": {
+      "zh": "海斯丁"
+    },
+    "Haught": {
+      "zh": "浩特"
+    },
+    "Haverfrex": {
+      "zh": "哈佛富雷克斯"
+    },
+    "Haws": {
+      "zh": "豪司"
+    },
+    "Hazekiller": {
+      "zh": "杀雾者"
+    },
+    "Helenntion": {
+      "zh": "海兰迅"
+    },
+    "Hemalurgy": {
+      "zh": "血金术"
+    },
+    "Hero of Ages": {
+      "zh": "世纪英雄"
+    },
+    "Maraga": {
+      "zh": "马拉加"
+    },
+    "Hettel": {
+      "zh": "海特"
+    },
+    "High Imperial": {
+      "zh": "高皇语"
+    },
+    "High Lord Ladrian": {
+      "zh": "高阶领主拉德利安"
+    },
+    "Hilde": {
+      "zh": "希儿蒂"
+    },
+    "Hill of a Thousand Spires": {
+      "zh": "千塔之山"
+    },
+    "Hinston": {
+      "zh": "辛斯顿"
+    },
+    "Hobart": {
+      "zh": "霍拔特"
+    },
+    "Hoid": {
+      "zh": "霍伊得"
+    },
+    "Holy Witness": {
+      "zh": "神圣见证人"
+    },
+    "Moonlight": {
+      "zh": "月光"
+    },
+    "Autonomy": {
+      "zh": "独盟"
+    },
+    "Homeland of Kandra": {
+      "zh": "坎得拉家乡"
+    },
+    "Hoselle": {
+      "zh": "荷赛儿"
+    },
+    "HunFoor": {
+      "zh": "洪福"
+    },
+    "Industrial District": {
+      "zh": "工业区"
+    },
+    "Inner Dominance": {
+      "zh": "内统御区"
+    },
+    "Iron": {
+      "zh": "铁"
+    },
+    "Ironeyes": {
+      "zh": "铁眼"
+    },
+    "Izenry": {
+      "zh": "依森瑞"
+    },
+    "Jadendwyl": {
+      "zh": "加登朵"
+    },
+    "Janarle": {
+      "zh": "加那尔"
+    },
+    "Jarloux": {
+      "zh": "嘉路"
+    },
+    "Jastes": {
+      "zh": "加斯提"
+    },
+    "Jaston": {
+      "zh": "贾斯敦"
+    },
+    "Jed": {
+      "zh": "杰得"
+    },
+    "Jedal": {
+      "zh": "杰戴"
+    },
+    "Jell": {
+      "zh": "阿杰"
+    },
+    "Jendellah": {
+      "zh": "詹戴拉"
+    },
+    "Jon Deadfinger": {
+      "zh": "死指乔恩"
+    },
+    "Joshin": {
+      "zh": "约辛"
+    },
+    "Lady Faula": {
+      "zh": "福拉女士"
+    },
+    "Maraya": {
+      "zh": "玛拉雅"
+    },
+    "Kandra": {
+      "zh": "坎得拉"
+    },
+    "KanPaar": {
+      "zh": "坎帕"
+    },
+    "Keep Orielle": {
+      "zh": "奥瑞尔堡垒"
+    },
+    "Keeper": {
+      "zh": "守护者"
+    },
+    "Kelsier / Kell": {
+      "zh": "卡西尔（阿凯）"
+    },
+    "Yancey Yaceczko": {
+      "zh": "雅西·雅捷茨科"
+    },
+    "Vila": {
+      "zh": "薇拉"
+    },
+    "Melstrom": {
+      "zh": "梅尔斯特罗姆"
+    },
+    "Ardenne": {
+      "zh": "阿尔德尼"
+    },
+    "Catacendre": {
+      "zh": "灰烬灾变"
+    },
+    "Silajana": {
+      "zh": "塞拉亚那"
+    },
+    "Kenton Street": {
+      "zh": "坎敦街"
+    },
+    "Khlennium": {
+      "zh": "克雷尼恩"
+    },
+    "Jammi Walls": {
+      "zh": "杰米·沃尔斯"
+    },
+    "Noways Joe": {
+      "zh": "诺维斯·乔"
+    },
+    "Kinaler": {
+      "zh": "齐奈勒"
+    },
+    "King Wednegon": {
+      "zh": "维德奈更王"
+    },
+    "Kiss": {
+      "zh": "克礼丝"
+    },
+    "Koloss": {
+      "zh": "克罗司"
+    },
+    "Kredik Shaw": {
+      "zh": "克雷迪克·霄"
+    },
+    "Connection": {
+      "zh": "联结"
+    },
+    "Krent": {
+      "zh": "科兰特"
+    },
+    "Kwaan": {
+      "zh": "关"
+    },
+    "Jan Ven": {
+      "zh": "詹纹"
+    },
+    "Southern Continent": {
+      "zh": "南方大陆"
+    },
+    "Jaxy": {
+      "zh": "贾克希"
+    },
+    "Shadesmar": {
+      "zh": "裂影界"
+    },
+    "Sho Del": {
+      "zh": "修德族"
+    },
+    "Ladrian Mansion": {
+      "zh": "拉德利安宅邸"
+    },
+    "Lady Aving Cett": {
+      "zh": "亚凡·塞特夫人"
+    },
+    "Gave Entrone": {
+      "zh": "盖夫·恩特隆"
+    },
+    "Lady Entrone": {
+      "zh": "恩特隆贵女"
+    },
+    "Lady Mi’chelle": {
+      "zh": "米歇尔贵女"
+    },
+    "Lady Patresen": {
+      "zh": "帕特芮森贵女"
+    },
+    "Wayfarer": {
+      "zh": "旅者城"
+    },
+    "Gabria": {
+      "zh": "迦百莉亚"
+    },
+    "Pewternaut": {
+      "zh": "休特舰"
+    },
+    "Wellid": {
+      "zh": "维利德"
+    },
+    "Larn": {
+      "zh": "拉恩"
+    },
+    "Larsta": {
+      "zh": "喇司塔族"
+    },
+    "Larstaism": {
+      "zh": "拉司达教"
+    },
+    "Last Emperor": {
+      "zh": "末代帝王"
+    },
+    "Law of Sixteen": {
+      "zh": "十六法则"
+    },
+    "Leecher": {
+      "zh": "水蛭"
+    },
+    "Lekal": {
+      "zh": "雷卡"
+    },
+    "Lellin": {
+      "zh": "雷林"
+    },
+    "Lessie": {
+      "zh": "蕾西"
+    },
+    "Lestibournes / Spook": {
+      "zh": "雷司提波恩（鬼影）"
+    },
+    "Limmi": {
+      "zh": "莉米"
+    },
+    "Longard": {
+      "zh": "龙嘉尔德"
+    },
+    "Lord Dukaler": {
+      "zh": "度卡雷大人"
+    },
+    "Lord Evenstrom Tekiel": {
+      "zh": "伊凡史托姆·太齐尔大人"
+    },
+    "Silver House": {
+      "zh": "银府"
+    },
+    "Lord Ferson Penrod": {
+      "zh": "费尔森·潘洛德大人"
+    },
+    "Lord Habren": {
+      "zh": "哈伯伦大人"
+    },
+    "Lord Harms": {
+      "zh": "哈姆斯大人"
+    },
+    "Lord Hue": {
+      "zh": "修大人"
+    },
+    "Dor": {
+      "zh": "多尔"
+    },
+    "Ghostblood": {
+      "zh": "鬼血"
+    },
+    "Soonie": {
+      "zh": "粟泥"
+    },
+    "Lord Prelan": {
+      "zh": "至上圣祭司"
+    },
+    "Lord Ruler": {
+      "zh": "统御主"
+    },
+    "Lord Stanton": {
+      "zh": "斯坦顿大人"
+    },
+    "Lord Waxillium Ladrian": {
+      "zh": "瓦克斯利姆·拉德利安大人"
+    },
+    "Lurcher": {
+      "zh": "扯手"
+    },
+    "Lutha-Davn Canal": {
+      "zh": "陆沙戴文运河"
+    },
+    "Sequence": {
+      "zh": "序列"
+    },
+    "Kellen": {
+      "zh": "凯伦"
+    },
+    "Investiture": {
+      "zh": "封授"
+    },
+    "Taldain": {
+      "zh": "塔尔德恩"
+    },
+    "Luthadel": {
+      "zh": "陆沙德"
+    },
+    "Mathingdaw": {
+      "zh": "马廷多"
+    },
+    "Dip": {
+      "zh": "迪普"
+    },
+    "Abrem": {
+      "zh": "亚布莱姆"
+    },
+    "Gord": {
+      "zh": "戈尔德"
+    },
+    "Embrier": {
+      "zh": "恩布里尔"
+    },
+    "Logshine": {
+      "zh": "木辉啤"
+    },
+    "Franis": {
+      "zh": "弗兰西斯"
+    },
+    "Odium": {
+      "zh": "奥迪厄姆"
+    },
+    "Fialia": {
+      "zh": "菲利娅"
+    },
+    "Kessi": {
+      "zh": "凯奚"
+    },
+    "Luthadel Garrison": {
+      "zh": "陆沙德警备队"
+    },
+    "Drenya": {
+      "zh": "德兰娅"
+    },
+    "Allriandre": {
+      "zh": "埃尔利安德"
+    },
+    "Consortium": {
+      "zh": "财团"
+    },
+    "Madion Ways": {
+      "zh": "迈迪恩大道"
+    },
+    "Ruri": {
+      "zh": "鲁里"
+    },
+    "Allik": {
+      "zh": "阿里克"
+    },
+    "Mailey": {
+      "zh": "美蕾"
+    },
+    "Coussaint": {
+      "zh": "库桑"
+    },
+    "Maksil": {
+      "zh": "马克希尔"
+    },
+    "Jennid": {
+      "zh": "杰尼德"
+    },
+    "Malatium": {
+      "zh": "脉天金"
+    },
+    "Marasi": {
+      "zh": "玛拉茜"
+    },
+    "Mardra": {
+      "zh": "玛德菈"
+    },
+    "Mare": {
+      "zh": "梅儿"
+    },
+    "Gorglen": {
+      "zh": "果戈林"
+    },
+    "Margel": {
+      "zh": "玛吉"
+    },
+    "Constable Blantach": {
+      "zh": "布兰塔珂警官"
+    },
+    "Margothian District": {
+      "zh": "玛格斯区"
+    },
+    "Marketpit": {
+      "zh": "市集沟"
+    },
+    "Cognitive Shadows": {
+      "zh": "认知阴影"
+    },
+    "Marsh": {
+      "zh": "马尔什"
+    },
+    "Max": {
+      "zh": "麦克斯"
+    },
+    "MeLaan": {
+      "zh": "宓兰"
+    },
+    "Metalborn": {
+      "zh": "金属之子"
+    },
+    "metalmind": {
+      "zh": "金属意识"
+    },
+    "Miles Dagouter": {
+      "zh": "迈尔斯·达古特"
+    },
+    "Miles Hundredlives": {
+      "zh": "迈尔斯·百命"
+    },
+    "Ministry": {
+      "zh": "教廷"
+    },
+    "Miss Grimes": {
+      "zh": "格兰姆斯小姐"
+    },
+    "Mist": {
+      "zh": "迷雾"
+    },
+    "Mistborn": {
+      "zh": "迷雾之子"
+    },
+    "Mister Suit": {
+      "zh": "西装先生"
+    },
+    "Misting": {
+      "zh": "迷雾人"
+    },
+    "Mistsickness": {
+      "zh": "迷雾病"
+    },
+    "Mistwraith": {
+      "zh": "雾魅"
+    },
+    "Movag": {
+      "zh": "莫拉格"
+    },
+    "Nelazan": {
+      "zh": "奈拉禅"
+    },
+    "Wilhelmette": {
+      "zh": "威尔海米特"
+    },
+    "Gemdwyn": {
+      "zh": "杰姆德温"
+    },
+    "Nicroburst": {
+      "zh": "镍爆"
+    },
+    "Nicrosil": {
+      "zh": "镍铬"
+    },
+    "Noorden": {
+      "zh": "诺丹"
+    },
+    "Northern Dominance": {
+      "zh": "北方统御区"
+    },
+    "Nouxil": {
+      "zh": "诺西尔"
+    },
+    "Obligator": {
+      "zh": "圣务官"
+    },
+    "Octant": {
+      "zh": "捌分区"
+    },
+    "Aradel": {
+      "zh": "阿拉戴尔"
+    },
+    "Old Gate": {
+      "zh": "旧城门"
+    },
+    "Olid": {
+      "zh": "欧立德"
+    },
+    "Governor": {
+      "zh": "总督"
+    },
+    "Oracle": {
+      "zh": "预言者"
+    },
+    "OreSeur": {
+      "zh": "欧瑟"
+    },
+    "Origin": {
+      "zh": "起源"
+    },
+    "Originator": {
+      "zh": "创始者"
+    },
+    "Outer Dominance": {
+      "zh": "外统御区"
+    },
+    "Outer Cities": {
+      "zh": "外城"
+    },
+    "Outer Estates": {
+      "zh": "外城区"
+    },
+    "Paclo the Dusty": {
+      "zh": "尘染者帕克罗"
+    },
+    "Path": {
+      "zh": "道"
+    },
+    "Pathian": {
+      "zh": "道徒"
+    },
+    "Peret the Black": {
+      "zh": "黑手佩瑞特"
+    },
+    "Pewter": {
+      "zh": "白镴"
+    },
+    "Pewterarm": {
+      "zh": "白镴臂"
+    },
+    "Harmonium": {
+      "zh": "谐金"
+    },
+    "Matieu": {
+      "zh": "玛修"
+    },
+    "Philen Frandeu": {
+      "zh": "费伦·傅兰敦"
+    },
+    "Pinnacle": {
+      "zh": "巅峰"
+    },
+    "Pits of Hathsin": {
+      "zh": "海司辛深坑"
+    },
+    "Pre-Ascension": {
+      "zh": "升华时期前"
+    },
+    "Prelan": {
+      "zh": "圣祭司"
+    },
+    "Cycle": {
+      "zh": "轮循"
+    },
+    "Ruin and Preservation": {
+      "zh": "毁灭与存留"
+    },
+    "Preservation": {
+      "zh": "存留"
+    },
+    "Preserves": {
+      "zh": "留存之主"
+    },
+    "Pulser": {
+      "zh": "脉动者"
+    },
+    "Quellion": {
+      "zh": "魁利恩"
+    },
+    "Rabzeen": {
+      "zh": "拉布真"
+    },
+    "Ranette": {
+      "zh": "拉奈特"
+    },
+    "Rashek": {
+      "zh": "拉剎克"
+    },
+    "Redalevin": {
+      "zh": "雷戴文"
+    },
+    "Reddi": {
+      "zh": "雷迪"
+    },
+    "Senate": {
+      "zh": "议院"
+    },
+    "Reen": {
+      "zh": "瑞恩"
+    },
+    "Remote Dominance": {
+      "zh": "边境统御区"
+    },
+    "Renoux": {
+      "zh": "雷弩"
+    },
+    "Resolution": {
+      "zh": "定决"
+    },
+    "Rindel": {
+      "zh": "林戴"
+    },
+    "Rioter": {
+      "zh": "煽动者"
+    },
+    "Darkwater": {
+      "zh": "暗水"
+    },
+    "LeeMar": {
+      "zh": "利马尔"
+    },
+    "Paalm": {
+      "zh": "帕尔姆"
+    },
+    "Cassileux": {
+      "zh": "卡西历克斯"
+    },
+    "Nomad Gang": {
+      "zh": "游牧民帮"
+    },
+    "Rittle": {
+      "zh": "利托"
+    },
+    "River Channerel": {
+      "zh": "香奈瑞河"
+    },
+    "Roughs": {
+      "zh": "蛮苦之地"
+    },
+    "Ruin": {
+      "zh": "灭绝"
+    },
+    "Rust and Ruin": {
+      "zh": "铁锈毁灭"
+    },
+    "Satren": {
+      "zh": "沙特伦"
+    },
+    "Steelpushing": {
+      "zh": "钢推术"
+    },
+    "Saze": {
+      "zh": "萨泽"
+    },
+    "Dlavil": {
+      "zh": "达拉维尔"
+    },
+    "Sazed": {
+      "zh": "沙赛德"
+    },
+    "Scadrial": {
+      "zh": "斯卡德利亚"
+    },
+    "Searan": {
+      "zh": "席兰"
+    },
+    "Seeker": {
+      "zh": "搜寻者"
+    },
+    "Seer": {
+      "zh": "先知"
+    },
+    "Sentry": {
+      "zh": "哨兵"
+    },
+    "Seran Conventical": {
+      "zh": "瑟蓝集所"
+    },
+    "Sev": {
+      "zh": "小畲"
+    },
+    "Shan": {
+      "zh": "珊"
+    },
+    "Sindren": {
+      "zh": "辛德伦"
+    },
+    "Skaa": {
+      "zh": "司卡"
+    },
+    "Kim": {
+      "zh": "金姆"
+    },
+    "Skiff": {
+      "zh": "史齐夫"
+    },
+    "Skimmer": {
+      "zh": "飞掠者"
+    },
+    "Skimming": {
+      "zh": "飞掠"
+    },
+    "Slider": {
+      "zh": "滑行者"
+    },
+    "Sliver": {
+      "zh": "碎裂"
+    },
+    "Sliverism": {
+      "zh": "碎裂教"
+    },
+    "Slowswift": {
+      "zh": "慢快"
+    },
+    "Smoker": {
+      "zh": "烟阵"
+    },
+    "Soother": {
+      "zh": "安抚者"
+    },
+    "Sootwarrens": {
+      "zh": "炭窝"
+    },
+    "Soulbearer": {
+      "zh": "承魂者"
+    },
+    "South Bridge": {
+      "zh": "南桥"
+    },
+    "Southern Dominance": {
+      "zh": "南方统御区"
+    },
+    "Sparker": {
+      "zh": "星火"
+    },
+    "Spinner": {
+      "zh": "旋转者"
+    },
+    "Spiritweb": {
+      "zh": "灵网"
+    },
+    "Stagin": {
+      "zh": "史塔金"
+    },
+    "Statlin City": {
+      "zh": "史塔林城"
+    },
+    "Steel": {
+      "zh": "钢"
+    },
+    "Steel Inquisitor": {
+      "zh": "钢铁审判者"
+    },
+    "Steel Ministry": {
+      "zh": "钢铁教廷"
+    },
+    "Steelrunner": {
+      "zh": "钢奔"
+    },
+    "Steris": {
+      "zh": "史特芮丝"
+    },
+    "Sterrion": {
+      "zh": "史特里昂"
+    },
+    "Storage Carern": {
+      "zh": "储藏窟"
+    },
+    "Streerslot": {
+      "zh": "街沟"
+    },
+    "Studies in Revolution": {
+      "zh": "《革命研究》"
+    },
+    "Subsumer": {
+      "zh": "吞食者"
+    },
+    "Suisna": {
+      "zh": "绥纳"
+    },
+    "Supplying in Scale": {
+      "zh": "《比例补给法》"
+    },
+    "Surefire": {
+      "zh": "神火帮"
+    },
+    "Suringshath": {
+      "zh": "苏林沙斯"
+    },
+    "zealot": {
+      "zh": "狂热者"
+    },
+    "Jeffy": {
+      "zh": "杰菲"
+    },
+    "Survivor of Hathsin": {
+      "zh": "海司辛幸存者"
+    },
+    "Gud the Killer": {
+      "zh": "杀手古德"
+    },
+    "Survivorist": {
+      "zh": "幸存者教徒"
+    },
+    "Synod": {
+      "zh": "席诺德"
+    },
+    "Jak": {
+      "zh": "雅克"
+    },
+    "Lone Mesa": {
+      "zh": "孤单的梅萨"
+    },
+    "River Human": {
+      "zh": "人类之河"
+    },
+    "Canyon of Death": {
+      "zh": "死亡峡谷"
+    },
+    "Taraco": {
+      "zh": "塔拉克"
+    },
+    "Blatant Barm, the Unwashed Bandit": {
+      "zh": "明目张胆的巴姆，金盆洗不净的强盗"
+    },
+    "Demmy": {
+      "zh": "戴米"
+    },
+    "Tark Vestingdow": {
+      "zh": "塔克·威斯汀多"
+    },
+    "TarKavv": {
+      "zh": "塔卡"
+    },
+    "Tathingdwen": {
+      "zh": "塔辛文"
+    },
+    "Tekiel": {
+      "zh": "太齐尔"
+    },
+    "Telden": {
+      "zh": "泰尔登"
+    },
+    "Telsin": {
+      "zh": "苔尔辛"
+    },
+    "Teniert": {
+      "zh": "坦尼珥"
+    },
+    "TenSoon": {
+      "zh": "坦迅"
+    },
+    "Tepper": {
+      "zh": "泰伯"
+    },
+    "Terion": {
+      "zh": "泰利昂"
+    },
+    "Termredare": {
+      "zh": "彻姆戴尔"
+    },
+    "Terr": {
+      "zh": "泰尔"
+    },
+    "Terringul": {
+      "zh": "泰林古尔"
+    },
+    "Maxillium": {
+      "zh": "麦克斯利姆"
+    },
+    "Cali Hatthew": {
+      "zh": "卡利·哈休"
+    },
+    "Terris": {
+      "zh": "泰瑞司"
+    },
+    "Teur": {
+      "zh": "特珥"
+    },
+    "Tevidian": {
+      "zh": "泰维迪安"
+    },
+    "The Set": {
+      "zh": "组织"
+    },
+    "Theron": {
+      "zh": "赛隆"
+    },
+    "Thug": {
+      "zh": "打手"
+    },
+    "Kath": {
+      "zh": "凯斯"
+    },
+    "Thurts": {
+      "zh": "索特"
+    },
+    "Tillaume": {
+      "zh": "提洛米"
+    },
+    "Tin": {
+      "zh": "锡"
+    },
+    "Tindwyl": {
+      "zh": "廷朵"
+    },
+    "Wyrn": {
+      "zh": "斐"
+    },
+    "Tineye": {
+      "zh": "锡眼"
+    },
+    "Tompher": {
+      "zh": "酮绯"
+    },
+    "Rose Empire": {
+      "zh": "蔷薇帝国"
+    },
+    "Torinost": {
+      "zh": "托林诺"
+    },
+    "Trell": {
+      "zh": "特雷"
+    },
+    "Tremredare": {
+      "zh": "彻姆戴尔"
+    },
+    "Trendalan": {
+      "zh": "特瑞达伦"
+    },
+    "Trentison": {
+      "zh": "特蓝提森"
+    },
+    "Trials of Monument": {
+      "zh": "《伟大的试炼》"
+    },
+    "Troubeld": {
+      "zh": "特鲁博得"
+    },
+    "True Body": {
+      "zh": "真体"
+    },
+    "True Madil": {
+      "zh": "真马迪镇"
+    },
+    "Blessed Thief": {
+      "zh": "福荫之匪"
+    },
+    "Trueself": {
+      "zh": "真我"
+    },
+    "Twinsoul": {
+      "zh": "双生魂"
+    },
+    "Trustwarren": {
+      "zh": "信巢"
+    },
+    "Twinborn": {
+      "zh": "双生师"
+    },
+    "Twinborn Compounder": {
+      "zh": "双生复合师"
+    },
+    "Twist": {
+      "zh": "揪转区"
+    },
+    "Tyden": {
+      "zh": "泰敦"
+    },
+    "Tyrian": {
+      "zh": "特瑞安"
+    },
+    "unbirth": {
+      "zh": "未生者"
+    },
+    "Uncle Gregr": {
+      "zh": "葛莱吉叔叔"
+    },
+    "Urbain": {
+      "zh": "兀尔班"
+    },
+    "Urbene": {
+      "zh": "兀邦"
+    },
+    "Urdee": {
+      "zh": "兀迪"
+    },
+    "Urtan": {
+      "zh": "兀特蓝"
+    },
+    "Urteau": {
+      "zh": "邬都"
+    },
+    "Metallic Arts": {
+      "zh": "金属艺术"
+    },
+    "Hemalurgist": {
+      "zh": "血金术师"
+    },
+    "Valette Renoux": {
+      "zh": "法蕾特·雷弩"
+    },
+    "Vanisher": {
+      "zh": "隐匪"
+    },
+    "VarSell": {
+      "zh": "法赛"
+    },
+    "Vedlew": {
+      "zh": "维迪路"
+    },
+    "Vedzan": {
+      "zh": "维德然"
+    },
+    "Vent": {
+      "zh": "狂风"
+    },
+    "Vet": {
+      "zh": "斐特"
+    },
+    "Vetitan": {
+      "zh": "维泰敦"
+    },
+    "Vin": {
+      "zh": "纹"
+    },
+    "Vindication": {
+      "zh": "清辩（枪支名）"
+    },
+    "Vinuarch": {
+      "zh": "纹弩亚期"
+    },
+    "Walin": {
+      "zh": "瓦林"
+    },
+    "Wax": {
+      "zh": "瓦克斯"
+    },
+    "Lady Gardre": {
+      "zh": "嘉德里夫人"
+    },
+    "Waxillium Dawnshot": {
+      "zh": "瓦克斯利姆·晓击"
+    },
+    "Wayne": {
+      "zh": "韦恩"
+    },
+    "Weathering": {
+      "zh": "抗风镇"
+    },
+    "Wellen": {
+      "zh": "威伦"
+    },
+    "West Dominance": {
+      "zh": "西方统御区"
+    },
+    "Westbrook Lane": {
+      "zh": "西溪巷"
+    },
+    "Westerner": {
+      "zh": "西方人"
+    },
+    "Windwhisperer": {
+      "zh": "风语者"
+    },
+    "Words of Founding": {
+      "zh": "创始箴言录"
+    },
+    "World of Ash": {
+      "zh": "灰烬世界"
+    },
+    "Worldbringer": {
+      "zh": "世界引领者"
+    },
+    "Yeden": {
+      "zh": "叶登"
+    },
+    "Yelva City": {
+      "zh": "叶伐城"
+    },
+    "Yestal": {
+      "zh": "叶斯塔"
+    },
+    "Yomen": {
+      "zh": "尤门"
+    },
+    "Yventes": {
+      "zh": "依凡提司"
+    },
+    "Zane": {
+      "zh": "詹"
+    },
+    "Zerinah": {
+      "zh": "赭瑞纳"
+    },
+    "Zinc": {
+      "zh": "锌"
+    }
+  }
+}
