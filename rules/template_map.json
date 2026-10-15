@@ -76,5 +76,29 @@
     "field_map": {
       "_说明": "quote 用位置参数1=内容、2=说话人，无需字段映射，按位置保留。"
     }
+  },
+  "page_wrappers": {
+    "_说明": "中文站独有的页面级包装模板，搬运时每个中文页都要加的（决议 10-12）。英文站没有这些。",
+    "list": [
+      {
+        "template": "en",
+        "position": "首部（紧随词条开头，如 '''卡拉丁'''{{en|Kaladin}}）",
+        "arg1": "英文站词条名",
+        "arg2_optional": "显示字符串（与英文名不一致时才用）",
+        "note": "用 #var:en 存英文名，CmPermission 与 ensync 依赖它"
+      },
+      {
+        "template": "CmPermission",
+        "position": "最顶部",
+        "arg1_optional": "英文站词条名（省略则读 {{en}} 存的英文名）",
+        "note": "展示英文站授权来源说明"
+      },
+      {
+        "template": "ensync",
+        "position": "结尾",
+        "arg1": "英文站词条版本号 revid",
+        "note": "记录最后与英文站同步的版本号；依赖 {{en}} 已定义"
+      }
+    ]
   }
 }
