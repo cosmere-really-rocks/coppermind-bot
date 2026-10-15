@@ -6,21 +6,11 @@
     "source_sheet": "Glossary",
     "entry_count": 584,
     "updated": "2026-10-16",
-    "en_fixes": [
-      {
-        "from": "依蓝德 Venture",
-        "to": "Elend Venture",
-        "zh": "依蓝德·泛图尔"
-      },
-      {
-        "from": "依蓝德el City",
-        "to": "Elendel City",
-        "zh": "伊兰黛尔市"
-      }
-    ],
+    "en_fixes": [],
     "notes": [
       "英文 key 保留原始大小写/拼写。",
       "中文人名分隔符已统一为间隔号 ·。",
+      "源表英文 key 中误用的汉字「依蓝德」已统一修正为 Elend（源 xls 已同步修正，此规则兼作兜底）。",
       "内容为草稿，仍需逐条核对。"
     ]
   },

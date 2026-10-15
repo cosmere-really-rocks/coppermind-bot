@@ -27,10 +27,22 @@ def norm_zh(s):
     return s
 
 
-KNOWN_EN_FIXES = {
-    "依蓝德 Venture": "Elend Venture",
-    "依蓝德el City": "Elendel City",
+KNOWN_EN_TOKENS = {
+    # 源表批量替换误伤：英文 key 里的汉字 "依蓝德" 实为 Elend
+    "依蓝德": "Elend",
 }
+
+
+def fix_en_key(en, fixes_used, zh):
+    """修正英文 key 中被误替换成汉字的 token（如 依蓝德->Elend）。"""
+    fixed = False
+    for bad, good in KNOWN_EN_TOKENS.items():
+        if bad in en:
+            en = en.replace(bad, good)
+            fixed = True
+    if fixed:
+        fixes_used.append({"from": "含「依蓝德」", "to": "Elend", "zh": zh, "full_en": en})
+    return en
 
 
 def build(rows):
@@ -41,10 +53,7 @@ def build(rows):
         zh = norm_zh(zh_raw)
         if not en or not zh:
             continue
-        if en in KNOWN_EN_FIXES:
-            good = KNOWN_EN_FIXES[en]
-            fixes_used.append({"from": en, "to": good, "zh": zh})
-            en = good
+        en = fix_en_key(en, fixes_used, zh)
         if en in terms:
             if terms[en]["zh"] != zh:
                 terms[en].setdefault("aliases", [])
@@ -78,6 +87,7 @@ def main():
             "notes": [
                 "英文 key 保留原始大小写/拼写。",
                 "中文人名分隔符已统一为间隔号 ·。",
+                "源表英文 key 中误用的汉字「依蓝德」已统一修正为 Elend（源 xls 已同步修正，此规则兼作兜底）。",
                 "内容为草稿，仍需逐条核对。",
             ],
         },
