@@ -1,51 +1,79 @@
 {
-  "_说明": "英文模板参数 -> 中文模板参数 映射表。逐个积累（决策第6条）。key=英文模板名。未被映射的参数会进入 unmapped 报告。",
+  "_说明": "会话模板转换映射表（决策第6条，逐步积累）。基于 Template:Character(EN,65参数) 与 Template:Infobox character(CN,84参数) 逐字段比对（2025-10-15）。",
+  "_对比结论": "非一一对应：EN 约35个参数可映射到 CN；EN 约32个为内部 ref/raw/hidden 控制参数（丢弃）；CN 约54个参数 EN 模板无直接来源（外观细节/关系细分/媒体出场/发音等），需翻译阶段人工或从其他来源填充。",
   "character": {
     "src_template": "character",
     "dst_template": "Infobox character",
     "field_map": {
-      "image": "图像",
       "name": "人名",
-      "aliases": "别名",
-      "titles": "头衔",
-      "born": "出生时间",
-      "died": "死亡时间",
-      "birthplace": "出生地点",
-      "religion": "宗教",
-      "profession": "职业",
-      "occupation": "职业",
-      "groups": "阵营",
-      "species": "种族",
-      "abilities": "能力",
-      "bonded": "契约对象",
+      "image": "图像",
+      "parents": "家族",
       "spouse": "配偶",
-      "Spouse": "配偶",
-      "parents": "父母",
-      "father": "父亲",
-      "mother": "母亲",
       "siblings": "同辈",
       "children": "子嗣",
-      "relatives": "亲戚",
       "ancestors": "祖先",
+      "relatives": "亲戚",
       "descendants": "后代",
+      "family": "家族",
+      "born": "出生时间",
+      "died": "死亡时间",
+      "abilities": "能力",
+      "bonded": "契约对象",
+      "skills": "能力",
+      "achievements": "其他补充",
+      "powers": "其他补充",
+      "titles": "头衔",
+      "aliases": "别名",
+      "profession": "职业",
+      "occupation": "职业",
+      "religion": "宗教",
+      "groups": "阵营",
+      "species": "种族",
+      "ethnicity": "民族",
+      "nationality": "国家",
+      "nation": "国家",
       "world": "世界",
       "universe": "分类",
-      "nationality": "国家",
-      "ethnicity": "民族",
-      "nation": "国家",
-      "residence": "国家",
+      "era": "系列",
+      "birthplace": "出生地点",
+      "residence": "村镇",
       "introduced": "小说"
     },
-    "drop_always": ["image-artist", "hide-world", "hide-family", "merge-family", "unnamed"],
-    "multi": {
-      "_说明": "同一值可能映射到多个CN参数（如种族+民族），用数组列出候选。见 ethnic 处理。"
+    "drop_always": [
+      "unnamed", "merge-family", "hide-family", "hide-world", "image-artist", "earth",
+      "species-ref", "'species", "species-raw", "raw-species",
+      "birthplace-ref", "'birthplace", "birthplace-raw", "raw-birthplace",
+      "residence-ref", "'residence", "residence-raw", "raw-residence",
+      "ethnicity-ref", "'ethnicity", "ethnicity-raw", "raw-ethnicity",
+      "nation-ref", "'nation", "nationality-ref", "nation-raw", "raw-nation",
+      "world-ref", "'world", "world-raw", "raw-world",
+      "#profession", "{profession"
+    ],
+    "cn_only_fill_manually": {
+      "_说明": "以下 CN 参数 EN character 模板无直接来源，翻译/人工阶段填充或留空。",
+      "list": [
+        "图二", "图三", "图四", "原名", "发音", "发音文件", "其他译名", "昵称", "性别",
+        "死亡", "死亡地点", "文化", "语言", "发色", "瞳色", "肤色", "服饰", "饰品",
+        "武器", "工具", "坐骑", "服装", "阶职", "体系", "继承人", "儿子", "女儿",
+        "恋人", "好友", "仇敌", "上级", "下属", "师从", "学徒", "侍从", "城市", "大陆",
+        "漫画", "图画小说", "动画", "电影", "电视剧", "电子游戏", "桌上游戏",
+        "电影演员", "电视剧演员", "动画配音", "游戏配音", "extra1", "extra2", "extra3",
+        "extra4", "extra5", "图像信息"
+      ]
+    },
+    "notes": {
+      "parents": "EN 的 parents 是笼统值；CN 拆成 父亲/母亲 两个参数，需按值拆分，或先并入 家族。",
+      "siblings": "EN siblings=兄弟姐妹；CN 同辈 语义略宽（含同辈/兄弟姐妹）。community 惯例待确认。",
+      "residence": "EN residence 为居所；CN 拆 村镇/城市/国家/大陆，需按具体值归入。",
+      "universe": "映射到 CN 的 分类 参数；值如 [[Cosmere]] 需译成 三界宙（属分类选项值）。",
+      "era": "EN era=时代；CN 无 时代 参数，暂归 系列，语义待确认。"
     }
   },
   "quote": {
     "src_template": "quote",
     "dst_template": "Quote",
     "field_map": {
-      "_说明": "quote 模板用位置参数1=内容、2=说话人，无需字段映射，按位置保留。"
+      "_说明": "quote 用位置参数1=内容、2=说话人，无需字段映射，按位置保留。"
     }
   }
 }
