@@ -185,6 +185,20 @@ coppermind/
 - **文件（images）识别说明**（决策第 7 条）：`[[File:...]]` 直接链接 + `{{image}}` 模板首参 + 任意模板中"像文件名的命名参数值"（如 `character|image=`）。已实测 `Allik Neverfar` 抓全 4 张图。静态分析仍可能漏（文件藏更深模板里），届时靠 meta.json 手动补充。
 - 依赖：`.venv`（requests / cloudscraper / mwparserfromhell）。已实测。
 
+- **`scripts/convert_templates.py`**（Python，已跑通）：模板转换器 →
+  1. `{{character}}` → `{{Infobox character}}`，字段名按 `rules/template_map.json` 映射（**大小写不敏感**；一行一参数中文站风格）
+  2. `{{quote}}` → `{{Quote}}`
+  3. 其余模板（`book ref`/`date`/`image`/`for`/`columns`/`partial`/`Mistborn`…）**中文站同名且参数兼容，直接复用不动**
+  4. `--wrap`：组装页面级包装 `{{CmPermission|英文名}}`（顶）+ `{{en|英文名}}`（首部占位，翻译阶段移位）+ `{{ensync|revid}}`（结尾，revid 取自快照）——决议 10-12
+  5. 报告 mapped/unmapped/collisions/wrapped
+
+用法：
+```bash
+.venv/bin/python scripts/convert_templates.py --title <标题> [--wrap] [--json]
+```
+
+- **验证结论**：`Allik Neverfar` 全页 10 种模板，仅 `character`/`quote` 需转换，其余 8 种（占 54+ 处引用）中文站直接复用。真正需写转换规则的模板很少。
+
 ---
 
 # 待办状态总览（更新）

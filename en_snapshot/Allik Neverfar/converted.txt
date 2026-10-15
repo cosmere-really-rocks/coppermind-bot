@@ -1,4 +1,7 @@
-{{Infobox character
+
+{{CmPermission|Allik Neverfar}}
+
+{{en|Allik Neverfar}}{{Infobox character
 | 图像    = Allik Neverfar-MotP.png
 | 配偶    = Marasi Colms
 | 国家    = Malwish
@@ -83,3 +86,5 @@ Allik refers to Wax with many different titles during their time together.
 {{partial}}
 {{Mistborn|Era 2}}
 [[es:Allik Nuncalejos]]
+
+{{ensync|213349}}

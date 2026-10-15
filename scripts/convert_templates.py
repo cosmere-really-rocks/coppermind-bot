@@ -124,6 +124,8 @@ def main():
     grp.add_argument("--file", help="直接提供 wikitext 文件路径")
     grp.add_argument("--stdin", action="store_true", help="从 stdin 读 wikitext")
     ap.add_argument("--json", action="store_true", help="输出转换报告 JSON")
+    ap.add_argument("--wrap", action="store_true", help="组装页面级包装模板（CmPermission/en/ensync，决议 10-12）")
+    ap.add_argument("--en-title", help="--wrap 时使用的英文站词条名（默认取 --title）")
     args = ap.parse_args()
 
     if args.title:
@@ -139,6 +141,30 @@ def main():
 
     rules = load_rules()
     converted, report = convert_wikitext(wikitext, rules)
+
+    if args.wrap:
+        # 页面级包装（决议 10-12）：CmPermission 顶部 + en 首部占位 + ensync 结尾
+        en_title = args.en_title or (args.title or "")
+        revid = None
+        if args.title:
+            d = EN_SNAPSHOT / args.title.replace("/", "_")
+            meta = d / "meta.json"
+            if meta.exists():
+                revid = json.loads(meta.read_text(encoding="utf-8")).get("revid")
+        if not revid:
+            revid = "CHANGE_ME_REVID"
+        top_cm = "\n{{CmPermission|" + en_title + "}}\n"
+        top_en_marker = "\n{{en|" + en_title + "}}"  # 翻译阶段移入首行 '''中文名'''
+        end_ensync = "\n{{ensync|" + str(revid) + "}}\n"
+        converted = top_cm + top_en_marker + converted
+        # ensync 放最末尾（正文之后）；忽略最后已有换行
+        converted = converted.rstrip("\n") + "\n" + end_ensync
+        report["wrapped"] = {
+            "CmPermission": en_title,
+            "en": en_title,
+            "ensync": revid,
+            "note": "en 已置于顶部占位，翻译阶段需移到正文首行 '''中文名''' 之后",
+        }
 
     if args.json:
         print(json.dumps({"converted": converted, "report": report}, ensure_ascii=False, indent=2))
