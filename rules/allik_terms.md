@@ -60,6 +60,7 @@ Metallic One→金属之君 ; Great Metallic One→伟大金属之君 ; Divine O
    - 尽管中文站存在「悼念之带」「阿利克·纳法尔」页面，用户点名不译 → 译文用英文原样，列入 `untranslated_terms`。
    - 词条本身以英文「Allik Neverfar」命名。
 4. **翻译结果用 JSON 返回**，含 `translation`（中文 wikitext）+ `untranslated_terms`（未翻译专有名词列表）——落地决议 #4。样例见 `en_snapshot/Allik Neverfar/translation.json`。
+5. **原文引用不翻译**（决议 #13）：`{{quote}}` 台词、`{{columns}}` 称号列表等**引用小说中译本原文**的内容一律保留英文，列入 `untranslated_terms` 注明「需查中译本对应译文」——避免与官方中译本对不上。已对 Allik 两个 quote + 称号列表生效。
 
 ## 其余音译专名（中文站已有同音页面，保留中文）
 Brunstell→布伦斯德、Wilg→威尔格、Jordis→乔迪丝、Wiestlow→维斯特洛、Bilming→比尔明、Seran Range→瑟兰山脉、New Seran→新瑟兰、unsealed metalminds→未封印金储 —— 均已实查确认中文站有对应页面，可作链接落点。

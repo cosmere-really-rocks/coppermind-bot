@@ -11,7 +11,7 @@
 | 小说    = [[Bands of Mourning]]
 }}
 
-{{Quote|诸神，真是喜怒无常。
+{{Quote|Gods. Very temperamental.
 |Allik{{book ref|mb6|20}}
 }}
 '''Allik Neverfar'''{{en|Allik Neverfar}}是一名[[南司卡德瑞尔人]]，也是飞船[[布伦斯德]]的船员之一。在{{date|342|pc}}年，[[布伦斯德]]被[[组织]]俘获。在被[[玛拉席·科姆斯]]和[[宓兰]]救出后，他加入了他们寻找[[Bands of Mourning]]的行列。
@@ -29,8 +29,8 @@ Allik似乎有些随性不羁，从不害怕把脑中冒出的任何话说出口
 == 属性与能力 ==
 {{image|Allik Neverfar by Laurys L.jpg|side=right|height=200px}}
 
-{{Quote|你若想飞，就必须比那更特别。我们被期望成为绅士和淑女。曾有人因为不懂正确的舞步而被扔下船。
-|Allik对玛拉席{{book ref|mb6|22}}
+{{Quote|You have to be something more special than that, if you want to fly. We're expected to be gentlemen and ladies. We’ve thrown people overboard for not knowing the proper dance moves.
+|Allik to Marasi{{book ref|mb6|22}}
 }}
 Allik不具备任何[[镕金术]]或[[藏金术]]能力，但他能够通过自己族群制造的[[未封印金储|徽章]]来运用[[金属技艺]]。他对某些金属技艺展现出渊博的知识，只要一眼就能看出瓦克斯具备哪些能力。{{book ref|mb6|20}}然而，他似乎对时间镕金术不太熟悉，起初并未意识到[[玛拉席]]和[[韦恩]]是镕金术师。
 
@@ -55,30 +55,30 @@ Allik在[[司卡德瑞尔]]的南极长大，属于玛尔维什民族，住在�
 ==== 给瓦克斯的称号列表 ====
 Allik在与瓦克斯相处期间，用许多不同的称号来称呼他。
 {{columns|
-*金属之君{{book ref|mb6|20}}
-*伟大金属之君{{book ref|mb6|20}}
-*神圣之君{{book ref|mb6|21}}
-*伟大的金属存在{{book ref|mb6|21}}
-*代谢之君{{book ref|mb6|21}}
-*您的伟岸{{book ref|mb6|21}}
-*高个之君{{book ref|mb6|21}}
-*卓越之君{{book ref|mb6|21}}
-*坚毅之君{{book ref|mb6|21}}
-*渎神之君{{book ref|mb6|21}}
-*神秘之君{{book ref|mb6|21}}
-*大智之君{{book ref|mb6|21}}
-*奇妙之君{{book ref|mb6|21}}
-*昏沉大帝{{book ref|mb6|22}}
-*观…（被瓦克斯打断）{{book ref|mb6|22}}
-*看…呃…（Allik自己住口，因为瓦克斯刚叫他停下）{{book ref|mb6|22}}
-*果断之君{{book ref|mb6|23}}
-*伟大金属毁灭者{{book ref|mb6|23}}
-*大急之君{{book ref|mb6|23}}
-*大君{{book ref|mb6|23}}{{book ref|mb6|30}}
-*深思之君{{book ref|mb6|24}}
-*不察之主{{book ref|mb6|24}}
-*饥饿之君（噢，饥饿之君）{{book ref|tlm|11}}
-*形容词式的瓦克斯利姆{{book ref|tlm|18}}
+*Metallic One{{book ref|mb6|20}}
+*Great Metallic One{{book ref|mb6|20}}
+*Divine One{{book ref|mb6|21}}
+*Great Being of Metals{{book ref|mb6|21}}
+*Metabolic One{{book ref|mb6|21}}
+*Your Magnificence{{book ref|mb6|21}}
+*Tall One{{book ref|mb6|21}}
+*Remarkable One{{book ref|mb6|21}}
+*Persistent One{{book ref|mb6|21}}
+*Blasphemous One{{book ref|mb6|21}}
+*Mysterious One{{book ref|mb6|21}}
+*Great Wise One{{book ref|mb6|21}}
+*Wonderful One{{book ref|mb6|21}}
+*His Greatness the Drowsy One{{book ref|mb6|22}}
+*Observan- (cut off by Wax){{book ref|mb6|22}}
+*Confusing… er… (Allik cuts himself off, since Wax had just told him to stop){{book ref|mb6|22}}
+*Decisive One{{book ref|mb6|23}}
+*Great Metallic Destroyer{{book ref|mb6|23}}
+*Great Impetuous One{{book ref|mb6|23}}
+*Great One{{book ref|mb6|23}}{{book ref|mb6|30}}
+*Thoughtful One{{book ref|mb6|24}}
+*Unobservant Master{{book ref|mb6|24}}
+*O Hungry One{{book ref|tlm|11}}
+*Adjective Waxillium{{book ref|tlm|18}}
 }}
 
 == 注释 ==
