@@ -37,7 +37,8 @@
       "era": "系列",
       "birthplace": "出生地点",
       "residence": "村镇",
-      "introduced": "小说"
+      "introduced": "小说",
+      "title": "titles"
     },
     "drop_always": [
       "unnamed",
@@ -371,7 +372,8 @@
       "books": "涉及书目",
       "region": "地区",
       "map": "地图",
-      "type": "类型"
+      "type": "类型",
+      "era": "时代"
     },
     "drop_always": [],
     "missing_cn_fields": [],
@@ -391,11 +393,12 @@
       "owners": "所有者",
       "era": "时代",
       "usage": "用途",
-      "type": "类型"
+      "type": "类型",
+      "introduced": "涉及书目"
     },
     "drop_always": [],
     "missing_cn_fields": [],
-    "notes": "新建中文站 Infobox architecture（pageid3491）。owner/owners 归所有者。"
+    "notes": "新建中文站 Infobox architecture（pageid3491）。owner/owners 归所有者；books/introduced 均归涉及书目。"
   },
   "geography": {
     "src_template": "geography",
@@ -406,7 +409,8 @@
       "universe": "分类",
       "books": "涉及书目",
       "era": "时代",
-      "type": "类型"
+      "type": "类型",
+      "region": "所属区域"
     },
     "drop_always": [],
     "missing_cn_fields": [],
@@ -422,11 +426,14 @@
       "books": "涉及书目",
       "capital": "首都",
       "ruler": "统治者",
-      "type": "类型"
+      "type": "类型",
+      "era": "时代",
+      "map": "地图",
+      "ethnicity": "主要民族"
     },
     "drop_always": [],
     "missing_cn_fields": [],
-    "notes": "新建中文站 Infobox nation（pageid3493）。"
+    "notes": "新建中文站 Infobox nation（pageid3493）。ethnicity→主要民族（中文站已有该字段）。"
   },
   "vehicle": {
     "src_template": "vehicle",
@@ -436,7 +443,11 @@
       "world": "世界",
       "universe": "分类",
       "books": "涉及书目",
-      "type": "类型"
+      "type": "类型",
+      "creators": "建造者",
+      "captain": "舰长",
+      "nation": "所属国家",
+      "introduced": "涉及书目"
     },
     "drop_always": [],
     "missing_cn_fields": [],
