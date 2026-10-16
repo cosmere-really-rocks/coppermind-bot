@@ -10,22 +10,28 @@
 
 ---
 
-## 1. business（EN 15 → CN 16）
+## 1. business（EN 15 → CN 已补齐；中文站已加 服务/产品/创建者/负责人/成员/地区/时代/标志 字段）
 
 **可映射**
 | EN | CN | 备注 |
 |---|---|---|
 | image | 图像 | |
 | name | 行业名 | 原名=英文名保留 |
-| owner / founder | 业主 | ⚠️ 两词碰撞同归「业主」 |
-| leader | 业主 | 负责人归业主 |
+| owner | 业主 | |
+| founder | 创建者 | 与 owner 分列 |
+| leader | 负责人 | |
 | city | 城市 | |
-| region | 地址 | 或 所属区域 |
+| region | 地区 | |
+| logo | 标志 | |
+| services | 服务 | |
+| products | 产品 | |
+| members | 成员 | |
+| era | 时代 | |
 | world | 世界 | |
 | universe | 分类 | |
 | books | 涉及书目 | |
 
-**丢弃/需人工**：`era`（CN 无系列）、`logo`（并入图像或丢弃）、`products`/`services`（并入 类型/行业名，或丢弃）、`members`（CN 无）。CN 的 发音/别名/其他译名/地址/国家 由翻译阶段补。
+CN 的 发音/别名/其他译名/地址/国家 由翻译阶段补。
 
 ## 2. group（EN 10 → CN 16）
 
@@ -57,10 +63,10 @@ image→图像、world→世界、universe→分类、books→涉及书目、typ
 image→图像、name→家族名、world→世界、universe→分类、books→涉及书目、home→（CN 无"所在地"，丢弃或并入类型）、era→丢弃。
 **待人工**：爵位/祖先/族长/前任族长/继承人/原名。
 
-## 8. book（EN 15 → CN 25）
+## 8. book（EN 15 → CN 25；中文站已加 部/注释/字数 字段）
 
-name→书名、cover→封面、released/date→发行日期（两源碰撞同归）、series→系列、prequel→上一本、sequel→下一本、setting→设定、publisher→出版社、ISBN→ISBN、page-count→页数。
-**丢弃/需人工**：`annotations` `subpages` `word-count` `part`（CN 无）；CN 的 作者/译者/国家/语言/出版社/开本/页数等 部分英文 book 词条无 → 留空/人工。
+name→书名、cover→封面、released→发行日期、date→发行日期（两源碰撞同归）、series→系列、prequel→上一本、sequel→下一本、setting→设定、publisher→出版社、ISBN→ISBN、page-count→页数、part→部、annotations→注释、word-count→字数。
+**丢弃**：`subpages`（编辑开关，非内容字段）。CN 的 作者/译者/国家/语言/媒介/开本/纸型等 部分英文 book 词条无 → 留空/人工。
 
 ## 9. lifeform（EN 5 → CN 17）
 

@@ -308,5 +308,56 @@
     },
     "drop_always": [],
     "notes": "通用映射批。"
+  },
+  "business": {
+    "src_template": "business",
+    "dst_template": "Infobox business",
+    "field_map": {
+      "image": "图像",
+      "name": "行业名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型",
+      "city": "城市",
+      "era": "时代",
+      "owner": "业主",
+      "founder": "创建者",
+      "services": "服务",
+      "products": "产品",
+      "leader": "负责人",
+      "members": "成员",
+      "region": "地区",
+      "logo": "标志"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "中文站 Infobox business 已补 服务/产品/创建者/负责人/成员/地区/时代/标志 字段。"
+  },
+  "book": {
+    "src_template": "book",
+    "dst_template": "Infobox book",
+    "field_map": {
+      "image": "图像",
+      "name": "书名",
+      "cover": "封面",
+      "series": "系列",
+      "setting": "设定",
+      "publisher": "出版社",
+      "released": "发行日期",
+      "date": "发行日期",
+      "prequel": "上一本",
+      "sequel": "下一本",
+      "ISBN": "ISBN",
+      "page-count": "页数",
+      "part": "部",
+      "annotations": "注释",
+      "word-count": "字数"
+    },
+    "drop_always": [
+      "subpages"
+    ],
+    "missing_cn_fields": [],
+    "notes": "中文站 Infobox book 已补 部/注释/字数 字段；subpages 为编辑开关丢弃。released/date 碰撞归发行日期。"
   }
 }
