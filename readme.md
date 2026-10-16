@@ -12,6 +12,29 @@
 站点名：中文站 = 「红铜智库中文维基」，MediaWiki 1.38.4；英文站 = The Coppermind Wiki。
 中文站首页 wiki 名：`首页`（mainpage），revid 16588。
 
+## 系列构成（Mistborn）与译名表
+
+迷雾之子（Mistborn）是大系列，可拆成两个小时代。本地 epub 与译名表覆盖面都按此理解（见 `dict/epub/`，均不提交）。
+
+**英文版**
+- **时代一（era1）/ 古代三部曲**：对应 `dict/epub/The_Mistborn_Trilogy*.epub`，实际是三部曲。
+- **时代 1.5**：中间短篇，`Secret History`（`dict/epub/[Mistborn 1.5] - Secret History*.epub`）。
+- **时代二（era2）四部曲**，英文顺序：
+  1. The Alloy of Law（`THE_ALLOY_OF_LAW_EPUB.epub`）
+  2. Shadows of Self（`SHADOWS_OF_SELF_EPUB.epub`）
+  3. The Bands of Mourning（`THE_BANDS_OF_MOURNING_EPUB.epub`）
+  4. The Lost Metal（`Mistborn 07 - The Lost Metal*.epub`）
+
+**粉丝戏称 / 编号（wikitext 里两种都可能出现）**
+- 全集排列 **mistborn1~7**：如 `mb7` = The Lost Metal。
+- 按时代划分 **era2|N**：如 `era2|4` 也指 The Lost Metal。
+
+**中文版**
+- 目前只有 **1~6**：`dict/epub/mistborn_chs_1_6.epub`（The Lost Metal 尚无中译）。
+
+**译名表**：`dict/mistborn.json` 为**全系列**（era1+era2）译名表；源文件在本地 `dict/raw/`（不提交）。`Allik Neverfar` 等缺全名仍待补。
+
+
 ## 关键结论（截至现在）
 
 - **读取英文站 wikitext**：已跑通。例：`Allik_Neverfar` 用
