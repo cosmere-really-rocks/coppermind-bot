@@ -135,9 +135,18 @@ def convert_wikitext(wikitext, rules):
                 report["collisions"].update(collisions)
                 new_nodes.append(mwparserfromhell.nodes.Text(raw))
                 continue
-            if name == "quote":
-                node.name = "Quote"
-                report["renamed"].append("quote->Quote")
+            # 简单模板改名（参数原样保留，中文站同名模板按原参数消费）
+            SIMPLE_RENAME = {
+                "quote": "Quote",
+                "image": "Image",
+                "img": "Image",
+                "rpg ref": "Rpg ref",
+                "rpgref": "Rpg ref",
+            }
+            rename = SIMPLE_RENAME.get(name.lower())
+            if rename and rename != name:
+                node.name = rename
+                report["renamed"].append(f"{name}->{rename}")
         new_nodes.append(node)
 
     code.nodes = new_nodes

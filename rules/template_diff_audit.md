@@ -68,8 +68,8 @@
 逐条 pageid 确认**不存在**：
 
 - **高频/必须处理**：
-  - `{{image}}`（246 次）——中文站无 `Template:Image`。**真实词条已出现失效的 `{{image}}` 红链**。可建的替代：`Template:Multiple image`(存在,949)、`Template:Wide image`(719)、`Template:Image link`(528) 都存在，选一承接，或新建 `Template:Image`。
-  - `{{rpg ref}}`（194 次）——中文站无 `Rpg ref` 变体。高引用模板，需建或映射到其他 ref 模板（wob/msh/epigraph ref 都有）。
+  - `{{image}}`（246 次）——✅ 已建 `Template:Image`（pageid3496，照英文 Template:Image，side/width/height/link 参数）。转换器 `{{image}}→{{Image}}`（参数原样）。
+  - `{{rpg ref}}`（194 次）——✅ 已建 `Template:Rpg ref`（pageid3495）+ `Template:Rpg book`（pageid3497，crpg 码→英文书名表，照英文 Template:B）。渲染：`''英文书名''，第 x 页`（页码译中文、书名英文原文）。转换器 `{{rpg ref}}→{{Rpg ref}}`（参数原样）。
 - **维护/特殊（建议搬运时删除，不照搬到新站）**：`update` `expand` `nosnippet` `demoted` `small caps` `cite note` `edit note` `meta/done` `meta/partial` `meta/stub` `rpg-canon` `user:fbstj/mb/writing` `wp ref` `sots ref` `tress` `coverToc` `FULLPAGENAME`(系统魔术字) —— 这些是英文站编辑维护用，不应上中文站。
 - **其他系列/低频**：`Rosharan date`/`rosharan date`（风暴光历）、`cosmere`、`summaries`、`Notice`、`Dialogue`、`Mistborn Era 1`/`Mistborn Era 2` —— 中文站无，需按需相应处理（Era 1/2 或改成 Navbox，Notice/Dialogue 改其他横幅）。
 
@@ -83,7 +83,7 @@
 ## 六、建议下一步（供定夺）
 
 1. **先解决 §三 的决策**：settlement/architecture/geography/nation/vehicle 是建模板还是用 `Infobox location` 承接（需用户拍板，影响最大）。
-2. **解决 §四 高频项**：建 `Template:Image` 或选 `Wide image` 承接 `{{image}}`；补 `Template:Rpg ref` 或映射到 ref 系。
+2. ✅ 已解决 §四 高频项：已建 `Template:Image`（承接 `{{image}}`）和 `Template:Rpg ref`+`Rpg book`（承接 `{{rpg ref}}`），转换器已接入；两者真实渲染验证通过。
 3. 按使用量把 §二 的 13 个 infobox 依次接入 `convert_templates.py`（先 settlement/business/architecture——一并解决 §三）。每个先读中文站模板 wikitext，产出 character 同款字段对照。
 4. §四 维护类在转换器中列为 `drop`（删除不搬运）。
 
