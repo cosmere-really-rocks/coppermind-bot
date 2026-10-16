@@ -54,7 +54,8 @@ def build_dst_template(name_map, tpl):
     cn_key_src = {}
 
     for p in tpl.params:
-        if p.showkey is None:
+        # 位置参数 showkey is False（命名参数是 True）；用 not 兼容 None
+        if not p.showkey:
             v = str(p.value).strip()
             if v:
                 unmapped.append(("__positional__", v))
@@ -117,6 +118,7 @@ def convert_wikitext(wikitext, rules):
         "missing_cn": [],
         "collisions": {},
         "renamed": [],
+        "quote_content": [],
     }
 
     new_nodes = []
@@ -127,6 +129,20 @@ def convert_wikitext(wikitext, rules):
             name = name.lstrip(":").strip()
             cfg = infobox.get(name.lower())
             if cfg is not None:
+                if cfg.get("simple_rename"):
+                    # 简单改名（如 quote）：位置参数按位置保留，仅改名。
+                    # 位置参数是内容（引文/说话者），不是待映射字段，不报 unmapped。
+                    # 引文不翻译、说话者可翻译——交给翻译阶段，这里只记录内容供提醒。
+                    node.name = cfg["dst_template"]
+                    report["renamed"].append(f"{name}->{cfg['dst_template']}")
+                    pos = [str(p.value).strip() for p in node.params
+                           if not p.showkey and str(p.value).strip()]
+                    report.setdefault("quote_content", []).append({
+                        "text_len": len(pos[0]) if pos else 0,
+                        "speaker": pos[1][:80] if len(pos) > 1 else None,
+                    })
+                    new_nodes.append(node)
+                    continue
                 raw, mapped, unmapped, collisions, missing_cn = build_dst_template(cfg, node)
                 src = cfg["src_template"]
                 report["converted"].setdefault(src, []).extend(mapped)

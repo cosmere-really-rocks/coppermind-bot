@@ -139,8 +139,9 @@
   "quote": {
     "src_template": "quote",
     "dst_template": "Quote",
+    "simple_rename": true,
     "field_map": {
-      "_说明": "quote 用位置参数1=内容、2=说话人，无需字段映射，按位置保留。"
+      "_说明": "quote 用位置参数1=内容、2=说话人，仅改名保留；内容不翻译、说话者可翻译（翻译阶段）。"
     }
   },
   "page_wrappers": {
