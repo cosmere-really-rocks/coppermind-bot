@@ -34,6 +34,21 @@
 - 时代二：`迷雾之子外传（全三卷）`（合订，含卷一执法镕金——此卷无中译单行本，只能从合订或 1-6 取）；另有 `外传 卷二 旧影森森 / 卷三 悲悼护腕`（单行本）。
 - 早期合订 `mistborn_chs_1_6.epub`（1~6）仍用于升华之井、并保留作备份（The Lost Metal 尚无中译）。
 
+**分章产物（`dict/epub_out/<book>/NNN_<chapter>.html`，中英按章对齐、本地不提交）**
+
+| 书 | EN 目录 | ZH 目录 | 章节数 EN/ZH |
+|---|---|---|---|
+| 时代一 卷一 | the_final_empire | zh_最后帝国 | 40 / 40 |
+| 时代一 卷二 | the_well_of_ascension | zh_升华之井 | 60 / 60 |
+| 时代一 卷三 | the_hero_of_ages | zh_永世英雄 | 84 / 84 |
+| 时代二 卷一 | the_alloy_of_law | zh_执法镕金 | 26 / 22（EN 多 4 篇报章插页）|
+| 时代二 卷二 | shadows_of_self | zh_旧影森森 | 28 / 28 |
+| 时代二 卷三 | the_bands_of_mourning | zh_悲悼护腕 | 34 / 34 |
+| 时代二 卷四 | the_lost_metal | （尚无中译） | 75 / — |
+| 时代 1.5 | secret_history | （尚无中译） | 33 / — |
+
+分章脚本：`scripts/extract_books.py`（一文件一章节的英文书）、`scripts/reconstruct_epub.py`（EN split 流 + 中文合订，含内嵌 `###` 标题拆分）；探针/中英同章对照用 `scripts/epub_prep.py`。
+
 **译名表**：`dict/mistborn.json` 为**全系列**（era1+era2）译名表；源文件在本地 `dict/raw/`（不提交）。`Allik Neverfar` 等缺全名仍待补。
 
 
