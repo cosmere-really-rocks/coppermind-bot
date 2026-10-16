@@ -129,7 +129,10 @@ API key 在 `.env`（已 gitignore，勿提交）。账号类凭据后续也放 
 ## 6. 保持 wikitext 格式，逐步积累格式转换工具
 - 翻译时**保持 wikitext 的格式**（模板、内链、引用标记等结构保留）。
 - 已知两侧模板**不完全一致**（如英文 `{{character}}` ↔ 中文 `{{Infobox character}}`，参数名/字段集都不同）。
-- 逐步积累「格式转换的 tool 或 skill」来解决模板差异（⬜ 待积累）。
+- 逐步积累「格式转换的 tool 或 skill」来解决模板差异。已接入 `rules/template_map.json`（大小写不敏感、一行一参数）：
+  - ✅ 已接入：`character`（完整）、及「通用映射批」`group`/`location`/`culture`/`item`/`literature`/`lifeform`/`food`/`magic`/`disease`（英文有值参数映射到中文对应字段，空值参数自动丢弃）。
+  - ⬜ 待接入：`business`/`book`（含多源碰撞归一，如 owner&founder→业主）、`metal`（中文为金属技艺专用模板，需单独定承载方式）、以及 settlement/architecture/geography/nation/vehicle（中文站缺 `Infobox X`，需建模板或承接）。
+  - 模板差异盘点见 `rules/template_diff_audit.md`、字段映射确认见 `rules/infobox_mapping.md`。
 
 ## 7. 每篇处理后：校验用到的 template 与 image 是否存在
 - bot **每处理完一个文件**，记录该文章**用到的 templates 和 images**。
@@ -267,7 +270,9 @@ coppermind/
 - 依赖：`.venv`（requests / cloudscraper / mwparserfromhell）。已实测。
 
 - **`scripts/convert_templates.py`**（Python，已跑通）：模板转换器 →
-  1. `{{character}}` → `{{Infobox character}}`，字段名按 `rules/template_map.json` 映射（**大小写不敏感**；一行一参数中文站风格）
+  1. 按 `rules/template_map.json` 的 `src_template` 驱动，把匹配的英文 infobox 转换为 `{{Infobox X}}`，字段名按 `field_map` 映射（**大小写不敏感**；一行一参数中文站风格；空值参数自动丢弃）
+     - 已支持：`character` + `group`/`location`/`culture`/`item`/`literature`/`lifeform`/`food`/`magic`/`disease`
+  2. `{{quote}}` → `{{Quote}}` 重命名
   2. `{{quote}}` → `{{Quote}}`
   3. 其余模板（`book ref`/`date`/`image`/`for`/`columns`/`partial`/`Mistborn`…）**中文站同名且参数兼容，直接复用不动**
   4. `--wrap`：组装页面级包装 `{{CmPermission|英文名}}`（顶）+ `{{en|英文名}}`（首部占位，翻译阶段移位）+ `{{ensync|revid}}`（结尾，revid 取自快照）——决议 10-12

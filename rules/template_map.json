@@ -40,26 +40,92 @@
       "introduced": "小说"
     },
     "drop_always": [
-      "unnamed", "merge-family", "hide-family", "hide-world", "image-artist", "earth",
-      "species-ref", "species-raw", "raw-species",
-      "birthplace-ref", "birthplace-raw", "raw-birthplace",
-      "residence-ref", "residence-raw", "raw-residence",
-      "ethnicity-ref", "ethnicity-raw", "raw-ethnicity",
-      "nation-ref", "nationality-ref", "nation-raw", "raw-nation",
-      "world-ref", "world-raw", "raw-world",
-      "#profession", "{profession"
+      "unnamed",
+      "merge-family",
+      "hide-family",
+      "hide-world",
+      "image-artist",
+      "earth",
+      "species-ref",
+      "species-raw",
+      "raw-species",
+      "birthplace-ref",
+      "birthplace-raw",
+      "raw-birthplace",
+      "residence-ref",
+      "residence-raw",
+      "raw-residence",
+      "ethnicity-ref",
+      "ethnicity-raw",
+      "raw-ethnicity",
+      "nation-ref",
+      "nationality-ref",
+      "nation-raw",
+      "raw-nation",
+      "world-ref",
+      "world-raw",
+      "raw-world",
+      "#profession",
+      "{profession"
     ],
     "_apostrophe_alias": "EN 的 'xxx 前导撇号参数（如 'residence / 'world）是真实值别名，与无撇号版同义。转换器会去掉前导撇号再按 field_map 查找（2025-10-15 修正：这些不是 ref，之前误列入 drop）。",
     "cn_only_fill_manually": {
       "_说明": "以下 CN 参数 EN character 模板无直接来源，翻译/人工阶段填充或留空。",
       "list": [
-        "图二", "图三", "图四", "原名", "发音", "发音文件", "其他译名", "昵称", "性别",
-        "死亡", "死亡地点", "文化", "语言", "发色", "瞳色", "肤色", "服饰", "饰品",
-        "武器", "工具", "坐骑", "服装", "阶职", "体系", "继承人", "儿子", "女儿",
-        "恋人", "好友", "仇敌", "上级", "下属", "师从", "学徒", "侍从", "城市", "大陆",
-        "漫画", "图画小说", "动画", "电影", "电视剧", "电子游戏", "桌上游戏",
-        "电影演员", "电视剧演员", "动画配音", "游戏配音", "extra1", "extra2", "extra3",
-        "extra4", "extra5", "图像信息"
+        "图二",
+        "图三",
+        "图四",
+        "原名",
+        "发音",
+        "发音文件",
+        "其他译名",
+        "昵称",
+        "性别",
+        "死亡",
+        "死亡地点",
+        "文化",
+        "语言",
+        "发色",
+        "瞳色",
+        "肤色",
+        "服饰",
+        "饰品",
+        "武器",
+        "工具",
+        "坐骑",
+        "服装",
+        "阶职",
+        "体系",
+        "继承人",
+        "儿子",
+        "女儿",
+        "恋人",
+        "好友",
+        "仇敌",
+        "上级",
+        "下属",
+        "师从",
+        "学徒",
+        "侍从",
+        "城市",
+        "大陆",
+        "漫画",
+        "图画小说",
+        "动画",
+        "电影",
+        "电视剧",
+        "电子游戏",
+        "桌上游戏",
+        "电影演员",
+        "电视剧演员",
+        "动画配音",
+        "游戏配音",
+        "extra1",
+        "extra2",
+        "extra3",
+        "extra4",
+        "extra5",
+        "图像信息"
       ]
     },
     "notes": {
@@ -100,5 +166,149 @@
         "note": "记录最后与英文站同步的版本号；依赖 {{en}} 已定义"
       }
     ]
+  },
+  "group": {
+    "src_template": "group",
+    "dst_template": "Infobox group",
+    "field_map": {
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型",
+      "founders": "组建者",
+      "leader": "领袖",
+      "leaders": "领袖",
+      "hq": "总部"
+    },
+    "drop_always": [
+      "era"
+    ],
+    "notes": "通用映射批；era 丢弃（CN group 无系列）。"
+  },
+  "location": {
+    "src_template": "location",
+    "dst_template": "Infobox location",
+    "field_map": {
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "city": "所属市县",
+      "region": "所属区域"
+    },
+    "drop_always": [
+      "map"
+    ],
+    "notes": "CN 有 45 参数字段，其余（神瑛/政体/气候等）留空人工。map 非位置字段丢弃。"
+  },
+  "culture": {
+    "src_template": "culture",
+    "dst_template": "Infobox culture",
+    "field_map": {
+      "image": "图像",
+      "name": "文化名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型",
+      "related": "关联"
+    },
+    "drop_always": [
+      "era"
+    ],
+    "notes": "通用映射批。"
+  },
+  "item": {
+    "src_template": "item",
+    "dst_template": "Infobox item",
+    "field_map": {
+      "image": "图像",
+      "name": "物品名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型",
+      "creator": "创造者",
+      "creators": "创造者",
+      "owner": "所有者",
+      "owners": "所有者",
+      "function": "用途"
+    },
+    "drop_always": [],
+    "notes": "creator/creators、owner/owners 均归创造者/所有者（碰撞）。"
+  },
+  "literature": {
+    "src_template": "literature",
+    "dst_template": "Infobox literature",
+    "field_map": {
+      "image": "图像",
+      "name": "文献名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型",
+      "author": "作者",
+      "era": "时期"
+    },
+    "drop_always": [],
+    "notes": "era 映射到 CN 时期。"
+  },
+  "lifeform": {
+    "src_template": "lifeform",
+    "dst_template": "Infobox lifeform",
+    "field_map": {
+      "image": "图像",
+      "name": "生物名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "种类"
+    },
+    "drop_always": [],
+    "notes": "type 映射到 CN 种类。"
+  },
+  "food": {
+    "src_template": "food",
+    "dst_template": "Infobox food",
+    "field_map": {
+      "image": "图像",
+      "name": "食品名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型"
+    },
+    "drop_always": [],
+    "notes": "通用映射批。"
+  },
+  "magic": {
+    "src_template": "magic",
+    "dst_template": "Infobox magic",
+    "field_map": {
+      "image": "图像",
+      "name": "魔法名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "related": "related",
+      "type": "type"
+    },
+    "drop_always": [],
+    "notes": "CN magic 模板保留英文参数 related/type/focus/prereq。"
+  },
+  "disease": {
+    "src_template": "disease",
+    "dst_template": "Infobox disease",
+    "field_map": {
+      "image": "图像",
+      "name": "疾病名",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型"
+    },
+    "drop_always": [],
+    "notes": "通用映射批。"
   }
 }

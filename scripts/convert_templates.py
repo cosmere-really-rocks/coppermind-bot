@@ -60,6 +60,9 @@ def build_dst_template(name_map, tpl):
         # 英文模板有前导撇号别名（如 'residence / 'world），与无撇号版同义，去掉撇号再查。
         lookup_key = key[1:] if key.startswith("'") else key
         val = str(p.value).strip()
+        # 空值参数不产出（英文模板常见 type=/name= 空占位，无信息量）
+        if not val:
+            continue
         keyl = lookup_key.lower()
         if keyl in drop_low:
             continue
@@ -83,33 +86,52 @@ def build_dst_template(name_map, tpl):
     return raw, mapped_ordered, unmapped, collisions
 
 
+def _collect_infobox_rules(rules):
+    """从 rules 收集所有 infobox 转换配置：{英文模板名(小写): config}。"""
+    by_name = {}
+    for key, cfg in rules.items():
+        if not isinstance(cfg, dict):
+            continue
+        src = cfg.get("src_template")
+        if src and cfg.get("dst_template"):
+            by_name[src.strip().lower()] = cfg
+    return by_name
+
+
 def convert_wikitext(wikitext, rules):
-    """返回 (converted_wikitext, report)。"""
+    """返回 (converted_wikitext, report)。
+
+    按 rules 里的 src_template 驱动：凡英文 infobox 模板名匹配即转换为对应
+    中文 {{Infobox X}}（字段映射见 field_map）。其它模板保留原样。
+    """
     code = mwparserfromhell.parse(wikitext)
+    infobox = _collect_infobox_rules(rules)
     report = {
-        "character": {"mapped": [], "unmapped": [], "collisions": {}},
+        "converted": {},
+        "unmapped": [],
+        "collisions": {},
         "renamed": [],
     }
 
     new_nodes = []
     for node in code.nodes:
-        if isinstance(node, mwparserfromhell.nodes.Template) and \
-           str(node.name).strip().lstrip("Template:").lstrip(":") == "character":
-            raw, mapped, unmapped, collisions = build_dst_template(rules["character"], node)
-            report["character"]["mapped"].extend(mapped)
-            report["character"]["unmapped"].extend(unmapped)
-            report["character"]["collisions"].update(collisions)
-            new_nodes.append(mwparserfromhell.nodes.Text(raw))
-        else:
-            new_nodes.append(node)
-
-    # 重命名 quote -> Quote（其余模板先不动）
-    for node in new_nodes:
         if isinstance(node, mwparserfromhell.nodes.Template):
-            n = str(node.name).strip()
-            if n == "quote":
+            # 注意：不能用 lstrip("Template:") —— lstrip 参数是字符集，会误剥开头的 l 等字符。
+            name = re.sub(r'^(?:Template|模板)\s*:', '', str(node.name).strip(), flags=re.IGNORECASE)
+            name = name.lstrip(":").strip()
+            cfg = infobox.get(name.lower())
+            if cfg is not None:
+                raw, mapped, unmapped, collisions = build_dst_template(cfg, node)
+                src = cfg["src_template"]
+                report["converted"].setdefault(src, []).extend(mapped)
+                report["unmapped"].extend([(src, k, v) for k, v in unmapped])
+                report["collisions"].update(collisions)
+                new_nodes.append(mwparserfromhell.nodes.Text(raw))
+                continue
+            if name == "quote":
                 node.name = "Quote"
                 report["renamed"].append("quote->Quote")
+        new_nodes.append(node)
 
     code.nodes = new_nodes
     converted = str(code)
