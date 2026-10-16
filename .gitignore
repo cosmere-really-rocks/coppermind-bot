@@ -7,6 +7,9 @@ en_snapshot/
 # 电子书（中英 epub）—— 受版权保护，只做本地处理，绝不提交
 dict/epub/
 
+# 译名表源文件 raw —— 本地数据，不提交
+dict/raw/
+
 # Python
 .venv/
 __pycache__/
