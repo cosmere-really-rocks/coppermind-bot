@@ -330,15 +330,29 @@ coppermind/
   .venv/bin/python scripts/batch.py --title X --write-target-prefix "BOT测试:"  # 写临时页验证
   ```
 
+- **`scripts/glossary_assist.py`**（Python，已跑通）：译名表补全的中英章节对齐定位工具（把「缺失专名→book ref →英书定位→中书采证」人工流程脚本化；可复用于自动翻译 `{{quote}}` 的定位阶段）→
+  - 解析词条基础名（去括号消歧：`Chip (constable)`→`Chip`）
+  - 出处：页面 `{{book ref|书码|章}}`（map/file ref 标为非正文，见 Finding D/E）；或纯词条模式跨书全书搜（人物全名首现，Finding A）
+  - 英书该章定位并高亮上下文；按中英章节对齐映射到中书同章给出「中文对照区」，供人工/LLM 采证官方中译
+  - 输出 JSON（`--json`）供后续自动补录/quote 翻译
+  ```bash
+  .venv/bin/python scripts/glossary_assist.py --page "Irongate River"          # 页面 book ref → 定位
+  .venv/bin/python scripts/glossary_assist.py --term "X" --book mb6 --chapter 21 # 指定书章
+  .venv/bin/python scripts/glossary_assist.py --term "Mycondwel" --all-hits     # 跨书/跨章搜
+  .venv/bin/python scripts/glossary_assist.py --term "X" --json                 # 机器可读
+  ```
+  依赖：stdlib；读取本地 `dict/epub_out/`（中英电子书已解包，不提交）。
+
 ---
 
 # 待办状态总览（更新）
 
 1. ✅ 英→中读取链路已通
 2. ✅ 中文站 bot 账号（水蛭一号，`verified` 认证用户）→ 登录 → 有效 CSRF token → `action=edit` 写入（2025-10-16 首次写入 `Allik Neverfar` 成功）
-3. ⬜ 拿到初始译名表（放 `dict/`）
+3. ✅ 译名表 `dict/mistborn.json`（819→821 条，书证采证中）；✅ 补全工具 `glossary_assist.py` 已可用（中英章节对齐定位，见 `rules/glossary_alignment.md` §1.1/1.2）→ 缺失专名可据此采证补入
 4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照）→ ✅ 已实现（`fetch_en.py`）
 5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ✅ 抓取落盘已实现（`fetch_en.py`）
 6. ✅ 样板词条 `Allik_Neverfar`：转换 + 译名表 + 映射表 + 翻译（`translate.py`）均已跑通并写入（2025-10-16 首次写入；2025-10-17 起 translate.py 自动产出，附 CmPermission/en/ensync 包装）
 7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则（黑名单含 File 命名空间不自动上传图片、Template 命名空间暂不搬运；图片引用文本照搬）
 8. ⬜ 批量写站前的**治理/人工 review**：图片黑名单、模板图片校验、redirect 搬运（`batch.py` 已能批量串联 fetch→translate→write，但正式批量跑某个分类/清单前需先定上述规则与范围，避免覆盖真实内容）
+9. ⬜ **译名表补全铺开**：用 `glossary_assist.py` 对缺失专名批量采证（优先可书证的正文词：地理/地点/宗教/货币等）；地图-only 或仅 tlm 无中译的词条标 pending 待补。本轮已示范 `Survivor→幸存者`、`Survivorism→幸存者教义`（悲悼护腕 mb6 ch12）

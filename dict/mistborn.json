@@ -4,8 +4,8 @@
     "en": "Mistborn Glossary",
     "source": "迷雾之子第二纪元名词表.xls + 《迷雾之子》名词表(1).xls + 迷雾名词对照表.docx",
     "source_sheet": "Glossary",
-    "entry_count": 819,
-    "updated": "2026-10-16",
+    "entry_count": 821,
+    "updated": "2026-10-17",
     "en_fixes": [],
     "notes": [
       "英文 key 保留原始大小写/拼写。",
@@ -14,7 +14,8 @@
       "内容为草稿，仍需逐条核对。",
       "覆盖为全系列（Era1+Era2）译名表；更名 mistborn_era2.json -> mistborn.json。",
       "用户口径覆盖：Marsh=沼泽（不同译者作品翻译不一，统一为沼泽）；Cosmere=三界宙。",
-      "时代二四部曲中文书名（用户提供）：执法镕金/旧影森森/悲悼护腕/失落金属。"
+      "时代二四部曲中文书名（用户提供）：执法镕金/旧影森森/悲悼护腕/失落金属。",
+      "Survivor/Survivorism 由 glossary_assist.py 定位并书证采证（悲悼护腕 mb6 ch12）。"
     ]
   },
   "terms": {
@@ -2729,6 +2730,14 @@
     "Wax's earring": {
       "zh": "耳环",
       "note": "执法镕金 ch3 等（瓦克斯戴的镕金血法耳环，助他与和谐通话；中译未成专名，仅作耳环）"
+    },
+    "Survivor": {
+      "zh": "幸存者",
+      "note": "凯西尔崇拜中「幸存者」这一宗教人物；悲悼护腕 mb6 ch12 幸存者教徒/幸存者像"
+    },
+    "Survivorism": {
+      "zh": "幸存者教义",
+      "note": "幸存者之教义/教派；悲悼护腕 mb6 ch12「幸存者教义讲求的不是赢到最后…」"
     }
   }
 }

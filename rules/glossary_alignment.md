@@ -21,6 +21,29 @@
 5. **核对一致性**：在多本/多章重复出现的，确认译名稳定（如 Irongate→铁门河在两本书一致）。
 6. **记入译名表**：`dict/mistborn.json` 的 `terms`，必要时加 `note` 说明词义/出处，消歧的词条靠 `note` 避免歧义。
 
+### 1.1 已脚本化：`scripts/glossary_assist.py`
+上面的 6 步已脚本化为 **`scripts/glossary_assist.py`**（可复用于自动翻译 `{{quote}}` 的定位阶段）。它自动：
+- 解析词条基础名（去括号消歧，如 `Chip (constable)`→`Chip`）；
+- 从页面 `{{book ref|书码|章}}` 取出处（`map/file ref` 标为非正文，见 Finding D/E）；或纯词条模式跨书全书搜（Finding A 人物全名首现）；
+- 在英书该章定位并显示高亮上下文；
+- 按中英章节对齐（mb5/mb6/era1 同文件序号；mb4/aol 按章节号且跳过报章插页）映射到中书同章，给出「中文对照区」供人工/LLM 采证官方中译；
+- 输出 JSON（`--json`）供后续自动补录/quote 翻译。
+
+用法：
+```bash
+.venv/bin/python scripts/glossary_assist.py --page "Irongate River"        # 取页面 book ref 定位
+.venv/bin/python scripts/glossary_assist.py --term "Allik Neverfar" --book mb6 --chapter 21
+.venv/bin/python scripts/glossary_assist.py --term "Mycondwel" --all-hits  # 跨书/跨章搜
+.venv/bin/python scripts/glossary_assist.py --term "X" --json              # 机器可读输出
+```
+验证样例（本轮）：`Irongate River→铁门河`（官方中译现于中文对照区内）、`Allik Neverfar`（全书扫证明仅 mb6 ch21 首现）、`Survivorism→幸存者教义`（悲悼护腕 mb6 ch12）、`Channerel Range/Mycondwel/Sea of Yomend→正文无命中`（地图/清单 only，如实报告待补）。
+
+### 1.2 补全原则（用户定稿）
+- **所有英文词条（含词条名本身）都应入译名表**：词条标题也是专名，写入 `terms`（如 `Sea of Yomend` 若可采证则入表；仅地图/无中译书则标 pending，见 Finding D）。
+- **消歧词条→基础名为 key，一词多义用 `note`/`variants` 区分**：如 `Chip (constable)` 释义并到 `Chip`（`variants[kind=constable]` 或在 `note` 说明），不另起 `Chip (constable)` key；`Red (Scadrial)`→`Red`。查找时先 `base_name()` 去括号。
+- 词条名缺官方中译但正文可采证（如 `Survivorism→幸存者教义`）→ 依 `glossary_assist.py` 定位的书证补入并加 `note`。
+
+
 ## 2. 已落地的验证样例（能力已跑通）
 | 词条（快照） | 实际英文名 | 类别 | 出处（ref） | 官方中译（书证） | 备注 |
 |---|---|---|---|---|---|
