@@ -4,7 +4,7 @@
     "en": "Mistborn Glossary",
     "source": "迷雾之子第二纪元名词表.xls + 《迷雾之子》名词表(1).xls + 迷雾名词对照表.docx",
     "source_sheet": "Glossary",
-    "entry_count": 591,
+    "entry_count": 769,
     "updated": "2026-10-16",
     "en_fixes": [],
     "notes": [
@@ -241,7 +241,8 @@
       "zh": "葛拉道队长"
     },
     "Carlo’s Bend": {
-      "zh": "卡罗湾"
+      "zh": "卡罗湾",
+      "note": "执法镕金 ch15（依蓝德盆地火车+运河交汇处）"
     },
     "Cazzi": {
       "zh": "卡西"
@@ -388,7 +389,19 @@
       "zh": "《深闇教义》"
     },
     "Demoux": {
-      "zh": "德穆"
+      "zh": "德穆",
+      "variants": [
+        {
+          "kind": "person",
+          "zh": "德穆"
+        },
+        {
+          "kind": "city",
+          "zh": null,
+          "pending": "tlm-untranslated"
+        }
+      ],
+      "note": "人物（前存留者/Originator）；同名城市 Demoux (city) 中译待 The Lost Metal（tlm）。"
     },
     "Demoux Promenade": {
       "zh": "德穆大道"
@@ -1039,7 +1052,17 @@
       "zh": "鲁里"
     },
     "Allik": {
-      "zh": "阿里克"
+      "zh": "亚历克",
+      "aliases": [
+        "阿里克"
+      ],
+      "renderings": [
+        {
+          "en": "Allik Neverfar, Tall One",
+          "zh": "高个子亚历克·奈弗法",
+          "note": "名+敬称整句"
+        }
+      ]
     },
     "Mailey": {
       "zh": "美蕾"
@@ -1132,7 +1155,8 @@
       "zh": "莫拉格"
     },
     "Nelazan": {
-      "zh": "奈拉禅"
+      "zh": "奈拉禅",
+      "note": "崇拜特雷的北方民族（最后帝国 ch9）"
     },
     "Wilhelmette": {
       "zh": "威尔海米特"
@@ -1204,7 +1228,8 @@
       "zh": "道徒"
     },
     "Peret the Black": {
-      "zh": "黑手佩瑞特"
+      "zh": "黑手佩瑞特",
+      "note": "执法镕金 ch9/旧影森森序章（白镴臂罪犯/强奸犯，瓦克斯首次缉拿；Peret the Black）"
     },
     "Pewter": {
       "zh": "白镴"
@@ -1594,7 +1619,8 @@
       "zh": "托林诺"
     },
     "Trell": {
-      "zh": "特雷"
+      "zh": "特雷",
+      "note": "神（独盟之化身）；宗教名 Trellism/Trelagism=特雷教."
     },
     "Tremredare": {
       "zh": "彻姆戴尔"
@@ -1790,6 +1816,719 @@
     },
     "Lost Metal": {
       "zh": "失落金属"
+    },
+    "Allik Neverfar": {
+      "zh": "亚历克·奈弗法"
+    },
+    "Red": {
+      "zh": "雷德",
+      "note": "Scadrial 依蓝德运河船夫（Shadows of Self ch5，与其它同名 Red 区别）"
+    },
+    "Irongate River": {
+      "zh": "铁门河",
+      "note": "依蓝德盆地主河（Shadows of Self ch18 / Bands of Mourning ch4）"
+    },
+    "Trellism": {
+      "zh": "特雷教",
+      "note": "时代二宗教（新 Trelagism）；官方中译与 Trelagism 同为「特雷教」"
+    },
+    "Trelagism": {
+      "zh": "特雷教",
+      "note": "时代一旧宗教（最后帝国 ch9，沙赛德）；官方中译与 Trellism 同为「特雷教」"
+    },
+    "Seran Range": {
+      "zh": "赛朗山脉",
+      "note": "悲悼护腕 ch22；Seran 全系列统一=赛朗"
+    },
+    "Seran River": {
+      "zh": "赛朗河",
+      "note": "悲悼护腕 ch7"
+    },
+    "Glimmering Point": {
+      "zh": "光点",
+      "note": "悲悼护腕 ch4（光点码头）"
+    },
+    "Stansel Belt": {
+      "zh": "斯坦瑟尔环路",
+      "note": "悲悼护腕 ch4（词条快照误引执法镕金，实证在悲悼护腕）"
+    },
+    "Elmsdel": {
+      "zh": "埃尔姆斯德尔",
+      "note": "悲悼护腕 ch31"
+    },
+    "Rashekin": {
+      "zh": "拉舍金",
+      "note": "悲悼护腕 epilogue"
+    },
+    "Wiestlow": {
+      "zh": "威斯特洛",
+      "note": "悲悼护腕 ch22；与中文站「维斯特洛」不同，以书为准"
+    },
+    "Doriel (city)": {
+      "zh": "多瑞尔",
+      "note": "悲悼护腕 ch5 中转站（城，与 David Demoux 人物区分）"
+    },
+    "Dashir boys": {
+      "zh": "达什尔兄弟",
+      "note": "旧影森森 ch2（暴徒兄弟）"
+    },
+    "Daughnin": {
+      "zh": "道格宁",
+      "note": "旧影森森 ch7（姓；正文仅见姓）"
+    },
+    "Dechamp": {
+      "zh": "迪察普",
+      "note": "悲悼护腕 ch12（墓地看守）"
+    },
+    "Dent": {
+      "zh": "登特",
+      "note": "悲悼护腕 ch4（老登特=Old Dent，路边摊贩）"
+    },
+    "Destra": {
+      "zh": "蒂斯特拉",
+      "note": "悲悼护腕 ch15"
+    },
+    "Devlin Airs": {
+      "zh": "德弗林·艾尔斯",
+      "note": "悲悼护腕 ch12/13（线人）"
+    },
+    "Dims": {
+      "zh": "迪姆斯",
+      "note": "旧影森森 ch5（哥特帮首领）"
+    },
+    "Donny": {
+      "zh": "唐尼",
+      "note": "悲悼护腕 ch9（夜街帮首领）"
+    },
+    "Donton": {
+      "zh": "丹顿",
+      "note": "旧影森森 ch18（公共事务部长）"
+    },
+    "Douglas Venture": {
+      "zh": "道格拉斯·泛图尔",
+      "note": "旧影森森 ch2（泛图尔家族）"
+    },
+    "Dowser Maline": {
+      "zh": "道瑟尔·马利纳",
+      "note": "旧影森森 ch5（走私犯）"
+    },
+    "Drapen": {
+      "zh": "德雷本",
+      "note": "悲悼护腕 ch2（第六八分区治安总长）"
+    },
+    "Drawers": {
+      "zh": "卓兹",
+      "note": "悲悼护腕 prologue（帮派成员）"
+    },
+    "Drewton": {
+      "zh": "德鲁顿",
+      "note": "悲悼护腕 ch1/7/9（瓦克斯男仆）"
+    },
+    "Drim": {
+      "zh": "德里穆",
+      "note": "旧影森森 ch9/12（因内特保镖）"
+    },
+    "Edip": {
+      "zh": "艾迪普",
+      "note": "旧影森森 ch3 / 悲悼护腕 ch4（一致）"
+    },
+    "Eliza Marin": {
+      "zh": "伊莉莎·马林",
+      "note": "悲悼护腕 ch13（墓碑）"
+    },
+    "Eriola": {
+      "zh": "埃利奥拉",
+      "note": "悲悼护腕 ch11（匿名银行家）"
+    },
+    "Evenstrom Tekiel": {
+      "zh": "伊凡史托姆·太齐尔",
+      "note": "执法镕金 ch16；太齐尔家族"
+    },
+    "Father Bin": {
+      "zh": "比恩神父",
+      "note": "旧影森森 ch2/12 幸存者教神父"
+    },
+    "Fed": {
+      "zh": "菲德",
+      "note": "悲悼护腕 ch29（Set 女 Skimmer）"
+    },
+    "Felise Demoux": {
+      "zh": "费丽思·德穆",
+      "note": "悲悼护腕 ch12；德穆队长=Captain Demoux（最后帝国 ch21）"
+    },
+    "Flog": {
+      "zh": "弗罗格",
+      "note": "旧影森森 ch1（温斯汀·伊纳特保镖）"
+    },
+    "Forch": {
+      "zh": "弗尔奇",
+      "note": "悲悼护腕 prologue（泰瑞司双生师）"
+    },
+    "Forgeron": {
+      "zh": "佛吉隆",
+      "note": "旧影森森 ch14（阿什韦瑟车行）"
+    },
+    "Granite Joe": {
+      "zh": "冷岩乔伊",
+      "note": "旧影森森 prologue（蛮苦之地罪犯；“冷岩”乔伊）"
+    },
+    "Guillian": {
+      "zh": "古维利安",
+      "note": "悲悼护腕 prologue（罪犯）"
+    },
+    "Halex": {
+      "zh": "哈莱克斯",
+      "note": "旧影森森 ch15（安抚之厅店主，Mistress Halex）"
+    },
+    "Hanlanaze": {
+      "zh": "汉拉纳泽",
+      "note": "旧影森森 ch9/10（数学家，Yennev Hanlanaze）"
+    },
+    "Harrisel Hard": {
+      "zh": "哈瑞瑟·哈德",
+      "note": "执法镕金 ch9（罪犯）"
+    },
+    "Herve": {
+      "zh": "赫维",
+      "note": "悲悼护腕 ch4/5/7（男仆）"
+    },
+    "Hinston Ladrian": {
+      "zh": "辛斯顿·拉德利安",
+      "note": "旧影森森 ch5 / 执法镕金 epilogue（已故；瓦克斯叔父）"
+    },
+    "Hughes Entrone": {
+      "zh": "休斯·恩特隆",
+      "note": "旧影森森 ch1（恩特隆族长表亲）"
+    },
+    "House Tekiel": {
+      "zh": "太齐尔家族",
+      "note": "执法镕金 ch16；另 Tekiel=太齐尔"
+    },
+    "New Seran": {
+      "zh": "新赛朗",
+      "note": "悲悼护腕（37 次）；Seran=赛朗统一"
+    },
+    "Dulsing": {
+      "zh": "道廷镇",
+      "note": "悲悼护腕 ch15/16/17/29（新赛朗东北农耕镇）"
+    },
+    "Ironstand": {
+      "zh": "铁岗镇",
+      "note": "悲悼护腕 ch8/9/15（铁=iron，岗=stand）"
+    },
+    "Thermoli": {
+      "zh": "瑟莫利",
+      "note": "旧影森森 ch9（外城村）；其余地图-only"
+    },
+    "Tathingdwel": {
+      "zh": "塔辛德维尔",
+      "note": "悲悼护腕 ch5（泰瑞司城）"
+    },
+    "The Village": {
+      "zh": null,
+      "note": "泰瑞司定居点昵称；中译随上下文为 村/村里/村子（旧影森森）/村寨（悲悼护腕 prologue），无专名",
+      "zh_variable": true,
+      "renders_note": "泰瑞司定居点昵称；中译随上下文：村/村里/村子（旧影森森 ch5/6），村寨（悲悼护腕 prologue）"
+    },
+    "Idashwy": {
+      "zh": "艾达希",
+      "note": "旧影森森 ch5/6（泰瑞司钢储师）"
+    },
+    "Irich": {
+      "zh": "艾里奇",
+      "note": "悲悼护腕 ch15/18（铬金制雾者，Set）"
+    },
+    "Isabaline Frellia": {
+      "zh": "伊萨巴琳·弗雷利亚",
+      "note": "旧影森森 ch4（罪犯）"
+    },
+    "Jackstom Harms": {
+      "zh": "哈姆斯",
+      "note": "执法镕金 ch2/7；正文仅见 Lord Harms=哈姆斯大人（哈姆斯家），史特芮丝之父"
+    },
+    "Javie": {
+      "zh": "雅维",
+      "note": "悲悼护腕 ch18（Set 工程师教授）"
+    },
+    "Javies": {
+      "zh": "贾维斯",
+      "note": "旧影森森 ch6（依蓝戴警察厅中尉）"
+    },
+    "Jendel": {
+      "zh": "詹德尔",
+      "note": "旧影森森 ch8（劳工）"
+    },
+    "Alernath": {
+      "zh": "亚勒纳斯",
+      "note": "《执法镕金》第四章：亚勒纳斯大人在吧台（Lord Alernath）；哈姆斯大人同侪，依蓝黛贵族"
+    },
+    "Allri Innate": {
+      "zh": "亚莉·因内特",
+      "note": "旧影森森 ch9（Lady Allri=亚莉贵女；夫姓因内特=Replar Innate）"
+    },
+    "Allriandre Durkel": {
+      "zh": "亚莉安德",
+      "note": "旧影森森 ch5（大学生；官译仅用名，无姓 Durkel 书证）"
+    },
+    "Ape Manton": {
+      "zh": "亚佩·曼顿",
+      "note": "旧影森森 ch2（罪犯）"
+    },
+    "Aramine": {
+      "zh": "亚拉敏（亚拉敏教授）",
+      "note": "执法镕金 ch7（依蓝黛大学教授，马拉西导师）"
+    },
+    "Arintol": {
+      "zh": "亚林托尔",
+      "note": "执法镕金 ch8（依蓝德律师）"
+    },
+    "Augustin Tekiel": {
+      "zh": "奥古斯丁·太齐尔",
+      "note": "执法镕金 ch3（太齐尔家族领主；走私铝案货主）"
+    },
+    "Aunt Gin": {
+      "zh": "金姨",
+      "note": "悲悼护腕 ch10/16（铜门旅店老板娘；Gin=金）"
+    },
+    "Aving Cett": {
+      "zh": "亚凡·塞特",
+      "note": "执法镕金 ch1（Lady Aving Cett=亚凡·塞特夫人；塞特宅邸女主人）"
+    },
+    "Bilmy": {
+      "zh": "比尔米",
+      "note": "悲悼护腕 ch12（坟场值日班管理员）"
+    },
+    "Blome": {
+      "zh": "布洛米",
+      "note": "旧影森森 ch1（温斯汀宅酒保，青铜Seeker）；ch4 遇害"
+    },
+    "Boris Junior": {
+      "zh": "小鲍里斯",
+      "note": "旧影森森 ch2（瓦克斯旧敌，外境人；Junior=小）"
+    },
+    "Boris the Third": {
+      "zh": "鲍里斯家的老三",
+      "note": "旧影森森 ch2（小鲍里斯的哥哥）"
+    },
+    "Burlow": {
+      "zh": "布罗",
+      "note": "执法镕金 ch13（老布罗=old Burlow，抗风镇老人）"
+    },
+    "Caberel": {
+      "zh": "卡贝雷尔",
+      "note": "旧影森森 ch5/7（治安队女中尉）"
+    },
+    "Chapaou": {
+      "zh": "查波欧",
+      "note": "旧影森森 ch14/15（灰侯车马行马车夫）"
+    },
+    "Chip": {
+      "zh": "奇普",
+      "note": "旧影森森 ch19（依蓝德治安队警员，射币Coinshot）"
+    },
+    "Claude Aradel": {
+      "zh": "克劳德·亚拉戴尔",
+      "note": "旧影森森 ch4（第四分区治安总长）/尾声（首位非贵族市长）"
+    },
+    "Cob": {
+      "zh": "科博",
+      "note": "悲悼护腕 ch1/3（拉德利安家依蓝戴车夫，小个子）"
+    },
+    "Daius": {
+      "zh": "戴尤斯",
+      "note": "执法镕金 尾声（高级检控官/律师）"
+    },
+    "Darm": {
+      "zh": "达尔姆",
+      "note": "旧影森森 ch1（温斯汀拍卖会枪战罪犯/宾客）"
+    },
+    "Darriance": {
+      "zh": "达李恩斯",
+      "note": "旧影森森 ch2（拉德里安庄园管家）"
+    },
+    "Johnst": {
+      "zh": "乔斯特",
+      "note": "旧影森森 ch14（炸水坝农民，被放血者取代）"
+    },
+    "Jone": {
+      "zh": "约恩",
+      "note": "旧影森森 ch14（Ashweather 车马行车夫）"
+    },
+    "Jordis": {
+      "zh": "约蒂丝",
+      "note": "悲悼护腕 ch29-31（南方玛尔维什飞船布伦斯特尔号女船长）"
+    },
+    "Joshin Yomen": {
+      "zh": "约辛·尤门",
+      "note": "执法镕金 ch4/9（尤门家族贵族；妻米歇尔贵女）"
+    },
+    "Kelesina Shores": {
+      "zh": "克雷西娜（夫人）",
+      "note": "悲悼护腕 ch12/13/15/16（新塞伦贵族女主人；正文未见姓Shores）"
+    },
+    "Lady Mulgrave": {
+      "zh": "马尔格雷夫贵女",
+      "note": "旧影森森 ch9（依蓝戴贵族女性，出席 ZoBell 派对）"
+    },
+    "Clotide": {
+      "zh": "克洛提德",
+      "note": "旧影森森 尾声（哈尔姆斯府血祸庆祝会上的仆人，换茶）"
+    },
+    "Kelesina Shores's steward": {
+      "zh": "管家助手",
+      "note": "悲悼护腕 ch14（泰瑞司女仆副宅务管家）；ch15-16作管家/女管家——原著无个人名，仅职务"
+    },
+    "Kip": {
+      "zh": "奇普",
+      "note": "执法镕金 ch2（拉德利安家年轻仆役，送信/递请柬）"
+    },
+    "Kwashim": {
+      "zh": "瓦什米",
+      "note": "悲悼护腕 序言（依蓝戴村寨泰瑞司叛逆少女，与弗尔奇/艾达希结伴）"
+    },
+    "Lady Farthing": {
+      "zh": "法斯廷夫人",
+      "note": "悲悼护腕 ch10（新赛朗女贵族；法斯廷宅邸遇袭；正文仅见 Farthing=法斯廷，称谓按Lady并入）"
+    },
+    "Lady Lentin": {
+      "zh": "朗坦贵女",
+      "note": "旧影森森 ch5（拍卖会枪击案首位遇害贵女）"
+    },
+    "Lady ZoBell": {
+      "zh": "佐贝尔夫人",
+      "note": "旧影森森 ch5/7（依兰戴尔高贵贵女，佐贝尔大楼主人；办政府春季晚宴）"
+    },
+    "Landre": {
+      "zh": "蓝德丽",
+      "note": "悲悼护腕 ch5（女仆，为史特芮丝铺床）"
+    },
+    "Larskpur": {
+      "zh": "拉斯科博",
+      "note": "旧影森森 ch12（道徒传教士，教堂血案被指认为凶手）"
+    },
+    "Lieutenant Ahlstrom": {
+      "zh": "奥司托姆中尉",
+      "note": "旧影森森 ch5（依蓝戴第四区警员）"
+    },
+    "Lord Barrington": {
+      "zh": "巴灵顿大人",
+      "note": "旧影森森 ch14（城中最常见路行马车承袭其名=巴灵顿）"
+    },
+    "Lord Erikell": {
+      "zh": "艾瑞凯家族的族长",
+      "note": "旧影森森 ch9（ZoBell 宴会，与市长交谈；Erikell=艾瑞凯）"
+    },
+    "Lord Steming": {
+      "zh": "史苔明大人",
+      "note": "悲悼护腕 ch2（婚礼上水塔倾倒时跌伤头部者）"
+    },
+    "Lord Stenet": {
+      "zh": "史提内特领主",
+      "note": "旧影森森 ch9（依蓝戴贵族，宴会与瓦克斯谈婚事）"
+    },
+    "Marthin": {
+      "zh": "玛尔辛",
+      "note": "执法镕金 ch5（佩特鲁斯大人之妻，矮胖女人）"
+    },
+    "Maurin": {
+      "zh": "莫林",
+      "note": "悲悼护腕 ch19（苔尔辛前未婚夫）"
+    },
+    "Mereline": {
+      "zh": "梅丽妮",
+      "note": "旧影森森 ch19（伊蓝德城警局中尉，金短发女人）"
+    },
+    "Marasi Colms": {
+      "zh": "玛拉茜·科尔姆斯",
+      "note": "官方中译全名（旧影森森 ch13 等）；单名 Marasi=玛拉茜"
+    },
+    "Chip Erikell": {
+      "zh": "奇普·艾瑞凯",
+      "note": "旧影森森 ch16（艾瑞凯家族成员，第三八分区走私嫌犯，温斯汀拍卖会遇害；Wax 认尸）"
+    },
+    "Cimines": {
+      "zh": "西米尼斯",
+      "note": "悲悼护腕 ch10（学者；做过警察与鲨鱼比较的社会学研究；Lord Cimines=西米尼斯大人）"
+    },
+    "Madam Penfor": {
+      "zh": "潘弗尔夫人",
+      "note": "旧影森森 ch5（帕莎顿楼女生宿舍舍监）"
+    },
+    "Maindew": {
+      "zh": "曼迪尤",
+      "note": "旧影森森 ch5（依蓝德治安队下士，爱敬礼）"
+    },
+    "Marksman": {
+      "zh": "神射手",
+      "note": "旧影森森 ch2（银行劫匪，别名 Marks；抢劫第一联合银行；射币Coinshot，与Set有关）"
+    },
+    "Brettin": {
+      "zh": "布雷廷",
+      "note": "执法镕金 ch6/8/20（第四八分区警队负责人，后身故被 TenSoon 假冒）"
+    },
+    "Mi'chelle Yomen": {
+      "zh": "米歇尔贵女",
+      "note": "执法镕金 ch4（约辛大人的婚宴新娘，约敏庄园女主）"
+    },
+    "Migs": {
+      "zh": "米格斯",
+      "note": "悲悼护腕 序章（伊蓝德尔匪帮头目）"
+    },
+    "Miklin": {
+      "zh": "米科林",
+      "note": "旧影森森 ch14（第四分区档案室警官，雷迪挚友）"
+    },
+    "Mirabell": {
+      "zh": "米拉贝尔",
+      "note": "旧影森森 ch6（统计/心理学家，米拉贝尔规则）"
+    },
+    "Misra": {
+      "zh": "米斯卡",
+      "note": "旧影森森 ch19（拉奈特的前女友）"
+    },
+    "Modicarm": {
+      "zh": "摩迪卡（教授）",
+      "note": "执法镕金 ch7（依蓝戴大学教授，马丽茜之师）"
+    },
+    "Hutchen": {
+      "zh": "哈特森",
+      "note": "悲悼护腕 ch9（瓦克斯讽刺语：哈特森富人家门前的牛奶；'富人'为Mrs.意译）"
+    },
+    "Murnbru": {
+      "zh": "蒙布鲁",
+      "note": "执法镕金 ch15（蒙布鲁医生，为瓦克斯写心理分析报告）"
+    },
+    "Nikolin": {
+      "zh": "尼寇林",
+      "note": "旧影森森 ch8（求贷买新船的富裕银行客户；尼寇林大人）"
+    },
+    "Paclo": {
+      "zh": "帕克罗",
+      "note": "执法镕金 ch15（尘染者帕克罗=Paclo the Dusty，瓦克斯旧副手）"
+    },
+    "Peterus": {
+      "zh": "佩特鲁斯（大人）",
+      "note": "执法镕金 ch5（第八警卫队退休队长，婚宴上率先抗匪）"
+    },
+    "Remmingtel Tarcsel": {
+      "zh": "雷鸣特·塔瑟尔",
+      "note": "旧影森森 ch6/10（发明家塔瑟尔，索菲之父）"
+    },
+    "Replar Innate": {
+      "zh": "雷普拉·因内特",
+      "note": "旧影森森 ch26（艾兰德尔前总督，被帕尔姆杀害冒充）"
+    },
+    "Rick Stranger": {
+      "zh": "里克·斯特朗格",
+      "note": "旧影森森 ch2（瓦克斯追捕过的罪犯）"
+    },
+    "Rusko": {
+      "zh": "卢斯科",
+      "note": "旧影森森 序章（The Weeping Bull 酒馆老板）"
+    },
+    "Burl": {
+      "zh": "玻尔",
+      "note": "悲悼护腕 ch15（青铜镕金术师/Seeker，受雇克雷西娜；探查派对中的镕金术师）"
+    },
+    "Pars": {
+      "zh": "帕尔斯",
+      "note": "执法镕金 ch13（'死人'帕尔斯=Pars the Deadman，瓦克斯在抗风镇缉拿的杀人犯）"
+    },
+    "ReLuur": {
+      "zh": "雷鲁尔",
+      "note": "悲悼护腕 ch3（第三代坎得拉；寻找悲悼护腕，被夺尖钉发疯）"
+    },
+    "Rame Maldor": {
+      "zh": "拉梅·摩尔多",
+      "note": "旧影森森 ch9（科学家；韦恩伪装汉拉纳泽时与其攀谈，希根斯效果）"
+    },
+    "Razal": {
+      "zh": "拉扎尔",
+      "note": "旧影森森 ch5（村中泰瑞司壮汉/白镴臂）"
+    },
+    "Remin": {
+      "zh": "雷敏贵女",
+      "note": "旧影森森 ch9（Lady Remin，ZoBell 派对上的贵族女性；戒指掉进酒杯）"
+    },
+    "Rian": {
+      "zh": "利恩",
+      "note": "旧影森森 ch7（Set 同伙/被拘押嫌犯；预言放血者会杀因内特）"
+    },
+    "Blue": {
+      "zh": "布卢",
+      "note": "旧影森森 ch13（伊蓝戴酒吧守卫；韦恩的打招呼对象；是代号还是本名不明）"
+    },
+    "Bookers": {
+      "zh": "布克斯",
+      "note": "旧影森森 ch9（Lord Bookers=布克斯领主，无聊的贵族）"
+    },
+    "Shayna": {
+      "zh": "沙伊娜贵女",
+      "note": "旧影森森 ch9（ZoBell 派对贵妇，市长因内特的政治支持者）"
+    },
+    "Shewrman": {
+      "zh": "修尔曼大人",
+      "note": "执法镕金 ch4（臭名昭著的宴会宾客）"
+    },
+    "Slink": {
+      "zh": "斯灵克",
+      "note": "悲悼护腕 序章（米格斯帮派成员）"
+    },
+    "Sophi Tarcsel": {
+      "zh": "索菲·塔瑟尔",
+      "note": "旧影森森 ch6/悲悼护腕 ch23（发明家塔瑟尔之女；创立塔瑟尔电力公司）"
+    },
+    "Spook": {
+      "zh": "鬼影",
+      "note": "升华之井 ch6/永世英雄 ch23（凯尔西小队成员，眼亮者；真名 Lestibournes），后成迷雾统领"
+    },
+    "Stanoux": {
+      "zh": "斯塔诺克斯",
+      "note": "悲悼护腕 ch18（语言学家，精通前葱郁时代古语；Set 成员）"
+    },
+    "Stansi": {
+      "zh": "斯塔恩希",
+      "note": "悲悼护腕 ch18（Lady Stansi，Set 组织工程师，斯坦诺克斯之侄女）"
+    },
+    "Stanton": {
+      "zh": "斯坦顿大人",
+      "note": "执法镕金 ch1（依蓝戴贵族家族之主）"
+    },
+    "Steris Harms": {
+      "zh": "史特芮丝·哈姆斯",
+      "note": "执法镕金 ch2（哈姆斯之女；瓦克斯利姆之妻）；正文多以单名史特芮丝"
+    },
+    "Svel": {
+      "zh": "斯威厄",
+      "note": "悲悼护腕 ch22（布伦斯特尔号南蛮船员，艾力克同伴；两处译名斯威尔/斯威厄，取主译）"
+    },
+    "Tarson": {
+      "zh": "塔森",
+      "note": "执法镕金 ch5-19（隐匪副首领，铬金狂，Koloss 血统；婚礼劫持马拉茜）"
+    },
+    "Taudr": {
+      "zh": "陶蒂尔",
+      "note": "旧影森森 ch14（依蓝戴警察局瘦高个女巡警）"
+    },
+    "Tellingdwar": {
+      "zh": "泰林德瓦",
+      "note": "悲悼护腕 序言（依蓝戴村寨泰瑞司长者/教师）"
+    },
+    "Telsin Ladrian": {
+      "zh": "苔尔辛",
+      "note": "悲悼护腕/执法镕金（瓦克斯利姆之妹，Set 高层；代号序夫人）"
+    },
+    "Tim Vashin": {
+      "zh": "蒂姆·瓦辛",
+      "note": "旧影森森 ch5（发明家/实业家，让汽车降价普及）"
+    },
+    "Tindwyl Ladrian": {
+      "zh": "廷朵·拉德利安",
+      "note": "名 Tindwyl 来自历史守护者廷朵（升华之井 ch14）；姓氏拉德利安；本人仅在 tlm"
+    },
+    "Vwafendal": {
+      "zh": "瓦范达尔",
+      "note": "旧影森森 ch5（瓦范达尔长者）/悲悼护腕序章（瓦范达尔祖母）；泰瑞司席诺德长老，瓦克斯与苔尔辛外祖母"
+    },
+    "Waxillium Ladrian": {
+      "zh": "瓦克斯利姆·拉德利安",
+      "note": "执法镕金序章/ch1（拉德利安第十六任至高领主，孪生师/Crasher）；常简作瓦克斯"
+    },
+    "Wells": {
+      "zh": "威尔斯",
+      "note": "旧影森森 ch6（伊兰德尔警察局警员，威尔斯警员）"
+    },
+    "Westweather Cett": {
+      "zh": "韦斯特维泽·塞特大人",
+      "note": "悲悼护腕 ch11（塞特家族财富继承人；打破瓦克斯鼻子的矮个）"
+    },
+    "Winsting Innate": {
+      "zh": "温斯汀（大人）",
+      "note": "旧影森森 ch1-17（依蓝戴参议员，煽动者镕金术师，因内特族长；拍卖会被杀）"
+    },
+    "Tathed": {
+      "zh": "塔瑟德",
+      "note": "悲悼护腕 序言（依蓝戴村寨泰瑞司人；向瓦范达尔祖母打听火患危机）"
+    },
+    "Templeton Fig": {
+      "zh": "坦普尔顿",
+      "note": "悲悼护腕 ch15（新赛朗公墓经理，Set 成员；蒂斯特拉来访一场；正文只以名坦普尔顿出现，姓Fig未用）"
+    },
+    "Valette Entrone": {
+      "zh": "法蕾特·恩特隆",
+      "note": "悲悼护腕 ch12（嫁给他人联姻；瓦克斯旧相好）；Entrone=恩特隆"
+    },
+    "Petrine": {
+      "zh": "佩崔恩",
+      "note": "悲悼护腕 ch29（布伦斯特尔号总工程师，年纪最长的船员，年过六旬；Jordis 跪在其旁）"
+    },
+    "Counselor's Cup": {
+      "zh": "康瑟乐酒馆",
+      "note": "旧影森森 ch11（艾顿大道上的酒馆）"
+    },
+    "Eastbridge": {
+      "zh": "东桥",
+      "note": "旧影森森 ch18/24（横跨铁门河的巨大吊桥，依蓝戴市）"
+    },
+    "Elendel University": {
+      "zh": "依蓝戴大学",
+      "note": "旧影森森 ch5（Elendel=依蓝戴；帕莎顿楼所在）"
+    },
+    "Farthing Mansion": {
+      "zh": "法斯廷宅邸",
+      "note": "悲悼护腕 ch10（法辛夫人宅邸，三层石砌）"
+    },
+    "Feder Tower": {
+      "zh": "费德大楼",
+      "note": "旧影森森 ch12（伊蓝戴尔摩天大楼；瓦克斯藏哈姆斯于顶层）"
+    },
+    "First Central Bank": {
+      "zh": "第一中央银行",
+      "note": "旧影森森 ch8（拉德里安家族在依蓝戴的银行）"
+    },
+    "First Insurance Bank": {
+      "zh": "第一银行",
+      "note": "旧影森森 ch12（官方中译省略 Insurance 一词）"
+    },
+    "First Union Bank": {
+      "zh": "第一联合银行",
+      "note": "旧影森森 ch2（被神射手抢劫的银行）"
+    },
+    "Ironspine Building": {
+      "zh": "铁脊大楼",
+      "note": "执法镕金 ch1/3/17/18（未完工摩天楼，与太齐尔塔竞高）"
+    },
+    "Rousseau's": {
+      "zh": "鲁索鞋店",
+      "note": "旧影森森 ch12（第三八分区尤门大道鞋店）"
+    },
+    "Sovereign's temple": {
+      "zh": "君主神殿",
+      "note": "悲悼护腕 ch21（存放悲悼护腕的山中神殿）"
+    },
+    "Tekiel Tower": {
+      "zh": "太齐尔塔",
+      "note": "执法镕金 ch1/17（财务区未完工摩天楼；House Tekiel=太齐尔家）"
+    },
+    "Elendel": {
+      "zh": "依蓝戴",
+      "note": "官方中译（执法镕金/旧影森森/悲悼护腕全书146处一致=依蓝戴）；源表 Elendel City=伊兰黛尔市 为旧非官方写法，以书证为准"
+    },
+    "Coolerim Playhouse": {
+      "zh": "库勒里姆剧院",
+      "note": "执法镕金 ch2（伊蓝戴知名剧院；遭隐匪抢劫；常简作库勒里姆）"
+    },
+    "National Archives": {
+      "zh": "国家档案馆",
+      "note": "旧影森森（第二八分区警察在门口台阶集合）"
+    },
+    "Yomen Manor": {
+      "zh": "尤门宅邸",
+      "note": "执法镕金（尤门家族宅邸；婚礼/厨房问话场景）；Yomen=尤门"
+    },
+    "ZoBell Tower": {
+      "zh": "佐贝尔大楼",
+      "note": "旧影森森（二十几层摩天楼，顶层阁楼为 Lady ZoBell 宅邸）；ZoBell=佐贝尔"
     }
   }
 }

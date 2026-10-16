@@ -49,7 +49,7 @@
 
 分章脚本：`scripts/extract_books.py`（一文件一章节的英文书）、`scripts/reconstruct_epub.py`（EN split 流 + 中文合订，含内嵌 `###` 标题拆分）；探针/中英同章对照用 `scripts/epub_prep.py`。
 
-**译名表**：`dict/mistborn.json` 为**全系列**（era1+era2）译名表；源文件在本地 `dict/raw/`（不提交）。`Allik Neverfar` 等缺全名仍待补。
+**译名表**：`dict/mistborn.json` 为**全系列**（era1+era2）译名表；源文件在本地 `dict/raw/`（不提交）。补全方法见 `rules/glossary_alignment.md`（中英章节对齐，以官方中译本），数据模型含 `renderings`（长语块）/`variants`（同名多义）/`zh_variable`（无固定译名）三可选字段（迁移脚本 `scripts/glossary_migrate.py`）。2025-10-16 已落地约 60 条书证译名（人物/地理/地点/定居点/宗教，见 rules doc）。
 
 
 ## 关键结论（截至现在）
@@ -73,6 +73,21 @@
 1. ✅ 英→中读取链路已通
 2. ✅ 中文站 bot 账号（水蛭一号，`verified`）→ 登录 → 有效 CSRF token → `action=edit` 写入（2025-10-16 已跑通）
 3. ✅ 翻译 `Allik_Neverfar` 词条并贴回中文站（测试写入成功，页面 [Allik Neverfar](https://coppermind.huijiwiki.com/wiki/Allik_Neverfar)）
+
+### 译名表补全（glossary alignment，方法见 `rules/glossary_alignment.md`）
+待办按优先级：
+- ✅ 数据模型扩展已定稿并落地：`renderings`（长语块替换，如 "Allik Neverfar, Tall One"↔"高个子亚历克·奈弗法"，见 `Allik`）+ `variants`（同名多义义项，如 Demoux=人物/城市）+ `zh_variable`（无固定专名，如 The Village），迁移脚本 `scripts/glossary_migrate.py`（已跑）。
+- ✅ 批量补全：人物 → 地理/地点/建筑 → 歧义词条已铺开并完成 era2 可采证条目（~118 条，含主要人物 Waxillium/Spook/Steris/Telsin 等，见 `rules/glossary_alignment.md` 第 2 节批记录）。不可采证的（仅 tlm 无中译、报章插页被省略、正文匿名/编造名）已归入 pending。
+- ✅ 整理「仅出现于失落金属(tlm)」词条清单（94 条 + mixed 58，见 `rules/glossary_alignment.md` §7），待 tlm 中译出版后补。
+- ✅ 补全后回填 `rules/*.md` 并提交译名表（本轮已提交）。
+
+### 已落地书证译名（`dict/mistborn.json`，2025-10-16，全表 769 条，含 182 条带书证 note）
+- Allik Neverfar = 亚历克·奈弗法；Allik = 亚历克（别名 阿里克）
+- Red（依蓝德运河船夫）= 雷德
+- Irongate River = 铁门河
+- Carlo’s Bend = 卡罗湾（已有，书证核验）
+- Trell（神）= 特雷；Trellism / Trelagism（宗教，官方中译合并）= 特雷教；Nelazan = 奈拉禅
+- Spook=鬼影、Waxillium Ladrian=瓦克斯利姆·拉德利安、Steris Harms=史特芮丝·哈姆斯、Telsin Ladrian=苔尔辛、Marasi Colms=玛拉茜·科尔姆斯、Elendel=依蓝戴（书证146处一致，修正源表伊兰黛尔市） 等，完整批记录见 `rules/glossary_alignment.md` §2。
 
 ## 凭据
 
