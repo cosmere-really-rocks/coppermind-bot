@@ -17,9 +17,10 @@
 - **读取英文站 wikitext**：已跑通。例：`Allik_Neverfar` 用
   `GET /w/api.php?action=query&prop=revisions&rvprop=content&titles=<标题>` 拿到 7830 字符完整 wikitext（含 `{{character}}`/`{{quote}}`/`{{date}}`/`{{book ref}}`/`[[内链]]`）。
 - **读取中文站**：已跑通，需 `X-authkey` 头走 `api.php`（否则 Cloudflare 403）。
-- **中文站写入（edit/创建）**：❌ **尚未打通**。当前 authkey 只给读取权限（匿名、rights=0），拿到的 CSRF token 是无效 `+\`。
-  - 写操作需要**已登录用户的 CSRF token**（`action=edit` 前先 `meta=tokens&type=csrf`）。
-  - 中文站 `action=login` API 可用（login token 能取到，未被拦截），需要 **bot 账号（用户+密码）** 才能登录拿有效 token。
+- **中文站写入（edit/创建）**：✅ **已打通**（2025-10-16 首次写入 `Allik Neverfar` 成功，newrevid 16679）。
+  - 写操作需要**已登录 bot 账号的有效 CSRF token**（`action=edit` 前先 `meta=tokens&type=csrf`）。
+  - 关键门槛：即使登录拿到的 CSRF 有效，**账号还必须属于「认证用户」(`verified`) 或「职员」(`staff`) 群组**才拥有 `edit` 权，否则 `action=edit` 会报 `permissiondenied`（仅限认证用户/职员）。`水蛭一号` 认证手机号后进入 `verified` 群组，才获得 `edit` 权。
+  - 判断是否认证：登录会话（`userinfo&uiprop=groups`）里 `groups` 含 `verified` 即有编辑权；匿名/未登录 `allusers` 列表不显示该平台级群组。
 - Cloudflare：英文站用 cloudscraper（TLS 指纹伪装）可过；中文站**必须**带 `X-authkey`，否则 API 层也被 403 拦。
 
 ## 技术方案
@@ -30,8 +31,8 @@
 ## 下一步（待办）
 
 1. ✅ 英→中读取链路已通
-2. ⬜ 拿到中文站 bot 账号（用户+密码）→ 登录 → 拿有效 CSRF token → `action=edit` 写入
-3. ⬜ 翻译 `Allik_Neverfar` 词条并贴回中文站
+2. ✅ 中文站 bot 账号（水蛭一号，`verified`）→ 登录 → 有效 CSRF token → `action=edit` 写入（2025-10-16 已跑通）
+3. ✅ 翻译 `Allik_Neverfar` 词条并贴回中文站（测试写入成功，页面 [Allik Neverfar](https://coppermind.huijiwiki.com/wiki/Allik_Neverfar)）
 
 ## 凭据
 
@@ -225,9 +226,9 @@ coppermind/
 # 待办状态总览（更新）
 
 1. ✅ 英→中读取链路已通
-2. ⬜ 中文站 bot 账号（用户+密码）→ 登录 → 有效 CSRF token → `action=edit` 写入
+2. ✅ 中文站 bot 账号（水蛭一号，`verified` 认证用户）→ 登录 → 有效 CSRF token → `action=edit` 写入（2025-10-16 首次写入 `Allik Neverfar` 成功）
 3. ⬜ 拿到初始译名表（放 `dict/`）
 4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照）→ ✅ 已实现（`fetch_en.py`）
 5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ✅ 抓取落盘已实现（`fetch_en.py`）
-6. ⬜ 从 `Allik_Neverfar` 起步做样板词条：转换 + 译名表 + 映射表，用户 review 后再写站
+6. ⬜ 从 `Allik_Neverfar` 起步做样板词条：转换 + 译名表 + 映射表，用户 review 后再写站（⚠️ 已测试写入，待 review 图片黑名单/包装等）
 7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则
