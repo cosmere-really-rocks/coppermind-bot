@@ -165,30 +165,62 @@ def _sub_glossary_in_string(value: str, gloss: dict) -> str:
     return out
 
 
+def _find_infobox_block(text: str, start: int) -> int:
+    """从 text[start]（'{{'）平衡花括号找模板结束位置。返回闭合 '}}' 后的位置；失败 -1。"""
+    depth = 0
+    i = start
+    n = len(text)
+    while i < n:
+        if text.startswith("{{", i):
+            depth += 1
+            i += 2
+        elif text.startswith("}}", i):
+            depth -= 1
+            i += 2
+            if depth == 0:
+                return i
+        else:
+            i += 1
+    return -1
+
+
 def translate_infobox_values(wikitext: str, glossary: dict) -> dict:
     """把 wikitext 开头 {{Infobox X ...}} 里各命名参数的值按译名表翻译。
 
-    返回 (modified_wikitext, 替换统计 {EN: (原文值→新值)} )。
-    只改 Infobox；不改任何参数名；无译名的不动。
+    返回 (modified_wikitext, 替换统计 {参数名: (原文值→新值)} )。
+    - 只改 Infobox；不改任何参数名；无译名的不动。
+    - 逐行处理（convert_templates.py 输出为一行一参数 `| 键    = 值`），
+      精确保留每行格式，避免 mwparserfromhell 重序列化把多行 Infobox 压成一行。
     """
-    code = mwparserfromhell.parse(wikitext)
+    m = re.search(r"\{\{Infobox\b", wikitext, re.IGNORECASE)
+    if not m:
+        return wikitext, {}
+    start = m.start()
+    end = _find_infobox_block(wikitext, start)
+    if end < 0:
+        return wikitext, {}
+
+    block = wikitext[start:end]
     stats = {}
-    for node in code.nodes:
-        if not isinstance(node, mwparserfromhell.nodes.Template):
-            continue
-        name = re.sub(r"^(?:Template|模板)\s*:", "", str(node.name).strip(), flags=re.IGNORECASE)
-        if not name.lower().startswith("infobox"):
-            continue
-        for p in node.params:
-            if not p.showkey:
-                continue
-            val = str(p.value)
+    out_lines = []
+    param_re = re.compile(r"^(\|\s*[^|=]+\s*=\s*)(.*)$")
+    for ln in block.split("\n"):
+        pm = param_re.match(ln)
+        if pm:
+            key = pm.group(1)
+            val = pm.group(2)
+            # 值内部若还藏着未闭合等价的子模板（如图片），跳过该行
             new_val = _sub_glossary_in_string(val, glossary)
             if new_val != val:
-                stats.setdefault(str(p.name).strip(), (val, new_val))
-                p.value = new_val
-        break  # 只处理首个（文首 infobox）
-    return str(code), stats
+                param_name = key.strip().lstrip("|").strip()
+                stats[param_name] = (val, new_val)
+                out_lines.append(key + new_val)
+            else:
+                out_lines.append(ln)
+        else:
+            out_lines.append(ln)
+    new_block = "\n".join(out_lines)
+    return wikitext[:start] + new_block + wikitext[end:], stats
 
 
 # --------------------------------------------------------------------------- #

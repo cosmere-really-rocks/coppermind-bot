@@ -305,6 +305,31 @@ coppermind/
   ```
   依赖：stdlib（`urllib`/`json`/`re`/`dataclasses`）+ `mwparserfromhell`；不需要额外 LLM 客户端库。
 
+- **`scripts/write.py`**（Python，已跑通）：写站管道，把 `translation.json` 写回中文站 →
+  - 读 `.env`（`HUIJI_WIKI`/`HUIJI_API_KEY`/`HUIJI_BOT_USER`/`HUIJI_BOT_PASS`）→ `login`（logintoken）→ CSRF → `action=edit`（bot 标记）
+  - 权限要求：账号须在中文站 `verified`（认证用户）或 `staff` 群组才有 edit 权，否则 `permissiondenied`
+  - `--dry-run`（登录+CSRF，只打印载荷不写）/ `--skip-if-same`（目标页 ensync revid 与 meta.revision_id 相同则跳过，决议#3 增量去重）/ `--target`（指定中文页标题，默认 meta.title_en）
+  - 端到端已验：真实写页成功（newrevid 返回）、读回校验内容、skip-if-same 判重生效
+  ```bash
+  .venv/bin/python scripts/write.py --title <标题>                 # 写回（目标=meta.title_en）
+  .venv/bin/python scripts/write.py --title <标题> --dry-run        # 预演
+  .venv/bin/python scripts/write.py --title <标题> --skip-if-same   # 增量：已同 revid 则跳过
+  ```
+  依赖：仅 stdlib（urllib/http.cookiejar/re/json）。
+
+- **`scripts/batch.py`**（Python，已跑通）：批量管道，串联 **fetch→convert+translate→write** →
+  - 编排脚本：逐页以子进程调用 `fetch_en.py`/`translate.py`/`write.py`（复用已验证逻辑，不做阶段复制）；支持并发标题
+  - `--titles <清单文件>`（每行一标题）/ `--title`（可多次）/ `--all`（跑 en_snapshot 现有全部含 infobox 的标题）
+  - `--stage fetch,translate,write`（默认 translate,write；快照缺失才补 fetch）/ `--dry-run` / `--concurrency N`
+  - `--write-target-prefix <前缀>`：写站目标页加前缀（如 `BOT测试:`，非破坏性验证）
+  - 透传 `--max-chars`/`--skip-if-same`/`--force`/`--summary` 等；末尾打印每页状态汇总（ok/FAIL/skipped/no-input）
+  ```bash
+  .venv/bin/python scripts/batch.py --titles 清单.txt                       # 正式跑
+  .venv/bin/python scripts/batch.py --titles 清单.txt --dry-run             # 全程预演
+  .venv/bin/python scripts/batch.py --all --stage translate,write --concurrency 3
+  .venv/bin/python scripts/batch.py --title X --write-target-prefix "BOT测试:"  # 写临时页验证
+  ```
+
 ---
 
 # 待办状态总览（更新）
@@ -314,5 +339,6 @@ coppermind/
 3. ⬜ 拿到初始译名表（放 `dict/`）
 4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照）→ ✅ 已实现（`fetch_en.py`）
 5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ✅ 抓取落盘已实现（`fetch_en.py`）
-6. ⬜ 从 `Allik_Neverfar` 起步做样板词条：转换 + 译名表 + 映射表，用户 review 后再写站（⚠️ 已测试写入，待 review 图片黑名单/包装等）
+6. ✅ 样板词条 `Allik_Neverfar`：转换 + 译名表 + 映射表 + 翻译（`translate.py`）均已跑通并写入（2025-10-16 首次写入；2025-10-17 起 translate.py 自动产出，附 CmPermission/en/ensync 包装）
 7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则（黑名单含 File 命名空间不自动上传图片、Template 命名空间暂不搬运；图片引用文本照搬）
+8. ⬜ 批量写站前的**治理/人工 review**：图片黑名单、模板图片校验、redirect 搬运（`batch.py` 已能批量串联 fetch→translate→write，但正式批量跑某个分类/清单前需先定上述规则与范围，避免覆盖真实内容）

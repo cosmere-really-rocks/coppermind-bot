@@ -1,0 +1,218 @@
+#!/usr/bin/env python3
+"""
+批量管道：对一批标题串联「fetch → convert+translate → write」，复用一个已逐页验证过的脚本逻辑。
+
+策略：batch.py 是编排脚本，逐页以子进程调用已就绪的脚本（translate.py / write.py），
+避免复制阶段逻辑；页与页之间可并发，单页内仍是 translate.py 自己的多块串行/并发。
+
+用法：
+  .venv/bin/python scripts/batch.py --titles 清单.txt              # 清单每行一个标题
+  .venv/bin/python scripts/batch.py --title A --title B --title C   # 直接列标题
+  .venv/bin/python scripts/batch.py --all                           # 跑 en_snapshot 现有全部（含 infobox 的）标题
+  .venv/bin/python scripts/batch.py --titles 清单.txt --stage translate,write
+  .venv/bin/python scripts/batch.py --titles 清单.txt --dry-run    # 全程预演，不写站
+  .venv/bin/python scripts/batch.py --titles 清单.txt --concurrency 3
+
+阶段：fetch（缺快照才抓）/convert+translate（translate.py）/write（write.py）。
+  --stage 默认 "translate,write"；fetch 默认仅在快照缺失时补抓（除非 --fetch 强制）。
+选项透传：--max-chars/--concurrency/--skip-if-same/--summary 会转发给对应脚本。
+
+退出码：0 全部成功；1 有失败（部分成功也报 1，末尾打印汇总表）。
+依赖：无额外库；调用 .venv/bin/python 运行本项目脚本。
+"""
+from __future__ import annotations
+
+import argparse
+import concurrent.futures
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
+EN_SNAPSHOT = ROOT / "en_snapshot"
+PY = ROOT / ".venv" / "bin" / "python"
+INFOBOX_TYPES = ("business", "book", "character", "culture", "disease", "food", "geography",
+                 "group", "item", "lifeform", "literature", "location", "magic", "metal",
+                 "nation", "noble house", "settlement", "vehicle", "architecture")
+
+
+def read_titles_from_file(path: str) -> list[str]:
+    p = Path(path)
+    if not p.exists():
+        raise SystemExit(f"清单文件不存在：{p}")
+    titles = []
+    for line in p.read_text(encoding="utf-8").splitlines():
+        t = line.strip()
+        if t and not t.startswith("#"):
+            titles.append(t)
+    return titles
+
+
+def snapshot_titles() -> list[str]:
+    """en_snapshot 下所有含 wikitext.txt 的标题（目录名）。"""
+    return sorted(
+        d for d in os.listdir(EN_SNAPSHOT)
+        if (EN_SNAPSHOT / d / "wikitext.txt").is_file()
+    )
+
+
+def has_infobox(title: str) -> bool:
+    p = EN_SNAPSHOT / title / "wikitext.txt"
+    if not p.exists():
+        return False
+    try:
+        txt = (p.read_text(encoding="utf-8")).lower()
+    except Exception:
+        return False
+    return any("{{" + t.lower() in txt for t in INFOBOX_TYPES)
+
+
+def run_stage(args, title: str) -> list[str]:
+    """执行一个标题的全部阶段；返回该页的 [阶段...] 状态串。"""
+    status = []
+    snapshot_dir = EN_SNAPSHOT / title.replace("/", "_")
+
+    # ---- fetch（如需）----
+    if "fetch" in args.stage and not (snapshot_dir / "wikitext.txt").exists():
+        st = subprocess.run([str(PY), str(HERE / "fetch_en.py"), title],
+                            capture_output=True, text=True)
+        if st.returncode != 0:
+            status.append("fetch:FAIL")
+            return status
+        status.append("fetch:ok")
+    elif not (snapshot_dir / "wikitext.txt").exists():
+        # 快照缺失但没开 fetch 阶段
+        status.append("skipped:no-snapshot")
+        return status
+
+    # ---- convert + translate ----
+    translate_cmd = [str(PY), str(HERE / "translate.py"), "--title", title]
+    if args.max_chars:
+        translate_cmd += ["--max-chars", str(args.max_chars)]
+    if args.dry_run:
+        translate_cmd += ["--dry-run"]
+    if args.no_wrap:
+        translate_cmd += ["--no-wrap"]
+    if args.api_key:
+        translate_cmd += ["--api-key", args.api_key]
+    if args.max_output_tokens:
+        translate_cmd += ["--max-output-tokens", str(args.max_output_tokens)]
+    tr = subprocess.run(translate_cmd, capture_output=True, text=True)
+    # 子进程 stderr 记录进度，只保留足够诊断
+    if tr.returncode != 0:
+        status.append("translate:FAIL")
+        sys.stderr.write(f"[{title}] translate 失败：{(tr.stderr or '')[-600:]}\n")
+        return status
+    status.append("translate:dry" if args.dry_run else "translate:ok")
+
+    # ---- write ----
+    if "write" in args.stage:
+        # dry-run 时 translate 未产出/未更新 translation.json：若本无该文件，则 write 无从 dry-run，
+        # 记 write:no-input（信息，非失败），否则照常 dry-run write。
+        tj = snapshot_dir / "translation.json"
+        if args.dry_run and not tj.exists():
+            status.append("write:no-input")
+            return status
+        write_cmd = [str(PY), str(HERE / "write.py"), "--title", title]
+        if args.write_target_prefix:
+            # 非破坏性验证：写到计划前缀下的临时页（如 "BOT测试:Allik Neverfar"）
+            write_cmd += ["--target", args.write_target_prefix + title]
+        if args.skip_if_same:
+            write_cmd += ["--skip-if-same"]
+        if args.force:
+            write_cmd += ["--force"]
+        if args.dry_run:
+            write_cmd += ["--dry-run"]
+        if args.summary:
+            write_cmd += ["--summary", args.summary]
+        wr = subprocess.run(write_cmd, capture_output=True, text=True)
+        if wr.returncode != 0:
+            status.append("write:FAIL")
+            sys.stderr.write(f"[{title}] write 失败：{(wr.stderr or '')[-600:]}\n")
+            return status
+        out = (wr.stdout or "").strip()
+        if "跳过" in out or "已含 ensync" in out:
+            status.append("write:skipped")
+        elif "dry-run" in out.lower():
+            status.append("write:dry")
+        else:
+            status.append("write:ok")
+    return status
+
+
+def main():
+    ap = argparse.ArgumentParser(description="批量 fetch→convert+translate→write 管道")
+    ap.add_argument("--titles", default=None, help="清单文件，每行一个标题")
+    ap.add_argument("--title", action="append", default=[], help="单个标题（可多次）")
+    ap.add_argument("--all", action="store_true", help="跑 en_snapshot 现有全部含 infobox 的标题")
+    ap.add_argument("--stage", default="translate,write", help="逗号分隔阶段：fetch,translate,write（默认 translate,write）")
+    ap.add_argument("--concurrency", type=int, default=1, help="并发标题数（默认 1）")
+    ap.add_argument("--max-chars", type=int, default=0, help="透传给 translate.py 的分块上限")
+    ap.add_argument("--max-output-tokens", type=int, default=0, help="透传单块最大输出 token")
+    ap.add_argument("--skip-if-same", action="store_true", help="透传：目标页 ensync 相同则跳过写")
+    ap.add_argument("--force", action="store_true", help="透传：即使已同步也强制写")
+    ap.add_argument("--no-wrap", action="store_true", help="透传：不插页面包装")
+    ap.add_argument("--summary", default=None, help="透传自定义写站摘要")
+    ap.add_argument("--api-key", default=None, help="透传 LLM api key")
+    ap.add_argument("--write-target-prefix", default=None, help="写站目标页前缀（如 'BOT测试:'，用于非破坏性验证）")
+    ap.add_argument("--dry-run", action="store_true", help="全程预演（translate/write 均 dry-run，不真正调 LLM/写站）")
+    args = ap.parse_args()
+
+    # 收集标题
+    titles = []
+    if args.titles:
+        titles += read_titles_from_file(args.titles)
+    titles += args.title
+    if args.all:
+        titles += [t for t in snapshot_titles() if has_infobox(t)]
+    # 去重保序
+    seen = set()
+    titles = [t for t in titles if not (t in seen or seen.add(t))]
+    if not titles:
+        raise SystemExit("未指定任何标题。用 --titles/--title/--all 之一。")
+
+    stages = [s.strip() for s in args.stage.split(",") if s.strip()]
+    print(f"[批量] {len(titles)} 个标题，阶段={stages}，并发={args.concurrency}"
+          + ("（dry-run）" if args.dry_run else "") + "\n")
+
+    results = []
+    if args.concurrency <= 1:
+        for t in titles:
+            results.append((t, run_stage(args, t)))
+    else:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=args.concurrency) as ex:
+            futs = {ex.submit(run_stage, args, t): t for t in titles}
+            for f in concurrent.futures.as_completed(futs):
+                t = futs[f]
+                results.append((t, f.result()))
+    results.sort(key=lambda r: titles.index(r[0]) if r[0] in titles else 0)
+
+    # 汇总
+    print("\n========== 汇总 ==========")
+    ok = fail = 0
+    for t, st in results:
+        joined = " ".join(st)
+        print(f"  {t}: {joined}")
+        if "FAIL" in joined:
+            fail += 1
+        elif "no-snapshot" in joined or "no-input" in joined:
+            # 信息态：缺快照 / dry-run 下无 translation.json（非失败，标记待办）
+            print(f"       ^ 待办/信息（不计数失败）")
+            ok += 1
+        elif "write:ok" in joined or "write:dry" in joined or "write:skipped" in joined:
+            ok += 1
+        else:
+            # translate 成功但 write 未真正 ok（如 dry-run）——dry-run 按成功算
+            if args.dry_run:
+                ok += 1
+            else:
+                fail += 1
+    print(f"\n成功 {ok}，失败 {fail}。")
+    return 1 if fail else 0
+
+
+if __name__ == "__main__":
+    main()
