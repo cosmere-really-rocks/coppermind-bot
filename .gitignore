@@ -4,6 +4,9 @@
 # 英文站快照 —— 本地数据，不提交
 en_snapshot/
 
+# 电子书（中英 epub）—— 受版权保护，只做本地处理，绝不提交
+dict/epub/
+
 # Python
 .venv/
 __pycache__/
