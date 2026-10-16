@@ -359,5 +359,86 @@
     ],
     "missing_cn_fields": [],
     "notes": "中文站 Infobox book 已补 部/注释/字数 字段；subpages 为编辑开关丢弃。released/date 碰撞归发行日期。"
+  },
+  "settlement": {
+    "src_template": "settlement",
+    "dst_template": "Infobox settlement",
+    "field_map": {
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "region": "地区",
+      "map": "地图",
+      "type": "类型"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "新建中文站 Infobox settlement（pageid3490）。"
+  },
+  "architecture": {
+    "src_template": "architecture",
+    "dst_template": "Infobox architecture",
+    "field_map": {
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "city": "城市",
+      "region": "地区",
+      "owner": "所有者",
+      "owners": "所有者",
+      "era": "时代",
+      "usage": "用途",
+      "type": "类型"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "新建中文站 Infobox architecture（pageid3491）。owner/owners 归所有者。"
+  },
+  "geography": {
+    "src_template": "geography",
+    "dst_template": "Infobox geography",
+    "field_map": {
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "era": "时代",
+      "type": "类型"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "新建中文站 Infobox geography（pageid3492）。"
+  },
+  "nation": {
+    "src_template": "nation",
+    "dst_template": "Infobox nation",
+    "field_map": {
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "capital": "首都",
+      "ruler": "统治者",
+      "type": "类型"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "新建中文站 Infobox nation（pageid3493）。"
+  },
+  "vehicle": {
+    "src_template": "vehicle",
+    "dst_template": "Infobox vehicle",
+    "field_map": {
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "type": "类型"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "新建中文站 Infobox vehicle（pageid3494）。"
   }
 }

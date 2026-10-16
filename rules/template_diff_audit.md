@@ -55,11 +55,11 @@
 
 | 英文 `{{…}}` | 使用量 | 中文站 `Infobox X` | 处置建议 |
 |---|---|---|---|
-| `{{settlement}}` | 37 | **不存在** | 建 `Template:Infobox settlement`，或临时用 `Infobox location` 承接 |
-| `{{architecture}}` | 31 | **不存在** | 同上 |
-| `{{geography}}` | 12 | **不存在** | 同上（多为河流/山脉，可用 `Infobox location`） |
-| `{{nation}}` | 2 | **不存在** | 同上 |
-| `{{vehicle}}` | 7 | **不存在** | 同上 |
+| `{{settlement}}` | 37 | ✅ 已建 | 已建 `Template:Infobox settlement`（pageid3490），映射见 infobox_mapping.md |
+| `{{architecture}}` | 31 | ✅ 已建 | 已建 `Template:Infobox architecture`（pageid3491） |
+| `{{geography}}` | 12 | ✅ 已建 | 已建 `Template:Infobox geography`（pageid3492） |
+| `{{nation}}` | 2 | ✅ 已建 | 已建 `Template:Infobox nation`（pageid3493） |
+| `{{vehicle}}` | 7 | ✅ 已建 | 已建 `Template:Infobox vehicle`（pageid3494） |
 
 > 这是最需要**决策**的一类：这些是高频类型（settlement+architecture 合计 68 条），但中文站没有对应模板，强行搬运会红链。建议先与用户定：建模板还是统一用现有的 `Infobox location` 承接。
 

@@ -97,6 +97,26 @@ world→世界、universe→分类、books→涉及书目。CN 的 症状/治疗
 
 ---
 
+## 15. settlement（EN → CN 已建 Infobox_settlement，pageid3490）
+world→世界、universe→分类、books→涉及书目、region→地区、map→地图、type→类型。
+中文模板另有 类型/地区/所属国家/首都/地图 字段；图像/原名在顶部 image 区。
+
+## 16. architecture（EN → CN 已建 Infobox_architecture，pageid3491）
+world→世界、universe→分类、books→涉及书目、city→城市、region→地区、owner/owners→所有者、era→时代、usage→用途、type→类型。
+中文模板另有 类型/城市/地区/用途/所有者/时代/地图 字段。
+
+## 17. geography（EN → CN 已建 Infobox_geography，pageid3492）
+world→世界、universe→分类、books→涉及书目、era→时代、type→类型。
+中文模板另有 类型/位置/所属区域/所在河·流域/时代 字段。
+
+## 18. nation（EN → CN 已建 Infobox_nation，pageid3493）
+world→世界、universe→分类、books→涉及书目、capital→首都、ruler→统治者、type→类型。
+中文模板另有 首都/统治者/政体/官方语言/主要民族/地图 字段。
+
+## 19. vehicle（EN → CN 已建 Infobox_vehicle，pageid3494）
+world→世界、universe→分类、books→涉及书目、type→类型。
+中文模板另有 类型/拥有者/机组/武器/时代 字段。
+
 ## 建议
 
 1. 以上 13 类里，**9 类的映射是"通用字段 + 少量专有"**（group/location/culture/item/literature/lifeform/food/magic/disease），实现容易。
