@@ -1,8 +1,8 @@
 {
   "meta": {
-    "name": "迷雾之子·第二纪元 译名表",
-    "en": "Mistborn Era 2 Glossary",
-    "source": "迷雾之子第二纪元名词表.xls",
+    "name": "迷雾之子 译名表",
+    "en": "Mistborn Glossary",
+    "source": "迷雾之子第二纪元名词表.xls + 《迷雾之子》名词表(1).xls + 迷雾名词对照表.docx",
     "source_sheet": "Glossary",
     "entry_count": 584,
     "updated": "2026-10-16",
@@ -11,7 +11,9 @@
       "英文 key 保留原始大小写/拼写。",
       "中文人名分隔符已统一为间隔号 ·。",
       "源表英文 key 中误用的汉字「依蓝德」已统一修正为 Elend（源 xls 已同步修正，此规则兼作兜底）。",
-      "内容为草稿，仍需逐条核对。"
+      "内容为草稿，仍需逐条核对。",
+      "覆盖为全系列（Era1+Era2）译名表；更名 mistborn_era2.json -> mistborn.json。",
+      "用户口径覆盖：Marsh=沼泽（不同译者作品翻译不一，统一为沼泽）；Cosmere=三界宙。"
     ]
   },
   "terms": {
@@ -337,7 +339,7 @@
       "zh": "红铜意识"
     },
     "Cosmere": {
-      "zh": "寇斯米尔"
+      "zh": "三界宙"
     },
     "Counselor of Gods": {
       "zh": "神之顾问"
@@ -1081,7 +1083,7 @@
       "zh": "认知阴影"
     },
     "Marsh": {
-      "zh": "马尔什"
+      "zh": "沼泽"
     },
     "Max": {
       "zh": "麦克斯"

@@ -21,7 +21,7 @@ import mwparserfromhell
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 EN_SNAPSHOT = ROOT / "en_snapshot"
-DEFAULT_GLOSS = ROOT / "dict" / "mistborn_era2.json"
+DEFAULT_GLOSS = ROOT / "dict" / "mistborn.json"
 
 
 def extract_en_terms(wikitext):

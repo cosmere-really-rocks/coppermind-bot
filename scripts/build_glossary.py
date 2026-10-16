@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-从《迷雾之子第二纪元》名词表.xls 生成 dict/mistborn_era2.json。
+从《迷雾之子第二纪元》名词表.xls 生成 dict/mistborn.json。
 
 用法：
   .venv/bin/python scripts/build_glossary.py <xls路径> [--out dict/mistborn_era2.json]
@@ -67,7 +67,7 @@ def build(rows):
 def main():
     ap = argparse.ArgumentParser(description="生成迷雾之子第二纪元译名表 JSON")
     ap.add_argument("xls", help="源 xls 路径")
-    ap.add_argument("--out", default=str(ROOT / "dict" / "mistborn_era2.json"))
+    ap.add_argument("--out", default=str(ROOT / "dict" / "mistborn.json"))
     args = ap.parse_args()
 
     wb = xlrd.open_workbook(args.xls)
@@ -77,8 +77,8 @@ def main():
     terms, fixes = build(rows)
     doc = {
         "meta": {
-            "name": "迷雾之子·第二纪元 译名表",
-            "en": "Mistborn Era 2 Glossary",
+            "name": "迷雾之子 译名表",
+            "en": "Mistborn Glossary",
             "source": Path(args.xls).name,
             "source_sheet": "Glossary",
             "entry_count": len(terms),
