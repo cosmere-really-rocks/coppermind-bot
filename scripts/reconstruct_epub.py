@@ -33,6 +33,7 @@ import argparse
 import html as html_mod
 import os
 import re
+import shutil
 import zipfile
 from xml.etree import ElementTree as ET
 
@@ -193,36 +194,59 @@ class Classifier:
         return classify_heading(h)
 
 
+def inline_sections(raw):
+    """把 body 按内嵌「###Heading」段拆成多段，返回 [(anchor_cls|None, fragment_html), ...]。
+    文件首段 anchor 用「文件级锚点」（extract_heading→classify_heading）；
+    每个 ### 标记之后的段 anchor 用该标记文本（如 ###尾声 → epilogue）。
+    ### 标记段本身从正文剔除。"""
+    m = re.search(r"(?is)<body[^>]*>(.*)</body>", raw)
+    body = m.group(1) if m else raw
+    pat = re.compile(r'(?is)<p[^>]*>\s*###([^<]+?)\s*</p>')
+    items = [(mm, mm.group(1).strip()) for mm in pat.finditer(body)]
+    if not items:
+        return [(classify_heading(extract_heading(body)), clean_fragment("<body>" + body + "</body>"))]
+    segments = []
+    # 首段：文件开头 -> 第一个标记开始
+    first = body[:items[0][0].start()]
+    segments.append((classify_heading(extract_heading(body)), clean_fragment("<body>" + first + "</body>")))
+    # 每个标记 -> 下一段
+    for idx, (mm, marktext) in enumerate(items):
+        nxt = items[idx + 1][0].start() if idx + 1 < len(items) else len(body)
+        seg_body = body[mm.end():nxt]
+        segments.append((classify_heading(marktext), clean_fragment("<body>" + seg_body + "</body>")))
+    return segments
+
+
 def gen_book(zf, chapters, outdir, lang):
-    """通用重构：spine 顺序扫描，锚点开新章，其余挂缓冲归属下一章；front matter 丢弃。"""
+    """通用重构：spine 顺序扫描，锚点开新章，其余挂缓冲归属下一章；front matter 丢弃。
+    支持一个文件内嵌「###尾声」等多章拆分（合订本常见）。此函数同时接受章节切片 chapters。"""
     det = Classifier()
     pending = []
     in_front = True
     order = 0
     written = []
-    dropped_tail = 0
     for path in chapters:
         raw = zf.read(path).decode("utf-8", "replace")
-        cls = det.classify(raw)
-        frag = clean_fragment(raw)
-        if cls is not None and cls[0] == "drop":
-            # 目录/版权/鸣谢/镕金秘典等：永远丢弃，不混入正文章节
-            continue
-        if cls is not None:
-            if in_front:
-                in_front = False
-                pending = []
-            key = cls[0]
-            if cls[0] == "chapter":
-                key = f"chapter{cls[1]}"
-            written.append((order, key, pending + [frag]))
-            order += 1
-            pending = []
-        else:
-            if in_front:
+        sections = inline_sections(raw)
+        file_cls = None
+        # 首个段走文件级锚点（已由 inline_sections 计算）
+        for seg_anchor, seg in sections:
+            if seg_anchor is not None and seg_anchor[0] == "drop":
                 continue
-            pending.append(frag)
-    # 写入（结尾未归章的缓冲丢弃）
+            if seg_anchor is not None:
+                if in_front:
+                    in_front = False
+                    pending = []
+                key = seg_anchor[0]
+                if seg_anchor[0] == "chapter":
+                    key = f"chapter{seg_anchor[1]}"
+                written.append((order, key, pending + [seg]))
+                order += 1
+                pending = []
+            else:
+                if in_front:
+                    continue
+                pending.append(seg)
     for o, key, frags in written:
         body = "\n".join(frags)
         safe_key = re.sub(r"[^A-Za-z0-9_\-\u4e00-\u9fff]+", "_", key).strip("_") or f"ch{o:03d}"
@@ -248,7 +272,7 @@ ENBOOKS = {
 
 ZHBOOKS = {
     "Brandon Sanderson - 迷雾之子·01·最后帝国 - 9787229105136.epub": "zh_最后帝国",
-    "Brandon Sanderson - 迷雾之子·02·升华之井 - 9787229105952.epub": "zh_升华之井",
+    # 注：升华之井单行本缺第3章（源缺陷），改从 mistborn_chs_1_6 合订取（见 OMNIBUS16_SLICE）
     "Brandon Sanderson - 迷雾之子·03·永世英雄 - 9787229110000.epub": "zh_永世英雄",
     "迷雾之子外传 卷二 旧影森森 (（美）布兰登·桑德森 著) (z-library.sk, 1lib.sk, z-lib.sk).epub": "zh_旧影森森",
     "迷雾之子外传 卷三 悲悼护腕 (（美）布兰登·桑德森 著) (z-library.sk, 1lib.sk, z-lib.sk).epub": "zh_悲悼护腕",
@@ -257,6 +281,13 @@ ZHBOOKS = {
 OMNIBUS_ERA2_VOL1 = {
     # 源文件 -> (所有书) -> 我们只取卷一（执法镕金），spine 2..29
     "迷雾之子外传（全三卷）.epub": "zh_执法镕金",
+}
+
+# 中文 1-6 合订本中「升华之井」（书二）的 spine 切片 [起:止)：
+#   part0053..part0123 = idx 54..124（含 版权页/目录/致谢/part 分页 + 第1-59章 + 内含 ###尾声 拆分）
+# 此合订本含单行本所缺的「第3章」（part0059），故升华之井改用本来源。
+OMNIBUS16_SLICE = {
+    "mistborn_chs_1_6.epub": ("zh_升华之井", slice(54, 125)),
 }
 
 
@@ -310,6 +341,23 @@ def main():
             _, chapters = read_opf(zf, read_container(zf))
             # 只取卷一（执法镕金）：spine 2..29；其余（卷二/卷三）不归此书
             gen_book(zf, chapters[2:29], d, "zh")
+        processed += 1
+
+    for src_name, (book, slc) in OMNIBUS16_SLICE.items():
+        if args.book and args.book != book:
+            continue
+        src = os.path.join(EPUB_DIR, src_name)
+        if not os.path.exists(src):
+            print(f"!! 跳过（找不到）: {src_name}")
+            continue
+        d = os.path.join(outdir, book)
+        # 该目录之前由「缺第3章」的单行本生成，先用合订本完整版覆盖
+        if os.path.isdir(d) and not args.book:
+            shutil.rmtree(d)
+        os.makedirs(d, exist_ok=True)
+        with zipfile.ZipFile(src) as zf:
+            _, chapters = read_opf(zf, read_container(zf))
+            gen_book(zf, chapters[slc], d, "zh")
         processed += 1
 
     if args.book and processed == 0:
