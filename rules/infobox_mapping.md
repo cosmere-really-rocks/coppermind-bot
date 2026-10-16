@@ -29,7 +29,7 @@
 
 ## 2. group（EN 10 → CN 16）
 
-**可映射**：image→图像、world→世界、universe→分类、books→涉及书目、type→类型、founders→组建者、leader/leaders→领袖、hq→总部、era→（CN group 无系列，丢弃）。
+**可映射**：image→图像、world→世界、universe→分类、books→涉及书目、type→类型、founders→组建者、leader/leaders→领袖、hq→总部、era→时代（CN 模板已加「时代」字段）。
 **待人工**：CN 的 别名/其他译名/成员/发音/团体名(取标题)。
 
 ## 3. location（EN 6 → CN 45，CN 极细→大多留空）
@@ -37,12 +37,12 @@
 EN 实际只有 `world/universe/books/city/region/map`：
 - world→世界、universe→分类、books→涉及书目
 - city→所属市县、region→所属区域
-- `map`→（CN 无此字段，丢弃；注意别与 `map ref` 混）
+- `map`→地图（CN 模板已加「地图」字段，值为地图图片文件名；注意别与 `map ref` 混）
 **待人工**：CN 45 参数里绝大多数（神瑛/神能/政体/统治者/历代执法者/物产资源/气候…）EN 无来源，留空。
 
 ## 4. culture（EN 7 → CN 13）
 
-name→文化名、world→世界、universe→分类、books→涉及书目、type→类型、related→关联、era→丢弃（CN 无系列）。
+name→文化名、world→世界、universe→分类、books→涉及书目、type→类型、related→关联、era→时代、origin→起源（CN 模板已加「时代」「起源」字段）。
 
 ## 5. item（EN 10 → CN 15）
 

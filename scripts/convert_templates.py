@@ -34,12 +34,14 @@ def build_dst_template(name_map, tpl):
 
     - 参数名查找不区分大小写（MediaWiki 参数区分大小写，但实际词条常混用，如 Spouse/spouse）。
     - 输出采用中文站约定：每个参数一行 `| 中文名 = 值`。
-    - 返回 (新wikitext, mapped{英文键:中文键}, unmapped[(键,值)], collisions)。
+    - 返回 (新wikitext, mapped{英文键:中文键}, unmapped[(键,值)], collisions, missing_cn[(键,值)])。
+    - missing_cn：中文站该模板**缺这些字段**（`missing_cn_fields`），属于需在中文站补字段的待办，单独报告、不静默丢弃。
     """
     dst_name = name_map["dst_template"]
     field_map = name_map["field_map"]
     drop = set(name_map.get("drop_always", []))
     drop_low = {k.lower() for k in drop}
+    missing_cn_fields = set(x.lower() for x in name_map.get("missing_cn_fields", []))
     # 大小写不敏感查找表：lower(英文键) -> 中文键
     lookup = {}
     for enk, cnk in field_map.items():
@@ -47,6 +49,7 @@ def build_dst_template(name_map, tpl):
 
     mapped_ordered = []   # (英文键, 中文键, 值)
     unmapped = []
+    missing_cn = []   # 中文站缺字段，待办（见 missing_cn_fields）
     # 目标->源 碰撞检测（两个不同英文键映射到同一中文键）
     cn_key_src = {}
 
@@ -70,6 +73,8 @@ def build_dst_template(name_map, tpl):
         if dst_key:
             mapped_ordered.append((key, dst_key, val))
             cn_key_src.setdefault(dst_key, []).append(key)
+        elif keyl in missing_cn_fields:
+            missing_cn.append((key, val))
         else:
             unmapped.append((key, val))
 
@@ -83,7 +88,7 @@ def build_dst_template(name_map, tpl):
     out.append("}}")
     raw = "\n".join(out) + "\n"
 
-    return raw, mapped_ordered, unmapped, collisions
+    return raw, mapped_ordered, unmapped, collisions, missing_cn
 
 
 def _collect_infobox_rules(rules):
@@ -109,6 +114,7 @@ def convert_wikitext(wikitext, rules):
     report = {
         "converted": {},
         "unmapped": [],
+        "missing_cn": [],
         "collisions": {},
         "renamed": [],
     }
@@ -121,10 +127,11 @@ def convert_wikitext(wikitext, rules):
             name = name.lstrip(":").strip()
             cfg = infobox.get(name.lower())
             if cfg is not None:
-                raw, mapped, unmapped, collisions = build_dst_template(cfg, node)
+                raw, mapped, unmapped, collisions, missing_cn = build_dst_template(cfg, node)
                 src = cfg["src_template"]
                 report["converted"].setdefault(src, []).extend(mapped)
                 report["unmapped"].extend([(src, k, v) for k, v in unmapped])
+                report["missing_cn"].extend([(src, k, v) for k, v in missing_cn])
                 report["collisions"].update(collisions)
                 new_nodes.append(mwparserfromhell.nodes.Text(raw))
                 continue

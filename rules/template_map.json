@@ -179,12 +179,11 @@
       "founders": "组建者",
       "leader": "领袖",
       "leaders": "领袖",
-      "hq": "总部"
+      "hq": "总部",
+      "era": "时代"
     },
-    "drop_always": [
-      "era"
-    ],
-    "notes": "通用映射批；era 丢弃（CN group 无系列）。"
+    "notes": "通用映射批；era 丢弃（CN group 无系列）。",
+    "missing_cn_fields": []
   },
   "location": {
     "src_template": "location",
@@ -195,12 +194,11 @@
       "universe": "分类",
       "books": "涉及书目",
       "city": "所属市县",
-      "region": "所属区域"
+      "region": "所属区域",
+      "map": "地图"
     },
-    "drop_always": [
-      "map"
-    ],
-    "notes": "CN 有 45 参数字段，其余（神瑛/政体/气候等）留空人工。map 非位置字段丢弃。"
+    "notes": "CN 有 45 参数字段，其余（神瑛/政体/气候等）留空人工。map 非位置字段丢弃。",
+    "missing_cn_fields": []
   },
   "culture": {
     "src_template": "culture",
@@ -212,12 +210,12 @@
       "universe": "分类",
       "books": "涉及书目",
       "type": "类型",
-      "related": "关联"
+      "related": "关联",
+      "era": "时代",
+      "origin": "起源"
     },
-    "drop_always": [
-      "era"
-    ],
-    "notes": "通用映射批。"
+    "notes": "通用映射批。",
+    "missing_cn_fields": []
   },
   "item": {
     "src_template": "item",
