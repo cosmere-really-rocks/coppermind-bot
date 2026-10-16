@@ -285,6 +285,26 @@ coppermind/
 
 - **验证结论**：`Allik Neverfar` 全页 10 种模板，仅 `character`/`quote` 需转换，其余 8 种（占 54+ 处引用）中文站直接复用。真正需写转换规则的模板很少。
 
+- **`scripts/translate.py`**（Python，已跑通）：翻译管道，英文 converted wikitext → 中文 wikitext → `translation.json` 契约 →
+  1. **在内存里用最新转换逻辑重转一次**（不依赖可能过期的 `converted.txt`，避免旧版把 `{{quote}}` 内容清空）
+  2. **超长词条分块**：按 `== 章节 ==`/`=== 小节 ===` 边界切块，每块 ≤ `--max-chars`（默认 7000），Infobox+导语固定 chunk0，**绝不在一节/一模板内部硬切**（单节超限独成一块并告警）。已验证 23KB 的 `Spook` 切 5 块、197KB 的 `Kaladin` 切 35 块均无损（章节结构完全保留）
+  3. **Infobox「字段 = 值」确定性翻译**（决议#4）：结构化短字段按译名表整值/最长匹配替换，不依赖 LLM 是否记得翻值
+  4. **决议#13 确定性保护**：`{{Quote}}`/`{{columns}}`/`{{sidequote}}` 等原文引用块在送 LLM 前用唯一占位符替换，模型原样保留，翻译后填回英文原文，并自动列入 `untranslated_terms`（「需查中译本」）——不让 LLM 选择翻不翻
+  5. **术语裁切**（决议#9）：仅把本文命中的译名子集送 LLM，省 token
+  6. 组装页面级包装 `{{CmPermission}}`（顶）+ `{{en}}`（首行，由 LLM 在块0安放）+ `{{ensync}}`（尾，revid 取快照 meta）——决议 10-12
+  7. 输出契约 `translation.json`：`{meta, translation, untranslated_terms}`，另落 `translation.txt`
+
+  用法：
+  ```bash
+  # LLM 配置与 DSH 一致：默认 base_url=https://token.glint-mvt.com/v1、model=deepseek-v4-flash-0731，
+  # api key 从环境变量 DEEPGLINT2_API_KEY 读取（可 --api-key / .env 的 LLM_API_KEY 覆盖）
+  .venv/bin/python scripts/translate.py --title <标题>                 # 全量翻译
+  .venv/bin/python scripts/translate.py --title <标题> --dry-run        # 只预演分块+提示词，不调 LLM
+  .venv/bin/python scripts/translate.py --title <标题> --max-chars 6000 # 调小分块预算（更细粒度，块更多）
+  .venv/bin/python scripts/translate.py --title <标题> --concurrency 2  # 并发翻译块
+  ```
+  依赖：stdlib（`urllib`/`json`/`re`/`dataclasses`）+ `mwparserfromhell`；不需要额外 LLM 客户端库。
+
 ---
 
 # 待办状态总览（更新）
