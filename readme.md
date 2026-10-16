@@ -17,7 +17,7 @@
 迷雾之子（Mistborn）是大系列，可拆成两个小时代。本地 epub 与译名表覆盖面都按此理解（见 `dict/epub/`，均不提交）。
 
 **英文版**
-- **时代一（era1）/ 古代三部曲**：对应 `dict/epub/The_Mistborn_Trilogy*.epub`，实际是三部曲。
+- **时代一（era1）/ 古代三部曲**：单行本 `dict/epub/[Mistborn 1.1..1.3]*.epub`（The Final Empire / The Well of Ascension / The Hero of Ages，分章最清晰，重构首选）；也保留合订 `The_Mistborn_Trilogy*.epub`（仅备份，不再用于分章）。
 - **时代 1.5**：中间短篇，`Secret History`（`dict/epub/[Mistborn 1.5] - Secret History*.epub`）。
 - **时代二（era2）四部曲**，英文顺序：
   1. The Alloy of Law（`THE_ALLOY_OF_LAW_EPUB.epub`）
@@ -29,8 +29,10 @@
 - 全集排列 **mistborn1~7**：如 `mb7` = The Lost Metal。
 - 按时代划分 **era2|N**：如 `era2|4` 也指 The Lost Metal。
 
-**中文版**
-- 目前只有 **1~6**：`dict/epub/mistborn_chs_1_6.epub`（The Lost Metal 尚无中译）。
+**中文版（era1 1-3 + era2 1-3，六本都已分章）**
+- 时代一：`迷雾之子·01·最后帝国 / 02·升华之井 / 03·永世英雄`（单行本）。
+- 时代二：`迷雾之子外传（全三卷）`（合订，含卷一执法镕金——此卷无中译单行本，只能从合订或 1-6 取）；另有 `外传 卷二 旧影森森 / 卷三 悲悼护腕`（单行本）。
+- 早期合订 `mistborn_chs_1_6.epub`（1~6）保留作备份/兜底（The Lost Metal 尚无中译）。
 
 **译名表**：`dict/mistborn.json` 为**全系列**（era1+era2）译名表；源文件在本地 `dict/raw/`（不提交）。`Allik Neverfar` 等缺全名仍待补。
 

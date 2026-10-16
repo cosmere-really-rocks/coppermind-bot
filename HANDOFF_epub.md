@@ -1,52 +1,62 @@
-# HANDOFF：epub 解压 / 章节重构（Trilogy + 中文 1-6）
+# HANDOFF：epub 解压 / 章节重构（Trilogy + 中文 1-6 → 已全部落地）
 
-> 生成：2025-10-16（本次会话）
-> 用途：本会话已完成 5 本干净英文书的章节提取；**Trilogy（3 本合集）与中文 1-6（partNNNN 流）需要内容驱动重构，建议在新会话处理**。
+> 更新：2025-10-16（本会话，第二次）
+> 前一版（第一次会话）遗留的「Trilogy（3 本合集）与中文 1-6（partNNNN 流）需内容驱动重构」——**本次会话已用用户新传的**更清晰**分章版替代并全部完成**。
 
 ## 背景（为什么做这个）
 为补全译名表缺失的全名译名（如 `Allik Neverfar`），方案是「中英 epub 章节对齐」：英文版定位关键词所在章+位置 → 中文版同章找官方译名。
 系列构成与中文书名的完整说明已记入 `readme.md`「系列构成（Mistborn）」一节。
 
 ## 文件与目录（均不提交，已 gitignore）
-- `dict/epub/`：7 个原始 epub（z-lib/BookZZ 来源，受版权保护，本地处理）
-- `dict/epub_out/`：**本会话已产出**的英文分章节 HTML（gitignore）
+- `dict/epub/`：原始 epub（z-lib/BookZZ 来源，受版权保护，本地处理）
+- `dict/epub_out/`：**产出**的分章节 HTML（gitignore）
 - `scripts/epub_prep.py`：epub 探针（--list / --find / --dump / --zh 同章对照）
-- `scripts/extract_books.py`：把「一文件一章节」的英文书拆成分章节 HTML
+- `scripts/extract_books.py`：把「一文件一章节」的英文书拆成分章节 HTML（第一批）
+- `scripts/reconstruct_epub.py`：**本会话新增**的内容驱动重构（EN split 流 + 中文 cpNN/txtNNN/partNNN 合订）
 
-## ✅ 本会话已完成：5 本干净英文书 → dict/epub_out/<book>/NNN_<chapter>.html
+## ✅ 全部已产出（dict/epub_out/）
+
+### 第一批（第一次会话）：5 本干净英文书
 | book | 章节数 | 说明 |
 |---|---|---|
-| the_alloy_of_law | 26 | prologue+20+epilogue + 4 篇报章插页（978…_ch0N，独立保留） |
-| shadows_of_self | 28 | prologue+26+epilogue |
-| the_bands_of_mourning | 34 | prologue+31+epilogue+postscript |
-| the_lost_metal | 75 | prologue+chapter1..74（split 片段已归并） |
-| secret_history | 33 | Part-1..6 + N-M 小节 + Epilogue + Postscript |
+| the_alloy_of_law | 26 | 执法镕金（EN，时代二卷一） |
+| shadows_of_self | 28 | 旧影森森（EN,时代二卷二） |
+| the_bands_of_mourning | 34 | 悲悼护腕（EN,时代二卷三，含 postscript） |
+| the_lost_metal | 75 | 失落金属（EN,时代二卷四） |
+| secret_history | 33 | 秘史（EN,时代1.5） |
 
-提取规则要点（`extract_books.py`）：
-- 正文章节 = `prologue`/`chapterN`/`epilogue`/`postscript`/`Part-N`/`N-M`；`chapter2_split_000/_001` 等 `_split_` 归并为同一章。
-- 跳过 front/back matter（cover/title/dedication/acknowledgments/maps/contents/copyright/ads/newsletter/arcanum/torad…）。
-- 输出为保留结构的干净 HTML（段落/标题/强调；图片降为 `[图:alt]` 文本；链接保留文本）。
+### 本会话新增（EN era1 三本 —— 之前只能从 Trilogy 合订处理，现已用 1.1~1.3 单行本）
+| book（EN） | 章节数 | 结构 |
+|---|---|---|
+| the_final_empire | 40 | prologue + 1..38 + epilogue（split 流，bold 章节号） |
+| the_well_of_ascension | 60 | 1..59 + epilogue（无 prologue；split 流） |
+| the_hero_of_ages | 84 | prologue + 1..82 + epilogue（split 流） |
 
-## ⬜ 待处理（建议新会话）：2 本合集，需内容驱动重构
-### A. The Mistborn Trilogy —— 3 本合集
-- 文件：`dict/epub/[Sanderson_Brandon]_The_Mistborn_Trilogy_(Boxed_se(BookZZ.org).epub`
-- spine：236 个 `CR!…_split_NNN.html`，**书/章边界不在文件名里**，需从正文识别。
-- 任务：先按内容识别 3 本书的边界与每章的 `Chapter N` 标题，再重排为 3 个 `dict/epub_out/...`book 目录的分章 HTML。
-- 参考：这 3 本是 Mistborn 1-3（The Final Empire / The Well of Ascension / The Hero of Ages）。
+### 本会话新增（ZH 中文六本：era1 三本 + era2 三本，与上表 EN 一一对齐）
+| book（ZH） | 章节数 | 与 EN 对齐 | 来源 | 说明 |
+|---|---|---|---|---|
+| zh_最后帝国 | 40 | = the_final_empire | 迷雾之子·01 单行本 | 楔子+1..38+尾声 |
+| zh_升华之井 | **59** | the_well_of_ascension(60) | 迷雾之子·02 单行本 | **源 epub 缺第3章**（chapter003 内容=第4章），故 59≠60 |
+| zh_永世英雄 | 84 | = the_hero_of_ages | 迷雾之子·03 单行本 | 序章/序曲+1..82+终曲 |
+| zh_执法镕金 | 22 | = the_alloy_of_law | 迷雾之子外传（全三卷）合订 → 卷一 | **时代二卷一中译终于补上**（用户所说唯一缺单行本的一本） |
+| zh_旧影森森 | 28 | = shadows_of_self | 外传 卷二 单行本 | 序言+1..26+尾声 |
+| zh_悲悼护腕 | 34 | = the_bands_of_mourning | 外传 卷三 单行本 | 序言+1..31+尾声+后记 |
 
-### B. 中文 1-6 —— 6 本合集（partNNNN 流，重点难点）
-- 文件：`dict/epub/mistborn_chs_1_6.epub`
-- spine：315 个 `OEBPS/Text/partNNNN.xhtml`，**书名/章节全靠正文识别**（正是"epub 不按章节整理"的典型）。
-- 已探明结构：
-  - `part0000` = 总目录（列出 6 本书：最后的帝国 / 升华之井 / 永世英雄 / 执法镕金 / 旧影森森 / 悲悼护腕）。
-  - `part0003` = 每本 Contents（致谢/楔子/第一章…）。
-  - 正文章：`part0005`楔子、`part0006`第一章、之后是连续编号小节（"1 1"、"2 2"…，即章内编号段落，**不是章**）。
-  - 章节边界 = 形如「第一章 XXX」的标题文件/标题行；书边界 = 卷首书名页 + 内容里的书名。
-- 任务：解析 315 个 part 文件 → 按内容识别 6 本书边界 + 每本内章边界 → 把编号小节归并入所属章 → 产 `dict/epub_out/<书名>/` 分章 HTML。
-- 中文书名（用于子目录名）：迷雾之子卷一最后的帝国 / 卷二升华之井 / 卷三永世英雄 / 外传卷一执法镕金 / 外传卷二旧影森森 / 外传卷三悲悼护腕。
+> 至此 era1 1-3 与 era2 1-3 共 6 本，**英文 + 中文均已分章 HTML 就绪**，可做中英章节对齐补全译名。
+> 之前担心的 `[Sanderson]_The_Mistborn_Trilogy*.epub` 与 `mistborn_chs_1_6.epub`（两个「partNNNN/credit 流」合订）**已无需再处理**——都被更清晰的分章版替代（Trilogy ← 1.1/1.2/1.3 单行本；中文1-6 ← 各单行本 + 外传全三卷）。
 
-## 新会话开工建议
-1. 先跑 `scripts/epub_prep.py <file> --list/--dump` 探查，再写按内容的分章重构脚本（可扩展 `extract_books.py`，或新写 `reconstruct_*.py`）。
-2. 用 `part0000`/各书 Contents 站稳书/章锚点，再处理编号小节归并。
-3. 产出都放 `dict/epub_out/`（已 gitignore）；不要提交任何 epub/正文。
-4. 完成后即可做中英对齐：英文 `--find 'Allik Neverfar'` 定位，中文同章找官方译名，回填 `dict/mistborn.json`（Marsh=沼泽、Cosmere=三界宙 为已定稿口径）。
+## 重构方法（reconstruct_epub.py）
+- 按 spine 顺序扫描每个文件，用「标题锚点分类器」判断是否开启新章：
+  - **开新章**：`PROLOGUE/EPILOGUE`、`楔子/序言`(prologue)、`尾声/终章/终曲`(epilogue)、`后记`(postscript)、裸数字章节号、`第X章`。
+  - **非锚点**：front matter（第一个锚点前）整页丢弃；锚点后的 PART 页 / epigraph / 插图占位 / 空页 → 挂入缓冲，归属「下一个」新章。
+  - **DROP 集合**：`目录/版权信息/前言/导读/鸣谢/致谢/作者简介/译者简介/镕金秘典/ARS ARCANUM` 等，无论位置一律整页丢弃（避免目录混入第一章）。
+- 输出 `dict/epub_out/<book>/NNN_<chapter>.html`，编号从 0 起、与第一批命名一致。
+
+## ⚠️ 已知源缺陷（提取严格忠实源文件，未修补）
+- **zh_升华之井 缺第 3 章**：该 epub 的 `chapter003.xhtml` 内容实为第 4 章，整本书跳过了「第3章」，无「3」字样的章节头。属源文件问题，建议后续人工核对或用其他源补。
+- **zh_旧影森森 序言**：序言正文存在（fow004，约 9.8k 字）。
+- **zh_执法镕金** 取自「迷雾之子外传（全三卷）」合订的卷一部分（spine 2..29：版权页/目录/前言/鸣谢/序言/第1-20章/尾声/封面），分章干净。
+
+## 下一步（建议）
+1. 需补全译名时，用 `epub_prep.py` 对单本（不再对合订）：英文 `--find '<term>'` 定位所在章 → 中文同章找官方译名 → 回填 `dict/mistborn.json`（Marsh=沼泽、Cosmere=三界宙 为已定稿口径）。
+2. 时代二四部曲名已入译名表：执法镕金/旧影森森/悲悼护腕/失落金属；各书分章 EN↔ZH 已可按同名 chapter 对齐。
