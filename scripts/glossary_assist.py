@@ -324,5 +324,46 @@ def find_whole_book(term, en_dir, zh_dir, args):
     return {"total": total, "hits": hits}
 
 
+def locate(term: str, book=None, chapter=None, ctx: int = 220, all_hits: bool = False) -> dict:
+    """translate.py 可导入的定位 API：按 (书码, 章) 找指定英文短语在英书上下文与中书对照区。
+
+    返回 dict（供 quote/称呼采证）：
+      {found: bool, book, chapter, en_file, en_contexts: [...], zh_region: str|None, zh_note}
+    - book 为书码（如 mb6/bom）；chapter 为章号（数字/字符串）。
+    - 未给 book/chapter 时跨全书搜（all_hits）。
+    """
+    import argparse as _ap
+    _args = _ap.Namespace(ctx=ctx)
+    if book and chapter not in (None, ""):
+        if book.lower() not in BOOKS:
+            return {"found": False, "book": book, "error": f"未知书码 {book}"}
+        code = book.lower()
+        en_dir, zh_dir = BOOKS[code]
+        chnum = {"prologue": 0, "epilogue": 999}.get(str(chapter).lower(), int(chapter) if str(chapter).isdigit() else 0)
+        text, fname = load_chapter_text(en_dir, chnum)
+        if text is None:
+            return {"found": False, "book": code, "chapter": chapter, "error": f"英书{en_dir}无该章"}
+        hits = find_in(text, term)
+        if not hits:
+            return {"found": False, "book": code, "chapter": chapter, "en_file": fname, "term_hits": 0}
+        rec = {"found": True, "book": code, "chapter": chapter, "en_file": fname,
+               "en_contexts": [context(text, i, term, ctx) for i in hits[:3]]}
+        add_zh_region(rec, text, hits, zh_dir, chnum, _args)
+        rec["term_hits"] = len(hits)
+        return rec
+    # 无具体书章 → 跨书扫
+    for code in ("mb6", "mb5", "mb4", "mb3", "mb2", "mb1"):
+        if code not in BOOKS:
+            continue
+        en_dir, zh_dir = BOOKS[code]
+        fw = find_whole_book(term, en_dir, zh_dir, _args)
+        if fw and fw["total"]:
+            h = fw["hits"][0]
+            return {"found": True, "book": code, "chapter": h["chapter"], "label": h.get("label"),
+                    "en_file": h["file"], "en_contexts": [h["context"]], "zh_region": h.get("zh_region"),
+                    "zh_note": h.get("zh_note"), "term_hits": fw["total"]}
+    return {"found": False, "book": None, "chapter": None}
+
+
 if __name__ == "__main__":
     main()
