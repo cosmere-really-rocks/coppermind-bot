@@ -4,7 +4,7 @@
     "en": "Mistborn Glossary",
     "source": "迷雾之子第二纪元名词表.xls + 《迷雾之子》名词表(1).xls + 迷雾名词对照表.docx",
     "source_sheet": "Glossary",
-    "entry_count": 769,
+    "entry_count": 819,
     "updated": "2026-10-16",
     "en_fixes": [],
     "notes": [
@@ -2529,6 +2529,206 @@
     "ZoBell Tower": {
       "zh": "佐贝尔大楼",
       "note": "旧影森森（二十几层摩天楼，顶层阁楼为 Lady ZoBell 宅邸）；ZoBell=佐贝尔"
+    },
+    "Emotional Allomancy parlors": {
+      "zh": "安抚之厅/煽动之厅",
+      "note": "旧影森森 ch14/15（情绪镕金术营业场所；Soothing=安抚之厅、Rioting=煽动之厅）"
+    },
+    "Syles": {
+      "zh": "塞尔斯白兰地",
+      "note": "悲悼护腕 ch11/12（斯克德利亚白兰地品牌）"
+    },
+    "Gavil's Carriages": {
+      "zh": "加维马车行",
+      "note": "执法镕金 ch12（依兰德出租车马车公司）"
+    },
+    "Findley's": {
+      "zh": "芬得利餐厅",
+      "note": "悲悼护腕 ch17（韦恩熟悉的餐馆）"
+    },
+    "Citizen Magistrates": {
+      "zh": "市民公仆（雪茄牌）",
+      "note": "执法镕金 ch10/旧影森森 ch4（昂贵雪茄品牌）"
+    },
+    "Ashweather Carriage and Coach": {
+      "zh": "灰侯车马场",
+      "note": "旧影森森 ch14（艾蓝德尔出租马车企业；亦称灰侯公司）"
+    },
+    "Originators": {
+      "zh": "创始者",
+      "note": "执法镕金 ch4/旧影森森 ch19/悲悼护腕 ch19（灾厄末日后重建者）"
+    },
+    "Nightstreet Gang": {
+      "zh": "夜匪帮",
+      "note": "悲悼护腕 ch9（铁守附近犯罪团伙；别称Nightstreets）"
+    },
+    "Hidden Guard": {
+      "zh": "秘卫",
+      "note": "悲悼护腕 ch29（组织秘卫=Set's Hidden Guard，红色制服）"
+    },
+    "Preservers": {
+      "zh": "存留者",
+      "note": "旧影森森 ch11（凯尔西核心团队；名源自存留神力）"
+    },
+    "The Weeping Bull": {
+      "zh": "牛泣酒馆",
+      "note": "旧影森森 序章（蛮苦之地酒吧，老板卢斯科）"
+    },
+    "Tingmar": {
+      "zh": "廷格玛雪茄",
+      "note": "悲悼护腕 ch16（抗风镇产的浓郁硬货雪茄品牌）"
+    },
+    "Surefires": {
+      "zh": "神火帮",
+      "note": "执法镕金 ch4（蛮苦之地的犯罪团伙）"
+    },
+    "Cobblers": {
+      "zh": "光脚帮",
+      "note": "旧影森森 ch5（伊蓝戴犯罪团伙；成员不穿鞋，当地区域对手帮派）"
+    },
+    "Immerling Arms": {
+      "zh": "艾莫林",
+      "note": "执法镕金 ch2（艾莫林44-S手枪品牌，伊蓝戴火器制造商）"
+    },
+    "Deniers of Masks": {
+      "zh": "面具驳阻者",
+      "note": "悲悼护腕 ch21（南司卡德利安的一派，弃面具者；与君主派对立）"
+    },
+    "Men of gold and red": {
+      "zh": "金红之人",
+      "note": "执法镕金 尾声（终极金属/末代金属的携带者预言；主要为 tlm 语境）"
+    },
+    "Yomen-Ostlin wedding dinner": {
+      "zh": "尤门·欧斯特林婚宴",
+      "note": "执法镕金 ch2/4（尤门与欧斯特林两家联姻婚宴，隐匪袭击事件）"
+    },
+    "Lady ZoBell's party": {
+      "zh": "佐贝尔夫人的派对",
+      "note": "旧影森森 ch7-9（佐贝尔大楼顶层派对；社交场合）"
+    },
+    "Evanotype": {
+      "zh": "照片",
+      "note": "悲悼护腕 ch3（成像仪 evanoscope 投影的相片；官译意译为照片）"
+    },
+    "Allomantic Agreement of '94": {
+      "zh": "镕金术94号公约",
+      "note": "旧影森森 ch14（限制情绪镕金术商业用途的法律）"
+    },
+    "Jaggenmire": {
+      "zh": "轧亘米尔",
+      "note": "悲悼护腕 ch22（南司卡德里亚宗教合一的毁灭+存留之神）"
+    },
+    "Mareweather": {
+      "zh": "迈尔",
+      "note": "旧影森森 ch17（迈尔区的节日性晚宴）"
+    },
+    "The Path": {
+      "zh": "道",
+      "note": "执法镕金 ch2/3（随和谐之主的宗教；信徒称道徒=Pathian）"
+    },
+    "Southern Scadrian": {
+      "zh": "南方人",
+      "note": "悲悼护腕 ch30-32（南司卡德利安人；正文作the Southerners）"
+    },
+    "House Hammondess": {
+      "zh": "哈姆德家族",
+      "note": "旧影森森 ch18（哈姆德家族子孙；与大灾变前人物 Hammond 同源）"
+    },
+    "Winsting Innate's auction": {
+      "zh": "拍卖会",
+      "note": "旧影森森 ch1（温斯汀把自己拍卖出去，假借拍卖会之名设局；后在地下室被杀）"
+    },
+    "Kelesina Shores's party": {
+      "zh": "克雷西娜·肖尔斯的派对",
+      "note": "悲悼护腕 ch12-17（新赛朗贵妇克雷西娜·肖尔斯举办的派对，女主庙）"
+    },
+    "House Innate": {
+      "zh": "因内特家族",
+      "note": "旧影森森（温斯汀即因内特家族族长）"
+    },
+    "House Ladrian": {
+      "zh": "拉德利安家族",
+      "note": "执法镕金 ch16+（瓦克斯利姆家族；第十六任至高领主一族）"
+    },
+    "House Harms": {
+      "zh": "哈姆斯家族",
+      "note": "执法镕金（史特芮丝·哈姆斯家族）"
+    },
+    "House Yomen": {
+      "zh": "尤门家族",
+      "note": "执法镕金 ch4+（伊蓝戴名门望族，信碎裂教）"
+    },
+    "House Lekal": {
+      "zh": "雷卡家",
+      "note": "旧影森森 ch18（the Lekals，主对手家族）"
+    },
+    "Terringul 27": {
+      "zh": "泰林格尔27型",
+      "note": "执法镕金 ch6（瓦克斯小腿备用手枪）"
+    },
+    "Invarian steel": {
+      "zh": "因伐利安钢",
+      "note": "执法镕金 ch14（制作鸣镝手枪的合金，更硬更轻）"
+    },
+    "Sterrion 36": {
+      "zh": "史特里昂36型",
+      "note": "执法镕金 序章/ch1/9/14（拉奈特为瓦克斯造的转轮手枪）"
+    },
+    "Ambersair": {
+      "zh": "安博萨",
+      "note": "执法镕金 ch14（拉奈特造的左轮，与迈尔斯交手时丢失）"
+    },
+    "Granger 28": {
+      "zh": "格兰杰28型",
+      "note": "执法镕金 ch5（佩特鲁斯肩枪套被缴的手枪，特制厚握柄）"
+    },
+    "Destroyer": {
+      "zh": "毁灭者",
+      "note": "旧影森森 序章（瓦克斯利姆所骑母马名）"
+    },
+    "The Elendel Daily": {
+      "zh": "依蓝戴日报",
+      "note": "旧影森森 ch5（依蓝戴出版的报纸；不算最可靠消息来源）"
+    },
+    "Excisor": {
+      "zh": "切除器",
+      "note": "悲悼护腕 ch21（南司卡德利安制作藏金术徽章/未封印金属意识库的装置）"
+    },
+    "Wilg": {
+      "zh": "柳影号",
+      "note": "悲悼护腕 ch21-23（布伦斯特尔号的滑翔机/小艇）"
+    },
+    "Brunstell": {
+      "zh": "布伦斯特尔号",
+      "note": "悲悼护腕 ch21/22（马尔维什造的飞船）"
+    },
+    "Rioting": {
+      "zh": "莱廷枪",
+      "note": "悲悼护腕 ch14（22型六发手枪；en_snapshot Rioting 为枪械 item，非镕金术煽动）"
+    },
+    "Docksithium": {
+      "zh": "多克森之书",
+      "note": "旧影森森 ch19（伪经文献，明显是赝品）"
+    },
+    "Elendel Basin": {
+      "zh": "依蓝戴盆地",
+      "note": "执法镕金/旧影森森/悲悼护腕（大灾变后人类聚居的盆地区域）"
+    },
+    "Chillfever": {
+      "zh": "寒热病",
+      "note": "悲悼护腕 ch29（司卡德利亚恶疾，发热症状）"
+    },
+    "Barrington carriage": {
+      "zh": "巴灵顿（型马车）",
+      "note": "旧影森森 ch14/16（以巴灵顿大公命名的城市马车品牌；瓦克斯的马车即巴灵顿型）"
+    },
+    "The Last Breath": {
+      "zh": "最后的气息",
+      "note": "悲悼护腕 ch4（韦恩点的轻快歌谣《最后的气息》）"
+    },
+    "Wax's earring": {
+      "zh": "耳环",
+      "note": "执法镕金 ch3 等（瓦克斯戴的镕金血法耳环，助他与和谐通话；中译未成专名，仅作耳环）"
     }
   }
 }

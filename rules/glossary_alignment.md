@@ -104,6 +104,14 @@
 - 已录代表（执法镕金/旧影森森/悲悼护腕，均为官方书证）：Chip(奇普)、Claude Aradel=克劳德·亚拉戴尔、Daius=戴尤斯、Darriance=达李恩斯、Jordis=约蒂丝、Joshin Yomen=约辛·尤门、Kelesina Shores=克雷西娜、Lady ZoBell=佐贝尔夫人、Lord Barrington=巴灵顿大人、Lord Stenet=史提内特领主、Marasi Colms=玛拉茜·科尔姆斯、Marksman=神射手、Brettin=布雷廷、Murnbru=蒙布鲁、Paclo=帕克罗（尘染者）、Peret the Black=黑手佩瑞特、Rian=利恩、Rick Stranger=里克·斯特朗格、Replar Innate=雷普拉·因内特、Slink=斯灵克、Sophi Tarcsel=索菲·塔瑟尔、Spook=鬼影、Steris Harms=史特芮丝·哈姆斯、Tarson=塔森、Telsin Ladrian=苔尔辛、Tindwyl Ladrian=廷朵·拉德利安、Vwafendal=瓦范达尔、Waxillium Ladrian=瓦克斯利姆·拉德利安、Winsting Innate=温斯汀、Petrine=佩崔恩 等（共约 90 条）。
 - 本轮新增 pending（found=false，无法采证）：Durkel、Maxillium Ladrian、Ulaam（仅 tlm 无中译）；Pull、Push（正文匿名代号，中译无固定名）；Terri（仅「警帽」道具引用，中译未具名）；Thomton Delacour（韦恩现场编造的假名）；+ 前批 Bastien Severington、Dorise Chevalle、Inis Julien。
 
+**批量非人物批 G（企业/团体/事件/文化/家族/物品等，2025-10-16，把译名表从「仅人物」扩到所有 E2+E1 可采证类型）：** 详见 `dict/mistborn.json`。
+- 企业/商业：Ashweather Carriage and Coach=灰侯车马场、Gavil's Carriages=加维马车行、Findley's=芬得利餐厅、Citizen Magistrates=市民公仆牌(雪茄)、Syles=塞尔斯白兰地、Immerling Arms=艾莫林(手枪)、Terringul 27=泰林格尔27型、Sterrion 36=史特里昂36型、Granger 28=格兰杰28型、Ambersair=安博萨、Rioting=莱廷枪(枪械，非煽动)、Invarian steel=因伐利安钢、Emotional Allomancy parlors=安抚之厅/煽动之厅、The Weeping Bull=牛泣酒馆、Tingmar=廷格玛雪茄、The Elendel Daily=依蓝戴日报、Barrington carriage=巴灵顿(型马车)。
+- 团体：Originators=创始者、Preservers=存留者、Hidden Guard=秘卫、Nightstreet Gang=夜匪帮、Surefires=神火帮、Cobblers=光脚帮、Deniers of Masks=面具驳阻者、Men of gold and red=金红之人。
+- 事件/节日/文化：Yomen-Ostlin wedding dinner=尤门·欧斯特林婚宴、Lady ZoBell's party=佐贝尔夫人的派对、Kelesina Shores's party=克雷西娜·肖尔斯的派对、Winsting Innate's auction=拍卖会、Allomantic Agreement of '94=镕金术94号公约、The Path=道(宗教，信徒=道徒)、Mareweather=迈尔、Evanotype=照片、Southern Scadrian=南方人、Jaggenmire=轧亘米尔。
+- 家族（House X=族，按书证）：House Innate=因内特家族、House Ladrian=拉德利安家族、House Harms=哈姆斯家族、House Yomen=尤门家族、House Lekal=雷卡家、House Hammondess=哈姆德家族。
+- 其他：Elendel Basin=依蓝戴盆地、Excisor=切除器、Chillfever=寒热病、Wilg=柳影号、Brunstell=布伦斯特尔号、Destroyer=毁灭者、Docksithium=多克森之书、The Last Breath=《最后的气息》。Elendel=依蓝戴（书证146处一致，修源表伊兰黛尔市）。
+- 本轮新增 pending（found=false）：仅 tlm 无中译——Tarcsel Electric、Community、Malwish Consortium、Plank Boys、Admiral Daal's warship、Hemalurgic chimera、Human (River)、Sea of Yomend、Corbeau、Tarier；报章插页被省略——Survivor's Treasure、Linville & Lyons（House Record）；中译意译未成专名——Soonie pup、Roseweather、Wax's earring（仅作「耳环」）、Seran New District Cemetery（新赛朗墓地）、Truefast；正文无书证——Canton of Cartography、House Demoux。
+
 ## 4. 与既有规则的关系 / 需更正的旧决定
 - `rules/allik_terms.md` 旧「用户裁决」称 **Allik Neverfar 专名不翻译、保留英文**——**本轮用户改向**：
   - 现在**以官方中译本为准**，Allik Neverfar=**亚历克·奈弗法**（不是中文站「阿利克·纳法尔」、也不是旧表「阿里克」）。`rules/allik_terms.md` 需按此更正。

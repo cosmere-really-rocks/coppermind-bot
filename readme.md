@@ -77,11 +77,11 @@
 ### 译名表补全（glossary alignment，方法见 `rules/glossary_alignment.md`）
 待办按优先级：
 - ✅ 数据模型扩展已定稿并落地：`renderings`（长语块替换，如 "Allik Neverfar, Tall One"↔"高个子亚历克·奈弗法"，见 `Allik`）+ `variants`（同名多义义项，如 Demoux=人物/城市）+ `zh_variable`（无固定专名，如 The Village），迁移脚本 `scripts/glossary_migrate.py`（已跑）。
-- ✅ 批量补全：人物 → 地理/地点/建筑 → 歧义词条已铺开并完成 era2 可采证条目（~118 条，含主要人物 Waxillium/Spook/Steris/Telsin 等，见 `rules/glossary_alignment.md` 第 2 节批记录）。不可采证的（仅 tlm 无中译、报章插页被省略、正文匿名/编造名）已归入 pending。
+- ✅ 批量补全：人物 → 地理/地点/建筑 → **企业/团体/事件/文化/家族/物品/刊物/交通工具/疾病** → 歧义词条 已铺开并完成 E2 可采证条目（本论 769→819 条，全表共 819 条，232 条带书证 note，见 `rules/glossary_alignment.md` §2 批 G）。不可采证的（仅 tlm 无中译、报章插页被省略、正文意译未成专名、正文无书证）已归入 pending。
 - ✅ 整理「仅出现于失落金属(tlm)」词条清单（94 条 + mixed 58，见 `rules/glossary_alignment.md` §7），待 tlm 中译出版后补。
 - ✅ 补全后回填 `rules/*.md` 并提交译名表（本轮已提交）。
 
-### 已落地书证译名（`dict/mistborn.json`，2025-10-16，全表 769 条，含 182 条带书证 note）
+### 已落地书证译名（`dict/mistborn.json`，2025-10-16，全表 819 条，含 232 条带书证 note）
 - Allik Neverfar = 亚历克·奈弗法；Allik = 亚历克（别名 阿里克）
 - Red（依蓝德运河船夫）= 雷德
 - Irongate River = 铁门河
