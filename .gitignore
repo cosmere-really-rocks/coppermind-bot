@@ -1,6 +1,9 @@
 # 凭据/密钥 —— 绝不提交
 .env
 
+# 英文站快照 —— 本地数据，不提交
+en_snapshot/
+
 # Python
 .venv/
 __pycache__/
