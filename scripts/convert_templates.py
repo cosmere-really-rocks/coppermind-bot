@@ -29,6 +29,77 @@ def load_rules():
     return json.loads(RULES.read_text(encoding="utf-8"))
 
 
+# 英文站维护/站务模板 → 翻译/写站时 drop（不搬进中文词条）。
+# 用户 2025-10-17 决议：complete/partial/stub 保留（中文站同名 Complete/Partial/Stub 语义等价），
+# 其余（update/expand/demoted/nosnippet/dialogue/edit note/meta:*/user:*）纯英文站编辑/维护标记，drop。
+#   - nosnippet 是「对搜索引擎隐藏某段内容」的包装模板：drop 其包装但**保留内文**（unwrap）。
+#   - 其余 drop 模板整删。
+# meta/* 与 user:* 是前缀匹配（子模板）；其余精确名匹配（模板名首字母不敏感，统一小写）。
+DROP_TEMPLATES = {
+    "update", "expand", "demoted", "dialogue", "edit note",
+    # stub/partial/complete 保留（中文站有同名且语义等价）——不在 drop 集
+    # nosnippet 单独处理（unwrap 保内文）
+}
+DROP_TEMPLATE_PREFIXES = ("meta/", "user:")
+UNWRAP_TEMPLATES = {"nosnippet"}
+
+
+def _norm_tpl_name(name):
+    """剥掉 Template:/模板: 前缀与内部空白后的小写模板名。"""
+    n = re.sub(r'^(?:Template|模板)\s*:', '', name, flags=re.IGNORECASE)
+    return n.lstrip(":").strip().lower()
+
+
+def is_drop_template(name):
+    """该模板是否应 drop（整删）。"""
+    n = _norm_tpl_name(name)
+    if n in DROP_TEMPLATES:
+        return True
+    if n.startswith(DROP_TEMPLATE_PREFIXES):
+        return True
+    return False
+
+
+def is_unwrap_template(name):
+    """该模板是否应 unwrap（drop 包装、保留内文）——如 nosnippet。"""
+    return _norm_tpl_name(name) in UNWRAP_TEMPLATES
+
+
+def _apply_drop(code, report):
+    """递归移除 drop 模板（update/expand/meta:*/demoted/dialogue/edit note/user:*），
+    并 unwrap 内容包装模板（nosnippet 保留内文）。可处理嵌套在 infobox 参数值 / Tag 内容里的模板。"""
+    to_process = []
+    to_unwrap = []
+    for node in list(code.nodes):
+        if isinstance(node, mwparserfromhell.nodes.Template):
+            nm = _norm_tpl_name(str(node.name))
+            if is_unwrap_template(nm):
+                to_unwrap.append(node)
+            elif is_drop_template(nm):
+                to_process.append(node)
+            else:
+                # 该模板会被保留：递归进它的参数值，清理嵌套的 drop/unwrap 模板
+                for p in node.params:
+                    _apply_drop(p.value, report)
+        elif isinstance(node, mwparserfromhell.nodes.Tag):
+            if node.contents is not None:
+                _apply_drop(node.contents, report)
+        elif isinstance(node, mwparserfromhell.nodes.Wikilink):
+            if node.text is not None:
+                _apply_drop(node.text, report)
+    for node in to_process:
+        name = _norm_tpl_name(str(node.name))
+        report.setdefault("dropped", []).append(name)
+        code.remove(node)
+    for node in to_unwrap:
+        inner = " ".join(str(p.value).strip() for p in node.params if not p.showkey and str(p.value).strip())
+        report.setdefault("dropped", []).append("nosnippet(unwrap)")
+        if inner:
+            code.replace(node, inner)
+        else:
+            code.remove(node)
+
+
 def build_dst_template(name_map, tpl):
     """把英文 {{character}} 调用改写成中文 {{Infobox character 调用}}。
 
@@ -111,7 +182,6 @@ def convert_wikitext(wikitext, rules):
     中文 {{Infobox X}}（字段映射见 field_map）。其它模板保留原样。
     """
     code = mwparserfromhell.parse(wikitext)
-    infobox = _collect_infobox_rules(rules)
     report = {
         "converted": {},
         "unmapped": [],
@@ -120,6 +190,11 @@ def convert_wikitext(wikitext, rules):
         "renamed": [],
         "quote_content": [],
     }
+    # 先递归清理英文站维护/站务模板（update/expand/meta:*/demoted/dialogue/edit note/user:* 整删，
+    # nosnippet unwrap 保内文）——必须在 infobox 转换之前，否则嵌套在 infobox 参数值里的这些模板
+    # 会被 build_dst_template 拍平成文本后无法再按模板节点识别。
+    _apply_drop(code, report)
+    infobox = _collect_infobox_rules(rules)
 
     new_nodes = []
     for node in code.nodes:

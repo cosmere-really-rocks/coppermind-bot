@@ -16,11 +16,10 @@
 
 ## 🔴 真实卡点
 
-### 卡点 1（管线级 · 最大）：meta/维护模板未 drop，穿透进输出
+### 卡点 1（管线级 · 最大）：meta/维护模板未 drop，穿透进输出 —— ✅ 已修复
 - **805 处**穿透：`{{complete}}`×473、`{{partial}}`×74、`{{update}}`×34、`{{expand}}`×27、`{{meta/*}}`×12、`{{demoted}}`×3、`{{stub}}`×2、`{{nosnippet}}`×2、`{{dialogue}}`×1、`{{edit note}}`×1、`{{user:*}}`×1。
 - 实测：`Abrem` 转换保留 `{{complete}}`；已译 `Allik Neverfar` 翻译保留 `{{partial}}`。
-- 影响：这些是英文站维护标记，中文站**不应有**；中站同名 `Template:Complete/Partial/Stub` 语义不同（英文站算法评级标记），**不能等价复用**。会以错误/空模板写入正式词条。
-- 处置：⚠️ 需在 `convert_templates.py`/`translate.py` 加**全局 meta drop 清单**（大、expand、demoted、nosnippet、update、meta/done|partial|stub、dialogue、edit note、user:…；FULLPAGENAME 是魔术字）——这是批量写站前必须先修的隧道。**readme 待办 13 / probe_resolution §四 已记录。**
+- **已修**（2025-10-17）：用户决议 `complete`/`partial`/`stub` **保留**（中文站同名 Complete/Partial/Stub 语义等价，473/74/2 处原样保留）；`update`/`expand`/`meta:*/demoted/nosnippet/dialogue/edit note/user:*` **drop**；`nosnippet` 为内容包装、drop 时 unwrap 保留内文。落地在 `convert_templates.py` 递归 `_apply_drop`（处理嵌套模板），`translate.py` 在内存重转自动继承。**全量 568 词条节点级验证：0 残留、保留项精确对齐。**（见 readme 待办 13）
 
 ### 卡点 2（依赖当前任务）：metal 术语未定
 - 只影响英文快照里的 `Harmonium`/`Trellium` 2 篇（用 `{{metal}}`）+ 中文站 ~20 个金属词条更新。**不影响其余 566 篇的批量管线**。
@@ -31,6 +30,6 @@
 - readme 待办 7-8：正式批量写真实内容**前**需先定白名单范围、黑名单（File 不自动上传图、Template 已按 #16 例外处理）、redirect 搬运、图片校验与人工 review——避免覆盖真实内容。
 
 ## 建议推进顺序
-1. 先修 **卡点 1**（meta drop）——纯本地脚本改动、不需翻译姐姐、立即可批量解掉 805 处污染。✅ 可立刻做
+1. ✅ **卡点 1（meta drop）已修复**（2025-10-17，`convert_templates.py` 递归 `_apply_drop`，568 词条节点级验证通过）。
 2. 等**翻译姐姐**敲定 metal 术语（卡点 2 解除）→ 改金属模板/词条。
-3. 确定**批量写站范围**（卡点 3，白名单/治理）后再大规模 write；否则 450 页全量写站有覆盖/无序风险。
+3. 确定**批量写站范围**（卡点 3，白名单/治理）后再大规模 write；否则 ~450 页全量写站有覆盖/无序风险。
