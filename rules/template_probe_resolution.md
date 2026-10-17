@@ -98,7 +98,7 @@
 - ✅ **非 meta 模板已迁移到中文站**：`scripts/migrate_templates.py --all` 建了 11 个模板（Rosharan date/Date/sa/Notice/Cite note/Rpg-canon/Small caps/CoverToC/Sots ref/Wp ref/Books/Tress），revid 16708–16718；`Date/sa`→redirect→`Rosharan date`，实测 `{{date/sa|1174|2}}` 正常展开。
 - ✅ `shard info`→`Infobox shard` 已接入转换映射（实测 `Harmony`）。
 - ⬜ `metal` 等候单独承载决策（见 readme §6 / template_diff_audit §二）。
-- ⬜ meta 级模板（update/expand/demoted/nosnippet/meta:* /edit note/user:...）的 drop 逻辑需在 `convert_templates.py`/`translate.py` 落地。
+- ⬜ meta 级模板（update/expand/demoted/nosnippet/meta:* /edit note/user:...）的 drop 逻辑需在 `convert_templates.py`/`translate.py` 落地。**实测卡点**：2025-10-17 批量扫描 568 词条确认 `complete/partial/update/expand/meta:*/demoted/stub/nosnippet/dialogue/edit note/user:*` 共 805 处当前原样穿透进转换/翻译输出（如 `Abrem` 的 `{{complete}}`、`Allik Neverfar` 的 `{{partial}}`），**未 drop**——这是批量写站前需先修的真实堵点（见 readme 待办 13）。
 
 ## 五、给后续 AI 的提示（易踩坑）
 1. **判存在性用 pageid**，别用 `missing`（灰机返回空串）别用 `allpages`（不完整）。
