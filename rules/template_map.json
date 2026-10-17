@@ -342,7 +342,7 @@
     "field_map": {
       "image": "图像",
       "name": "书名",
-      "cover": "封面",
+      "cover": "图像",
       "series": "系列",
       "setting": "设定",
       "publisher": "出版社",

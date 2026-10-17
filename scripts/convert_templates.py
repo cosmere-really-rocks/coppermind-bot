@@ -50,6 +50,33 @@ def _norm_tpl_name(name):
     return n.lstrip(":").strip().lower()
 
 
+# --------------------------------------------------------------------------- #
+# 图片槽：把裸文件名包成 [[File:<名>|<宽>px]]（决议：中文站 Infobox 不自动加 [[file:]]，
+# 图槽保持自由，由 bot 在写页时给出可直接渲染的 [[File:...]]）。只包裹"裸文件名"，
+# 已含 [[File:...]] / 模板 {{image|...}} / <gallery> 等富内容的原样保留，不误伤。
+# --------------------------------------------------------------------------- #
+IMG_SRC_KEYS = {"image", "img", "cover", "map", "logo", "symbol", "mapfile", "file",
+                "emblem", "flag", "picture", "photo"}
+IMG_DST_PAT = re.compile(r"(图|像|地圖|地图|标志|徽|封面|封面图)")
+
+
+def _looks_like_bare_filename(val: str) -> bool:
+    """是否像"裸文件名"（可包成 [[File:...]]）：无 [[ / {{ / < / 换行，且以图片扩展名结尾。"""
+    if not val or "[" in val or "{" in val or "<" in val or "\n" in val:
+        return False
+    return bool(re.search(r"(?i)\.(?:jpe?g|png|gif|svg|webp|tif{1,2}|avif|bmp)$", val))
+
+
+def wrap_image_value(en_key: str, cn_key: str, val: str, width: int = 300) -> str:
+    """若该字段是图片槽且值为裸文件名，则包成 [[File:<名>|<宽>px]]；否则原样返回。"""
+    enl = en_key.lower()
+    if enl not in IMG_SRC_KEYS and not IMG_DST_PAT.search(cn_key):
+        return val
+    if not _looks_like_bare_filename(val):
+        return val
+    return f"[[File:{val}|{width}px]]"
+
+
 def is_drop_template(name):
     """该模板是否应 drop（整删）。"""
     n = _norm_tpl_name(name)
@@ -156,6 +183,7 @@ def build_dst_template(name_map, tpl):
     # 输出：一个参数一行，中文站风格
     out = ["{{" + dst_name]
     for enk, cnk, val in mapped_ordered:
+        val = wrap_image_value(enk, cnk, val)
         out.append(f"| {cnk}    = {val}")
     out.append("}}")
     raw = "\n".join(out) + "\n"
