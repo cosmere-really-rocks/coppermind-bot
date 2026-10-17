@@ -223,6 +223,33 @@ def translate_infobox_values(wikitext: str, glossary: dict) -> dict:
     return wikitext[:start] + new_block + wikitext[end:], stats
 
 
+def ensure_book_original_name(wikitext: str, en_title: str) -> tuple[str, bool]:
+    """给 {{Infobox book}} 补 `| 原名 = <英文书名>`（若缺）。
+
+    背景：中文站 Infobox book 标题行用 `'''{{{书名|{{PAGENAME}}}}}'''<br>'''{{{原名|{{#var_final:en}}}}}'''`，
+    若 bot 不写 『原名』，模板回退到 {{#var_final:en}}；而设置 en 变量的 {{en}} 在 infobox 之后才出现，
+    #var_final 在 en 尚未定义时求值 → 渲染泄漏 UNIQ--finalizedvar-* 占位符（页面出现怪串）。
+    真实页惯例是显式写 `| 原名 = <英文书名>`，这里按此补齐，绕开 #var_final。
+    返回 (新wikitext, 是否补了)。不会对已含『原名』或非 book 的 infobox 改动。
+    """
+    m = re.search(r"\{\{\s*Infobox\s*book\b", wikitext, re.IGNORECASE)
+    if not m:
+        return wikitext, False
+    start = m.start()
+    end = _find_infobox_block(wikitext, start)
+    if end < 0:
+        return wikitext, False
+    block = wikitext[start:end]
+    if re.search(r"(?m)^\|\s*原名\s*=", block):
+        return wikitext, False  # 已有，不动
+    # 在开头的 {{Infobox book 之后插一行
+    line_end = wikitext.find("\n", start)
+    if line_end < 0 or line_end > end:
+        return wikitext, False
+    insert = f"| 原名    = {en_title}\n"
+    return wikitext[:line_end + 1] + insert + wikitext[line_end + 1:], True
+
+
 # --------------------------------------------------------------------------- #
 # 决议#13 确定性保护：{{Quote}} 台词、{{columns}} 称号/名单等「原文引用」块
 # 在送 LLM 前用唯一占位符替换，强制模型原样保留，翻译后再把英文原文填回。
@@ -891,6 +918,10 @@ def main():
         sys.stderr.write("[Infobox 值替换]（按译名表确定性替换，正文翻译仍交给 LLM）:\n")
         for k, (old, new) in infobox_stats.items():
             sys.stderr.write(f"  {k}: {old} -> {new}\n")
+
+    # 决议：{{{Infobox book}} 缺『原名』时补上英文书名，绕开模板回退到 {{#var_final:en}}
+    # 导致的 UNIQ--finalizedvar-* 渲染占位符（en 变量在 {{en}}（位于 infobox 之后）才定义）。
+    wikitext, _book_en_added = ensure_book_original_name(wikitext, args.title)
 
     # 决议#13：把 {{Quote}}/{{columns}} 等原文块换成唯一占位符，模型原样保留，翻完再填回英文原文
     wikitext, registry = mask_protected_blocks(wikitext)
