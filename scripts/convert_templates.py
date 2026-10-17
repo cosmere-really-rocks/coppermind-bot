@@ -77,6 +77,24 @@ def wrap_image_value(en_key: str, cn_key: str, val: str, width: int = 300) -> st
     return f"[[File:{val}|{width}px]]"
 
 
+# --------------------------------------------------------------------------- #
+# 词条名引用字段：如上`上一本/下一本`之类的字段天然指向另一词条页，中文站 Infobox
+# 不自动加 [[ ]]，由写页方给全量链接。这里对"裸词条名"包成 [[<名>]]（值内已有
+# [[ / {{ / < / 换行 则视为已是富内容，原样保留）。注意：只对明确是"指向别的词条页"
+# 的字段白名单包裹，避免误包纯文本/日期/数字字段。
+# --------------------------------------------------------------------------- #
+LINK_DST_KEYS = {"上一本", "下一本"}
+
+
+def wrap_link_value(en_key: str, cn_key: str, val: str) -> str:
+    """若该字段是词条名引用（白名单）且值为裸词条名，则包成 [[<名>]]；否则原样返回。"""
+    if cn_key not in LINK_DST_KEYS:
+        return val
+    if not val or any(ch in val for ch in ("[[", "{{", "<", "\n")):
+        return val
+    return f"[[{val}]]"
+
+
 def is_drop_template(name):
     """该模板是否应 drop（整删）。"""
     n = _norm_tpl_name(name)
@@ -184,6 +202,7 @@ def build_dst_template(name_map, tpl):
     out = ["{{" + dst_name]
     for enk, cnk, val in mapped_ordered:
         val = wrap_image_value(enk, cnk, val)
+        val = wrap_link_value(enk, cnk, val)
         out.append(f"| {cnk}    = {val}")
     out.append("}}")
     raw = "\n".join(out) + "\n"
