@@ -223,16 +223,19 @@ def translate_infobox_values(wikitext: str, glossary: dict) -> dict:
     return wikitext[:start] + new_block + wikitext[end:], stats
 
 
-def ensure_book_original_name(wikitext: str, en_title: str) -> tuple[str, bool]:
-    """给 {{Infobox book}} 补 `| 原名 = <英文书名>`（若缺）。
+def ensure_infobox_original_name(wikitext: str, en_title: str) -> tuple[str, bool]:
+    """给 {{Infobox ...}} 缺『原名』字段时补 `| 原名 = <en_title>`。
 
-    背景：中文站 Infobox book 标题行用 `'''{{{书名|{{PAGENAME}}}}}'''<br>'''{{{原名|{{#var_final:en}}}}}'''`，
-    若 bot 不写 『原名』，模板回退到 {{#var_final:en}}；而设置 en 变量的 {{en}} 在 infobox 之后才出现，
-    #var_final 在 en 尚未定义时求值 → 渲染泄漏 UNIQ--finalizedvar-* 占位符（页面出现怪串）。
-    真实页惯例是显式写 `| 原名 = <英文书名>`，这里按此补齐，绕开 #var_final。
-    返回 (新wikitext, 是否补了)。不会对已含『原名』或非 book 的 infobox 改动。
+    背景：中文站多数 Infobox（book/character/location/nation/settlement/item/magic/...）
+    标题行用 `'''{{{Xxx|{{PAGENAME}}}}}'''<br>'''{{{原名|{{#var_final:en}}}}}'''`。
+    若页面未写『原名』，模板回退到 {{#var_final:en}}；而设置 en 变量的 {{en}} 位于
+    infobox 之后，MediaWiki 源顺序展开时 #var_final:en 在 en 未定义时求值 → 渲染泄漏
+    UNIQ--finalizedvar-* 占位符（页面出现怪串）。真实页惯例是显式写『原名 = 英文名』。
+    此处对任意缺『原名』的 Infobox 补上（MediaWiki 忽略模板未使用的参数，故对没有
+    『原名』槽的模板注入也无害；对有该槽的模板则正好绕开 #var_final 占位符）。
+    返回 (新wikitext, 是否补了)。只处理首个缺失的 Infobox。
     """
-    m = re.search(r"\{\{\s*Infobox\s*book\b", wikitext, re.IGNORECASE)
+    m = re.search(r"\{\{\s*Infobox\b", wikitext, re.IGNORECASE)
     if not m:
         return wikitext, False
     start = m.start()
@@ -241,8 +244,7 @@ def ensure_book_original_name(wikitext: str, en_title: str) -> tuple[str, bool]:
         return wikitext, False
     block = wikitext[start:end]
     if re.search(r"(?m)^\|\s*原名\s*=", block):
-        return wikitext, False  # 已有，不动
-    # 在开头的 {{Infobox book 之后插一行
+        return wikitext, False  # 已设原名，不动
     line_end = wikitext.find("\n", start)
     if line_end < 0 or line_end > end:
         return wikitext, False
@@ -919,9 +921,10 @@ def main():
         for k, (old, new) in infobox_stats.items():
             sys.stderr.write(f"  {k}: {old} -> {new}\n")
 
-    # 决议：{{{Infobox book}} 缺『原名』时补上英文书名，绕开模板回退到 {{#var_final:en}}
-    # 导致的 UNIQ--finalizedvar-* 渲染占位符（en 变量在 {{en}}（位于 infobox 之后）才定义）。
-    wikitext, _book_en_added = ensure_book_original_name(wikitext, args.title)
+    # 决议：给依赖 {{#var_final:en}} 的 {{Infobox ...}} 缺『原名』时补英文名，绕开
+    # 模板回退到 #var_final:en 导致的 UNIQ--finalizedvar-* 渲染占位符（en 变量在
+    # {{en}}（位于 infobox 之后）才定义）。book/character/location/... 均适用。
+    wikitext, _en_added = ensure_infobox_original_name(wikitext, args.title)
 
     # 决议#13：把 {{Quote}}/{{columns}} 等原文块换成唯一占位符，模型原样保留，翻完再填回英文原文
     wikitext, registry = mask_protected_blocks(wikitext)
