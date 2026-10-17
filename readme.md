@@ -94,6 +94,7 @@
   - 以维基为准改译名表：**Krent 科兰特→克伦特**（维基既有页，ch9 拉德利安家车夫）
   - 维基 move 到译名表名：**Mi'chelle Yomen 拆两条**——`Mi'chelle Yomen`=米歇尔·尤门（旧姓欧斯特林，婚后夫姓）、新增 `Mi'chelle Ostlin`=米歇尔·欧斯特林（旧姓），维基核心正文移动至 `米歇尔·尤门`，其余 redirect；**Yomen-Ostlin wedding dinner**=尤门-欧斯特林的婚礼晚宴（欧斯特林·斯），维基旧页 `尤门·/尤门- 尤门-欧思特林…` redirect 至连字符版正文
   - 其余不一致均在更早批次已解决或为「用户口径保留差异」（Origin/Pinnacle/Shadesmar/Valette Renoux/Wax/Mistborn 等）。全表 796 条。
+- ✅ 2026-10-18 爬取 `Category:Mistborn` 全量（递归展开 **1116 页**；其中 Era_2 等 564 页已抓/跳过，本次新抓 **550 页**，0 错误）。复用 `fetch_en.fetch_one` + cloudscraper（与 Era_2 同法），慢速限速 `2.0s/页`（决议#14，防反爬，全程未触发封禁）。脚本 `scripts/fetch_mistborn_crawl.py`（按 `state/mistborn_need_fetch.json` 清单断点续跑、每 25 页存索引）；范围清单 `state/mistborn_category_list.json`。验证：1116/1116 全快照、0 缺失。
 
 ## 凭据
 
