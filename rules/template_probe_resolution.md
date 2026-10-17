@@ -46,47 +46,59 @@
 | `Mistborn Era 2` | 22 | `Template:Navbox mistborn Era 2` ✅ | 改挂中站 Navbox mistborn Era 2 |
 | `Mistborn Era 1` | 1 | `Template:Navbox mistborn Era 1` ✅ | 改挂中站 Navbox mistborn Era 1 |
 | `cosmere`/`Cosmere` | 4 | `Template:Navbox cosmere` ✅ | 改挂中站 Navbox cosmere（三界宙导航） |
-| `books` | 6 | 中站无同名；书页底部导航 | 可改用 `Template:Navbox mistborn` 或删除，待定（低频） |
-| `summaries` | 4 | 中站无同名 | 维护页脚，drop 或不搬 |
-| `notice` | 1 | 中站无同名（候选 Theory/Exemplary/Complete/Fmbox） | 横幅，drop 或手工改中文横幅 |
-| `dialogue` | 1 | 中站无同名 | 对话横幅，drop 或承接（中文站如有对话模板另议） |
 
-### C. 系统性魔法字 / 不该上站 → drop（翻译时删除）
+### C. 非 meta 级模板 → 按用户决议「都需要搬」（2025-10-17 已建站）
+> 用户决议：**只要不是 meta 级（编辑维护）的 Template，都需要搬**。下列英文模板已由 `scripts/migrate_templates.py --all` 迁移（翻译）到中文站，`模板:` 均已建（revid 见后）：
+| 已建模板 | 英文 pageid | 用途 | 说明 |
+|---|---|---|---|
+| `Rosharan date`（含 `Date/sa` redirect）| 5747 | 罗沙/风暴光历（Vorin）中文输出 | 承接原中文 Date/sa 的 年/月/周/天，date/sa→redirect 到本模板（实测 `{{date/sa|1174|2}}`→`1174年第2月`） |
+| `Notice` | （父模板）| 横幅类父模板 | cite note / rpg-canon 的底座，一并建 |
+| `Cite note` | 4842 | 「需更多引用」横幅 | 依赖 Notice |
+| `Rpg-canon` | 25374 | 「Cosmere RPG 内容正典」横幅 | 依赖 Notice |
+| `Small caps` | 21518 | 小型大写排版 | 风暴之父等说话引文格式 |
+| `CoverToC` | 15936 | 系列封面目录导航 | mbe1/mbe2 等代号 |
+| `Sots ref` | 11716 | 引用 State of the Sanderson 年度信 | 按中文站 bws ref 风格改写 |
+| `Wp ref` | 5652 | 引用维基百科 | 按中文站 url ref 风格改写 |
+| `Books` | 709 | 桑德森全部作品导航 | 有既定中译的书名用中文，其余保留英文 |
+| `Tress` | 22736 | 单书导航 | 显示名保留英文 |
+
+> 已建 revid 16708–16718（`Rosharan date`/`Date/sa`/`Notice`/`Cite note`/`Rpg-canon`/`Small caps`/`CoverToC`/`Sots ref`/`Wp ref`/`Books`/`Tress`）。
+
+### C'. 仍属 meta 级（编辑维护）→ drop，不搬
 | 英文 `{{…}}` | 用量 | 说明 |
 |---|---|---|
-| `FULLPAGENAME` | 9 | MediaWiki 系统魔法字（`{{Special:PrefixIndex/{{FULLPAGENAME}}/}}`），非模板，drop |
-| `update` | 34 | 站务标记「需更新」，drop |
-| `expand` | 25 | 站务标记「待扩充」，drop |
-| `demoted` | 3 | 站务「已降级」，drop |
-| `nosnippet` | 2 | 站务「不进入摘要」，drop |
-| `small caps` | 1 | 排版「小型大写」，drop |
-| `cite note` | 1 | 排版/脚注辅助，drop |
-| `edit note` | 1 | 站务「编辑说明」，drop |
-| `meta/done` | 6 | meta 编辑状态模板，drop |
-| `meta/partial` | 5 | meta 编辑状态模板，drop |
-| `meta/stub` | 1 | meta 编辑状态模板，drop |
-| `rpg-canon` | 1 | 站务「rpg 是否正典」标记，drop |
-| `CoverToC` | 2 | 封面目录导航，drop |
-| `user:fbstj/mb/writing` | 1 | 用户子页模板，drop |
-| `sots ref` | 2 | 引用「State of the Sanderson」站外参考，drop（或转 url ref 处理） |
-| `wp ref` | 1 | 引用维基百科站外参考，drop（或转 url ref 处理） |
-| `tress` | 1 | 单书维基导航隐藏项，drop |
+| `update` | 34 | 站务「需更新」，meta，不搬 |
+| `expand` | 25 | 站务「待扩充」，meta，不搬 |
+| `demoted` | 3 | 站务「已降级」，meta，不搬 |
+| `nosnippet` | 2 | 站务「不进入摘要」，meta，不搬 |
+| `small caps`（已迁，见上）| 1 | —— |
+| `cite note`（已迁）| 1 | —— |
+| `edit note` | 1 | 站务「编辑说明」，meta，不搬 |
+| `meta/done`/`meta/partial`/`meta/stub` | 12 | meta 编辑状态机，不搬 |
+| `rpg-canon`（已迁）| 1 | —— |
+| `user:fbstj/mb/writing` | 1 | 用户子页模板，不搬 |
+| `CoverToC`（已迁）| 2 | —— |
+| `sots ref`（已迁）| 2 | —— |
+| `wp ref`（已迁）| 1 | —— |
+| `tress`（已迁）| 1 | —— |
+| `FULLPAGENAME` | 9 | MediaWiki 系统魔术字，非模板，drop |
+| `dialogue` | 1 | 对话横幅，待定（未在搬运清单，暂不建） |
+| `notice`（直接使用的那 1 次）| 1 | 与本项目已建的 `Notice` 是同一模板名（大小写不敏感），已建 |
 
-### D. 其他系列/低频 → 按需人工
-| 英文 `{{…}}` | 用量 | 处置 |
-|---|---|---|
-| `Rosharan date` | 41 | 风暴光历（Stormlight）专用日期模板，中站只有通用 `Date`。Mistborn 用不到（出现在快照里的 Stormlight 词条），建议**保留英文站源不动**、或通用化转 `Date`；风暴光词条不在当前 Mistborn 搬运范围，先标 pending |
-| `rosharan date` | 3 | 同上（小写别名） |
-| `shard info` | 1 | 神瑛信息模板（Stormlight），Mistborn 无此概念；drop 或风暴光词条人工处理 |
+### D. shard info → 对应中站 Infobox shard（映射，已接入）
+- **确认**：英文 `{{shard info}}` 对应中文「模板:Infobox shard」（vessel→化身/holder、status→现状/status、perpendicularity→神潭/shardpool、magic→魔法、slivers/splinters 同名、residence→世界/world；universe 无对应字段丢弃）。
+- 属于「映射」而非「新建」——中文站早已有 `Infobox shard`。已接入 `rules/template_map.json`，转换器实测 `Harmony` 出 `{{Infobox shard}}`。
 
-> 说明：`Rosharan date`/`shard info` 属于风暴光（Stormlight）世界观，而本项目范围按 readme 是 Mistborn 系列。快照里含一批风暴光词条（Adolin/Shallan/Kaladin 等），这部分模板能否照搬需与用户确认是否纳入当前搬运，故标 pending。
+> 说明：`Rosharan date`/`shard info` 属风暴光（Stormlight）/神瑛概念；快照里有对应风暴光词条时按上述方案承接，纳入搬运范围。
 
 ## 四、落地状态
 
-- ✅ `noble house` 已接入 `rules/template_map.json`，转换器实测 `House Demoux` 正常出 `{{Infobox noble house}}`。
-- ✅ 探测工具 `scripts/probe_template.py` 已修一个排序 bug（`missing.sort` 的 key 应为 dict 的 `"count"`，原误写成 `x[1]`），`--audit` 全流程可跑。
+- ✅ `noble house` 已接入 `rules/template_map.json`（`House Demoux` 实测转换）。
+- ✅ 探测工具 `scripts/probe_template.py` 全流程可跑（修过排序 bug）。
+- ✅ **非 meta 模板已迁移到中文站**：`scripts/migrate_templates.py --all` 建了 11 个模板（Rosharan date/Date/sa/Notice/Cite note/Rpg-canon/Small caps/CoverToC/Sots ref/Wp ref/Books/Tress），revid 16708–16718；`Date/sa`→redirect→`Rosharan date`，实测 `{{date/sa|1174|2}}` 正常展开。
+- ✅ `shard info`→`Infobox shard` 已接入转换映射（实测 `Harmony`）。
 - ⬜ `metal` 等候单独承载决策（见 readme §6 / template_diff_audit §二）。
-- ⬜ B/C/D 类处置需在 `convert_templates.py`/`translate.py` 的 drop/改挂逻辑落地（本轮先给决议，落地可后续做）。
+- ⬜ meta 级模板（update/expand/demoted/nosnippet/meta:* /edit note/user:...）的 drop 逻辑需在 `convert_templates.py`/`translate.py` 落地。
 
 ## 五、给后续 AI 的提示（易踩坑）
 1. **判存在性用 pageid**，别用 `missing`（灰机返回空串）别用 `allpages`（不完整）。

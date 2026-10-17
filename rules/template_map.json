@@ -374,6 +374,26 @@
     "missing_cn_fields": [],
     "notes": "已建中文站 Template:Infobox noble house（pageid440）。EN 常用参数 name/world/books；home（居所）、era（时代）、universe（三界宙）为 EN 独有、中文站无对应字段，未映射（home 语义近『村镇/城市』可人工并入对应字段，era/universe 暂无承接）。"
   },
+  "shard info": {
+    "src_template": "shard info",
+    "dst_template": "Infobox shard",
+    "field_map": {
+      "name": "shard",
+      "image": "图像",
+      "vessel": "holder",
+      "slivers": "slivers",
+      "splinters": "splinters",
+      "status": "status",
+      "perpendicularity": "shardpool",
+      "magic": "magic",
+      "residence": "world"
+    },
+    "drop_always": [
+      "universe"
+    ],
+    "missing_cn_fields": [],
+    "notes": "中文站 Template:Infobox shard 已存在。EN {{shard info}} 的 vessel→化身/holder、status→现状/status、perpendicularity→神潭/shardpool、magic→魔法、slivers/splinters 同名直继承；residence（居所）语义近 世界/world 归入 world；universe（三界宙）Infobox shard 无对应字段，丢弃。先生成后由翻译阶段核对字段取值。"
+  },
   "settlement": {
     "src_template": "settlement",
     "dst_template": "Infobox settlement",

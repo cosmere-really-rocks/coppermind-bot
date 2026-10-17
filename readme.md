@@ -130,7 +130,7 @@ API key 在 `.env`（已 gitignore，勿提交）。账号类凭据后续也放 
 - 翻译时**保持 wikitext 的格式**（模板、内链、引用标记等结构保留）。
 - 已知两侧模板**不完全一致**（如英文 `{{character}}` ↔ 中文 `{{Infobox character}}`，参数名/字段集都不同）。
 - 逐步积累「格式转换的 tool 或 skill」来解决模板差异。已接入 `rules/template_map.json`（大小写不敏感、一行一参数）：
-  - ✅ 已接入：`character`（完整）、及「通用映射批」`group`/`location`/`culture`/`item`/`literature`/`lifeform`/`food`/`magic`/`disease`、`business`/`book`（含多源碰撞归一，如 owner&founder→业主）、`noble house`、以及已建中文站模板的 `settlement`/`architecture`/`geography`/`nation`/`vehicle`/`quote`/`image`/`rpg ref`。
+  - ✅ 已接入：`character`（完整）、及「通用映射批」`group`/`location`/`culture`/`item`/`literature`/`lifeform`/`food`/`magic`/`disease`、`business`/`book`（含多源碰撞归一，如 owner&founder→业主）、`noble house`、`shard info`（→Infobox shard）、以及已建中文站模板的 `settlement`/`architecture`/`geography`/`nation`/`vehicle`/`quote`/`image`/`rpg ref`。
   - ⬜ 待接入/待决策：`metal`（中文 `Infobox metal` 是「镕金金属技艺」语义，EN `{{metal}}` 是「神金/金属学」语义，字段不对应，**需单独定承载方式**，见 `rules/template_probe_resolution.md` §三 A）。
   - 模板差异盘点见 `rules/template_diff_audit.md`；全量存在性探测（101 模板）与缺失项逐条处置见 `rules/template_probe_resolution.md` + `probe_report.json`；字段映射确认见 `rules/infobox_mapping.md`。
 
@@ -363,6 +363,18 @@ coppermind/
   ```
   依赖：stdlib + `write.py` 的 HuijiClient（需 `.env` 登录凭据）；不需额外库。
 
+- **`scripts/migrate_templates.py`**（Python，已跑通）：把**非 meta 级模板**迁移（翻译）到中文站（决议 #16 的例外，用户 2025-10-17 决议「只要不是 meta 级 Template 都需要搬」）→ 读内置 `TEMPLATES` 定义，逐一到中文站 `模板:<名>` 登录+CSRF+edit 建/覆盖 →
+  1. 已建：`Rosharan date`（+ `Date/sa` redirect）、`Notice`、`Cite note`、`Rpg-canon`、`Small caps`、`CoverToC`、`Sots ref`、`Wp ref`、`Books`、`Tress`（revid 16708–16718）
+  2. `Date/sa` 从原生中文模板改为 redirect → `Rosharan date`（保留中文 年/月/周/天 输出，实测 `{{date/sa|1174|2}}`→`1174年第2月`）
+  3. `shard info` 属「映射」非「新建」：对应中文站已有 `Infobox shard`，已接入 `template_map.json`
+  - meta 级（`update`/`expand`/`demoted`/`nosnippet`/`meta:*`/`edit note`/`user:...`/`FULLPAGENAME` 等）不搬，drop。
+  ```bash
+  .venv/bin/python scripts/migrate_templates.py --dry-run               # 只打印不提交
+  .venv/bin/python scripts/migrate_templates.py --templates Notice,Sots ref
+  .venv/bin/python scripts/migrate_templates.py --all                   # 全部
+  ```
+  依赖：stdlib + `write.py` 的 HuijiClient。
+
 ---
 
 # 待办状态总览（更新）
@@ -376,4 +388,5 @@ coppermind/
 7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则（黑名单含 File 命名空间不自动上传图片、Template 命名空间暂不搬运；图片引用文本照搬）
 8. ⬜ 批量写站前的**治理/人工 review**：图片黑名单、模板图片校验、redirect 搬运（`batch.py` 已能批量串联 fetch→translate→write，但正式批量跑某个分类/清单前需先定上述规则与范围，避免覆盖真实内容）
 9. ⬜ **译名表补全铺开**：用 `glossary_assist.py` 对缺失专名批量采证（优先可书证的正文词：地理/地点/宗教/货币等）；地图-only 或仅 tlm 无中译的词条标 pending 待补。本轮已示范 `Survivor→幸存者`、`Survivorism→幸存者教义`（悲悼护腕 mb6 ch12）
-10. ✅ **模板存在性探测 + 中站对应决议**：`scripts/probe_template.py --audit` 全量核对 en_snapshot 全部模板（101 个 / 11531 处，同名 50、已映射 22、缺失 29），缺失项逐条给出处置（接入映射 / 改挂中站 Navbox / drop 站务模板 / 风暴光低频 pending），见 `rules/template_probe_resolution.md` + `probe_report.json`；并按决议**接入 `noble house→Infobox noble house` 映射**（实测 `House Demoux` 正常转换）。`metal` 因中英语义不对应，标待决策不自动映射。
+10. ✅ **模板存在性探测 + 中站对应决议**：`scripts/probe_template.py --audit` 全量核对 en_snapshot 全部模板（101 个 / 11531 处，同名 50、已映射 22、缺失 29），缺失项逐条给出处置，见 `rules/template_probe_resolution.md` + `probe_report.json`；并按决议**接入 `noble house→Infobox noble house`、`shard info→Infobox shard` 映射**（实测 `House Demoux`/`Harmony` 正常转换）。`metal` 因中英语义不对应，标待决策不自动映射。
+11. ✅ **非 meta 模板已迁移到中文站**（决议 #16 例外，用户定「只要不是 meta 级 Template 都搬」）：`scripts/migrate_templates.py --all` 建了 11 个模板（Rosharan date/Date/sa/Notice/Cite note/Rpg-canon/Small caps/CoverToC/Sots ref/Wp ref/Books/Tress，revid 16708–16718），`Date/sa`→redirect→`Rosharan date` 并保留中文 年/月/周/天 输出。meta 级（update/expand/demoted/nosnippet/meta:* 等）不搬、drop。
