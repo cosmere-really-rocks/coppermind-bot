@@ -1,0 +1,491 @@
+{
+  "total_templates": 101,
+  "total_usages": 11531,
+  "ok_same_name": [
+    [
+      "book ref",
+      6295
+    ],
+    [
+      "Mistborn",
+      534
+    ],
+    [
+      "complete",
+      473
+    ],
+    [
+      "wob ref",
+      438
+    ],
+    [
+      "date",
+      400
+    ],
+    [
+      "file ref",
+      366
+    ],
+    [
+      "icon",
+      292
+    ],
+    [
+      "image",
+      243
+    ],
+    [
+      "rpg ref",
+      194
+    ],
+    [
+      "columns",
+      191
+    ],
+    [
+      "sidequote",
+      155
+    ],
+    [
+      "map ref",
+      123
+    ],
+    [
+      "for",
+      100
+    ],
+    [
+      "row",
+      87
+    ],
+    [
+      "tag+",
+      87
+    ],
+    [
+      "cat tag",
+      84
+    ],
+    [
+      "partial",
+      74
+    ],
+    [
+      "tag",
+      64
+    ],
+    [
+      "tes ref",
+      53
+    ],
+    [
+      "ref",
+      49
+    ],
+    [
+      "epigraph ref",
+      33
+    ],
+    [
+      "chart",
+      25
+    ],
+    [
+      "msh ref",
+      23
+    ],
+    [
+      "cite",
+      14
+    ],
+    [
+      "bws ref",
+      12
+    ],
+    [
+      "url ref",
+      12
+    ],
+    [
+      "anchor",
+      10
+    ],
+    [
+      "mistborn",
+      10
+    ],
+    [
+      "holder",
+      9
+    ],
+    [
+      "theory",
+      9
+    ],
+    [
+      "DISPLAYTITLE:''{{FULLPAGENAME}}''",
+      8
+    ],
+    [
+      "Stormlight",
+      6
+    ],
+    [
+      "reddit ref",
+      6
+    ],
+    [
+      "event",
+      5
+    ],
+    [
+      "tor ref",
+      5
+    ],
+    [
+      "uncanonical",
+      5
+    ],
+    [
+      "17s ref",
+      4
+    ],
+    [
+      "chart/wrap",
+      3
+    ],
+    [
+      "tweet ref",
+      3
+    ],
+    [
+      "Date",
+      2
+    ],
+    [
+      "date/sa",
+      2
+    ],
+    [
+      "map",
+      2
+    ],
+    [
+      "stub",
+      2
+    ],
+    [
+      "Book ref",
+      1
+    ],
+    [
+      "Sidequote",
+      1
+    ],
+    [
+      "Special:PrefixIndex/{{FULLPAGENAME}}/",
+      1
+    ],
+    [
+      "The Emperor's Soul",
+      1
+    ],
+    [
+      "article ref",
+      1
+    ],
+    [
+      "exemplary",
+      1
+    ],
+    [
+      "row/kv",
+      1
+    ]
+  ],
+  "infobox_mapped": [
+    [
+      "character",
+      311
+    ],
+    [
+      "quote",
+      281
+    ],
+    [
+      "settlement",
+      37
+    ],
+    [
+      "business",
+      35
+    ],
+    [
+      "architecture",
+      31
+    ],
+    [
+      "group",
+      24
+    ],
+    [
+      "culture",
+      20
+    ],
+    [
+      "location",
+      20
+    ],
+    [
+      "item",
+      15
+    ],
+    [
+      "geography",
+      12
+    ],
+    [
+      "literature",
+      9
+    ],
+    [
+      "noble house",
+      7
+    ],
+    [
+      "vehicle",
+      7
+    ],
+    [
+      "book",
+      6
+    ],
+    [
+      "lifeform",
+      4
+    ],
+    [
+      "food",
+      3
+    ],
+    [
+      "magic",
+      2
+    ],
+    [
+      "nation",
+      2
+    ],
+    [
+      "Architecture",
+      1
+    ],
+    [
+      "Business",
+      1
+    ],
+    [
+      "Quote",
+      1
+    ],
+    [
+      "disease",
+      1
+    ]
+  ],
+  "missing": [
+    {
+      "name": "Rosharan date",
+      "count": 41,
+      "candidates": [
+        "模板:Date"
+      ]
+    },
+    {
+      "name": "update",
+      "count": 34,
+      "candidates": []
+    },
+    {
+      "name": "expand",
+      "count": 25,
+      "candidates": []
+    },
+    {
+      "name": "Mistborn Era 2",
+      "count": 22,
+      "candidates": [
+        "模板:Navbox mistborn Era 2",
+        "模板:Navbox mistborn"
+      ]
+    },
+    {
+      "name": "FULLPAGENAME",
+      "count": 9,
+      "candidates": []
+    },
+    {
+      "name": "books",
+      "count": 6,
+      "candidates": [
+        "模板:B",
+        "模板:B/wot",
+        "模板:Book tag",
+        "模板:Navbox mistborn adventure game",
+        "模板:Qac/frame",
+        "模板:Qac"
+      ]
+    },
+    {
+      "name": "meta/done",
+      "count": 6,
+      "candidates": []
+    },
+    {
+      "name": "meta/partial",
+      "count": 5,
+      "candidates": []
+    },
+    {
+      "name": "summaries",
+      "count": 4,
+      "candidates": [
+        "模板:Book ref",
+        "模板:Msh ref"
+      ]
+    },
+    {
+      "name": "cosmere",
+      "count": 3,
+      "candidates": [
+        "模板:Navbox cosmere",
+        "模板:B",
+        "模板:Portal cosmere mistborn",
+        "模板:Event",
+        "模板:Rpg book",
+        "模板:Rpg ref"
+      ]
+    },
+    {
+      "name": "demoted",
+      "count": 3,
+      "candidates": []
+    },
+    {
+      "name": "rosharan date",
+      "count": 3,
+      "candidates": [
+        "模板:Date"
+      ]
+    },
+    {
+      "name": "CoverToC",
+      "count": 2,
+      "candidates": []
+    },
+    {
+      "name": "metal",
+      "count": 2,
+      "candidates": [
+        "模板:Navbox mistborn",
+        "模板:B",
+        "模板:Navbox summary",
+        "模板:Metal/cell",
+        "模板:Metal/letter",
+        "模板:Metal/row4cat"
+      ]
+    },
+    {
+      "name": "nosnippet",
+      "count": 2,
+      "candidates": []
+    },
+    {
+      "name": "sots ref",
+      "count": 2,
+      "candidates": []
+    },
+    {
+      "name": "Cosmere",
+      "count": 1,
+      "candidates": [
+        "模板:Navbox cosmere",
+        "模板:B",
+        "模板:Portal cosmere mistborn",
+        "模板:Event",
+        "模板:Rpg book",
+        "模板:Rpg ref"
+      ]
+    },
+    {
+      "name": "Mistborn Era 1",
+      "count": 1,
+      "candidates": [
+        "模板:Navbox mistborn",
+        "模板:Navbox mistborn Era 1"
+      ]
+    },
+    {
+      "name": "cite note",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "dialogue",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "edit note",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "meta/stub",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "notice",
+      "count": 1,
+      "candidates": [
+        "模板:Theory",
+        "模板:Exemplary",
+        "模板:Complete",
+        "模板:Fmbox"
+      ]
+    },
+    {
+      "name": "rpg-canon",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "shard info",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "small caps",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "tress",
+      "count": 1,
+      "candidates": [
+        "模板:B"
+      ]
+    },
+    {
+      "name": "user:fbstj/mb/writing",
+      "count": 1,
+      "candidates": []
+    },
+    {
+      "name": "wp ref",
+      "count": 1,
+      "candidates": []
+    }
+  ]
+}

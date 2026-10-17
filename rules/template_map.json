@@ -362,6 +362,18 @@
     "missing_cn_fields": [],
     "notes": "中文站 Infobox book 已补 部/注释/字数 字段；subpages 为编辑开关丢弃。released/date 碰撞归发行日期。"
   },
+  "noble house": {
+    "src_template": "noble house",
+    "dst_template": "Infobox noble house",
+    "field_map": {
+      "name": "家族名",
+      "world": "世界",
+      "books": "涉及书目"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "已建中文站 Template:Infobox noble house（pageid440）。EN 常用参数 name/world/books；home（居所）、era（时代）、universe（三界宙）为 EN 独有、中文站无对应字段，未映射（home 语义近『村镇/城市』可人工并入对应字段，era/universe 暂无承接）。"
+  },
   "settlement": {
     "src_template": "settlement",
     "dst_template": "Infobox settlement",
