@@ -12531,5 +12531,100 @@
       ],
       "categories": []
     }
+  },
+  "Shadesmar": {
+    "revid": 171917,
+    "ts": "2022-12-08T20:07:21Z",
+    "has_wikitext": true,
+    "is_redirect": true,
+    "target": "Rosharan subastral",
+    "missing": false,
+    "snapshot": "en_snapshot/Shadesmar",
+    "assets": {
+      "templates": [],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Rosharan subastral": {
+    "revid": 225573,
+    "ts": "2026-09-08T12:00:36Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Rosharan subastral",
+    "assets": {
+      "templates": [
+        "a",
+        "book ref",
+        "cite",
+        "columns",
+        "cosmere",
+        "demoted",
+        "epigraph ref",
+        "for",
+        "image",
+        "location",
+        "map ref",
+        "partial",
+        "quote",
+        "rpg ref",
+        "sidequote",
+        "stormlight",
+        "update",
+        "wob ref"
+      ],
+      "files": [
+        "Elsecaller.png",
+        "I_am_Unity.jpg",
+        "Jasnah_by_Audrey_Hotte.png",
+        "Lasting_Integrity_Interior.jpeg",
+        "RoW_US_cover_art.jpg",
+        "Row_US_Cover_Cropped.jpeg",
+        "Shadesmar (TWoK).jpg",
+        "Shadesmar by Pablo Zamora Almagro.jpg",
+        "Spren_by_Marie_Seeberger.jpg",
+        "Wyndle.jpg"
+      ],
+      "categories": []
+    }
+  },
+  "Cognitive Realm": {
+    "revid": 227689,
+    "ts": "2026-10-14T13:17:33Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Cognitive Realm",
+    "assets": {
+      "templates": [
+        "Magic",
+        "au ref",
+        "book ref",
+        "cosmere",
+        "file ref",
+        "for",
+        "image",
+        "map ref",
+        "msh ref",
+        "partial",
+        "quote",
+        "ref",
+        "rpg ref",
+        "update",
+        "url ref",
+        "wob ref"
+      ],
+      "files": [
+        "Iote_into_the_emberdark.jpg",
+        "Shadesmar_(TWoK).jpg",
+        "Shadesmar_Travel_by_LittleGreyDragon.jpeg",
+        "Starspren_Connor_Chamberlain.jpg",
+        "The Two Seasons broadsheet.jpg"
+      ],
+      "categories": []
+    }
   }
 }

@@ -175,12 +175,115 @@ def _collect_infobox_rules(rules):
     return by_name
 
 
+def _find_bal(text, start):
+    """从 start（'{{'）起找匹配的 '}}'，返回其后的下标。处理脚注 text 内嵌套模板。"""
+    depth = 0
+    for i in range(start, len(text)):
+        c = text[i]
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return i + 1
+    return len(text)
+
+
+def _split_top_params(body):
+    """把 {{ref|...}} 的参数段按顶级 '|' 拆开（忽略嵌套 {{...}} 内的 |）。
+    返回 [(key, value), ...]（无 '=' 的段=位置参数，忽略）。"""
+    if not body.startswith("|"):
+        body = "|" + body
+    out, depth, cur = [], 0, ""
+    for ch in body:
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+        if ch == "|" and depth == 0:
+            out.append(cur)
+            cur = ""
+        else:
+            cur += ch
+    out.append(cur)
+    return [(p.split("=", 1)[0], p.split("=", 1)[1]) for p in out if "=" in p]
+
+
+def _scan_refs(text):
+    """把一串文本里的 {{ref|...group=fn...}} 转成标准 <ref>，其余原样保留。"""
+    res, i = [], 0
+    while i < len(text):
+        if text[i:i + 2] == "{{":
+            j = _find_bal(text, i)
+            inner = text[i + 2:j - 2]
+            m = re.match(r"\s*([^|{}]+)", inner)
+            tname = m.group(1).strip().lower() if m else ""
+            if tname == "ref":
+                params = {k.strip().lower(): v.strip() for k, v in _split_top_params(inner[m.end():])}
+                if params.get("group", "").lower() == "fn":
+                    name, fn_text = params.get("name"), params.get("text")
+                    if name and fn_text is not None:
+                        rep = '<ref name="%s">%s</ref>' % (name, fn_text)
+                    elif fn_text is not None:
+                        rep = "<ref>%s</ref>" % fn_text
+                    elif name:
+                        rep = '<ref name="%s"/>' % name
+                    else:
+                        rep = text[i:j]
+                    res.append(rep)
+                    i = j
+                    continue
+            res.append(text[i:j])
+            i = j
+            continue
+        res.append(text[i])
+        i += 1
+    return "".join(res)
+
+
+def _convert_footnote_groups(wikitext):
+    """把英文站 {{ref|...|group=fn}} 脚注体系转成中文站可渲染的标准 <ref>/<references>（方案 A）。
+
+    背景：英文站 Template:Ref 支持 group=fn，输出 <ref group="fn">；中文站 Template:Ref 是书目
+    引用模板，忽略 group，导致 <references group=fn> 找不到前置 group 标记而报
+    “<references> 中定义的 <ref> 带有未在前文出现的组 fn”。此函数在 LLM 翻译之前把脚注归一为
+    标准 <ref>，英文脚注 text 随即作为普通正文交给翻译（方案 A，用户 2026-10-17 确认）。
+
+    覆盖四种形态：
+      - 正文内联无 name：{{ref|group=fn|text=X}}         -> <ref>X</ref>
+      - 正文内联有 name：{{ref|name=N|group=fn}}        -> <ref name="N"/>
+      - 定义块：<references group=fn>{{ref|group=fn|text=X|name=N}}</references>
+                                                         -> <references><ref name="N">X</ref></references>
+      - 自闭合：<references group=fn/>                  -> <references/>
+    """
+    def defblock(m):
+        op, inner, close = m.group(1), m.group(2), m.group(3)
+        op = re.sub(r"\s+group\s*=\s*[\"']?fn[\"']?", "", op)
+        return op + _scan_refs(inner) + close
+
+    # 1) 定义块整体处理（先把块内 {{ref...}} 当定义转，再剥离 group 属性）
+    pat = re.compile(r"(<references\b[^>]*?group\s*=\s*[\"']?fn[\"']?[^>]*>)(.*?)(</references\s*>)", re.S | re.I)
+    out = pat.sub(defblock, wikitext)
+
+    # 2) 自闭合 <references group=fn/>
+    out = re.sub(r"<references\b[^>]*?group\s*=\s*[\"']?fn[\"']?[^>]*?/>", "<references/>", out, flags=re.I)
+
+    # 3) 剩余的正文内联 {{ref|...group=fn...}}
+    out = _scan_refs(out)
+
+    return out
+
+
 def convert_wikitext(wikitext, rules):
     """返回 (converted_wikitext, report)。
 
     按 rules 里的 src_template 驱动：凡英文 infobox 模板名匹配即转换为对应
     中文 {{Infobox X}}（字段映射见 field_map）。其它模板保留原样。
     """
+    # 先做脚注 group 归一（方案 A：{{ref|group=fn}}/<references group=fn> -> 标准 <ref>/<references>），
+    # 必须在 parse 之前，否则 mwparserfromhell 会把 <references> 里嵌套的 {{ref}} 结构复杂化。
+    wikitext = _convert_footnote_groups(wikitext)
+
     code = mwparserfromhell.parse(wikitext)
     report = {
         "converted": {},
@@ -189,6 +292,7 @@ def convert_wikitext(wikitext, rules):
         "collisions": {},
         "renamed": [],
         "quote_content": [],
+        "footnote_groups": {"converted_to_ref": True, "note": "方案A：group=fn -> 标准<ref>/<references>"},
     }
     # 先递归清理英文站维护/站务模板（update/expand/meta:*/demoted/dialogue/edit note/user:* 整删，
     # nosnippet unwrap 保内文）——必须在 infobox 转换之前，否则嵌套在 infobox 参数值里的这些模板

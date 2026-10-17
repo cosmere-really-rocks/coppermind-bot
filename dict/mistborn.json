@@ -4,7 +4,7 @@
     "en": "Mistborn Glossary",
     "source": "迷雾之子第二纪元名词表.xls + 《迷雾之子》名词表(1).xls + 迷雾名词对照表.docx",
     "source_sheet": "Glossary",
-    "entry_count": 821,
+    "entry_count": 796,
     "updated": "2026-10-17",
     "en_fixes": [],
     "notes": [
@@ -15,7 +15,21 @@
       "覆盖为全系列（Era1+Era2）译名表；更名 mistborn_era2.json -> mistborn.json。",
       "用户口径覆盖：Marsh=沼泽（不同译者作品翻译不一，统一为沼泽）；Cosmere=三界宙。",
       "时代二四部曲中文书名（用户提供）：执法镕金/旧影森森/悲悼护腕/失落金属。",
-      "Survivor/Survivorism 由 glossary_assist.py 定位并书证采证（悲悼护腕 mb6 ch12）。"
+      "Survivor/Survivorism 由 glossary_assist.py 定位并书证采证（悲悼护腕 mb6 ch12）。",
+      "2026-10-17 台版清理：删除dict/raw/迷雾之子第二纪元名词表.xls（台版）来源的 27 个无大陆对应词条；11 个改为大陆译名（见 src 标记）",
+      "2026-10-17 新增 Ghostbloods=鬼血会（此前缺复数词条，导致 LLM 把第三纪元三部曲名 Mistborn: Ghostbloods 误译为“血影”）",
+      "2026-10-17 Ghostblood / Ghostbloods 统一为 鬼血会（用户确认单复数同译）",
+      "2026-10-17 Hoid=须空（原台版“霍伊得”，源自第二纪元名词表；此前涉台版清理被漏，因大陆表该行格式异常未入 38 冲突）",
+      "2026-10-17 第二批·以维基为准（用户口径）：Autonomy=自主、Odium=仇恨、Metallic Arts=金属技艺、Aramine=亚拉敏、Modicarm=摩迪卡、Sliver=残瑛（原表独盟/奥迪厄姆/金属艺术/碎裂等按红铜智库维基改正；Trell 注同步改「自主之化身」）",
+      "2026-10-17 Sliver/Sliverism 辨析（用户口径 + 书中校对）：两者都保留。Sliver=残瑛（Cosmere 通用词：曾持 Shard 之力后失去的「载体」；书中独立用此义极少，正文多为其宗教短语 Sliver of Infinity）；Sliverism=碎裂教（宗教名）。两词条各加 note 供 LLM 区分。",
+      "2026-10-17 Metalborn 书证核验（用户问询）：时代二「金属能力者」统称，书中标准译名为「金属之子」（旧影森森 9、悲悼护腕 18 处一致）；执法镕金(era2 首本) ch6 有一处松散译为「迷雾人」，以「金属之子」为准（词条 note 已注明）。",
+      "2026-10-17 第三批·以译名表为准：Vindication=清辩（枪支名，维基 问证 已移动至 清辩 并保留重定向+重定向修正）；Wax=瓦克斯（补 note：Waxillium 的昵称，维基不动）；Valette Renoux=法蕾特·雷弩（补 note：纹/Vin 的化名，维基不动）。",
+      "2026-10-17 第四批·大人/爵爷（纯姓氏化，用户口径）：Alernath=亚勒纳斯、Lord Stanton=斯坦顿（书证执法镕金ch1，维基史坦敦有误）、Peterus=佩特鲁斯、Shewrman=修尔曼——均为贵族姓氏、书中未提及名字（各加 note）；Jackstom Harms / Lord Harms 全名=杰克斯托姆·哈姆斯（旧影森森ch12『杰克斯托姆阁下』+哈姆斯），译名表改并维基已移到全名。维基已按纯姓氏/全名移动+重定向。",
+      "2026-10-17 Pinnacle（用户口径）：两译名都对、都收入——Mistborn 藏金术师(Feruchemist)=巅峰；飓光志阿勒斯卡人破碎平原宫殿 The Pinnacle=巅宫。加 note+variants 区分，维基不动。",
+      "2026-10-17 Rose Empire（用户口径）：维持维基「玫瑰帝国」，译名表蔷薇帝国→玫瑰帝国。核实：该词出自 Sel《皇帝的灵魂》，迷雾之子仅 tlm ch54 一次彩蛋提及（Moonlight=Shai 口述），无中译书证；另补 note 供 LLM 识别为三界宇宙跨作品词条。",
+      "2026-10-17 Shadesmar（用户口径）：译名表取「裂影界」，维基不动。据英文维基补 note：裂影界=知界域（认知界 Cognitive Realm）的口语俗称（『Cognitive Realm, known colloquially as Shadesmar』），源自罗沙区称呼、后成三界宇宙标准；迷雾之子仅无中译的 SH/tlm 提及，译名分歧源自飓光志。",
+      "2026-10-17 Rashek 全书检索（用户问询）：主流译法为「拉刹克」（时代一三本共百余处）；悲悼护腕 ch3 仅2处传统字形「拉剎克」。译名表拉剎克→拉刹克，与维基一致。",
+      "2026-10-17 Origin（用户口径）：译名表收两义、维基不动——迷雾之子依蓝黛盆地开端的时代用「起源」（执法镕金 ch3/ch14 书证）；飓光志 Roshar 的起源用「飓源」。note 注明按作品/上下文取义，variants 区分。"
     ]
   },
   "terms": {
@@ -26,7 +40,8 @@
       "zh": "阿多拿西"
     },
     "Hammondar Bay": {
-      "zh": "哈蒙德湾"
+      "zh": "哈姆德海湾",
+      "src": "大陆(名词表(1))#台版清理:哈蒙德湾"
     },
     "Ahlstrom Tower": {
       "zh": "奥司托姆塔"
@@ -94,12 +109,6 @@
     "Armal": {
       "zh": "阿玛尔"
     },
-    "Armies in Motion": {
-      "zh": "《军队行进学》"
-    },
-    "Arts of Scholarship": {
-      "zh": "《学问艺术》"
-    },
     "Ascendant Warrior": {
       "zh": "升华战士"
     },
@@ -157,14 +166,8 @@
     "Blessinf of Stability": {
       "zh": "稳定的祝福"
     },
-    "Blessing of Awareness": {
-      "zh": "意识的祝福"
-    },
     "Blessing of Potency": {
       "zh": "力量的祝福"
-    },
-    "Blessing of Presence": {
-      "zh": "存在的祝福"
     },
     "Block Street": {
       "zh": "栋街"
@@ -189,9 +192,6 @@
     },
     "Breaknaught": {
       "zh": "防暴号"
-    },
-    "Breeze / Ladrian": {
-      "zh": "微风（拉德利安）"
     },
     "Dulouis": {
       "zh": "杜琉伊斯"
@@ -223,9 +223,6 @@
     "Cadon": {
       "zh": "卡登"
     },
-    "Calling of Trust": {
-      "zh": "《信任的天职》"
-    },
     "Callingfale": {
       "zh": "考林菲尔"
     },
@@ -248,17 +245,11 @@
     "Cazzi": {
       "zh": "卡西"
     },
-    "Central Dominance": {
-      "zh": "中央统御区"
-    },
     "Cett": {
       "zh": "塞特"
     },
     "Cett Mansion": {
       "zh": "塞特宅邸"
-    },
-    "Chamber of Ascension": {
-      "zh": "升华之室"
     },
     "ChanGaar": {
       "zh": "尘痂"
@@ -271,9 +262,6 @@
     },
     "Chromium": {
       "zh": "铬"
-    },
-    "Church of the Survivor": {
-      "zh": "幸存者教会"
     },
     "Citizen": {
       "zh": "公民"
@@ -302,14 +290,12 @@
     "Compounding": {
       "zh": "复合力"
     },
-    "Conclave of Worldbringers": {
-      "zh": "世界引领者秘密会"
-    },
     "Faceless Immortals": {
       "zh": "无面不朽者"
     },
     "Bleeder": {
-      "zh": "流血者"
+      "zh": "放血者",
+      "src": "大陆(名词表(1))#台版清理:流血者"
     },
     "Connecter": {
       "zh": "联结者"
@@ -359,9 +345,6 @@
     "Crenda": {
       "zh": "可蓝达"
     },
-    "Crescent Dominance": {
-      "zh": "月牙统御区"
-    },
     "Culee": {
       "zh": "库里"
     },
@@ -385,9 +368,6 @@
     },
     "Seventh Street": {
       "zh": "第七街"
-    },
-    "Deepness Doctrine": {
-      "zh": "《深闇教义》"
     },
     "Demoux": {
       "zh": "德穆",
@@ -542,9 +522,6 @@
     "Feltrel": {
       "zh": "费特瑞"
     },
-    "Feruchemical metalminds": {
-      "zh": "藏金金属意识"
-    },
     "Feruchemist": {
       "zh": "藏金术师"
     },
@@ -617,11 +594,9 @@
     "Gneorndin Cett": {
       "zh": "奈容汀·塞特"
     },
-    "Gneration of Kandra": {
-      "zh": "坎得拉世代"
-    },
     "God Beyond": {
-      "zh": "远古之神"
+      "zh": "彼界之神",
+      "src": "大陆(名词表(1))#台版清理:远古之神"
     },
     "Goradel": {
       "zh": "葛拉道"
@@ -641,9 +616,6 @@
     "Hallant": {
       "zh": "哈莱特"
     },
-    "Ham / Hammond": {
-      "zh": "哈姆（哈姆德）"
-    },
     "Harathdal": {
       "zh": "哈洛道"
     },
@@ -651,7 +623,8 @@
       "zh": "哈德恩"
     },
     "Harmony": {
-      "zh": "和谐之主"
+      "zh": "和谐",
+      "src": "大陆(名词表(1))#台版清理:和谐之主"
     },
     "Harrows": {
       "zh": "劳难"
@@ -660,7 +633,8 @@
       "zh": "比尔明"
     },
     "Basin": {
-      "zh": "港池"
+      "zh": "盆地区",
+      "src": "大陆(名词表(1))#台版清理:港池"
     },
     "Flaming Bunny": {
       "zh": "烈焰火兔"
@@ -707,9 +681,6 @@
     "Hilde": {
       "zh": "希儿蒂"
     },
-    "Hill of a Thousand Spires": {
-      "zh": "千塔之山"
-    },
     "Hinston": {
       "zh": "辛斯顿"
     },
@@ -717,7 +688,8 @@
       "zh": "霍拔特"
     },
     "Hoid": {
-      "zh": "霍伊得"
+      "zh": "须空",
+      "note": "官方大陆译名（飓光志/迷雾之子）；源表 台版=霍伊得（第二纪元名词表.xls）→ 2026-10-17 用户确认更正为 须空"
     },
     "Holy Witness": {
       "zh": "神圣见证人"
@@ -726,10 +698,7 @@
       "zh": "月光"
     },
     "Autonomy": {
-      "zh": "独盟"
-    },
-    "Homeland of Kandra": {
-      "zh": "坎得拉家乡"
+      "zh": "自主"
     },
     "Hoselle": {
       "zh": "荷赛儿"
@@ -855,7 +824,8 @@
       "zh": "联结"
     },
     "Krent": {
-      "zh": "科兰特"
+      "zh": "克伦特",
+      "note": "执法镕金 ch9（拉德利安家族车夫，提劳莫炸宅时在场）；2026-10-17 以维基为准，科兰特→克伦特"
     },
     "Kwaan": {
       "zh": "关"
@@ -870,7 +840,8 @@
       "zh": "贾克希"
     },
     "Shadesmar": {
-      "zh": "裂影界"
+      "zh": "裂影界",
+      "note": "裂影界是知界域（认知界，Cognitive Realm）的俗称。"
     },
     "Sho Del": {
       "zh": "修德族"
@@ -932,9 +903,6 @@
     "Lessie": {
       "zh": "蕾西"
     },
-    "Lestibournes / Spook": {
-      "zh": "雷司提波恩（鬼影）"
-    },
     "Limmi": {
       "zh": "莉米"
     },
@@ -950,14 +918,12 @@
     "Silver House": {
       "zh": "银府"
     },
-    "Lord Ferson Penrod": {
-      "zh": "费尔森·潘洛德大人"
-    },
     "Lord Habren": {
       "zh": "哈伯伦大人"
     },
     "Lord Harms": {
-      "zh": "哈姆斯大人"
+      "zh": "杰克斯托姆·哈姆斯",
+      "note": "即 Jackstom Harms（史特芮丝·哈姆斯之父）；书中全名=杰克斯托姆·哈姆斯（旧影森森 ch12 称其名『杰克斯托姆阁下』，哈姆斯为姓氏）。别名/称号：哈姆斯大人=Lord Harms"
     },
     "Lord Hue": {
       "zh": "修大人"
@@ -966,7 +932,8 @@
       "zh": "多尔"
     },
     "Ghostblood": {
-      "zh": "鬼血"
+      "zh": "鬼血会",
+      "note": "（单数 Ghostblood 亦译为鬼血会，与复数 Ghostbloods 一致，2026-10-17 用户确认）"
     },
     "Soonie": {
       "zh": "粟泥"
@@ -978,16 +945,14 @@
       "zh": "统御主"
     },
     "Lord Stanton": {
-      "zh": "斯坦顿大人"
+      "zh": "斯坦顿",
+      "note": "这是贵族的姓氏，书中没有提及名字（执法镕金 ch1『斯坦顿大人』；另有斯坦顿大道 Stanton Way）。维基旧译『史坦敦』有误"
     },
     "Lord Waxillium Ladrian": {
       "zh": "瓦克斯利姆·拉德利安大人"
     },
     "Lurcher": {
       "zh": "扯手"
-    },
-    "Lutha-Davn Canal": {
-      "zh": "陆沙戴文运河"
     },
     "Sequence": {
       "zh": "序列"
@@ -1026,7 +991,7 @@
       "zh": "弗兰西斯"
     },
     "Odium": {
-      "zh": "奥迪厄姆"
+      "zh": "仇恨"
     },
     "Fialia": {
       "zh": "菲利娅"
@@ -1034,14 +999,12 @@
     "Kessi": {
       "zh": "凯奚"
     },
-    "Luthadel Garrison": {
-      "zh": "陆沙德警备队"
-    },
     "Drenya": {
       "zh": "德兰娅"
     },
     "Allriandre": {
-      "zh": "埃尔利安德"
+      "zh": "亚莉安德",
+      "src": "大陆(名词表(1))#台版清理:埃尔利安德"
     },
     "Consortium": {
       "zh": "财团"
@@ -1117,7 +1080,8 @@
       "zh": "宓兰"
     },
     "Metalborn": {
-      "zh": "金属之子"
+      "zh": "金属之子",
+      "note": "迷雾之子时代二通用称呼：指拥有镕金/藏金（金属）能力之人（Allomancer/Feruchemist 统称）。官方书证：旧影森森 9 处、悲悼护腕 18 处均作「金属之子」（如旧影森森 ch4『每当有金属之子犯罪时』）。注：执法镕金（era2 首本）ch6 有一处把 Metalborn 松散译为「迷雾人」（『歹徒和执法者都很熟悉迷雾人』），且该译本常用「迷雾人」泛指迷雾之子/金属能力者——以「金属之子」为准。勿与「迷雾之子（Mistborn，特指通晓全金属者）」混淆。"
     },
     "metalmind": {
       "zh": "金属意识"
@@ -1174,9 +1138,6 @@
     "Noorden": {
       "zh": "诺丹"
     },
-    "Northern Dominance": {
-      "zh": "北方统御区"
-    },
     "Nouxil": {
       "zh": "诺西尔"
     },
@@ -1184,7 +1145,8 @@
       "zh": "圣务官"
     },
     "Octant": {
-      "zh": "捌分区"
+      "zh": "8分区",
+      "src": "大陆(名词表(1))#台版清理:捌分区"
     },
     "Aradel": {
       "zh": "阿拉戴尔"
@@ -1205,7 +1167,12 @@
       "zh": "欧瑟"
     },
     "Origin": {
-      "zh": "起源"
+      "zh": "起源",
+      "note": "按上下文挑选：① 迷雾之子中指依蓝黛盆地文明开端的时代/建基之源时用「起源」（执法镕金 ch3/ch14 书证）；② 飓光志中指 Roshar 的起源（风暴/地理起源）时用「飓源」。两译名都对，据所在作品取义。",
+      "variants": [
+        {"kind": "mistborn", "zh": "起源"},
+        {"kind": "stormlight", "zh": "飓源"}
+      ]
     },
     "Originator": {
       "zh": "创始者"
@@ -1248,7 +1215,12 @@
       "zh": "费伦·傅兰敦"
     },
     "Pinnacle": {
-      "zh": "巅峰"
+      "zh": "巅峰",
+      "note": "区分不同的使用场景：① 指迷雾之子中一种藏金术师(Feruchemist)时用「巅峰」；② 指飓光志中阿勒斯卡人位于破碎平原的宫殿（The Pinnacle）时用「巅宫」。两个译名都对，按上下文取义。",
+      "variants": [
+        {"kind": "feruchemist", "zh": "巅峰"},
+        {"kind": "stormlight-palace", "zh": "巅宫"}
+      ]
     },
     "Pits of Hathsin": {
       "zh": "海司辛深坑"
@@ -1284,7 +1256,8 @@
       "zh": "拉奈特"
     },
     "Rashek": {
-      "zh": "拉剎克"
+      "zh": "拉刹克",
+      "note": "统御主(Lord Ruler)的本名。书中主体译法是「拉刹克」（时代一三本共百余处：最后帝国/升华之井/永世英雄）；悲悼护腕 ch3 有两处作传统字形「拉剎克」，按主流取「拉刹克」。"
     },
     "Redalevin": {
       "zh": "雷戴文"
@@ -1341,7 +1314,8 @@
       "zh": "灭绝"
     },
     "Rust and Ruin": {
-      "zh": "铁锈毁灭"
+      "zh": "铁锈灭绝",
+      "src": "大陆(名词表(1))#台版清理:铁锈毁灭"
     },
     "Satren": {
       "zh": "沙特伦"
@@ -1350,7 +1324,8 @@
       "zh": "钢推术"
     },
     "Saze": {
-      "zh": "萨泽"
+      "zh": "萨兹",
+      "src": "大陆(名词表(1))#台版清理:萨泽"
     },
     "Dlavil": {
       "zh": "达拉维尔"
@@ -1359,7 +1334,8 @@
       "zh": "沙赛德"
     },
     "Scadrial": {
-      "zh": "斯卡德利亚"
+      "zh": "司卡德瑞尔",
+      "src": "大陆(名词表(1))#台版清理:斯卡德利亚"
     },
     "Searan": {
       "zh": "席兰"
@@ -1404,10 +1380,12 @@
       "zh": "滑行者"
     },
     "Sliver": {
-      "zh": "碎裂"
+      "zh": "残瑛",
+      "note": "三界宙(Cosmere)通用技术词：指曾持有某神(Shard)之力、后因主动或被动原因失去神力的「载体」，神的力量与载体可分看。与宗教名 Sliverism（碎裂教）是两回事。书中独立用此义较少：Mistborn 各书里「Sliver」多属碎裂教教义短语\"Sliver of Infinity\"（统治者=…，中译作「无穷宇宙的一截碎片」）；此义(残瑛)在已译各书几乎无书证，唯一清晰例证是失落金属(the_lost_metal)里 Telsin 自称\"a Sliver of Autonomy\"（该书暂无中译）。按红铜智库维基取「残瑛」。"
     },
     "Sliverism": {
-      "zh": "碎裂教"
+      "zh": "碎裂教",
+      "note": "迷雾之子(斯卡德瑞尔)的宗教，由时代一「钢铁教团」在 Final Ascension（最后飞升）后演化而来，时代二盛行；信众称 Sliverist。教义视统治者(Lord Ruler)为「Sliver of Infinity」（无穷宇宙的一截碎片）并崇拜铁眼(Ironeyes/马什)。此词是宗教名，勿混同表示「失去神力的 Shard 载体」的通用词 Sliver（残瑛）。中译「碎裂教」有书证（执法镕金 ch4：『别管他们信的是碎裂教』）。"
     },
     "Slowswift": {
       "zh": "慢快"
@@ -1426,9 +1404,6 @@
     },
     "South Bridge": {
       "zh": "南桥"
-    },
-    "Southern Dominance": {
-      "zh": "南方统御区"
     },
     "Sparker": {
       "zh": "星火"
@@ -1469,17 +1444,11 @@
     "Streerslot": {
       "zh": "街沟"
     },
-    "Studies in Revolution": {
-      "zh": "《革命研究》"
-    },
     "Subsumer": {
       "zh": "吞食者"
     },
     "Suisna": {
       "zh": "绥纳"
-    },
-    "Supplying in Scale": {
-      "zh": "《比例补给法》"
     },
     "Surefire": {
       "zh": "神火帮"
@@ -1493,9 +1462,6 @@
     "Jeffy": {
       "zh": "杰菲"
     },
-    "Survivor of Hathsin": {
-      "zh": "海司辛幸存者"
-    },
     "Gud the Killer": {
       "zh": "杀手古德"
     },
@@ -1506,7 +1472,8 @@
       "zh": "席诺德"
     },
     "Jak": {
-      "zh": "雅克"
+      "zh": "杰克",
+      "src": "大陆(名词表(1))#台版清理:雅克"
     },
     "Lone Mesa": {
       "zh": "孤单的梅萨"
@@ -1614,14 +1581,15 @@
       "zh": "酮绯"
     },
     "Rose Empire": {
-      "zh": "蔷薇帝国"
+      "zh": "玫瑰帝国",
+      "note": "三界宇宙/跨作品词条：Rose Empire 出自 Sel 星《皇帝的灵魂》(The Emperor's Soul)；并非迷雾之子本土帝国。迷雾之子系列仅失落金属(tlm) ch54 一次彩蛋提及（角色 Moonlight=Shai 随口提到『Nasties from the Rose Empire』），且 tlm 无中译、中文已译书无书证。按红铜智库维基取「玫瑰帝国」。"
     },
     "Torinost": {
       "zh": "托林诺"
     },
     "Trell": {
       "zh": "特雷",
-      "note": "神（独盟之化身）；宗教名 Trellism/Trelagism=特雷教."
+      "note": "神（自主之化身）；宗教名 Trellism/Trelagism=特雷教."
     },
     "Tremredare": {
       "zh": "彻姆戴尔"
@@ -1631,9 +1599,6 @@
     },
     "Trentison": {
       "zh": "特蓝提森"
-    },
-    "Trials of Monument": {
-      "zh": "《伟大的试炼》"
     },
     "Troubeld": {
       "zh": "特鲁博得"
@@ -1693,13 +1658,14 @@
       "zh": "邬都"
     },
     "Metallic Arts": {
-      "zh": "金属艺术"
+      "zh": "金属技艺"
     },
     "Hemalurgist": {
       "zh": "血金术师"
     },
     "Valette Renoux": {
-      "zh": "法蕾特·雷弩"
+      "zh": "法蕾特·雷弩",
+      "note": "纹(Vin)的化名：最后帝国中纹伪装成贵族小姐时所用身份（与依蓝德·泛图尔交往期间；本名 Vin=纹）"
     },
     "Vanisher": {
       "zh": "隐匪"
@@ -1735,7 +1701,8 @@
       "zh": "瓦林"
     },
     "Wax": {
-      "zh": "瓦克斯"
+      "zh": "瓦克斯",
+      "note": "昵称/简称：瓦克斯利姆·拉德利安(Waxillium Ladrian)的昵称（韦恩等常以 Wax/瓦克斯称呼他）；全名见 Waxillium Ladrian=瓦克斯利姆·拉德利安"
     },
     "Lady Gardre": {
       "zh": "嘉德里夫人"
@@ -2044,8 +2011,8 @@
       "note": "旧影森森 ch4（罪犯）"
     },
     "Jackstom Harms": {
-      "zh": "哈姆斯",
-      "note": "执法镕金 ch2/7；正文仅见 Lord Harms=哈姆斯大人（哈姆斯家），史特芮丝之父"
+      "zh": "杰克斯托姆·哈姆斯",
+      "note": "全名=杰克斯托姆·哈姆斯（Lord Harms，史特芮丝·哈姆斯之父）。旧影森森 ch12 称其名『杰克斯托姆阁下』；哈姆斯为姓氏。与 Lord Harms 同一人"
     },
     "Javie": {
       "zh": "雅维",
@@ -2061,7 +2028,7 @@
     },
     "Alernath": {
       "zh": "亚勒纳斯",
-      "note": "《执法镕金》第四章：亚勒纳斯大人在吧台（Lord Alernath）；哈姆斯大人同侪，依蓝黛贵族"
+      "note": "这是贵族的姓氏，书中没有提及名字（执法镕金 ch4『亚勒纳斯大人在吧台』=Lord Alernath；哈姆斯大人同侪，依蓝黛贵族）"
     },
     "Allri Innate": {
       "zh": "亚莉·因内特",
@@ -2076,7 +2043,7 @@
       "note": "旧影森森 ch2（罪犯）"
     },
     "Aramine": {
-      "zh": "亚拉敏（亚拉敏教授）",
+      "zh": "亚拉敏",
       "note": "执法镕金 ch7（依蓝黛大学教授，马拉西导师）"
     },
     "Arintol": {
@@ -2268,8 +2235,12 @@
       "note": "执法镕金 ch6/8/20（第四八分区警队负责人，后身故被 TenSoon 假冒）"
     },
     "Mi'chelle Yomen": {
-      "zh": "米歇尔贵女",
-      "note": "执法镕金 ch4（约辛大人的婚宴新娘，约敏庄园女主）"
+      "zh": "米歇尔·尤门",
+      "note": "执法镕金 ch4（约辛大人的婚宴新娘，尤门家族媳妇）；旧姓欧斯特林（Ostlin），婚后改夫姓尤门（Yomen）；2026-10-17 与维基核对：核心词条用「米歇尔·尤门」，维基已移动到该名"
+    },
+    "Mi'chelle Ostlin": {
+      "zh": "米歇尔·欧斯特林",
+      "note": "执法镕金 ch4（Mi'chelle 的旧姓，娘家欧斯特林 Ostlin）；婚后改夫姓尤门（Yomen），正文一般用「米歇尔·尤门」"
     },
     "Migs": {
       "zh": "米格斯",
@@ -2288,7 +2259,7 @@
       "note": "旧影森森 ch19（拉奈特的前女友）"
     },
     "Modicarm": {
-      "zh": "摩迪卡（教授）",
+      "zh": "摩迪卡",
       "note": "执法镕金 ch7（依蓝戴大学教授，马丽茜之师）"
     },
     "Hutchen": {
@@ -2308,8 +2279,8 @@
       "note": "执法镕金 ch15（尘染者帕克罗=Paclo the Dusty，瓦克斯旧副手）"
     },
     "Peterus": {
-      "zh": "佩特鲁斯（大人）",
-      "note": "执法镕金 ch5（第八警卫队退休队长，婚宴上率先抗匪）"
+      "zh": "佩特鲁斯",
+      "note": "这是贵族的姓氏，书中没有提及名字（执法镕金 ch5『佩特鲁斯大人』，前第八警卫队队长，婚宴上率先抗匪，其妻玛尔辛 Marthin）"
     },
     "Remmingtel Tarcsel": {
       "zh": "雷鸣特·塔瑟尔",
@@ -2368,8 +2339,8 @@
       "note": "旧影森森 ch9（ZoBell 派对贵妇，市长因内特的政治支持者）"
     },
     "Shewrman": {
-      "zh": "修尔曼大人",
-      "note": "执法镕金 ch4（臭名昭著的宴会宾客）"
+      "zh": "修尔曼",
+      "note": "这是贵族的姓氏，书中没有提及名字（执法镕金 ch4『修尔曼大人』，臭名昭著的宴会宾客）"
     },
     "Slink": {
       "zh": "斯灵克",
@@ -2600,8 +2571,8 @@
       "note": "执法镕金 尾声（终极金属/末代金属的携带者预言；主要为 tlm 语境）"
     },
     "Yomen-Ostlin wedding dinner": {
-      "zh": "尤门·欧斯特林婚宴",
-      "note": "执法镕金 ch2/4（尤门与欧斯特林两家联姻婚宴，隐匪袭击事件）"
+      "zh": "尤门-欧斯特林的婚礼晚宴",
+      "note": "执法镕金 ch2/4（尤门与欧斯特林两家联姻婚宴，隐匪袭击事件）；2026-10-17 与维基核对，正确名为「欧斯特林」（斯），维基既有页面为「尤门-欧思特林的婚礼晚宴」（思）-> 本表改「尤门-欧斯特林的婚礼晚宴」"
     },
     "Lady ZoBell's party": {
       "zh": "佐贝尔夫人的派对",
@@ -2738,6 +2709,10 @@
     "Survivorism": {
       "zh": "幸存者教义",
       "note": "幸存者之教义/教派；悲悼护腕 mb6 ch12「幸存者教义讲求的不是赢到最后…」"
+    },
+    "Ghostbloods": {
+      "zh": "鬼血会",
+      "note": "组织名（复数 Ghostbloods）；2026-10-17 新增，纠正 LLM 曾把第三纪元三部曲名 Mistborn: Ghostbloods 误译“血影”"
     }
   }
 }

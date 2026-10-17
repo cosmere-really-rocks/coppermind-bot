@@ -88,6 +88,12 @@
 - Carlo’s Bend = 卡罗湾（已有，书证核验）
 - Trell（神）= 特雷；Trellism / Trelagism（宗教，官方中译合并）= 特雷教；Nelazan = 奈拉禅
 - Spook=鬼影、Waxillium Ladrian=瓦克斯利姆·拉德利安、Steris Harms=史特芮丝·哈姆斯、Telsin Ladrian=苔尔辛、Marasi Colms=玛拉茜·科尔姆斯、Elendel=依蓝戴（书证146处一致，修正源表伊兰黛尔市） 等，完整批记录见 `rules/glossary_alignment.md` §2。
+- ⚠️ 2026-10-17 台版清理：源文件 `dict/raw/迷雾之子第二纪元名词表.xls` 为**台版**译名（如 斯卡德利亚/寰宇/和谐之主），与大陆源 `《迷雾之子》名词表(1).xls`（司卡德瑞尔/三界宙/和谐）冲突。已比对二者（`.\`/`．`全角点→间隔号`·`判定为同词非差异）：**11 条改为大陆译名**（Scadrial→司卡德瑞尔、Harmony→和谐、Bleeder→放血者、Basin→盆地区、Jak→杰克、Saze→萨兹、Octant→8分区、Rust and Ruin→铁锈灭绝、Hammondar Bay→哈姆德海湾、God Beyond→彼界之神、Allriandre→亚莉安德；各条 src 记 `大陆(名词表(1))#台版清理:<旧台版>`），**27 条**仅台版源、无大陆对应 → 删除。全表 821→794 条。备份 `dict/mistborn.json.bak.twpurge-*`。
+- 🔧 2026-10-17 Ghostblood 词条修复：`Ghostbloods`（组织=鬼血会）此前缺词条，LLM 把 `Mistborn (series)` 页第三纪元三部曲名 `Mistborn: Ghostbloods` 误译为「血影」。已新增 `Ghostbloods`→`鬼血会`；并按用户确认把单数 `Ghostblood` 也统一为`鬼血会`（二者同译）。`extract_en_terms`+切片已验证能给出 gloss。全表 795 条。
+- ✅ 2026-10-17 译名表 vs 红铜智库维基核对收尾（`state/glossary_wiki_audit.txt` 54 条不一致逐条核对完毕，文件已删）：
+  - 以维基为准改译名表：**Krent 科兰特→克伦特**（维基既有页，ch9 拉德利安家车夫）
+  - 维基 move 到译名表名：**Mi'chelle Yomen 拆两条**——`Mi'chelle Yomen`=米歇尔·尤门（旧姓欧斯特林，婚后夫姓）、新增 `Mi'chelle Ostlin`=米歇尔·欧斯特林（旧姓），维基核心正文移动至 `米歇尔·尤门`，其余 redirect；**Yomen-Ostlin wedding dinner**=尤门-欧斯特林的婚礼晚宴（欧斯特林·斯），维基旧页 `尤门·/尤门- 尤门-欧思特林…` redirect 至连字符版正文
+  - 其余不一致均在更早批次已解决或为「用户口径保留差异」（Origin/Pinnacle/Shadesmar/Valette Renoux/Wax/Mistborn 等）。全表 796 条。
 
 ## 凭据
 
@@ -186,11 +192,11 @@ API key 在 `.env`（已 gitignore，勿提交）。账号类凭据后续也放 
 - 脚本内置 `time.sleep(delay)`，并对失败做退避重试。
 - 中文站同理，遵循礼貌爬取，不过度并发。
 
-## 15. File 命名空间不得自动搬运；图片引用文本可搬运（画师授权）
-- **`File:` 命名空间下的词条（图片本体文件）不能自动搬运**——即 bot 不自动上传图片文件。理由：图片需**逐个获取画师授权**，未经授权不得搬运。
-- **注意区分「图片本体」与「图片引用文本」**：`File:` 命名空间词条（图片文件）禁止自动搬运；但**作为文本的引用** `[[File:xxx.jpg]]` / `[[Image:xxx.jpg]]`（甚至直接裸写 `xxx.jpg`、由 Template 内部包装成 `[[]]` 的形式）**可以搬运**——这些只是 wikitext 文本引用，不涉及上传图片文件。
-- 未来做法：建立**画师白名单**——只有白名单内画师的作品才允许上传对应图片文件。
-- 落地：**上传流程**默认跳过所有图片文件（仅在画师白名单确认后放行）；**文本中的图片引用保持不变、照搬**。
+## 15. File 命名空间授权后放行（图片本体可搬运）；图片引用文本照搬
+- **原限制（已解除）**：`File:` 命名空间下的词条（图片本体文件）当初不自动搬运，理由是要「逐个获取画师授权」。
+- **解除（2025 用户通知）**：**中文站站长已从英文站拿到包括图片的授权**——授权给英文站的画师，自动也授权给我们。因此图片本体文件 + `File:` 页内容均可搬运，不再受逐图授权限制。
+- **图片引用文本**（`[[File:xxx.jpg]]` / `[[Image:xxx.jpg]]`，甚至裸写 `xxx.jpg` / 由模板包装的 `[[]]`）始终是 wikitext 文本，照搬不动。
+- 落地：见 `scripts/migrate_images.py`（发现 → 下载英文站图片+File 内容 → 上传中文站）。
 
 ## 16. Template 命名空间暂时进黑名单
 - 由于「英文站 Template 与中文站 Template 不同、如何处理」尚无结论，**`Template:` 命名空间下的模板词条暂时纳入黑名单**，bot 不自动搬运模板。
@@ -275,6 +281,7 @@ coppermind/
   2. `{{quote}}` → `{{Quote}}` 重命名
   2. `{{quote}}` → `{{Quote}}`
   3. 其余模板（`book ref`/`date`/`image`/`for`/`columns`/`partial`/`Mistborn`…）**中文站同名且参数兼容，直接复用不动**
+  3b. **脚注 group 归一（方案 A，2026-10-17）**：英文站 `{{ref|...|group=fn}}` + `<references group=fn>` 是英文站 `Template:Ref` 扩展脚注体系；中文站 `Template:Ref` 是书目引用模板、**不支持 group** → 原样透传会让 `<references group=fn>` 找不到前置 group 标记而报「引用了未在前文中出现的组 fn」。`convert_templates.py` 在解析前用 `_convert_footnote_groups` 转成中文站可渲染的标准 `<ref>/<references>`：正文内联 `{{ref|group=fn|text=X}}`→`<ref>X</ref>`、内联具名→`<ref name="N"/>`、定义块 `{{ref|group=fn|text=X|name=N}}`→`<ref name="N">X</ref>`（`<references group=fn>`→`<references>`）、自闭合→`<references/>`；英文脚注 text 成为普通正文由 LLM 翻译。涉及 Wayne/Waxillium/Elendel Basin/Mistborn (series) 等 4/20 页（下轮重跑生效）。
   4. `--wrap`：组装页面级包装 `{{CmPermission|英文名}}`（顶）+ `{{en|英文名}}`（首部占位，翻译阶段移位）+ `{{ensync|revid}}`（结尾，revid 取自快照）——决议 10-12
   5. 报告 mapped/unmapped/collisions/wrapped
 
@@ -363,6 +370,30 @@ coppermind/
   ```
   依赖：stdlib + `write.py` 的 HuijiClient（需 `.env` 登录凭据）；不需额外库。
 
+- **`scripts/migrate_images.py`**（Python，已跑通）：**图片迁移**（画师授权后放行，覆盖决议 #15 旧限制）→ 把英文站的**图片本体文件 + File: 页内容**搬到中文站 →
+  1. **发现**：扫描英文 wikitext，用**正则**匹配图片引用（`[[File:x.jpg]]` / `[[Image:x.jpg]]` / `[[file:x.jpg|width=...]]` / 模板命名参数值，可选裸写 `x.jpg`），并**合并**各快照 `meta.json["files"]`（fetch_en.py 用 mwparserfromhell 确定性提取 `{{image}}` 首位置参 / 文件感参数，最稳妥）。两来源去重（含下划线≡空格归一）、过滤外链误报。
+  2. **下载**：英文站 `revisions` 取 **File: 页 wikitext（内容，含 {{art}} 授权/来源模板）**；`imageinfo` 取图片 bytes。**关键坑**：英文站 CDN 做内容协商，cloudscraper 的 Chrome Accept 会拿到 webp 转码版而非原始格式——脚本显式带原始格式 `Accept` 取回与扩展名一致的原始字节。
+  3. **上传**：中文站 `action=upload`（bytes + `text=原始 File 内容`），图片本体与 File: 页**一次到位**。**幂等以「中文站 File 页已存在」为准**（不用 sha1 判等——实测英文站内容协商取回的字节对部分文件 ≠ 规范哈希；本脚本是唯一上传者，存在即视为已迁移）。`--force` 才对已存在文件尝试覆盖。
+  4. **安全/限速**：`--include-bare` 的裸命名仅「列出待人工复核」（已实证：文件名含空格会把 `...Laurys L.jpg` 切出 `L.jpg`，且英文站恰有无关 `File:L.jpg`），需 `--confirm-bare` 才自动迁移。英文站读请求统一经 `RateLimiter` 限速 `--en-delay`（默认 1.0s，防反爬，决议 #14）；中文站写/下载间 `--delay`；失败退避重试（最多 5 次）——永久错误（`fileexists-forbidden`/`filetype-banned` 等）不重试。
+  5. **中文站扩展名白名单**：原来灰机只允许 `png/jpg/jpeg/gif/webp`，`.svg` 报 `filetype-banned`；**2025-10-17 用户联系管理员开放了 `.svg` 上传**，`ZH_ALLOWED_EXT` 已加入 `.svg`（实测 3 个 svg 上传成功）。仍被拒的有 `.tif/.tiff`（需要可再找管理员开）。
+  6. **上传大小上限 10 MB**：中文站 `maxuploadsize=10485760`（10 MB），服务器对超限请求回 `HTTP 413`。全 301 张实测仅 **2 张接近/超过**：`Dalinar Ambush LGD.png`（EN 规范 12MB，但 CDN 实取 9MB，未超限，已传成功）× `Harmony and Discord by Ashley Coad.png`（实取 13.5MB，超限，**无法经此路径上传**，需站长提高 `maxuploadsize` 或人工处理）。
+  6. **覆盖已存在文件（`--force`）**：MediaWiki 对无 `reupload` 权限的账号，即使 `ignorewarnings=1` 也报 `fileexists-forbidden`（权限门）。`水蛭一号` 现已加入 `sysop` 组（具备 `reupload`/`delete`），`--force` 可覆盖。**注意**：`action=upload` 覆盖已存在 File 页时**只更新图片本体、不更新 File 页描述**——脚本会在成功覆盖后自动 `edit` 补写 File: 内容为英文站原样。`fileexists-no-change`（内容已一致）视为 `ok` 而非失败。
+  ```bash
+  .venv/bin/python scripts/migrate_images.py --scan --all                          # 只发现图片清单（离线）
+  .venv/bin/python scripts/migrate_images.py --title "Allik Neverfar" --report     # 看正则明细
+  .venv/bin/python scripts/migrate_images.py --title X --dry-run                   # 预演：下载但不上传
+  .venv/bin/python scripts/migrate_images.py --title X                             # 正式迁移该标题用到的图
+  .venv/bin/python scripts/migrate_images.py --title X --en-delay 1.5              # 调英文站读限速更保守
+  .venv/bin/python scripts/migrate_images.py --title X --force                     # 覆盖已存在文件（需 reupload 权限）
+  .venv/bin/python scripts/migrate_images.py --all --status-file state/image_migration_status.jsonl  # 整批+进度落盘（后台长任务用）
+  .venv/bin/python scripts/migrate_images.py --all                                 # 全快照（301 张）
+  ```
+  **长任务/断线续看**：用 `--status-file <路径>` 会把每个文件的 `ok/skip/exists/fail` 逐条追加为 JSONL，并写最终 `summary`。会话断开后，后续 AI 只需读该文件即可查看进度/失败清单，无需联网。整批跑用 `state/image_migration_status.jsonl` 作为规范状态文件。
+  依赖：cloudscraper + write.py 的 HuijiClient（复用登录/CSRF）；不含额外库。
+  实测：**真实上传已验证**（2025-10-17）：`Allik Neverfar` 4 张 + `Dao/Ghostbloods/Harmonium/Set` 的 `webp/jpg/jpeg` + `.svg`（`Aon Dao`/`Ettmetal (Alloy of Law)`/`Ghostblood`）+ `New Ascendancy` 2 张共 **13 张均落到中文站 `File:` 命名空间成功**，File 页含 `{{art}}` 授权/来源，读回 sha1/size 一致；重跑幂等 skip。**`.svg` 已由管理员开放**上传。**`Zinc (Alloy of Law).svg` 覆盖完成**（`水蛭一号` 入 `sysop` 组后 `--force` 覆盖为英文版，图片本体 + File 页 `{{art}}` 内容均已修正）。全部 13 张 + Zinc 共 14 张文件读回均 `art=True`、`missing=False`。
+
+---
+
 - **`scripts/migrate_templates.py`**（Python，已跑通）：把**非 meta 级模板**迁移（翻译）到中文站（决议 #16 的例外，用户 2025-10-17 决议「只要不是 meta 级 Template 都需要搬」）→ 读内置 `TEMPLATES` 定义，逐一到中文站 `模板:<名>` 登录+CSRF+edit 建/覆盖 →
   1. 已建：`Rosharan date`（+ `Date/sa` redirect）、`Notice`、`Cite note`、`Rpg-canon`、`Small caps`、`CoverToC`、`Sots ref`、`Wp ref`、`Books`、`Tress`（revid 16708–16718）
   2. `Date/sa` 从原生中文模板改为 redirect → `Rosharan date`（保留中文 年/月/周/天 输出，实测 `{{date/sa|1174|2}}`→`1174年第2月`）
@@ -385,7 +416,7 @@ coppermind/
 4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照）→ ✅ 已实现（`fetch_en.py`）
 5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ✅ 抓取落盘已实现（`fetch_en.py`）
 6. ✅ 样板词条 `Allik_Neverfar`：转换 + 译名表 + 映射表 + 翻译（`translate.py`）均已跑通并写入（2025-10-16 首次写入；2025-10-17 起 translate.py 自动产出，附 CmPermission/en/ensync 包装）
-7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则（黑名单含 File 命名空间不自动上传图片、Template 命名空间暂不搬运；图片引用文本照搬）
+7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则（Template 命名空间暂不搬运；图片引用文本照搬）。✅ 图片本体迁移已随授权放行（`scripts/migrate_images.py`，见当前实现状态）；正式批量前仍需定画像/范围治理
 8. ⬜ 批量写站前的**治理/人工 review**：图片黑名单、模板图片校验、redirect 搬运（`batch.py` 已能批量串联 fetch→translate→write，但正式批量跑某个分类/清单前需先定上述规则与范围，避免覆盖真实内容）
 9. ⬜ **译名表补全铺开**：用 `glossary_assist.py` 对缺失专名批量采证（优先可书证的正文词：地理/地点/宗教/货币等）；地图-only 或仅 tlm 无中译的词条标 pending 待补。本轮已示范 `Survivor→幸存者`、`Survivorism→幸存者教义`（悲悼护腕 mb6 ch12）
 10. ✅ **模板存在性探测 + 中站对应决议**：`scripts/probe_template.py --audit` 全量核对 en_snapshot 全部模板（101 个 / 11531 处，同名 50、已映射 22、缺失 29），缺失项逐条给出处置，见 `rules/template_probe_resolution.md` + `probe_report.json`；并按决议**接入 `noble house→Infobox noble house`、`shard info→Infobox shard` 映射**（实测 `House Demoux`/`Harmony` 正常转换）。`metal` 因中英语义不对应，标待决策不自动映射。

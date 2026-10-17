@@ -100,6 +100,10 @@ def run_stage(args, title: str) -> list[str]:
         translate_cmd += ["--api-key", args.api_key]
     if args.max_output_tokens:
         translate_cmd += ["--max-output-tokens", str(args.max_output_tokens)]
+    if args.auto_quote_cn:
+        translate_cmd += ["--auto-quote-cn"]
+    if args.no_resolve_quotes:
+        translate_cmd += ["--no-resolve-quotes"]
     tr = subprocess.run(translate_cmd, capture_output=True, text=True)
     # 子进程 stderr 记录进度，只保留足够诊断
     if tr.returncode != 0:
@@ -157,6 +161,10 @@ def main():
     ap.add_argument("--no-wrap", action="store_true", help="透传：不插页面包装")
     ap.add_argument("--summary", default=None, help="透传自定义写站摘要")
     ap.add_argument("--api-key", default=None, help="透传 LLM api key")
+    ap.add_argument("--auto-quote-cn", action="store_true",
+                    help="透传 translate 全自动 quote：book ref 采证到的原文块直接替换为中文（英文不留）")
+    ap.add_argument("--no-resolve-quotes", action="store_true",
+                    help="透传 translate 关闭原文块书证采证（回到纯英文占位符）")
     ap.add_argument("--write-target-prefix", default=None, help="写站目标页前缀（如 'BOT测试:'，用于非破坏性验证）")
     ap.add_argument("--dry-run", action="store_true", help="全程预演（translate/write 均 dry-run，不真正调 LLM/写站）")
     args = ap.parse_args()
