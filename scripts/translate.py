@@ -423,6 +423,7 @@ SYSTEM_PROMPT = """你是一名精通「迷雾之子」(Mistborn) 系列英文�
 3. 【原文引用不译】(决议#13)：文中可能出现形如 %%ORIGINAL_BLOCK_1%% 的占位符，它们是**小说原著引文**（台词/称号列表）的替身。**必须原样保留、不翻译、不增删、不改动**（管道自会填回英文原文）。除此之外，正常叙述正文照常翻译。
 4. 【章节标题】== 章节 == / === 小节 === 标题翻译成简体中文；标题行顶格的等号数目与格式必须原样保留。
 5. 【首行(仅块0)】第一条正文行='''中文译名'''，并在其后紧跟 {{en|英文词条名}}。只有块0需要，其余块不得重复加。
+5b.【导语必翻(仅块0)】块0 除 Infobox 与首行标题外，通常还有**导语/首段正文**（Infobox 之后、首个 `== 章节 ==` 之前的全部叙述文字）。这些导语正文**必须逐句翻译成简体中文**；**严禁只把标题翻成中文、却把导语正文保留成英文**。除 %%ORIGINAL_BLOCK_*%% 占位符和译名表未收录的专名外，块0 中不得残留任何英文句子。
 6. 【输出格式】只输出一个 JSON 对象，不要 markdown 代码围栏、不要任何额外文字：
    {"translation": "<翻译后的完整本块 wikitext，换行转义为\\n，禁止截断/省略>", "untranslated_terms": [{"en": "<保留英文的专名>", "reason": "<原因>", "zh": "<已定译名则填，否则省略>"}]}
    translation 必须包含你收到的**整块**全部内容（含所有模板、占位符、参考文献/分类），不得丢失。
@@ -437,6 +438,8 @@ def build_user_prompt(chunk: Chunk, glossary_slice: dict, en_title: str, is_firs
         parts.append(
             "这是**第 1 块**（含 Infobox + 导语）。英文词条名 = " + en_title +
             "。请把条目标题译成简体中文，并在首行的 '''中文译名''' 之后紧跟 {{en|" + en_title + "}}。"
+            "本块的**导语/首段正文**（Infobox 之后、首个 == 章节 == 之前的叙述文字）也必须一并完整译成中文，"
+            "不得只翻标题而把导语正文留成英文。"
         )
     else:
         parts.append("这是**后续块**（中间章节）。除非已有译名表，否则不要重复加 {{en}}/{{CmPermission}}。")
@@ -481,6 +484,26 @@ def translate_chunk(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title
     return translation, untranslated
 
 
+def translate_chunk_with_retry(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title: str,
+                               is_first: bool, max_output_tokens: int = 8000, max_retries: int = 2):
+    """翻译一块；对 chunk0（导语）做「导语英文残留」校验，命中则重试。
+
+    实测偶发 LLM 只翻标题+加 {{en}}、却把导语正文保留英文。提示词已强化，但为避免漏网，
+    这里在校验失败时重试（上行重试通常即可修好，见 Demoux (city)）。重试仍失败则保留并告警。
+    """
+    for attempt in range(max_retries + 1):
+        translation, untranslated = translate_chunk(cfg, chunk, glossary_slice, en_title,
+                                                    is_first, max_output_tokens)
+        if not is_first or chunk.index != 0:
+            return translation, untranslated
+        if not untranslated_lead_english(chunk.text, translation):
+            return translation, untranslated
+        sys.stderr.write(
+            f"[导语校验] chunk0 导语疑似残留英文（本次=第{attempt + 1}次），将重试…\n")
+    sys.stderr.write("[导语校验] 重试上限已用尽，导语仍疑似含英文，保留当前译文（请人工复核）。\n")
+    return translation, untranslated
+
+
 # --------------------------------------------------------------------------- #
 # 组装与校验
 # --------------------------------------------------------------------------- #
@@ -496,6 +519,66 @@ def validate_translation(text: str, src_chunk: Chunk) -> list[str]:
         if re.search(pat, src_chunk.text) and not re.search(pat, text):
             problems.append(f"原文含 {name} 但译文缺失")
     return problems
+
+
+_UNTRANSLATED_STOPWORDS = {
+    "a", "an", "in", "of", "to", "and", "is", "was", "the", "for", "on", "it", "its",
+    "at", "that", "with", "this", "from", "by", "are", "be", "as", "his", "her", "their",
+    "read", "about", "during", "after", "before", "they", "who", "which", "not", "only",
+    "when", "one", "some", "more", "has", "have", "had", "called", "known", "located",
+    "south", "north", "near", "between", "celebrating", "released", "wedding", "city",
+}
+
+
+def untranslated_lead_english(src_text: str, translation: str) -> bool:
+    """检测 chunk0 译文中，导语（Infobox 后、首个章节/分节标题前的正文）是否残留英文句子。
+
+    背景：实测偶发 LLM「只把标题译成中文 + 加 {{en}}，却把导语正文原样保留英文」。
+    返回 True 表示疑似导语仍含未翻译英文（应重试/告警）。
+
+    判定（源/译对比 + 专名白名单，避免误伤合法的原文保留）：
+    1. 对源、译文导语各自剥离噪音（%%ORIGINAL_BLOCK%% 占位符、{{模板}}、[[内链]]取显示文本、URL）。
+    2. 只统计「叙述性英文词」：# 全小写或在停用词表里 的词才算（这类是需译的英文句子成分）；
+       全大写/首字母大写的专名串（Waxillium Ladrian / Scadrial）不算，天然不进白名单却也不判残留。
+    3. 源里确有叙述性英文（≥4 词）且译文里仍残留相当叙述性英文（≥4 词）→ 判为「该翻的英文没翻成中文」。
+    """
+    def lead_region(text: str) -> str:
+        # 截到首个章节/分节/分号标题
+        seg = re.split(r"\n==|\n;", text)[0]
+        # 去掉 Infobox 及头部 CmPermission：定位到最后一个 }}\n\n 之后
+        i = seg.rfind("}}\n\n")
+        lead = seg[i + 4:] if i >= 0 else seg
+        return lead
+
+    def strip_noise(text: str) -> str:
+        s = re.sub(r"%%ORIGINAL_BLOCK_\d+%%", " ", text)
+        s = re.sub(r"\{\{[^{}]*\}\}", " ", s)          # 模板
+        s = re.sub(r"\[\[[^\]|]*\|([^\]]*)\]\]", r"\1 ", s)  # 内链取显示文本
+        s = re.sub(r"\[\[[^\]]*\]\]", " ", s)
+        s = re.sub(r"https?://\S+", " ", s)            # URL
+        s = re.sub(r"[^\w\s.a-zA-Z\u4e00-\u9fff]", " ", s)
+        return s
+
+    def prose_word_count(text: str) -> int:
+        """统计叙述性英文词数：全小写或命中停用词表的词（需译为中文的句子成分）。"""
+        tokens = re.findall(r"[A-Za-z]+", strip_noise(text))
+        n = 0
+        for tok in tokens:
+            low = tok.lower()
+            if low in _UNTRANSLATED_STOPWORDS or tok == low:
+                n += 1
+        return n
+
+    src_lead = lead_region(src_text)
+    tr_lead = lead_region(translation)
+    if not src_lead.strip() or not tr_lead.strip():
+        return False
+    src_prose = prose_word_count(src_lead)
+    if src_prose < 4:
+        # 源导语本身没有成句英文（如只有专名/引用），无需检查
+        return False
+    dst_prose = prose_word_count(tr_lead)
+    return dst_prose >= 4
 
 
 def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: str,
@@ -853,7 +936,7 @@ def main():
         from concurrent.futures import ThreadPoolExecutor
         with ThreadPoolExecutor(max_workers=args.concurrency) as ex:
             futs = {
-                ex.submit(translate_chunk, cfg, c, gloss_slice, args.title, c.index == 0,
+                ex.submit(translate_chunk_with_retry, cfg, c, gloss_slice, args.title, c.index == 0,
                           args.max_output_tokens): c.index
                 for c in chunks
             }
@@ -867,8 +950,8 @@ def main():
         for c in chunks:
             sys.stderr.write(f"[翻译] chunk{c.index}/{len(chunks)-1}（{c.title or '头部'}）…\n")
             try:
-                chunk_results.append(translate_chunk(cfg, c, gloss_slice, args.title, c.index == 0,
-                                                     args.max_output_tokens))
+                chunk_results.append(translate_chunk_with_retry(cfg, c, gloss_slice, args.title,
+                                                                c.index == 0, args.max_output_tokens))
             except Exception as e:
                 errs.append((c.index, str(e)))
 
