@@ -1,0 +1,104 @@
+<includeonly>{{Infobox 
+| above         =<div class="text-center">{{#if:{{{图像|}}}|{{{图像|}}}|}}</div>
+| bodyclass = lighten
+| labelclass = darken
+| labelstyle =     border-bottom-color: inherit;
+| datastyle =     border-bottom-color: inherit;
+| image	    = <big style="font-size:18px">'''{{{金属名|}}}'''</big><br>'''{{{原名|{{#var_final:en}}}}}'''<div class="hidden-xs" style="float: right; position: absolute;right: 10px;"><div style="position:absolute;bottom:-5px;right:20px;">{{#switch:{{{类型|}}}
+  |#default = [[File:Icon Metal.png|90px]]
+}}</div></div>
+| imagestyle = font-family: 'infobox', 'Times New Roman', '华文中宋', '华文宋体', '微软雅黑'; text-shadow: 0 0 1px #000; color: #fff; text-align: left; padding: 8px; box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3), 0px 0px 20px rgba(0, 0, 0, 0.1) inset;background:{{#switch:{{{类型|}}}
+  |#default = #000
+}}
+| header1   ={{#if:{{{类型|}}}{{{属性|}}}{{{对应金属|}}}{{{其他译名|}}}{{{涉及书目|}}} |基本信息}}
+| label2     = 类型
+| data2     = {{{类型|}}}
+| label3     = 属性
+| data3     = {{{属性|}}}
+| label4     = 对应<br>金属
+| data4     = {{{对应金属|}}}
+| label5     = 其他<br>译名
+| data5     = {{{其他译名|}}}
+| label6     = 涉及<br>书目
+| data6     = {{{涉及书目|}}}
+| label7     = 数字
+| data7      = {{metal/number|{{{原名|{{#var_final:en}}}}}}}
+| label8     = [[Steel alphabet]]
+| data8      = {{uc:{{metal/letter|{{{原名|{{#var_final:en}}}}}}}}}
+
+|header10    ={{#if:{{{type-a|}}}{{{镕金术师|}}}{{{镕金术能力|}}}|镕金术}}
+|  label11	= 符号
+|  data11  = {{icon|{{{原名|{{#var_final:en}}}}}|m|40px}}
+|  label12	= 表位
+|  data12  = {{{type-a|}}}
+|  label13	= 术师
+|  data13  ={{{镕金术师|}}}
+|  label14	= 能力
+|  data14  ={{{镕金术能力|}}}
+
+|header20    ={{#if:{{{type-f|}}}{{{藏金术师|}}}{{{藏金术能力|}}}|藏金术}}
+|  label21	= 符号
+|  data21  ={{icon|{{{原名|{{#var_final:en}}}}}|f|40px}}
+|  label22	= 表位
+|  data22  ={{{type-f|}}}
+|  label23	= 术师
+|  data23  ={{{藏金术师|}}}
+|  label24	= 能力
+|  data24  ={{{藏金术能力|}}}
+
+|header30    ={{#if:{{{type-h|}}}{{{血金术师|}}}{{{血金术能力|}}}|血金术}}
+|  label31	= 符号
+|  data31  =<!--暂缺-->
+|  label32	= 表位
+|  data32  ={{{type-h|}}}
+|  label33	= 术师
+|  data33  ={{{血金术师|}}}
+|  label34	= 能力
+|  data34  ={{{血金术能力|}}}
+
+|  belowstyle = background:#000;font-size:10px;color:#fff;text-align:right;padding:2px;padding-right:1em;
+|  below	= {{#if: {{{图像信息|}}} |配图：{{{图像信息}}} }}
+}}[[category:金属]]</includeonly><noinclude>
+
+{{Infobox metal
+| 金属名       = 白镴
+| 原名           = Pewter
+| type-a        = Internal, Pushing, Physical
+| type-f        = Physical
+| type-h        = Physical
+| 对应金属    = [[锡]]
+| 其他译名    = 白蜡（大陆译版）
+| 镕金术师    = [[打手]]
+| 镕金术能力 = 增强力量
+| 藏金术师    = [[蛮力]]
+| 藏金术能力 = 储藏力量
+| 血金术师    = 
+| 血金术能力 = 盗取内部肢体力量的藏金术
+}}
+
+===范例===
+<pre>
+{{Infobox metal
+| 金属名       = 白镴
+| 原名           = Pewter
+| type-a        = Internal, Pushing, Physical
+| type-f        = Physical
+| type-h        = Physical
+| 对应金属    = [[锡]]
+| 其他译名    = 白蜡（大陆译版）
+| 镕金术师    = [[打手]]
+| 镕金术能力 = 增强力量
+| 藏金术师    = [[蛮力]]
+| 藏金术能力 = 储藏力量
+| 血金术师    = 
+| 血金术能力 = 盗取内部肢体力量的藏金术
+}}
+</pre>
+
+===参数说明===
+* 类型 = 金属类型（神金如 God Metal；普通金属填 无/不填）
+* 属性 = 其它属性
+* 涉及书目 = 出现该金属的书目
+* type-a / type-f / type-h = 该金属在镕金/藏金/血金术表中的位置（值照英文维基原文，如 "Internal, Pushing, Physical"；神金无表位则不填）
+
+[[Category:Infobox templates|Metal]]</noinclude><noinclude>{{DEFAULTSORT:Infoboxmetal}}</noinclude>

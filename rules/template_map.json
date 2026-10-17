@@ -394,6 +394,27 @@
     "missing_cn_fields": [],
     "notes": "中文站 Template:Infobox shard 已存在。EN {{shard info}} 的 vessel→化身/holder、status→现状/status、perpendicularity→神潭/shardpool、magic→魔法、slivers/splinters 同名直继承；residence（居所）语义近 世界/world 归入 world；universe（三界宙）Infobox shard 无对应字段，丢弃。先生成后由翻译阶段核对字段取值。"
   },
+  "metal": {
+    "src_template": "metal",
+    "dst_template": "Infobox metal",
+    "field_map": {
+      "name": "金属名",
+      "allomancy": "镕金术能力",
+      "misting": "镕金术师",
+      "feruchemy": "藏金术能力",
+      "ferring": "藏金术师",
+      "hemalurgy": "血金术能力",
+      "type": "类型",
+      "properties": "属性",
+      "books": "涉及书目",
+      "type-a": "type-a",
+      "type-f": "type-f",
+      "type-h": "type-h"
+    },
+    "drop_always": [],
+    "missing_cn_fields": [],
+    "notes": "2025-10-17 用户决议：中文 Infobox metal 与英文 {{metal}} 对应；删掉中文原有的 推拉/内外/分类（语义与英文表位错位），改为直接承接英文 type-a/type-f/type-h（值照英文原文）；新增 类型(type)/属性(properties)/涉及书目(books) 字段。type-a/f/h 为直通（中文模板加同名字段）。样例：Pewter 站外验证。"
+  },
   "settlement": {
     "src_template": "settlement",
     "dst_template": "Infobox settlement",
