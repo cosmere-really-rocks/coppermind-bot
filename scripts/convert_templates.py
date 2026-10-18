@@ -392,9 +392,31 @@ def convert_wikitext(wikitext, rules):
         new_nodes.append(node)
 
     code.nodes = new_nodes
-    converted = str(code)
+    converted = _strip_bib_infobox_class(str(code))
 
     return converted, report
+
+
+def _strip_bib_infobox_class(wikitext: str) -> str:
+    """把书目表格 class='infobox bib ...' 里的 infobox 词去掉。
+
+    背景：英文站书目表 `{| class='infobox bib mistborn cosmere' width=100%` 用 `infobox` 只是一个
+    普通 class（配合 width=100% 占满宽度）；而 huijiwiki 平台全局把 `.infobox` 定义为「信息框」
+    样式（窄/右浮/固定宽），导致这些宽书目表在中文站被压成信息框、布局奇怪。
+    只对 class 含 `bib` 的表格顶行做剥离（保留其余 class 与 width 属性，让 width=100% 正常生效）。
+    """
+    pat = re.compile(r"^(\{\|\s+class\s*=\s*[\"'])([^\"']*)([\"']\s*)", re.M)
+
+    def repl(m):
+        cls = m.group(2)
+        if "bib" not in cls.lower():
+            return m.group(0)
+        cls2 = re.sub(r"\binfobox\b\s*", "", cls, count=1, flags=re.I)
+        if not cls2.strip():
+            return m.group(0)
+        return m.group(1) + cls2 + m.group(3)
+
+    return pat.sub(repl, wikitext)
 
 
 def main():

@@ -75,6 +75,10 @@ class LLMConfig:
     api_key: str = ""
     timeout: int = 300
     max_retries: int = 3
+    # 推理开关："disabled"（默认）| "enabled"。实测 deepseek-v4-flash-0731 对长 wikitext
+    # 翻译块会病态地无限推理（reasoning 吃光 max_tokens，content 为空 -> JSON 解析失败），
+    # 关闭 thinking 后稳定产出。保留 enabled 供需要深思的模型/任务切换。
+    thinking: str = "disabled"
 
 
 def load_llm_config(args) -> LLMConfig:
@@ -84,6 +88,7 @@ def load_llm_config(args) -> LLMConfig:
     cfg.model = args.llm_model or os.environ.get("LLM_MODEL") or DEFAULT_MODEL
     cfg.timeout = args.timeout
     cfg.max_retries = args.max_retries
+    cfg.thinking = os.environ.get("LLM_THINKING") or "disabled"
 
     key = args.api_key
     if not key:
@@ -609,7 +614,12 @@ def chunk_wikitext(wikitext: str, max_chars: int):
 # OpenAI 兼容 chat completions（与 DSH 的 openai-completions 一致）
 # --------------------------------------------------------------------------- #
 def llm_chat(cfg: LLMConfig, messages, max_output_tokens=8000, temperature=0.2):
-    """调用 OpenAI 兼容 /chat/completions。失败按指数退避重试。"""
+    """调用 OpenAI 兼容 /chat/completions。失败按指数退避重试。
+
+    25-10-18 修复：默认发送 thinking={"type":"disabled"}，绕开 deepseek-v4-flash-0731
+    对长 wikitext 翻译块的无限推理（reasoning 吃光 max_tokens→content 空→JSON 解析失败）。
+    设 LLM_THINKING=enabled 可恢复推理。
+    """
     url = cfg.base_url.rstrip("/") + "/chat/completions"
     payload = {
         "model": cfg.model,
@@ -617,6 +627,8 @@ def llm_chat(cfg: LLMConfig, messages, max_output_tokens=8000, temperature=0.2):
         "temperature": temperature,
         "max_tokens": max_output_tokens,
     }
+    if cfg.thinking != "enabled":
+        payload["thinking"] = {"type": "disabled"}
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
         url, data=data, method="POST",
