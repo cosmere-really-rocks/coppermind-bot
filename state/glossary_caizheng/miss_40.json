@@ -1,0 +1,69 @@
+{
+ "batch": 40,
+ "results": [
+  {
+   "en": "Cled",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cobble",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中人名译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cosahn",
+   "zh": "珂珊",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沙赛德以平静语调说道，珂珊要帮你修剪"
+  },
+  {
+   "en": "Disten",
+   "zh": "迪斯敦",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "迪斯敦是凯蒙的小队长之一。他少了一只手"
+  },
+  {
+   "en": "Dockson",
+   "zh": "多克森",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沿着墙边走来。是多克森。他比卡西尔矮一点"
+  },
+  {
+   "en": "Fatren",
+   "zh": "法特伦",
+   "note": "mb3:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "法特伦眯起眼睛，望着一如往常躲在深色薄暮后的红色太阳"
+  },
+  {
+   "en": "Hammond",
+   "zh": "哈姆德",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你不应该想这种问题，哈姆德——你会伤透脑筋的"
+  },
+  {
+   "en": "Jasten",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  }
+ ]
+}

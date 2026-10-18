@@ -1,0 +1,101 @@
+{
+  "batch": 144,
+  "results": [
+    {
+      "en": "Kale Tekiel",
+      "zh": "凯尔·太齐尔",
+      "note": "mb1:28",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "凯尔·太齐尔已经无法回想此时了，依蓝德心想。"
+    },
+    {
+      "en": "Kevoux",
+      "zh": "凯弗",
+      "note": "mb1:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "而凯弗，容我冒昧地说一句，不会有多大的影响力。"
+    },
+    {
+      "en": "Kliss",
+      "zh": "克礼丝",
+      "note": "mb1:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "克礼丝贵女低声说道；多处一致译克礼丝。"
+    },
+    {
+      "en": "Kurdon",
+      "zh": "库敦",
+      "note": "mb1:0",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "特雷斯廷转过头呵斥：库敦！壮硕的工头冲上山坡。"
+    },
+    {
+      "en": "Laird",
+      "zh": "莱德",
+      "note": "mb1:1",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "纹看着圣祭司莱德骄傲地踏入房间（多章一致）。"
+    },
+    {
+      "en": "Melend Liese",
+      "zh": "梅莱德·李艾斯",
+      "note": "mb1:18",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我是梅莱德·李艾斯。请问你愿意与我共舞吗？"
+    },
+    {
+      "en": "Milen Davenpleu",
+      "zh": "米伦·戴文普鲁",
+      "note": "mb1:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "包括纹跟她的同伴——米伦·戴文普鲁，一名小家族的年轻继承人。"
+    },
+    {
+      "en": "Rene",
+      "zh": "瑞尼",
+      "note": "mb1:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "瑞尼，克礼丝今晚约会的对象问道。"
+    },
+    {
+      "en": "Rian Strobe",
+      "zh": "瑞安·史特罗布",
+      "note": "mb1:12",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我是瑞安·史特罗布爵士。你愿意与我共舞吗？"
+    },
+    {
+      "en": "Salmen Tekiel",
+      "zh": "沙门·太齐尔",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "那珊跟沙门·太齐尔的秘密关系呢？"
+    },
+    {
+      "en": "Shan Elariel",
+      "zh": "珊·埃拉瑞尔",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "珊·埃拉瑞尔贵女千真万确是名安抚者（多处一致）。"
+    },
+    {
+      "en": "Stase Blanches",
+      "zh": "史黛西·白兰史",
+      "note": "mb1:18",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "今晚轮到的是史黛西·白兰史贵女。"
+    }
+  ]
+}

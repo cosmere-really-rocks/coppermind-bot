@@ -1,0 +1,69 @@
+{
+  "batch": 64,
+  "results": [
+    {
+      "en": "Dean",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Deluse Couvre",
+      "zh": "德鲁斯·库佛",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "它的作者——德鲁斯·库佛继续写了一些更诽谤的书"
+    },
+    {
+      "en": "Dilisteni",
+      "zh": "迪黎斯坦尼",
+      "note": "mb1:12",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“你在读什么？”“迪黎斯坦尼。”依蓝德说道《伟大的试炼》"
+    },
+    {
+      "en": "Haridan",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Harmon",
+      "zh": "哈门",
+      "note": "mb1:4",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "哈门，一名年纪较大、胡须凌乱的窃贼说道（Harmon, an older scraggly-bearded burglar）"
+    },
+    {
+      "en": "Heberen",
+      "zh": "贺伯伦",
+      "note": "mb1:18",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“你喜欢读贺伯伦吗？”指一本厚重大书（Enjoying Heberen?）"
+    },
+    {
+      "en": "Hrud",
+      "zh": "贺鲁德",
+      "note": "mb1:4",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“两年了……”贺鲁德，一名安静，五官扁平的打手说道（said Hrud, a flat-faced, quiet thug）"
+    },
+    {
+      "en": "Kar",
+      "zh": "卡尔",
+      "note": "mb1:36",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“你常说这种话，卡尔，但从来都拿不出证据。”卡尔缓缓转身（Kar, the Inquisitor）"
+    }
+  ]
+}

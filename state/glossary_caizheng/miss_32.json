@@ -1,0 +1,69 @@
+{
+  "batch": 32,
+  "results": [
+    {
+      "en": "Tevidian Tekiel",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Themos Tresting",
+      "zh": "赛摩斯·特雷斯廷",
+      "note": "mb1:1",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "赛摩斯·特雷斯廷，据说一名乡区领地的领主遭到杀害"
+    },
+    {
+      "en": "Tren-Pedri Delouse",
+      "zh": "蓝佩得莉·德鲁斯",
+      "note": "mb1:28",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "蓝佩得莉·德鲁斯贵女一些有意思的消息（简称特蓝佩得莉，译名前后不一）"
+    },
+    {
+      "en": "Triss",
+      "zh": "特丽斯",
+      "note": "mb1:30",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "要一起来吗，特丽斯？"
+    },
+    {
+      "en": "Troalin",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Zane Venture",
+      "zh": "詹·泛图尔",
+      "note": "mb3:52",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "她看着它杀死詹·泛图尔，一名当纹没有天金时仍燃烧天金的迷雾之子"
+    },
+    {
+      "en": "Bilg",
+      "zh": "比格",
+      "note": "mb1:21",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "比格。坐在右边第四张桌子的大块头"
+    },
+    {
+      "en": "Cladent",
+      "zh": "克莱登",
+      "note": "mb2:49",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "请不要因为你不同意就批判他人的信仰，克莱登大人"
+    }
+  ]
+}

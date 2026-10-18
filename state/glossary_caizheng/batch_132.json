@@ -1,0 +1,101 @@
+{
+  "batch": 132,
+  "results": [
+    {
+      "en": "Carlee",
+      "zh": "卡莉",
+      "note": "mb1:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "卡莉，泰敦年轻的妻子，以她娇滴滴的声音说道"
+    },
+    {
+      "en": "Charrs Entrone",
+      "zh": "查斯·恩创",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "这是查斯·恩创大人，卡西尔在司卡贫民区外袭击了这名贵族"
+    },
+    {
+      "en": "Crews Geffenry",
+      "zh": "克鲁斯·詹芬利",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "赌注对手是克鲁斯·詹芬利……众人均知克鲁斯是迷雾之子"
+    },
+    {
+      "en": "Devinshae",
+      "zh": "戴文薛",
+      "note": "mb1:22",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "当凯芮安被戴文薛大人带走，次日尸体被归还、下葬"
+    },
+    {
+      "en": "Dukaler",
+      "zh": "度卡雷",
+      "note": "mb2:37",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我也投给潘洛德大人。度卡雷大人说道"
+    },
+    {
+      "en": "Edgard Ladrian",
+      "zh": "埃德加德·拉德利安",
+      "note": "mb5:19",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "瓦克斯自己的祖先埃德加德·拉德利安（原文OCR作埃德家德）"
+    },
+    {
+      "en": "Elend's mother",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Fedren Aime",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Ferson Penrod",
+      "zh": "费尔森·潘洛德",
+      "note": "mb3:32",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "你的城市的人民选择费尔森·潘洛德为他们的国王"
+    },
+    {
+      "en": "Flavine",
+      "zh": "芙拉玟",
+      "note": "mb1:20",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "她要跟芙拉玟贵女共进午餐"
+    },
+    {
+      "en": "Idren Seeris",
+      "zh": "艾德伦·席瑞斯",
+      "note": "mb1:30",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "朝艾德伦·席瑞斯大人微笑，他是埃拉瑞尔的表亲"
+    },
+    {
+      "en": "Jastes Lekal",
+      "zh": "加斯提·雷卡",
+      "note": "mb1:18",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "其中一人是加斯提·雷卡大人。另一名是海斯丁家族的人"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "batch": 72,
+  "results": [
+    {
+      "en": "Rudd",
+      "zh": "鲁德",
+      "note": "mb1:10",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“鲁德，请将蓝衣侍者派进来”对应 Rudd 称呼，侍者角色"
+    },
+    {
+      "en": "Ruddy",
+      "zh": "鲁迪",
+      "note": "mb1:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“鲁迪？”多克森说道，对应 Smoker 队员 Ruddy 之名"
+    },
+    {
+      "en": "Sertes",
+      "zh": "赛提斯",
+      "note": "mb1:24",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“赛提斯在吗？”对应 Is Sertes around，警备队队长"
+    },
+    {
+      "en": "Sixteen",
+      "zh": "十六",
+      "note": "mb1:25",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“十六个小时过后，再看看你是什么感觉”对应 sixteen hours"
+    },
+    {
+      "en": "Vin's earring",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Worldbringers",
+      "zh": "世界引领者",
+      "note": "mb1:29",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“在整个世界引领者秘密大会前谴责我”对应 Conclave of Worldbringers"
+    },
+    {
+      "en": "A House of Ashes",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Alloy of Law (rule book)",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

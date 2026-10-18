@@ -1,0 +1,69 @@
+{
+  "batch": 24,
+  "results": [
+    {
+      "en": "House Izenry",
+      "zh": "依森瑞",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "怪在依森瑞身上，他们是太齐尔的政敌"
+    },
+    {
+      "en": "Jaism",
+      "zh": "珈教",
+      "note": "mb1:10",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "也许你想听听珈教，由一人创立，以珈称呼"
+    },
+    {
+      "en": "Longtales",
+      "zh": "神话",
+      "note": "mb3:27",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "跟怪物和传说有关，有人说是神话"
+    },
+    {
+      "en": "Noble",
+      "zh": "贵族",
+      "note": "mb6:scan",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "贵族们才不在乎凝聚，贵族出身的市长等"
+    },
+    {
+      "en": "Straff Venture",
+      "zh": "史特拉夫·泛图尔",
+      "note": "mb3:14",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "史特拉夫·泛图尔刚死的那个时期"
+    },
+    {
+      "en": "Tegas",
+      "zh": "代加",
+      "note": "mb1:28",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "承诺会出席代加大人于明天下午的午餐聚会"
+    },
+    {
+      "en": "Telden Hasting",
+      "zh": "泰尔登·海斯丁",
+      "note": "mb3:50",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "泰尔登，纹此时认出他，泰尔登·海斯丁"
+    },
+    {
+      "en": "Teven Renoux",
+      "zh": "泰文·雷弩",
+      "note": "mb1:9",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我是法蕾特·雷弩贵女，泰文·雷弩大人的四表妹"
+    }
+  ]
+}

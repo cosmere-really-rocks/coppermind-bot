@@ -1,0 +1,69 @@
+{
+  "batch": 80,
+  "results": [
+    {
+      "en": "Alloy of Law: Masks of the Past",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Always Another Secret",
+      "zh": "永远都有另一个秘密",
+      "note": "mb1:5",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“永远都有另一个秘密。他抱起三只酒杯，走回纹跟多克森的桌子。”"
+    },
+    {
+      "en": "Mistborn Adventure Game",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Mistborn Adventure Game (rule book)",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Skaa: Tin & Ash",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Terris: Wrought of Copper",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "The Treatise Metallurgic",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Allomancy/table",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "batch": 252,
+  "results": [
+    {
+      "en": "Kwaan's inscription",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Leras's knife",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Luthadel Garrison",
+      "zh": "陆沙德警备队",
+      "note": "mb1:4",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我们要找到方法让陆沙德警备队动弹不得，令全城区失去镇压动乱的力量。"
+    },
+    {
+      "en": "Mistfallen",
+      "zh": "迷雾病人",
+      "note": "mb3:40",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "军队的大部分人都会有时间学习重新信任迷雾病人。迷雾病人，纹心想。有意思的名字。"
+    },
+    {
+      "en": "Pek",
+      "zh": "佩币",
+      "note": "mb3:26",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "鬼影微笑，掏出一枚佩币，这是公民所铸造的钱币，等同一枚铜夹币。"
+    },
+    {
+      "en": "Sazed's note",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Sazed's rings",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Shakewelts",
+      "zh": "颤抖症",
+      "note": "mb3:21",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "这感觉有点像是颤抖症，但颤抖症往往是因为——"
+    },
+    {
+      "en": "Skaa rebellion",
+      "zh": "司卡反抗军",
+      "note": "mb1:4",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "那到底是什么样的行动？司卡反抗军要我们帮什么忙？"
+    },
+    {
+      "en": "Soundstick",
+      "zh": "木条",
+      "note": "mb2:1",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "他手中握着一对木条，设计成互击时会发出巨大声响的样式。"
+    },
+    {
+      "en": "Spikeway",
+      "zh": "金属大道",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "费里斯跟陆沙德之间的金属大道让两者之间的旅程变得很短。金属棍不是他放的。"
+    },
+    {
+      "en": "Spook's note",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

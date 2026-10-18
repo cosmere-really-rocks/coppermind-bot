@@ -1,0 +1,101 @@
+{
+  "batch": 300,
+  "results": [
+    {
+      "en": "Moash",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Rebeke Salvage",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Vasher",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Blessing",
+      "zh": "祝福",
+      "note": "mb6:3",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我们不能，坎得拉祝福不能被滥用"
+    },
+    {
+      "en": "Blessing of Awareness",
+      "zh": "意识的祝福",
+      "note": "mb3:20",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "获得意识的祝福的四代或五代可以站在一段距离之外"
+    },
+    {
+      "en": "Blessing of Presence",
+      "zh": "存在的祝福",
+      "note": "mb3:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "可是坦迅有“存在的祝福”，不会这么轻易崩溃"
+    },
+    {
+      "en": "Blessing of Stability",
+      "zh": "稳定的祝福",
+      "note": "mb3:37",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "鲜少被使用的稳定的祝福则是情绪上的包容"
+    },
+    {
+      "en": "Charred",
+      "zh": "",
+      "note": "无法确认（书证仅为形容词“焦黑”用法）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "哈姆戳着一块焦黑的木头"
+    },
+    {
+      "en": "Cinderheart",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Crystal spike",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Ever-Slaying Sword",
+      "zh": "",
+      "note": "待失落金属中译",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Hemalurgy/table",
+      "zh": "",
+      "note": "非正文术语（表格页签，非专名词条）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

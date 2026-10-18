@@ -1,0 +1,69 @@
+{
+  "batch": 16,
+  "results": [
+    {
+      "en": "House Fathvell",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Fets",
+      "zh": "",
+      "note": "mb2:21 译作'下棋'未保留专名",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "有点像是下棋…吃下一子…逼到死角"
+    },
+    {
+      "en": "House Gardre",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "House Geffenry",
+      "zh": "詹芬利家族",
+      "note": "mb1:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "詹芬利家族一直在向太齐尔请求结盟"
+    },
+    {
+      "en": "House Hasting",
+      "zh": "海斯丁家族",
+      "note": "mb1:28",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我们都知道海斯丁在计划什么"
+    },
+    {
+      "en": "House Haught",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Historica",
+      "zh": "史论",
+      "note": "mb5:07",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "《创始箴言录》史论记载，与迷雾融为一体"
+    },
+    {
+      "en": "Ishathon",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

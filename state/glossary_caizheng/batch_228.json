@@ -1,0 +1,101 @@
+{
+  "batch": 228,
+  "results": [
+    {
+      "en": "Mistborn: The Final Empire",
+      "zh": "",
+      "note": "正文无书证(en_hits=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "The Well of Ascension",
+      "zh": "升华之井",
+      "note": "mb1:17;mb3:0",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "被囚禁于升华之井的存在；灭绝的意识被升华之井所困"
+    },
+    {
+      "en": "The Hero of Ages",
+      "zh": "永世英雄",
+      "note": "mb3:71;mb2:29",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "她指出她是永世英雄的种种征象；将艾兰迪跟永世英雄连接在一起"
+    },
+    {
+      "en": "Mistborn: Secret History",
+      "zh": "",
+      "note": "正文无书证(en_hits=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Mistborn: Secret History/Statistical analysis",
+      "zh": "",
+      "note": "维基子页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Mistborn: The Final Empire/Epigraphs",
+      "zh": "",
+      "note": "维基子页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Mistborn: The Final Empire/Statistical analysis",
+      "zh": "",
+      "note": "维基子页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "The Well of Ascension/Epigraphs",
+      "zh": "",
+      "note": "维基子页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "The Well of Ascension/Statistical analysis",
+      "zh": "",
+      "note": "维基子页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "The Hero of Ages/Epigraphs",
+      "zh": "",
+      "note": "维基子页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "The Hero of Ages/Statistical analysis",
+      "zh": "",
+      "note": "维基子页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Summary:Mistborn: The Final Empire",
+      "zh": "",
+      "note": "维基子页/摘要页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

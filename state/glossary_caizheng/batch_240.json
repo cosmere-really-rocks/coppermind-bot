@@ -1,0 +1,101 @@
+{
+  "batch": 240,
+  "results": [
+    {
+      "en": "Summary:The Well of Ascension",
+      "zh": "",
+      "note": "专题页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Summary:The Hero of Ages",
+      "zh": "",
+      "note": "专题页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Summary:Mistborn: Secret History",
+      "zh": "",
+      "note": "专题页，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Alendi's logbook",
+      "zh": "艾兰迪的日记",
+      "note": "mb3:21",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "这是艾兰迪的日记。一千年前，这名自以为是永世英雄的人写了这本日记。"
+    },
+    {
+      "en": "Ashwalkers",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Ati",
+      "zh": "",
+      "note": "仅见秘密史，无中译",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Blushdip red",
+      "zh": "染晕红",
+      "note": "mb1:9",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "特色为染晕红，来自当地常见的蜗牛。"
+    },
+    {
+      "en": "Book of the False Dawn",
+      "zh": "伪日出之书",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "那是《伪日出之书》——任何守护者都能把整本书背给你听。"
+    },
+    {
+      "en": "Callowfield yellow",
+      "zh": "浅野黄",
+      "note": "mb1:9",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "还有浅野黄，从树皮提取。"
+    },
+    {
+      "en": "Camon's crew",
+      "zh": "凯蒙的集团",
+      "note": "mb2:50",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "无论是在凯蒙的集团或是在依蓝德的政府中。"
+    },
+    {
+      "en": "Finwick blue",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Kelsier's bones",
+      "zh": "卡西尔的骨头",
+      "note": "mb3:59",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "它把装着卡西尔骨头的袋子藏在城外。"
+    }
+  ]
+}

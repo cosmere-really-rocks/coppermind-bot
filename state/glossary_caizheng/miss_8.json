@@ -1,0 +1,69 @@
+{
+  "batch": 8,
+  "results": [
+    {
+      "en": "Battle of Hathsin",
+      "zh": "",
+      "note": "正文无书证（en_hits_total=0）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全书英文本未命中该专名，无可采证官方中译"
+    },
+    {
+      "en": "Courteline",
+      "zh": "库特蓝",
+      "note": "mb1:6",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "半个世纪前在库特蓝爆发的司卡暴动"
+    },
+    {
+      "en": "Holstep",
+      "zh": "霍斯太普",
+      "note": "mb1:24",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "同时攻击了北方的霍斯太普警备队"
+    },
+    {
+      "en": "Kandra Homeland",
+      "zh": "坎得拉故乡",
+      "note": "mb5:17",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "这是坎得拉故乡（宓兰语）"
+    },
+    {
+      "en": "Summer Hill",
+      "zh": "夏丘",
+      "note": "mb1:21",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我守卫夏丘真的就是英雄将因此得名之重担"
+    },
+    {
+      "en": "Terris Dominance",
+      "zh": "泰瑞司统御区",
+      "note": "mb3:77",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "去泰瑞司统御区找你们的人民"
+    },
+    {
+      "en": "Vennias",
+      "zh": "文尼亚",
+      "note": "mb1:20",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "把他放在文尼亚的渗透点，混入教廷的门徒中"
+    },
+    {
+      "en": "Western Dominance",
+      "zh": "西方统御区",
+      "note": "mb3:15",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "越深入西方统御区，因迷雾失去的日照越多"
+    }
+  ]
+}

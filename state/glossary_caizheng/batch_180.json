@@ -1,0 +1,101 @@
+{
+  "batch": 180,
+  "results": [
+    {
+      "en": "Larn (Scadrial)",
+      "zh": "拉恩",
+      "note": "mb2:42",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“这是拉恩。”德穆向依蓝德介绍年轻司卡。"
+    },
+    {
+      "en": "Mennis",
+      "zh": "曼尼斯",
+      "note": "mb1:序章",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“你叫什么名字？”“曼尼斯。”"
+    },
+    {
+      "en": "Midge",
+      "zh": "",
+      "note": "扫描全库 en_hits_total=0（正文无书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Milev",
+      "zh": "米雷夫",
+      "note": "mb1:3",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "米雷夫端起箱子交给卡西尔。"
+    },
+    {
+      "en": "Redd",
+      "zh": "雷德",
+      "note": "mb1:31",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“他叫雷德，审判者们当场就杀了他。”"
+    },
+    {
+      "en": "Shum",
+      "zh": "束姆",
+      "note": "mb1:序章",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "束姆——曼尼斯靠着的小伙子。"
+    },
+    {
+      "en": "Tase",
+      "zh": "塔司",
+      "note": "mb1:33",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "其中一名学徒，纹想他的名字是塔司。"
+    },
+    {
+      "en": "Tawnson",
+      "zh": "陶森",
+      "note": "mb1:17",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“请他们过来吧，陶森。”"
+    },
+    {
+      "en": "Trap",
+      "zh": "陷阱",
+      "note": "mb1:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“陷阱呢？”“陷阱死了。”"
+    },
+    {
+      "en": "Ulef",
+      "zh": "乌雷",
+      "note": "mb1:1",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“纹！”乌雷的头探入房间。"
+    },
+    {
+      "en": "Vent (Scadrial)",
+      "zh": "狂风",
+      "note": "mb1:5",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“她让我想到狂风。”"
+    },
+    {
+      "en": "Vet (Scadrial)",
+      "zh": "斐特",
+      "note": "mb2:37",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "依蓝德对叫斐特的人投以感谢的笑容。"
+    }
+  ]
+}

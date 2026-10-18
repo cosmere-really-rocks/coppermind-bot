@@ -1,0 +1,101 @@
+{
+  "batch": 312,
+  "results": [
+    {
+      "en": "Aluminum",
+      "zh": "铝",
+      "note": "mb1-3/4:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "他燃烧钢…是铝，他意识到。铝和另外几种铝合金对镕金术不会产生反应，既不能推也不能拉。"
+    },
+    {
+      "en": "Dragonsteel (metal)",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "God Metal",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Gold",
+      "zh": "金",
+      "note": "mb1:27",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "第九种金属是金。…燃烧金是种有点……不舒服的经验。"
+    },
+    {
+      "en": "Raysium",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Silver",
+      "zh": "银",
+      "note": "mb6:11",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "韦恩从口袋里摸出一把银质拆信刀。他是打哪弄来的？"
+    },
+    {
+      "en": "Mistborn film",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Mistborn: Birthright",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "User:Adamkarma/Synod",
+      "zh": "",
+      "note": "wiki页面引用，正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Eiser",
+      "zh": "艾瑟",
+      "note": "mb1:6",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "两个月前我才因为艾瑟行动被标记了。"
+    },
+    {
+      "en": "Ire's orb",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Mistborn: House War",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

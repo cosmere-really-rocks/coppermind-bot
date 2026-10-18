@@ -1,0 +1,101 @@
+{
+  "batch": 216,
+  "results": [
+    {
+      "en": "Spanky",
+      "zh": "",
+      "note": "待失落金属中译",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Staxles",
+      "zh": "史塔克里司",
+      "note": "mb1:28",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我刚口述这封给史塔克里司的信，承诺会出席代加大人于明天下午的午餐聚会"
+    },
+    {
+      "en": "Temadre",
+      "zh": "泰玛德",
+      "note": "mb1:36",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "泰玛德预测到这件事，依蓝德突然明了"
+    },
+    {
+      "en": "Urdree",
+      "zh": "兀迪",
+      "note": "mb3:32",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "不要把兀迪扯进来"
+    },
+    {
+      "en": "Vin's sister",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Wednegon",
+      "zh": "维德奈更",
+      "note": "mb2:36",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "这一段是出自维德奈更王的传记，他是最后一名有规模地抵抗统御主的领导者"
+    },
+    {
+      "en": "Ytves",
+      "zh": "依凡提司",
+      "note": "mb2:31",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "他回想起依凡提司在《革命研究》中的评论"
+    },
+    {
+      "en": "Kelsier's crew",
+      "zh": "卡西尔的团队",
+      "note": "mb2:45",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "永远进不了卡西尔的团队，也许我会隐藏起镕金术（亦有“卡西尔帮”“卡西尔的团体”译法）"
+    },
+    {
+      "en": "Leras",
+      "zh": "",
+      "note": "待失落金属中译",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Luthadel Assembly",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Canton of Inquisition",
+      "zh": "审判廷",
+      "note": "mb1:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "审判廷，甚至是教义廷更是令人闻风丧胆"
+    },
+    {
+      "en": "The Eleventh Metal",
+      "zh": "第十一金属",
+      "note": "mb1:4",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "第十一金属。那种金属。微风不确定地问道"
+    }
+  ]
+}

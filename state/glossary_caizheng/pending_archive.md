@@ -1,0 +1,167 @@
+# pending 归档（2026-10-18 译名表补全轮·不可采证词条）
+
+> 本轮候选词条 `state/mistborn_glossary_terms.json` 共 327 条；168 条已采证并入 `dict/mistborn.json`，
+> 以下 159 条正文无书证/不可采证，标 pending，**勿再重跑**（除非失落金属等中译出版/新书证出现）。
+> 原始数据见 `state/glossary_caizheng/consolidated.json`（pending 数组）。
+
+## 159 条不可采证清单
+
+- **A House of Ashes** — 正文无书证
+- **Aika** — 正文无书证
+- **Ala** — 正文无书证
+- **Aledin** — 待失落金属中译（无扫描书证）
+- **Aleen** — 正文无书证
+- **Allomancy/table** — 正文无书证
+- **Alloy of Law (rule book)** — 正文无书证
+- **Alloy of Law: Masks of the Past** — 正文无书证
+- **Allrianne's mother** — 正文无书证
+- **Antillius Shezler** — 待失落金属中译（无扫描书证）
+- **Ardous Geffenry** — 待失落金属中译（无扫描书证）
+- **Ashwalkers** — 正文无书证
+- **Ati** — 仅见秘密史，无中译
+- **Audil Lekal** — 待失落金属中译（无扫描书证）
+- **Austrex** — 正文无书证
+- **Axindweth** — 正文无书证 — en_hits_total=0，涉失落金属未扫
+- **Battar** — 正文无书证
+- **Battle of Hathsin** — 正文无书证（en_hits_total=0） — 全书英文本未命中该专名，无可采证官方中译
+- **Biord** — 正文无书证
+- **Black Lake** — 正文无书证/无法确认
+- **Bobbie** — zh_region未明确对应，无法确认中译 — 英文为一种犬，中文对照区无对应译名
+- **Brollin** — 正文无书证 — 全扫描 en_hits_total=0
+- **Callins Geffenry** — 待失落金属中译（无扫描书证）
+- **Camon's safe house** — 正文无书证
+- **Chakath** — 中文译本省略该地名，无法采证
+- **Charred** — 无法确认（书证仅为形容词“焦黑”用法） — 哈姆戳着一块焦黑的木头
+- **Cinder King** — 正文无书证
+- **Cinderheart** — 正文无书证
+- **Classical Scadrial** — 正文无书证
+- **Cled** — 正文无书证（zh_region 未命中译名）
+- **Cobble** — 正文无书证（zh_region 未命中人名译名）
+- **Connector** — 正文无书证
+- **Coup of Urteau** — 正文无书证
+- **Crescent Dominance** — 正文无书证
+- **Crescent Wastelands** — 正文无书证
+- **Crystal spike** — 正文无书证
+- **Dajer** — 正文无书证 — 全扫描 en_hits_total=0
+- **Dean** — 正文无书证
+- **Dragonsteel (metal)** — 正文无书证
+- **Dulac** — 正文无书证
+- **Elegy Salvage** — 正文无书证
+- **Elend's mother** — 正文无书证
+- **Erlac** — 正文无书证
+- **Esandi** — 正文无书证 — 全扫描 en_hits_total=0
+- **Ever-Slaying Sword** — 待失落金属中译
+- **Fedren Aime** — 正文无书证
+- **FellSpire** — 无法确认中译(zh无对应)
+- **Feruchemy/table** — 正文无书证
+- **Fets** — mb2:21 译作'下棋'未保留专名 — 有点像是下棋…吃下一子…逼到死角
+- **Finwick blue** — 正文无书证
+- **Gereh** — 正文无书证
+- **Gnat** — 正文无书证
+- **God Metal** — 正文无书证
+- **Hannerdam** — 正文无书证
+- **Haridan** — 正文无书证
+- **Hemalurgy/table** — 非正文术语（表格页签，非专名词条）
+- **House Conrad** — 正文无书证
+- **House Delvrais** — 正文无书证
+- **House Fathvell** — 正文无书证
+- **House Gardre** — 正文无书证
+- **House Haught** — 正文无书证
+- **House Penrod** — 正文无书证
+- **House Teniert** — 正文无书证
+- **House Urbain** — 正文无书证
+- **Icy Tongue** — 正文无书证
+- **Ire's orb** — 正文无书证
+- **Ishathon** — 正文无书证
+- **Iyatil** — 正文无书证 — en_hits_total=0，涉密史/失落金属未扫
+- **Jasten** — 正文无书证（zh_region 未命中译名）
+- **Jezinor** — 正文无书证
+- **Jin** — 正文无书证
+- **Kabsal** — 正文无书证
+- **Kaise** — 正文无书证
+- **Kallib** — 待失落金属中译（无扫描书证）
+- **Keep Shezler** — 正文无书证 (en_hits_total=0)
+- **Kelsier's mother** — 正文无明确中译（无名角色描述语） — zh_region 未见“母亲”明确译名对应
+- **Kwaan's inscription** — 正文无书证
+- **Laget** — 正文无书证
+- **Lake Luthadel** — 正文无书证
+- **Lake Tyrian** — 正文无书证
+- **Lejanos** — 正文无书证 (en_hits_total=0)
+- **Lemex's nurse** — 正文无书证
+- **Leonore** — 待失落金属中译（无扫描书证）
+- **Leras** — 待失落金属中译
+- **Leras's knife** — 正文无书证
+- **Lieke** — 正文无书证
+- **Lin Davar** — 正文无书证
+- **Longsfollow** — 正文无书证 (en_hits_total=0)
+- **Luesh** — 正文无书证
+- **Luthadel Assembly** — 正文无书证
+- **Malwish Empire** — 待失落金属中译 — Malwish 相关仅见于 The Lost Metal，无中译
+- **Mantiz** — 正文无书证 (en_hits_total=0)
+- **Marewill flower** — 正文无书证 — 全扫描 en_hits_total=0
+- **Midge** — 扫描全库 en_hits_total=0（正文无书证）
+- **Mistborn Adventure Game** — 正文无书证
+- **Mistborn Adventure Game (rule book)** — 正文无书证
+- **Mistborn film** — 正文无书证
+- **Mistborn: Birthright** — 正文无书证
+- **Mistborn: House War** — 正文无书证
+- **Mistborn: Secret History** — 正文无书证(en_hits=0)
+- **Mistborn: Secret History/Statistical analysis** — 维基子页，正文无书证
+- **Mistborn: The Deckbuilding Game** — 正文无书证 — 全书扫描 en_hits_total=0，为桌游专名，正文无对应中译书证。
+- **Mistborn: The Final Empire** — 正文无书证(en_hits=0)
+- **Mistborn: The Final Empire/Epigraphs** — 维基子页，正文无书证
+- **Mistborn: The Final Empire/Statistical analysis** — 维基子页，正文无书证
+- **Moash** — 正文无书证
+- **Mraize** — 正文无书证
+- **Mraize's Aviar** — 正文无书证
+- **Myrshek Village** — 正文无书证 (en_hits_total=0)
+- **North Seran** — 正文无书证
+- **Ramshadow** — 正文无书证 — 全扫描 en_hits_total=0
+- **Ravamak** — 正文无书证
+- **Raysium** — 正文无书证
+- **Rebeke Salvage** — 正文无书证
+- **River Longsfollow** — 正文无书证 (en_hits_total=0)
+- **River Seran** — 正文无书证
+- **Ruin's Perpendicularity** — 正文无书证
+- **Saja** — 待失落金属中译（无扫描书证）
+- **Savant** — 正文无书证（mb3:15对照区未对应） — zh_region为迷雾/统御主内容，与pewter/bronze savant不对应
+- **Sazed's note** — 正文无书证
+- **Sazed's rings** — 正文无书证
+- **Senna** — 正文无书证 — 全书扫描 en_hits_total=0，正文无对应中译书证。
+- **Seranese long-haired goat** — 正文无书证 — 全扫描 en_hits_total=0
+- **Shade (character)** — 正文无书证（仅英文常用意shade，非角色）
+- **Shan Elariel's steward** — 正文无书证
+- **Shrouded Isles** — 正文无书证
+- **Siege of Fadrex City** — 正文无书证
+- **Skaa: Tin & Ash** — 正文无书证
+- **South Seran** — 正文无书证
+- **Spanky** — 待失落金属中译
+- **Speckleberry** — 正文无书证
+- **Spook's note** — 正文无书证
+- **Stairperch** — 正文无书证 — 全扫描 en_hits_total=0
+- **Steel alphabet** — 正文无书证
+- **Steelfield** — 正文无书证
+- **Summary:Mistborn: Secret History** — 专题页，正文无书证
+- **Summary:Mistborn: The Final Empire** — 维基子页/摘要页，正文无书证
+- **Summary:The Hero of Ages** — 专题页，正文无书证
+- **Summary:The Well of Ascension** — 专题页，正文无书证
+- **Sunwraith** — 正文无书证 — 全扫描 en_hits_total=0
+- **Tavira** — 正文无书证 (en_hits_total=0)
+- **Terris: Wrought of Copper** — 正文无书证
+- **Tevidian Tekiel** — 正文无书证
+- **Thaidakar** — 正文无书证
+- **The Hero of Ages/Epigraphs** — 维基子页，正文无书证
+- **The Hero of Ages/Statistical analysis** — 维基子页，正文无书证
+- **The Treatise Metallurgic** — 正文无书证
+- **The Well of Ascension/Epigraphs** — 维基子页，正文无书证
+- **The Well of Ascension/Statistical analysis** — 维基子页，正文无书证
+- **Tresting plantation** — 正文无书证
+- **Troalin** — 正文无书证
+- **User:Adamkarma/Synod** — wiki页面引用，正文无书证
+- **Vasher** — 正文无书证
+- **Vin's earring** — 正文无书证
+- **Vin's mother** — 正文无书证 — en_hits_total=0，无中译书证
+- **Vin's sister** — 正文无书证
+- **Worktide** — 正文无书证
+- **Yadramak** — 待失落金属中译（无扫描书证）
+- **Zora** — 正文无书证

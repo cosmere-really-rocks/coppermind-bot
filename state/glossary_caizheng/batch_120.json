@@ -1,0 +1,101 @@
+{
+  "batch": 120,
+  "results": [
+    {
+      "en": "Arriev",
+      "zh": "亚瑞耶夫",
+      "note": "mb1:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "上圣祭司亚瑞耶夫——审核你提案的委员会长"
+    },
+    {
+      "en": "Cabe",
+      "zh": "凯贝",
+      "note": "mb1:28",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "你错过凯贝大人的舞会"
+    },
+    {
+      "en": "Kallib",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Leonore",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Saja",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Yadramak",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Aledin",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Allrianne's mother",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Antillius Shezler",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Ardous Geffenry",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Audil Lekal",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Callins Geffenry",
+      "zh": "",
+      "note": "待失落金属中译（无扫描书证）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

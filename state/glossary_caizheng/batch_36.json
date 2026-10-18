@@ -1,0 +1,101 @@
+{
+  "batch": 36,
+  "results": [
+    {
+      "en": "Tougier",
+      "zh": "图吉珥",
+      "note": "mb1:4",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "三百年前有七千名司卡反抗军被歼灭的图吉珥大屠杀"
+    },
+    {
+      "en": "Central Dominance",
+      "zh": "中央统御区",
+      "note": "mb3:8",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "被带去中央统御区，那里还有足够的无迷雾日光种田"
+    },
+    {
+      "en": "Crescent Dominance",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Crescent Wastelands",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Dominance",
+      "zh": "统御区",
+      "note": "mb3:15",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "越深入西方统御区，因迷雾失去的日照时数就越多"
+    },
+    {
+      "en": "Eastern Dominance",
+      "zh": "东方统御区",
+      "note": "mb2:3",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "东方统御区的土壤比北方的陶土含量高"
+    },
+    {
+      "en": "FellSpire",
+      "zh": "",
+      "note": "无法确认中译(zh无对应)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Hannerdam",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Kordel",
+      "zh": "柯玳",
+      "note": "mb1:16",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "它不是从克雷尼恩或柯玳所开始"
+    },
+    {
+      "en": "Malwish Empire",
+      "zh": "",
+      "note": "待失落金属中译",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "New Empire",
+      "zh": "新帝国",
+      "note": "mb3:10",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "新帝国中的每个城市都有自己的版本"
+    },
+    {
+      "en": "North Seran",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

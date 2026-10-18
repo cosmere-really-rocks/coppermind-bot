@@ -95,6 +95,7 @@
   - 维基 move 到译名表名：**Mi'chelle Yomen 拆两条**——`Mi'chelle Yomen`=米歇尔·尤门（旧姓欧斯特林，婚后夫姓）、新增 `Mi'chelle Ostlin`=米歇尔·欧斯特林（旧姓），维基核心正文移动至 `米歇尔·尤门`，其余 redirect；**Yomen-Ostlin wedding dinner**=尤门-欧斯特林的婚礼晚宴（欧斯特林·斯），维基旧页 `尤门·/尤门- 尤门-欧思特林…` redirect 至连字符版正文
   - 其余不一致均在更早批次已解决或为「用户口径保留差异」（Origin/Pinnacle/Shadesmar/Valette Renoux/Wax/Mistborn 等）。全表 796 条。
 - ✅ 2026-10-18 爬取 `Category:Mistborn` 全量（递归展开 **1116 页**；其中 Era_2 等 564 页已抓/跳过，本次新抓 **550 页**，0 错误）。复用 `fetch_en.fetch_one` + cloudscraper（与 Era_2 同法），慢速限速 `2.0s/页`（决议#14，防反爬，全程未触发封禁）。脚本 `scripts/fetch_mistborn_crawl.py`（按 `state/mistborn_need_fetch.json` 清单断点续跑、每 25 页存索引）；范围清单 `state/mistborn_category_list.json`。验证：1116/1116 全快照、0 缺失。
+- ✅ 2026-10-18 译名表补全轮·caizheng 采证并入（`state/glossary_caizheng/` 工作目录）：对 `state/mistborn_glossary_terms.json` 的 **327 条**候选词条按批次书证采证（批次文件 `batch_*.json`/`miss_*.json` 逐条给出 zh+书证+置信），汇总 `consolidated.json`：**168 条 ok**（含人物/地理/地点/机构/物品/金属/祝福等），已并入 `dict/mistborn.json`（全表 796→**961** 条；脚本 `scripts/glossary_caizheng_merge.py`）；**159 条不可采证**（仅 tlm/密史无中译、维基子页/元信息、正文无书证、意译未成专名）已归档 `state/glossary_caizheng/pending_archive.md`（勿重跑）。并入门类一致：Venture 家族=泛图尔、Tekiel=太齐尔、Cett=塞特、Kelsier=卡西尔、硝镪病等。备份 `dict/mistborn.json.bak.caizheng-*`。
 
 ## 凭据
 

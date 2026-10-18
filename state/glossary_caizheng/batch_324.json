@@ -1,0 +1,29 @@
+{
+  "batch": 324,
+  "results": [
+    {
+      "en": "Mistborn: The Deckbuilding Game",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全书扫描 en_hits_total=0，为桌游专名，正文无对应中译书证。"
+    },
+    {
+      "en": "Mistcloak",
+      "zh": "迷雾斗篷",
+      "note": "mb6:13,mb6:31",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "执法镕金13章「身后还披着随风摆动的迷雾斗篷」；31章「外面披着正式的迷雾斗篷」。"
+    },
+    {
+      "en": "Senna",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全书扫描 en_hits_total=0，正文无对应中译书证。"
+    }
+  ]
+}

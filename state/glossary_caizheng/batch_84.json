@@ -1,0 +1,101 @@
+{
+  "batch": 84,
+  "results": [
+    {
+      "en": "House Penrod",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Renates",
+      "zh": "雷奈特",
+      "note": "mb1:18",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "雷奈特族之强迫迁徙"
+    },
+    {
+      "en": "House Renoux",
+      "zh": "雷弩",
+      "note": "mb1:8",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "所有人都认定雷弩家族早晚会成为上族的一分子"
+    },
+    {
+      "en": "Shelldry",
+      "zh": "贝牌",
+      "note": "mb1:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "你明天还是打算来跟我们一起玩贝牌吗"
+    },
+    {
+      "en": "House Shunah",
+      "zh": "书纳",
+      "note": "mb1:30",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "书纳也已经宣布它不会再举行舞会了"
+    },
+    {
+      "en": "Steel alphabet",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Streetspice",
+      "zh": "迷幻药",
+      "note": "mb1:17",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "这可能跟迷幻药一样容易上瘾"
+    },
+    {
+      "en": "House Teniert",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Terris Prophecies",
+      "zh": "泰瑞司预言",
+      "note": "mb1:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "泰瑞司预言说我会有拯救世界的力量"
+    },
+    {
+      "en": "Tinningdar",
+      "zh": "提宁达",
+      "note": "mb5:5",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "被称作提宁达的泰瑞司长袍，正面带有V字图案"
+    },
+    {
+      "en": "Truths of the Bennet",
+      "zh": "班内特之实言",
+      "note": "mb1:29",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "你应该听听看班内特之实言"
+    },
+    {
+      "en": "House Urbain",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

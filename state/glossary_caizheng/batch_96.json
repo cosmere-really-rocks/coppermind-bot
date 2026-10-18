@@ -1,0 +1,101 @@
+{
+  "batch": 96,
+  "results": [
+    {
+      "en": "Valla",
+      "zh": "法拉",
+      "note": "mb1:29",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "在统御主的主宰下，法拉族比任何其他宗教都撑得更久"
+    },
+    {
+      "en": "House Venture",
+      "zh": "泛图尔",
+      "note": "mb1:5",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "我是泛图尔的继承人；泛图尔的堡垒"
+    },
+    {
+      "en": "Worktide",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Ascension of the Lord Ruler",
+      "zh": "统御主升华",
+      "note": "mb3:10",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "在统御主升华前，在深黯来到大地前"
+    },
+    {
+      "en": "Classical Scadrial",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Baywrap",
+      "zh": "菜卷",
+      "note": "mb1:6",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "拿着四个菜卷重新出现。哈姆…咬了一口菜卷"
+    },
+    {
+      "en": "Heartroot",
+      "zh": "心根",
+      "note": "mb2:55",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "依蓝德随口说了句他不喜欢心根茶"
+    },
+    {
+      "en": "Laget",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Ravamak",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Speckleberry",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Birchbane",
+      "zh": "毒桦",
+      "note": "mb2:17",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "而且还是毒桦；能从肉桂中闻出毒桦的气味"
+    },
+    {
+      "en": "Black Frayn",
+      "zh": "黑费恩草",
+      "note": "mb2:52",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "其中有黑费恩草——的确是种很棘手的迷幻药"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "batch": 48,
+  "results": [
+    {
+      "en": "Jess (Scadrial)",
+      "zh": "洁丝",
+      "note": "mb1:0",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "众判处其子对司卡有害，众人同情“可怜的洁丝”"
+    },
+    {
+      "en": "Kareien",
+      "zh": "凯芮安",
+      "note": "mb1:22",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“凯芮安跟我的事提醒了每个人”"
+    },
+    {
+      "en": "Kelsier",
+      "zh": "卡西尔",
+      "note": "mb1:2",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“新来的人，卡西尔，摇摇头”"
+    },
+    {
+      "en": "Kelsier's mother",
+      "zh": "",
+      "note": "正文无明确中译（无名角色描述语）",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "zh_region 未见“母亲”明确译名对应"
+    },
+    {
+      "en": "Vin's mother",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "en_hits_total=0，无中译书证"
+    },
+    {
+      "en": "Iyatil",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "en_hits_total=0，涉密史/失落金属未扫"
+    },
+    {
+      "en": "Terrisman",
+      "zh": "泰瑞司人",
+      "note": "mb1:8",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "“你是泰瑞司人”沙赛德身份"
+    },
+    {
+      "en": "Axindweth",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "en_hits_total=0，涉失落金属未扫"
+    }
+  ]
+}

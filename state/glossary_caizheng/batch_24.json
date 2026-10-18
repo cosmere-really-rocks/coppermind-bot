@@ -1,0 +1,101 @@
+{
+  "batch": 24,
+  "results": [
+    {
+      "en": "Longsfollow",
+      "zh": "",
+      "note": "正文无书证 (en_hits_total=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "River Longsfollow",
+      "zh": "",
+      "note": "正文无书证 (en_hits_total=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Chakath",
+      "zh": "",
+      "note": "中文译本省略该地名，无法采证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Keep Shezler",
+      "zh": "",
+      "note": "正文无书证 (en_hits_total=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Mantiz",
+      "zh": "",
+      "note": "正文无书证 (en_hits_total=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Burnlands",
+      "zh": "炎地",
+      "note": "mb2:23",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "教导炎地边境的人民（the borders of the burnlands）"
+    },
+    {
+      "en": "Conway Canal",
+      "zh": "康道运河",
+      "note": "mb3:25",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "前方通往西方的宽广康道运河（the broad Conway Canal）"
+    },
+    {
+      "en": "Devanex",
+      "zh": "戴凡奈",
+      "note": "mb1:18",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "如戴凡奈大屠杀（the Massacre at Devanex）"
+    },
+    {
+      "en": "Lejanos",
+      "zh": "",
+      "note": "正文无书证 (en_hits_total=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Luth-Davn Canal",
+      "zh": "陆沙德运河",
+      "note": "mb1:25",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "奔陆沙德运河旁边的宽广曳道（beside the Luth-Davn Canal）"
+    },
+    {
+      "en": "Myrshek Village",
+      "zh": "",
+      "note": "正文无书证 (en_hits_total=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Tavira",
+      "zh": "",
+      "note": "正文无书证 (en_hits_total=0)",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    }
+  ]
+}

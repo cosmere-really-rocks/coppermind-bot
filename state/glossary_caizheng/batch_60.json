@@ -1,0 +1,101 @@
+{
+  "batch": 60,
+  "results": [
+    {
+      "en": "House Aime",
+      "zh": "艾枚",
+      "note": "mb1:28",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "克礼丝称「完全没有跟艾枚联姻的兴趣…艾枚家的儿子们」，官方中译 House Aime 为艾枚"
+    },
+    {
+      "en": "Astalsi",
+      "zh": "阿司塔西",
+      "note": "mb1:29",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "「升华前有一族人叫做『阿司塔西』…阿司塔西人蛮先进」，官方中译为阿司塔西"
+    },
+    {
+      "en": "Beliefs Reborn",
+      "zh": "信仰重生",
+      "note": "mb6:1",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "「和谐的《信仰重生》，是《创始箴言录》中的一卷」，官方中译为《信仰重生》"
+    },
+    {
+      "en": "House Buvidas",
+      "zh": "布维达",
+      "note": "mb1:9",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "陆沙德十大家族名录中对应 Buvidas 者为「…浩特、兀尔班、布维达」，官方中译为布维达"
+    },
+    {
+      "en": "House Cett",
+      "zh": "塞特家族",
+      "note": "mb2:35",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "塞特大公一族，缾金时代「塞特家族的所有权」「塞特宅邸」，官方中译 House Cett 为塞特家族"
+    },
+    {
+      "en": "Church of the Survivor",
+      "zh": "幸存者教会",
+      "note": "mb3:10",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "「幸存者教会的教义是纹…」，全书统一译为幸存者教会"
+    },
+    {
+      "en": "House Conrad",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "House Delvrais",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "House Elariel",
+      "zh": "埃拉瑞尔",
+      "note": "mb1:18",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "「珊·埃拉瑞尔贵女要你前去她的桌子…埃拉瑞尔是上族之一」，官方中译为埃拉瑞尔"
+    },
+    {
+      "en": "House Entrone",
+      "zh": "恩特隆",
+      "note": "mb5:1",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "「朝休斯·恩特隆大人走去，那是恩特隆族长的表亲和密友」，官方中译为恩特隆"
+    },
+    {
+      "en": "House Erikell",
+      "zh": "艾瑞凯",
+      "note": "mb1:9",
+      "status": "ok",
+      "confidence": "medium",
+      "evidence": "十大家名录中对应 Erikell 者为艾瑞凯；mb1:19作艾瑞凯勒、mb5:9作艾瑞凯家族，官方译法稍有出入"
+    },
+    {
+      "en": "House Erikeller",
+      "zh": "艾瑞凯勒",
+      "note": "mb1:9",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "十大家名录与「艾瑞凯勒堡垒」均译艾瑞凯勒，官方中译为艾瑞凯勒"
+    }
+  ]
+}

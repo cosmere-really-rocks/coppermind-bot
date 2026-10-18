@@ -1,0 +1,101 @@
+{
+  "batch": 108,
+  "results": [
+    {
+      "en": "Bobbie",
+      "zh": "",
+      "note": "zh_region未明确对应，无法确认中译",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "英文为一种犬，中文对照区无对应译名"
+    },
+    {
+      "en": "Brollin",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    },
+    {
+      "en": "Farlet",
+      "zh": "法雷",
+      "note": "mb1:序章",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "稀释的法雷汤好吃很多"
+    },
+    {
+      "en": "Marewill flower",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    },
+    {
+      "en": "Perchwither",
+      "zh": "枯鲈草",
+      "note": "mb5:17",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "这是枯鲈草，是一种生物性发光真菌"
+    },
+    {
+      "en": "Ramshadow",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    },
+    {
+      "en": "Seranese long-haired goat",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    },
+    {
+      "en": "Stairperch",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    },
+    {
+      "en": "Sunwraith",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    },
+    {
+      "en": "Human",
+      "zh": "人类",
+      "note": "mb3:59",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "那只自称为人类的克罗司"
+    },
+    {
+      "en": "Dajer",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    },
+    {
+      "en": "Esandi",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": "全扫描 en_hits_total=0"
+    }
+  ]
+}

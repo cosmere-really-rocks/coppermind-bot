@@ -1,0 +1,69 @@
+{
+  "batch": 56,
+  "results": [
+    {
+      "en": "Dulac",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Gereh",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Lemex's nurse",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Shan Elariel's steward",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Bendal",
+      "zh": "班达",
+      "note": "mb1:37",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "很可惜班达不在这里。卡尔说道（对应 It is unfortunate that Bendal isn't here）"
+    },
+    {
+      "en": "Bevidon",
+      "zh": "贝维登",
+      "note": "mb1:24",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "嘿，贝维登。我今天休假，赛提斯在吗？（对应 Hey, Bevidon）"
+    },
+    {
+      "en": "Biord",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Braches",
+      "zh": "布拉克斯",
+      "note": "mb1:22",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "一向好奇心很重的布拉克斯答应要去询问他（对应 Braches—inquisitive, as always）"
+    }
+  ]
+}

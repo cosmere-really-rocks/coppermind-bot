@@ -1,0 +1,14 @@
+{"batch": 12, "results": [
+  {"en": "Lake Luthadel", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Tresting plantation", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Lake Tyrian", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Valtroux", "zh": "法尔特鲁", "note": "mb1:24", "status": "ok", "confidence": "high", "evidence": "法尔特鲁警备队派了五千人过去（Valtroux Garrison 派兵）"},
+  {"en": "Black Lake", "zh": "", "note": "正文无书证/无法确认", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Conventical of Seran", "zh": "瑟蓝集所", "note": "mb3:49", "status": "ok", "confidence": "high", "evidence": "来到瑟蓝集所（arrived at the Conventical of Seran）"},
+  {"en": "Erlac", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "River Seran", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Siege of Fadrex City", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Coup of Urteau", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Austrex", "zh": "", "note": "正文无书证", "status": "pending", "confidence": "low", "evidence": ""},
+  {"en": "Lekal City", "zh": "雷卡城", "note": "mb3:4", "status": "ok", "confidence": "high", "evidence": "并没有带军队入侵雷卡城（no army brought to Lekal City）"}
+]}

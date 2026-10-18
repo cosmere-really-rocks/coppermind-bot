@@ -1,0 +1,5240 @@
+{
+ "ok": [
+  {
+   "en": "Valtroux",
+   "zh": "法尔特鲁",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "法尔特鲁警备队派了五千人过去（Valtroux Garrison 派兵）"
+  },
+  {
+   "en": "Conventical of Seran",
+   "zh": "瑟蓝集所",
+   "note": "mb3:49",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "来到瑟蓝集所（arrived at the Conventical of Seran）"
+  },
+  {
+   "en": "Lekal City",
+   "zh": "雷卡城",
+   "note": "mb3:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "并没有带军队入侵雷卡城（no army brought to Lekal City）"
+  },
+  {
+   "en": "Mistcloak",
+   "zh": "迷雾斗篷",
+   "note": "mb6:13,mb6:31",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "执法镕金13章「身后还披着随风摆动的迷雾斗篷」；31章「外面披着正式的迷雾斗篷」。"
+  },
+  {
+   "en": "Staxles",
+   "zh": "史塔克里司",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我刚口述这封给史塔克里司的信，承诺会出席代加大人于明天下午的午餐聚会"
+  },
+  {
+   "en": "Temadre",
+   "zh": "泰玛德",
+   "note": "mb1:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "泰玛德预测到这件事，依蓝德突然明了"
+  },
+  {
+   "en": "Urdree",
+   "zh": "兀迪",
+   "note": "mb3:32",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "不要把兀迪扯进来"
+  },
+  {
+   "en": "Wednegon",
+   "zh": "维德奈更",
+   "note": "mb2:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这一段是出自维德奈更王的传记，他是最后一名有规模地抵抗统御主的领导者"
+  },
+  {
+   "en": "Ytves",
+   "zh": "依凡提司",
+   "note": "mb2:31",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "他回想起依凡提司在《革命研究》中的评论"
+  },
+  {
+   "en": "Kelsier's crew",
+   "zh": "卡西尔的团队",
+   "note": "mb2:45",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "永远进不了卡西尔的团队，也许我会隐藏起镕金术（亦有“卡西尔帮”“卡西尔的团体”译法）"
+  },
+  {
+   "en": "Canton of Inquisition",
+   "zh": "审判廷",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "审判廷，甚至是教义廷更是令人闻风丧胆"
+  },
+  {
+   "en": "The Eleventh Metal",
+   "zh": "第十一金属",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "第十一金属。那种金属。微风不确定地问道"
+  },
+  {
+   "en": "Kale Tekiel",
+   "zh": "凯尔·太齐尔",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "凯尔·太齐尔已经无法回想此时了，依蓝德心想。"
+  },
+  {
+   "en": "Kevoux",
+   "zh": "凯弗",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "而凯弗，容我冒昧地说一句，不会有多大的影响力。"
+  },
+  {
+   "en": "Kliss",
+   "zh": "克礼丝",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "克礼丝贵女低声说道；多处一致译克礼丝。"
+  },
+  {
+   "en": "Kurdon",
+   "zh": "库敦",
+   "note": "mb1:0",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "特雷斯廷转过头呵斥：库敦！壮硕的工头冲上山坡。"
+  },
+  {
+   "en": "Laird",
+   "zh": "莱德",
+   "note": "mb1:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "纹看着圣祭司莱德骄傲地踏入房间（多章一致）。"
+  },
+  {
+   "en": "Melend Liese",
+   "zh": "梅莱德·李艾斯",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是梅莱德·李艾斯。请问你愿意与我共舞吗？"
+  },
+  {
+   "en": "Milen Davenpleu",
+   "zh": "米伦·戴文普鲁",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "包括纹跟她的同伴——米伦·戴文普鲁，一名小家族的年轻继承人。"
+  },
+  {
+   "en": "Rene",
+   "zh": "瑞尼",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "瑞尼，克礼丝今晚约会的对象问道。"
+  },
+  {
+   "en": "Rian Strobe",
+   "zh": "瑞安·史特罗布",
+   "note": "mb1:12",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是瑞安·史特罗布爵士。你愿意与我共舞吗？"
+  },
+  {
+   "en": "Salmen Tekiel",
+   "zh": "沙门·太齐尔",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那珊跟沙门·太齐尔的秘密关系呢？"
+  },
+  {
+   "en": "Shan Elariel",
+   "zh": "珊·埃拉瑞尔",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "珊·埃拉瑞尔贵女千真万确是名安抚者（多处一致）。"
+  },
+  {
+   "en": "Stase Blanches",
+   "zh": "史黛西·白兰史",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "今晚轮到的是史黛西·白兰史贵女。"
+  },
+  {
+   "en": "House Aime",
+   "zh": "艾枚",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "克礼丝称「完全没有跟艾枚联姻的兴趣…艾枚家的儿子们」，官方中译 House Aime 为艾枚"
+  },
+  {
+   "en": "Astalsi",
+   "zh": "阿司塔西",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「升华前有一族人叫做『阿司塔西』…阿司塔西人蛮先进」，官方中译为阿司塔西"
+  },
+  {
+   "en": "Beliefs Reborn",
+   "zh": "信仰重生",
+   "note": "mb6:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「和谐的《信仰重生》，是《创始箴言录》中的一卷」，官方中译为《信仰重生》"
+  },
+  {
+   "en": "House Buvidas",
+   "zh": "布维达",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "陆沙德十大家族名录中对应 Buvidas 者为「…浩特、兀尔班、布维达」，官方中译为布维达"
+  },
+  {
+   "en": "House Cett",
+   "zh": "塞特家族",
+   "note": "mb2:35",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "塞特大公一族，缾金时代「塞特家族的所有权」「塞特宅邸」，官方中译 House Cett 为塞特家族"
+  },
+  {
+   "en": "Church of the Survivor",
+   "zh": "幸存者教会",
+   "note": "mb3:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「幸存者教会的教义是纹…」，全书统一译为幸存者教会"
+  },
+  {
+   "en": "House Elariel",
+   "zh": "埃拉瑞尔",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「珊·埃拉瑞尔贵女要你前去她的桌子…埃拉瑞尔是上族之一」，官方中译为埃拉瑞尔"
+  },
+  {
+   "en": "House Entrone",
+   "zh": "恩特隆",
+   "note": "mb5:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「朝休斯·恩特隆大人走去，那是恩特隆族长的表亲和密友」，官方中译为恩特隆"
+  },
+  {
+   "en": "House Erikell",
+   "zh": "艾瑞凯",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "十大家名录中对应 Erikell 者为艾瑞凯；mb1:19作艾瑞凯勒、mb5:9作艾瑞凯家族，官方译法稍有出入"
+  },
+  {
+   "en": "House Erikeller",
+   "zh": "艾瑞凯勒",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "十大家名录与「艾瑞凯勒堡垒」均译艾瑞凯勒，官方中译为艾瑞凯勒"
+  },
+  {
+   "en": "Carlee",
+   "zh": "卡莉",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "卡莉，泰敦年轻的妻子，以她娇滴滴的声音说道"
+  },
+  {
+   "en": "Charrs Entrone",
+   "zh": "查斯·恩创",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是查斯·恩创大人，卡西尔在司卡贫民区外袭击了这名贵族"
+  },
+  {
+   "en": "Crews Geffenry",
+   "zh": "克鲁斯·詹芬利",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "赌注对手是克鲁斯·詹芬利……众人均知克鲁斯是迷雾之子"
+  },
+  {
+   "en": "Devinshae",
+   "zh": "戴文薛",
+   "note": "mb1:22",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "当凯芮安被戴文薛大人带走，次日尸体被归还、下葬"
+  },
+  {
+   "en": "Dukaler",
+   "zh": "度卡雷",
+   "note": "mb2:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我也投给潘洛德大人。度卡雷大人说道"
+  },
+  {
+   "en": "Edgard Ladrian",
+   "zh": "埃德加德·拉德利安",
+   "note": "mb5:19",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "瓦克斯自己的祖先埃德加德·拉德利安（原文OCR作埃德家德）"
+  },
+  {
+   "en": "Ferson Penrod",
+   "zh": "费尔森·潘洛德",
+   "note": "mb3:32",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你的城市的人民选择费尔森·潘洛德为他们的国王"
+  },
+  {
+   "en": "Flavine",
+   "zh": "芙拉玟",
+   "note": "mb1:20",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "她要跟芙拉玟贵女共进午餐"
+  },
+  {
+   "en": "Idren Seeris",
+   "zh": "艾德伦·席瑞斯",
+   "note": "mb1:30",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "朝艾德伦·席瑞斯大人微笑，他是埃拉瑞尔的表亲"
+  },
+  {
+   "en": "Jastes Lekal",
+   "zh": "加斯提·雷卡",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "其中一人是加斯提·雷卡大人。另一名是海斯丁家族的人"
+  },
+  {
+   "en": "Kordel",
+   "zh": "柯玳",
+   "note": "mb1:16",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "它不是从克雷尼恩或柯玳所开始(即 Khlennium 或 Kordel)"
+  },
+  {
+   "en": "New Empire",
+   "zh": "新帝国",
+   "note": "mb3:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "新帝国中的每个城市都有自己的版本"
+  },
+  {
+   "en": "Northern Dominance",
+   "zh": "北方统御区",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "书背上写着《北方统御区之气候变化》"
+  },
+  {
+   "en": "Southern Dominance",
+   "zh": "南方统御区",
+   "note": "mb3:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "会来到南方统御区中如此偏远的城市"
+  },
+  {
+   "en": "Southern Islands",
+   "zh": "南方诸岛",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "班内特人…住在南方诸岛上"
+  },
+  {
+   "en": "Storage cavern",
+   "zh": "储藏窟",
+   "note": "mb3:14",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "第四个储藏窟是他们的了"
+  },
+  {
+   "en": "The Well of Ascension",
+   "zh": "升华之井",
+   "note": "mb1:17;mb3:0",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "被囚禁于升华之井的存在；灭绝的意识被升华之井所困"
+  },
+  {
+   "en": "The Hero of Ages",
+   "zh": "永世英雄",
+   "note": "mb3:71;mb2:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "她指出她是永世英雄的种种征象；将艾兰迪跟永世英雄连接在一起"
+  },
+  {
+   "en": "Alendi's logbook",
+   "zh": "艾兰迪的日记",
+   "note": "mb3:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是艾兰迪的日记。一千年前，这名自以为是永世英雄的人写了这本日记。"
+  },
+  {
+   "en": "Blushdip red",
+   "zh": "染晕红",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "特色为染晕红，来自当地常见的蜗牛。"
+  },
+  {
+   "en": "Book of the False Dawn",
+   "zh": "伪日出之书",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那是《伪日出之书》——任何守护者都能把整本书背给你听。"
+  },
+  {
+   "en": "Callowfield yellow",
+   "zh": "浅野黄",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "还有浅野黄，从树皮提取。"
+  },
+  {
+   "en": "Camon's crew",
+   "zh": "凯蒙的集团",
+   "note": "mb2:50",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "无论是在凯蒙的集团或是在依蓝德的政府中。"
+  },
+  {
+   "en": "Kelsier's bones",
+   "zh": "卡西尔的骨头",
+   "note": "mb3:59",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "它把装着卡西尔骨头的袋子藏在城外。"
+  },
+  {
+   "en": "Tougier",
+   "zh": "图吉珥",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "三百年前有七千名司卡反抗军被歼灭的图吉珥大屠杀"
+  },
+  {
+   "en": "Central Dominance",
+   "zh": "中央统御区",
+   "note": "mb3:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "被带去中央统御区，那里还有足够的无迷雾日光种田"
+  },
+  {
+   "en": "Dominance",
+   "zh": "统御区",
+   "note": "mb3:15",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "越深入西方统御区，因迷雾失去的日照时数就越多"
+  },
+  {
+   "en": "Eastern Dominance",
+   "zh": "东方统御区",
+   "note": "mb2:3",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "东方统御区的土壤比北方的陶土含量高"
+  },
+  {
+   "en": "Chain",
+   "zh": "锁链",
+   "note": "mb5:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "他们会像锁链一样勒紧你的脖子（a chain around your neck）"
+  },
+  {
+   "en": "Luthadel Garrison",
+   "zh": "陆沙德警备队",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我们要找到方法让陆沙德警备队动弹不得，令全城区失去镇压动乱的力量。"
+  },
+  {
+   "en": "Mistfallen",
+   "zh": "迷雾病人",
+   "note": "mb3:40",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "军队的大部分人都会有时间学习重新信任迷雾病人。迷雾病人，纹心想。有意思的名字。"
+  },
+  {
+   "en": "Pek",
+   "zh": "佩币",
+   "note": "mb3:26",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "鬼影微笑，掏出一枚佩币，这是公民所铸造的钱币，等同一枚铜夹币。"
+  },
+  {
+   "en": "Shakewelts",
+   "zh": "颤抖症",
+   "note": "mb3:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这感觉有点像是颤抖症，但颤抖症往往是因为——"
+  },
+  {
+   "en": "Skaa rebellion",
+   "zh": "司卡反抗军",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那到底是什么样的行动？司卡反抗军要我们帮什么忙？"
+  },
+  {
+   "en": "Soundstick",
+   "zh": "木条",
+   "note": "mb2:1",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "他手中握着一对木条，设计成互击时会发出巨大声响的样式。"
+  },
+  {
+   "en": "Spikeway",
+   "zh": "金属大道",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "费里斯跟陆沙德之间的金属大道让两者之间的旅程变得很短。金属棍不是他放的。"
+  },
+  {
+   "en": "Valla",
+   "zh": "法拉",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "在统御主的主宰下，法拉族比任何其他宗教都撑得更久"
+  },
+  {
+   "en": "House Venture",
+   "zh": "泛图尔",
+   "note": "mb1:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是泛图尔的继承人；泛图尔的堡垒"
+  },
+  {
+   "en": "Ascension of the Lord Ruler",
+   "zh": "统御主升华",
+   "note": "mb3:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "在统御主升华前，在深黯来到大地前"
+  },
+  {
+   "en": "Baywrap",
+   "zh": "菜卷",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "拿着四个菜卷重新出现。哈姆…咬了一口菜卷"
+  },
+  {
+   "en": "Heartroot",
+   "zh": "心根",
+   "note": "mb2:55",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "依蓝德随口说了句他不喜欢心根茶"
+  },
+  {
+   "en": "Birchbane",
+   "zh": "毒桦",
+   "note": "mb2:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "而且还是毒桦；能从肉桂中闻出毒桦的气味"
+  },
+  {
+   "en": "Black Frayn",
+   "zh": "黑费恩草",
+   "note": "mb2:52",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "其中有黑费恩草——的确是种很棘手的迷幻药"
+  },
+  {
+   "en": "Arriev",
+   "zh": "亚瑞耶夫",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "上圣祭司亚瑞耶夫——审核你提案的委员会长"
+  },
+  {
+   "en": "Cabe",
+   "zh": "凯贝",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你错过凯贝大人的舞会"
+  },
+  {
+   "en": "Aluminum",
+   "zh": "铝",
+   "note": "mb1-3/4:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "他燃烧钢…是铝，他意识到。铝和另外几种铝合金对镕金术不会产生反应，既不能推也不能拉。"
+  },
+  {
+   "en": "Gold",
+   "zh": "金",
+   "note": "mb1:27",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "第九种金属是金。…燃烧金是种有点……不舒服的经验。"
+  },
+  {
+   "en": "Silver",
+   "zh": "银",
+   "note": "mb6:11",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "韦恩从口袋里摸出一把银质拆信刀。他是打哪弄来的？"
+  },
+  {
+   "en": "Eiser",
+   "zh": "艾瑟",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "两个月前我才因为艾瑟行动被标记了。"
+  },
+  {
+   "en": "Renates",
+   "zh": "雷奈特",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "雷奈特族之强迫迁徙"
+  },
+  {
+   "en": "House Renoux",
+   "zh": "雷弩",
+   "note": "mb1:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "所有人都认定雷弩家族早晚会成为上族的一分子"
+  },
+  {
+   "en": "Shelldry",
+   "zh": "贝牌",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你明天还是打算来跟我们一起玩贝牌吗"
+  },
+  {
+   "en": "House Shunah",
+   "zh": "书纳",
+   "note": "mb1:30",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "书纳也已经宣布它不会再举行舞会了"
+  },
+  {
+   "en": "Streetspice",
+   "zh": "迷幻药",
+   "note": "mb1:17",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "这可能跟迷幻药一样容易上瘾"
+  },
+  {
+   "en": "Terris Prophecies",
+   "zh": "泰瑞司预言",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "泰瑞司预言说我会有拯救世界的力量"
+  },
+  {
+   "en": "Tinningdar",
+   "zh": "提宁达",
+   "note": "mb5:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "被称作提宁达的泰瑞司长袍，正面带有V字图案"
+  },
+  {
+   "en": "Truths of the Bennet",
+   "zh": "班内特之实言",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你应该听听看班内特之实言"
+  },
+  {
+   "en": "Larn (Scadrial)",
+   "zh": "拉恩",
+   "note": "mb2:42",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“这是拉恩。”德穆向依蓝德介绍年轻司卡。"
+  },
+  {
+   "en": "Mennis",
+   "zh": "曼尼斯",
+   "note": "mb1:序章",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你叫什么名字？”“曼尼斯。”"
+  },
+  {
+   "en": "Milev",
+   "zh": "米雷夫",
+   "note": "mb1:3",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "米雷夫端起箱子交给卡西尔。"
+  },
+  {
+   "en": "Redd",
+   "zh": "雷德",
+   "note": "mb1:31",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“他叫雷德，审判者们当场就杀了他。”"
+  },
+  {
+   "en": "Shum",
+   "zh": "束姆",
+   "note": "mb1:序章",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "束姆——曼尼斯靠着的小伙子。"
+  },
+  {
+   "en": "Tase",
+   "zh": "塔司",
+   "note": "mb1:33",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "其中一名学徒，纹想他的名字是塔司。"
+  },
+  {
+   "en": "Tawnson",
+   "zh": "陶森",
+   "note": "mb1:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“请他们过来吧，陶森。”"
+  },
+  {
+   "en": "Trap",
+   "zh": "陷阱",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“陷阱呢？”“陷阱死了。”"
+  },
+  {
+   "en": "Ulef",
+   "zh": "乌雷",
+   "note": "mb1:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“纹！”乌雷的头探入房间。"
+  },
+  {
+   "en": "Vent (Scadrial)",
+   "zh": "狂风",
+   "note": "mb1:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“她让我想到狂风。”"
+  },
+  {
+   "en": "Vet (Scadrial)",
+   "zh": "斐特",
+   "note": "mb2:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "依蓝德对叫斐特的人投以感谢的笑容。"
+  },
+  {
+   "en": "Farlet",
+   "zh": "法雷",
+   "note": "mb1:序章",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "稀释的法雷汤好吃很多"
+  },
+  {
+   "en": "Perchwither",
+   "zh": "枯鲈草",
+   "note": "mb5:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是枯鲈草，是一种生物性发光真菌"
+  },
+  {
+   "en": "Human",
+   "zh": "人类",
+   "note": "mb3:59",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那只自称为人类的克罗司"
+  },
+  {
+   "en": "Burnlands",
+   "zh": "炎地",
+   "note": "mb2:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "教导炎地边境的人民（the borders of the burnlands）"
+  },
+  {
+   "en": "Conway Canal",
+   "zh": "康道运河",
+   "note": "mb3:25",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "前方通往西方的宽广康道运河（the broad Conway Canal）"
+  },
+  {
+   "en": "Devanex",
+   "zh": "戴凡奈",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "如戴凡奈大屠杀（the Massacre at Devanex）"
+  },
+  {
+   "en": "Luth-Davn Canal",
+   "zh": "陆沙德运河",
+   "note": "mb1:25",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "奔陆沙德运河旁边的宽广曳道（beside the Luth-Davn Canal）"
+  },
+  {
+   "en": "Blessing",
+   "zh": "祝福",
+   "note": "mb6:3",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我们不能，坎得拉祝福不能被滥用"
+  },
+  {
+   "en": "Blessing of Awareness",
+   "zh": "意识的祝福",
+   "note": "mb3:20",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "获得意识的祝福的四代或五代可以站在一段距离之外"
+  },
+  {
+   "en": "Blessing of Presence",
+   "zh": "存在的祝福",
+   "note": "mb3:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "可是坦迅有“存在的祝福”，不会这么轻易崩溃"
+  },
+  {
+   "en": "Blessing of Stability",
+   "zh": "稳定的祝福",
+   "note": "mb3:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "鲜少被使用的稳定的祝福则是情绪上的包容"
+  },
+  {
+   "en": "Deluse Couvre",
+   "zh": "德鲁斯·库佛",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "它的作者——德鲁斯·库佛继续写了一些更诽谤的书"
+  },
+  {
+   "en": "Dilisteni",
+   "zh": "迪黎斯坦尼",
+   "note": "mb1:12",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你在读什么？”“迪黎斯坦尼。”依蓝德说道《伟大的试炼》"
+  },
+  {
+   "en": "Harmon",
+   "zh": "哈门",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "哈门，一名年纪较大、胡须凌乱的窃贼说道（Harmon, an older scraggly-bearded burglar）"
+  },
+  {
+   "en": "Heberen",
+   "zh": "贺伯伦",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你喜欢读贺伯伦吗？”指一本厚重大书（Enjoying Heberen?）"
+  },
+  {
+   "en": "Hrud",
+   "zh": "贺鲁德",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“两年了……”贺鲁德，一名安静，五官扁平的打手说道（said Hrud, a flat-faced, quiet thug）"
+  },
+  {
+   "en": "Kar",
+   "zh": "卡尔",
+   "note": "mb1:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你常说这种话，卡尔，但从来都拿不出证据。”卡尔缓缓转身（Kar, the Inquisitor）"
+  },
+  {
+   "en": "Bendal",
+   "zh": "班达",
+   "note": "mb1:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "很可惜班达不在这里。卡尔说道（对应 It is unfortunate that Bendal isn't here）"
+  },
+  {
+   "en": "Bevidon",
+   "zh": "贝维登",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "嘿，贝维登。我今天休假，赛提斯在吗？（对应 Hey, Bevidon）"
+  },
+  {
+   "en": "Braches",
+   "zh": "布拉克斯",
+   "note": "mb1:22",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "一向好奇心很重的布拉克斯答应要去询问他（对应 Braches—inquisitive, as always）"
+  },
+  {
+   "en": "Cosahn",
+   "zh": "珂珊",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沙赛德以平静语调说道，珂珊要帮你修剪"
+  },
+  {
+   "en": "Disten",
+   "zh": "迪斯敦",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "迪斯敦是凯蒙的小队长之一。他少了一只手"
+  },
+  {
+   "en": "Dockson",
+   "zh": "多克森",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沿着墙边走来。是多克森。他比卡西尔矮一点"
+  },
+  {
+   "en": "Fatren",
+   "zh": "法特伦",
+   "note": "mb3:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "法特伦眯起眼睛，望着一如往常躲在深色薄暮后的红色太阳"
+  },
+  {
+   "en": "Hammond",
+   "zh": "哈姆德",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你不应该想这种问题，哈姆德——你会伤透脑筋的"
+  },
+  {
+   "en": "House Geffenry",
+   "zh": "詹芬利家族",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "詹芬利家族一直在向太齐尔请求结盟"
+  },
+  {
+   "en": "House Hasting",
+   "zh": "海斯丁家族",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我们都知道海斯丁在计划什么"
+  },
+  {
+   "en": "Historica",
+   "zh": "史论",
+   "note": "mb5:07",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "《创始箴言录》史论记载，与迷雾融为一体"
+  },
+  {
+   "en": "Rudd",
+   "zh": "鲁德",
+   "note": "mb1:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“鲁德，请将蓝衣侍者派进来”对应 Rudd 称呼，侍者角色"
+  },
+  {
+   "en": "Ruddy",
+   "zh": "鲁迪",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“鲁迪？”多克森说道，对应 Smoker 队员 Ruddy 之名"
+  },
+  {
+   "en": "Sertes",
+   "zh": "赛提斯",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“赛提斯在吗？”对应 Is Sertes around，警备队队长"
+  },
+  {
+   "en": "Sixteen",
+   "zh": "十六",
+   "note": "mb1:25",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“十六个小时过后，再看看你是什么感觉”对应 sixteen hours"
+  },
+  {
+   "en": "Worldbringers",
+   "zh": "世界引领者",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“在整个世界引领者秘密大会前谴责我”对应 Conclave of Worldbringers"
+  },
+  {
+   "en": "Always Another Secret",
+   "zh": "永远都有另一个秘密",
+   "note": "mb1:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“永远都有另一个秘密。他抱起三只酒杯，走回纹跟多克森的桌子。”"
+  },
+  {
+   "en": "Themos Tresting",
+   "zh": "赛摩斯·特雷斯廷",
+   "note": "mb1:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "赛摩斯·特雷斯廷，据说一名乡区领地的领主遭到杀害"
+  },
+  {
+   "en": "Tren-Pedri Delouse",
+   "zh": "蓝佩得莉·德鲁斯",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "蓝佩得莉·德鲁斯贵女一些有意思的消息（简称特蓝佩得莉，译名前后不一）"
+  },
+  {
+   "en": "Triss",
+   "zh": "特丽斯",
+   "note": "mb1:30",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "要一起来吗，特丽斯？"
+  },
+  {
+   "en": "Zane Venture",
+   "zh": "詹·泛图尔",
+   "note": "mb3:52",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "她看着它杀死詹·泛图尔，一名当纹没有天金时仍燃烧天金的迷雾之子"
+  },
+  {
+   "en": "Bilg",
+   "zh": "比格",
+   "note": "mb1:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "比格。坐在右边第四张桌子的大块头"
+  },
+  {
+   "en": "Cladent",
+   "zh": "克莱登",
+   "note": "mb2:49",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "请不要因为你不同意就批判他人的信仰，克莱登大人"
+  },
+  {
+   "en": "Jess (Scadrial)",
+   "zh": "洁丝",
+   "note": "mb1:0",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "众判处其子对司卡有害，众人同情“可怜的洁丝”"
+  },
+  {
+   "en": "Kareien",
+   "zh": "凯芮安",
+   "note": "mb1:22",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“凯芮安跟我的事提醒了每个人”"
+  },
+  {
+   "en": "Kelsier",
+   "zh": "卡西尔",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“新来的人，卡西尔，摇摇头”"
+  },
+  {
+   "en": "Terrisman",
+   "zh": "泰瑞司人",
+   "note": "mb1:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你是泰瑞司人”沙赛德身份"
+  },
+  {
+   "en": "House Izenry",
+   "zh": "依森瑞",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "怪在依森瑞身上，他们是太齐尔的政敌"
+  },
+  {
+   "en": "Jaism",
+   "zh": "珈教",
+   "note": "mb1:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "也许你想听听珈教，由一人创立，以珈称呼"
+  },
+  {
+   "en": "Longtales",
+   "zh": "神话",
+   "note": "mb3:27",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "跟怪物和传说有关，有人说是神话"
+  },
+  {
+   "en": "Noble",
+   "zh": "贵族",
+   "note": "mb6:scan",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "贵族们才不在乎凝聚，贵族出身的市长等"
+  },
+  {
+   "en": "Straff Venture",
+   "zh": "史特拉夫·泛图尔",
+   "note": "mb3:14",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "史特拉夫·泛图尔刚死的那个时期"
+  },
+  {
+   "en": "Tegas",
+   "zh": "代加",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "承诺会出席代加大人于明天下午的午餐聚会"
+  },
+  {
+   "en": "Telden Hasting",
+   "zh": "泰尔登·海斯丁",
+   "note": "mb3:50",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "泰尔登，纹此时认出他，泰尔登·海斯丁"
+  },
+  {
+   "en": "Teven Renoux",
+   "zh": "泰文·雷弩",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是法蕾特·雷弩贵女，泰文·雷弩大人的四表妹"
+  },
+  {
+   "en": "Courteline",
+   "zh": "库特蓝",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "半个世纪前在库特蓝爆发的司卡暴动"
+  },
+  {
+   "en": "Holstep",
+   "zh": "霍斯太普",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "同时攻击了北方的霍斯太普警备队"
+  },
+  {
+   "en": "Kandra Homeland",
+   "zh": "坎得拉故乡",
+   "note": "mb5:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是坎得拉故乡（宓兰语）"
+  },
+  {
+   "en": "Summer Hill",
+   "zh": "夏丘",
+   "note": "mb1:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我守卫夏丘真的就是英雄将因此得名之重担"
+  },
+  {
+   "en": "Terris Dominance",
+   "zh": "泰瑞司统御区",
+   "note": "mb3:77",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "去泰瑞司统御区找你们的人民"
+  },
+  {
+   "en": "Vennias",
+   "zh": "文尼亚",
+   "note": "mb1:20",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "把他放在文尼亚的渗透点，混入教廷的门徒中"
+  },
+  {
+   "en": "Western Dominance",
+   "zh": "西方统御区",
+   "note": "mb3:15",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "越深入西方统御区，因迷雾失去的日照越多"
+  },
+  {
+   "en": "Battle of Luthadel",
+   "zh": "陆沙德之战",
+   "note": "mb3:81",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "多克森跟歪脚在陆沙德之战被屠杀，卡西尔、多克森等老成员回顾陆沙德之战。"
+  },
+  {
+   "en": "Broken Quill",
+   "zh": "折羽酒吧",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "依蓝德大人在他于折羽酒吧聚会的贵族朋友们之间，对那女孩赞誉有加。"
+  },
+  {
+   "en": "Clubs's shop",
+   "zh": "歪脚的店铺",
+   "note": "mb3:27",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "傍晚在歪脚店铺中的桌子旁，跟集团的人共同欢笑。"
+  },
+  {
+   "en": "Fourwell Crossroads",
+   "zh": "四井路口",
+   "note": "mb1:11",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你可以在四井路口朝西走三个街口的地方找到他。"
+  },
+  {
+   "en": "Siege of Luthadel",
+   "zh": "陆沙德围城战",
+   "note": "mb3:66",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沙赛德一年前在陆沙德围城战之后，储存清醒能量。"
+  },
+  {
+   "en": "Square of the Survivor",
+   "zh": "幸存者广场",
+   "note": "mb1:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "去找他们，他们在幸存者广场集合……就是海司辛幸存者今天被杀掉的地方。"
+  },
+  {
+   "en": "Arguois",
+   "zh": "阿谷瓦山洞",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你知道阿谷瓦山洞的事？……反抗军过去许多年来都藏在里面。"
+  }
+ ],
+ "pending": [
+  {
+   "en": "Lake Luthadel",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Tresting plantation",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lake Tyrian",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Black Lake",
+   "zh": "",
+   "note": "正文无书证/无法确认",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Erlac",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "River Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Siege of Fadrex City",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Coup of Urteau",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Austrex",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: The Deckbuilding Game",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全书扫描 en_hits_total=0，为桌游专名，正文无对应中译书证。"
+  },
+  {
+   "en": "Senna",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全书扫描 en_hits_total=0，正文无对应中译书证。"
+  },
+  {
+   "en": "Spanky",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Vin's sister",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Leras",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Luthadel Assembly",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kaise",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lieke",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lin Davar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Luesh",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mraize",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mraize's Aviar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shade (character)",
+   "zh": "",
+   "note": "正文无书证（仅英文常用意shade，非角色）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Thaidakar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Zora",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Battar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cinder King",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Elegy Salvage",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Conrad",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Delvrais",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Elend's mother",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Fedren Aime",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Malwish Empire",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "Malwish 相关仅见于 The Lost Metal，无中译"
+  },
+  {
+   "en": "North Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ruin's Perpendicularity",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shrouded Isles",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "South Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Steelfield",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: The Final Empire",
+   "zh": "",
+   "note": "正文无书证(en_hits=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: Secret History",
+   "zh": "",
+   "note": "正文无书证(en_hits=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: Secret History/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: The Final Empire/Epigraphs",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: The Final Empire/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Well of Ascension/Epigraphs",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Well of Ascension/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Hero of Ages/Epigraphs",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Hero of Ages/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:Mistborn: The Final Empire",
+   "zh": "",
+   "note": "维基子页/摘要页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:The Well of Ascension",
+   "zh": "",
+   "note": "专题页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:The Hero of Ages",
+   "zh": "",
+   "note": "专题页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:Mistborn: Secret History",
+   "zh": "",
+   "note": "专题页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ashwalkers",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ati",
+   "zh": "",
+   "note": "仅见秘密史，无中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Finwick blue",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Crescent Dominance",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Crescent Wastelands",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "FellSpire",
+   "zh": "",
+   "note": "无法确认中译(zh无对应)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Hannerdam",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Gnat",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Savant",
+   "zh": "",
+   "note": "正文无书证（mb3:15对照区未对应）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "zh_region为迷雾/统御主内容，与pewter/bronze savant不对应"
+  },
+  {
+   "en": "Connector",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Feruchemy/table",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Aika",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ala",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Aleen",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Icy Tongue",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Jezinor",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Jin",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kabsal",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kwaan's inscription",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Leras's knife",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Sazed's note",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Sazed's rings",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Spook's note",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Worktide",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Classical Scadrial",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Laget",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ravamak",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Speckleberry",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kallib",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Leonore",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Saja",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Yadramak",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Aledin",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Allrianne's mother",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Antillius Shezler",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ardous Geffenry",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Audil Lekal",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Callins Geffenry",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Dragonsteel (metal)",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "God Metal",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Raysium",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn film",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: Birthright",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "User:Adamkarma/Synod",
+   "zh": "",
+   "note": "wiki页面引用，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ire's orb",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: House War",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Penrod",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Steel alphabet",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Teniert",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Urbain",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Midge",
+   "zh": "",
+   "note": "扫描全库 en_hits_total=0（正文无书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Bobbie",
+   "zh": "",
+   "note": "zh_region未明确对应，无法确认中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "英文为一种犬，中文对照区无对应译名"
+  },
+  {
+   "en": "Brollin",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Marewill flower",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Ramshadow",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Seranese long-haired goat",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Stairperch",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Sunwraith",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Dajer",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Esandi",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Longsfollow",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "River Longsfollow",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Chakath",
+   "zh": "",
+   "note": "中文译本省略该地名，无法采证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Keep Shezler",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mantiz",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lejanos",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Myrshek Village",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Tavira",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Moash",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Rebeke Salvage",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Vasher",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Charred",
+   "zh": "",
+   "note": "无法确认（书证仅为形容词“焦黑”用法）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "哈姆戳着一块焦黑的木头"
+  },
+  {
+   "en": "Cinderheart",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Crystal spike",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ever-Slaying Sword",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Hemalurgy/table",
+   "zh": "",
+   "note": "非正文术语（表格页签，非专名词条）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Dean",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Haridan",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Dulac",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Gereh",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lemex's nurse",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shan Elariel's steward",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Biord",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cled",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cobble",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中人名译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Jasten",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Fathvell",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Fets",
+   "zh": "",
+   "note": "mb2:21 译作'下棋'未保留专名",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "有点像是下棋…吃下一子…逼到死角"
+  },
+  {
+   "en": "House Gardre",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Haught",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ishathon",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Vin's earring",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "A House of Ashes",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Alloy of Law (rule book)",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Alloy of Law: Masks of the Past",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn Adventure Game",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn Adventure Game (rule book)",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Skaa: Tin & Ash",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Terris: Wrought of Copper",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Treatise Metallurgic",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Allomancy/table",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Tevidian Tekiel",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Troalin",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kelsier's mother",
+   "zh": "",
+   "note": "正文无明确中译（无名角色描述语）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "zh_region 未见“母亲”明确译名对应"
+  },
+  {
+   "en": "Vin's mother",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "en_hits_total=0，无中译书证"
+  },
+  {
+   "en": "Iyatil",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "en_hits_total=0，涉密史/失落金属未扫"
+  },
+  {
+   "en": "Axindweth",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "en_hits_total=0，涉失落金属未扫"
+  },
+  {
+   "en": "Battle of Hathsin",
+   "zh": "",
+   "note": "正文无书证（en_hits_total=0）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全书英文本未命中该专名，无可采证官方中译"
+  },
+  {
+   "en": "Camon's safe house",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  }
+ ],
+ "all": [
+  {
+   "en": "Lake Luthadel",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Tresting plantation",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lake Tyrian",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Valtroux",
+   "zh": "法尔特鲁",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "法尔特鲁警备队派了五千人过去（Valtroux Garrison 派兵）"
+  },
+  {
+   "en": "Black Lake",
+   "zh": "",
+   "note": "正文无书证/无法确认",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Conventical of Seran",
+   "zh": "瑟蓝集所",
+   "note": "mb3:49",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "来到瑟蓝集所（arrived at the Conventical of Seran）"
+  },
+  {
+   "en": "Erlac",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "River Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Siege of Fadrex City",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Coup of Urteau",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Austrex",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lekal City",
+   "zh": "雷卡城",
+   "note": "mb3:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "并没有带军队入侵雷卡城（no army brought to Lekal City）"
+  },
+  {
+   "en": "Mistborn: The Deckbuilding Game",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全书扫描 en_hits_total=0，为桌游专名，正文无对应中译书证。"
+  },
+  {
+   "en": "Mistcloak",
+   "zh": "迷雾斗篷",
+   "note": "mb6:13,mb6:31",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "执法镕金13章「身后还披着随风摆动的迷雾斗篷」；31章「外面披着正式的迷雾斗篷」。"
+  },
+  {
+   "en": "Senna",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全书扫描 en_hits_total=0，正文无对应中译书证。"
+  },
+  {
+   "en": "Spanky",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Staxles",
+   "zh": "史塔克里司",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我刚口述这封给史塔克里司的信，承诺会出席代加大人于明天下午的午餐聚会"
+  },
+  {
+   "en": "Temadre",
+   "zh": "泰玛德",
+   "note": "mb1:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "泰玛德预测到这件事，依蓝德突然明了"
+  },
+  {
+   "en": "Urdree",
+   "zh": "兀迪",
+   "note": "mb3:32",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "不要把兀迪扯进来"
+  },
+  {
+   "en": "Vin's sister",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Wednegon",
+   "zh": "维德奈更",
+   "note": "mb2:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这一段是出自维德奈更王的传记，他是最后一名有规模地抵抗统御主的领导者"
+  },
+  {
+   "en": "Ytves",
+   "zh": "依凡提司",
+   "note": "mb2:31",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "他回想起依凡提司在《革命研究》中的评论"
+  },
+  {
+   "en": "Kelsier's crew",
+   "zh": "卡西尔的团队",
+   "note": "mb2:45",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "永远进不了卡西尔的团队，也许我会隐藏起镕金术（亦有“卡西尔帮”“卡西尔的团体”译法）"
+  },
+  {
+   "en": "Leras",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Luthadel Assembly",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Canton of Inquisition",
+   "zh": "审判廷",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "审判廷，甚至是教义廷更是令人闻风丧胆"
+  },
+  {
+   "en": "The Eleventh Metal",
+   "zh": "第十一金属",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "第十一金属。那种金属。微风不确定地问道"
+  },
+  {
+   "en": "Kale Tekiel",
+   "zh": "凯尔·太齐尔",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "凯尔·太齐尔已经无法回想此时了，依蓝德心想。"
+  },
+  {
+   "en": "Kevoux",
+   "zh": "凯弗",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "而凯弗，容我冒昧地说一句，不会有多大的影响力。"
+  },
+  {
+   "en": "Kliss",
+   "zh": "克礼丝",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "克礼丝贵女低声说道；多处一致译克礼丝。"
+  },
+  {
+   "en": "Kurdon",
+   "zh": "库敦",
+   "note": "mb1:0",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "特雷斯廷转过头呵斥：库敦！壮硕的工头冲上山坡。"
+  },
+  {
+   "en": "Laird",
+   "zh": "莱德",
+   "note": "mb1:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "纹看着圣祭司莱德骄傲地踏入房间（多章一致）。"
+  },
+  {
+   "en": "Melend Liese",
+   "zh": "梅莱德·李艾斯",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是梅莱德·李艾斯。请问你愿意与我共舞吗？"
+  },
+  {
+   "en": "Milen Davenpleu",
+   "zh": "米伦·戴文普鲁",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "包括纹跟她的同伴——米伦·戴文普鲁，一名小家族的年轻继承人。"
+  },
+  {
+   "en": "Rene",
+   "zh": "瑞尼",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "瑞尼，克礼丝今晚约会的对象问道。"
+  },
+  {
+   "en": "Rian Strobe",
+   "zh": "瑞安·史特罗布",
+   "note": "mb1:12",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是瑞安·史特罗布爵士。你愿意与我共舞吗？"
+  },
+  {
+   "en": "Salmen Tekiel",
+   "zh": "沙门·太齐尔",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那珊跟沙门·太齐尔的秘密关系呢？"
+  },
+  {
+   "en": "Shan Elariel",
+   "zh": "珊·埃拉瑞尔",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "珊·埃拉瑞尔贵女千真万确是名安抚者（多处一致）。"
+  },
+  {
+   "en": "Stase Blanches",
+   "zh": "史黛西·白兰史",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "今晚轮到的是史黛西·白兰史贵女。"
+  },
+  {
+   "en": "Kaise",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lieke",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lin Davar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Luesh",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mraize",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mraize's Aviar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shade (character)",
+   "zh": "",
+   "note": "正文无书证（仅英文常用意shade，非角色）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Thaidakar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Zora",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Battar",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cinder King",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Elegy Salvage",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Aime",
+   "zh": "艾枚",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "克礼丝称「完全没有跟艾枚联姻的兴趣…艾枚家的儿子们」，官方中译 House Aime 为艾枚"
+  },
+  {
+   "en": "Astalsi",
+   "zh": "阿司塔西",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「升华前有一族人叫做『阿司塔西』…阿司塔西人蛮先进」，官方中译为阿司塔西"
+  },
+  {
+   "en": "Beliefs Reborn",
+   "zh": "信仰重生",
+   "note": "mb6:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「和谐的《信仰重生》，是《创始箴言录》中的一卷」，官方中译为《信仰重生》"
+  },
+  {
+   "en": "House Buvidas",
+   "zh": "布维达",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "陆沙德十大家族名录中对应 Buvidas 者为「…浩特、兀尔班、布维达」，官方中译为布维达"
+  },
+  {
+   "en": "House Cett",
+   "zh": "塞特家族",
+   "note": "mb2:35",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "塞特大公一族，缾金时代「塞特家族的所有权」「塞特宅邸」，官方中译 House Cett 为塞特家族"
+  },
+  {
+   "en": "Church of the Survivor",
+   "zh": "幸存者教会",
+   "note": "mb3:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「幸存者教会的教义是纹…」，全书统一译为幸存者教会"
+  },
+  {
+   "en": "House Conrad",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Delvrais",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Elariel",
+   "zh": "埃拉瑞尔",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「珊·埃拉瑞尔贵女要你前去她的桌子…埃拉瑞尔是上族之一」，官方中译为埃拉瑞尔"
+  },
+  {
+   "en": "House Entrone",
+   "zh": "恩特隆",
+   "note": "mb5:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "「朝休斯·恩特隆大人走去，那是恩特隆族长的表亲和密友」，官方中译为恩特隆"
+  },
+  {
+   "en": "House Erikell",
+   "zh": "艾瑞凯",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "十大家名录中对应 Erikell 者为艾瑞凯；mb1:19作艾瑞凯勒、mb5:9作艾瑞凯家族，官方译法稍有出入"
+  },
+  {
+   "en": "House Erikeller",
+   "zh": "艾瑞凯勒",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "十大家名录与「艾瑞凯勒堡垒」均译艾瑞凯勒，官方中译为艾瑞凯勒"
+  },
+  {
+   "en": "Carlee",
+   "zh": "卡莉",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "卡莉，泰敦年轻的妻子，以她娇滴滴的声音说道"
+  },
+  {
+   "en": "Charrs Entrone",
+   "zh": "查斯·恩创",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是查斯·恩创大人，卡西尔在司卡贫民区外袭击了这名贵族"
+  },
+  {
+   "en": "Crews Geffenry",
+   "zh": "克鲁斯·詹芬利",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "赌注对手是克鲁斯·詹芬利……众人均知克鲁斯是迷雾之子"
+  },
+  {
+   "en": "Devinshae",
+   "zh": "戴文薛",
+   "note": "mb1:22",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "当凯芮安被戴文薛大人带走，次日尸体被归还、下葬"
+  },
+  {
+   "en": "Dukaler",
+   "zh": "度卡雷",
+   "note": "mb2:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我也投给潘洛德大人。度卡雷大人说道"
+  },
+  {
+   "en": "Edgard Ladrian",
+   "zh": "埃德加德·拉德利安",
+   "note": "mb5:19",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "瓦克斯自己的祖先埃德加德·拉德利安（原文OCR作埃德家德）"
+  },
+  {
+   "en": "Elend's mother",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Fedren Aime",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ferson Penrod",
+   "zh": "费尔森·潘洛德",
+   "note": "mb3:32",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你的城市的人民选择费尔森·潘洛德为他们的国王"
+  },
+  {
+   "en": "Flavine",
+   "zh": "芙拉玟",
+   "note": "mb1:20",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "她要跟芙拉玟贵女共进午餐"
+  },
+  {
+   "en": "Idren Seeris",
+   "zh": "艾德伦·席瑞斯",
+   "note": "mb1:30",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "朝艾德伦·席瑞斯大人微笑，他是埃拉瑞尔的表亲"
+  },
+  {
+   "en": "Jastes Lekal",
+   "zh": "加斯提·雷卡",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "其中一人是加斯提·雷卡大人。另一名是海斯丁家族的人"
+  },
+  {
+   "en": "Kordel",
+   "zh": "柯玳",
+   "note": "mb1:16",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "它不是从克雷尼恩或柯玳所开始(即 Khlennium 或 Kordel)"
+  },
+  {
+   "en": "Malwish Empire",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "Malwish 相关仅见于 The Lost Metal，无中译"
+  },
+  {
+   "en": "New Empire",
+   "zh": "新帝国",
+   "note": "mb3:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "新帝国中的每个城市都有自己的版本"
+  },
+  {
+   "en": "North Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Northern Dominance",
+   "zh": "北方统御区",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "书背上写着《北方统御区之气候变化》"
+  },
+  {
+   "en": "Ruin's Perpendicularity",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shrouded Isles",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "South Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Southern Dominance",
+   "zh": "南方统御区",
+   "note": "mb3:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "会来到南方统御区中如此偏远的城市"
+  },
+  {
+   "en": "Southern Islands",
+   "zh": "南方诸岛",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "班内特人…住在南方诸岛上"
+  },
+  {
+   "en": "Steelfield",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Storage cavern",
+   "zh": "储藏窟",
+   "note": "mb3:14",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "第四个储藏窟是他们的了"
+  },
+  {
+   "en": "Mistborn: The Final Empire",
+   "zh": "",
+   "note": "正文无书证(en_hits=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Well of Ascension",
+   "zh": "升华之井",
+   "note": "mb1:17;mb3:0",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "被囚禁于升华之井的存在；灭绝的意识被升华之井所困"
+  },
+  {
+   "en": "The Hero of Ages",
+   "zh": "永世英雄",
+   "note": "mb3:71;mb2:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "她指出她是永世英雄的种种征象；将艾兰迪跟永世英雄连接在一起"
+  },
+  {
+   "en": "Mistborn: Secret History",
+   "zh": "",
+   "note": "正文无书证(en_hits=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: Secret History/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: The Final Empire/Epigraphs",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: The Final Empire/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Well of Ascension/Epigraphs",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Well of Ascension/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Hero of Ages/Epigraphs",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Hero of Ages/Statistical analysis",
+   "zh": "",
+   "note": "维基子页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:Mistborn: The Final Empire",
+   "zh": "",
+   "note": "维基子页/摘要页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:The Well of Ascension",
+   "zh": "",
+   "note": "专题页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:The Hero of Ages",
+   "zh": "",
+   "note": "专题页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Summary:Mistborn: Secret History",
+   "zh": "",
+   "note": "专题页，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Alendi's logbook",
+   "zh": "艾兰迪的日记",
+   "note": "mb3:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是艾兰迪的日记。一千年前，这名自以为是永世英雄的人写了这本日记。"
+  },
+  {
+   "en": "Ashwalkers",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ati",
+   "zh": "",
+   "note": "仅见秘密史，无中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Blushdip red",
+   "zh": "染晕红",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "特色为染晕红，来自当地常见的蜗牛。"
+  },
+  {
+   "en": "Book of the False Dawn",
+   "zh": "伪日出之书",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那是《伪日出之书》——任何守护者都能把整本书背给你听。"
+  },
+  {
+   "en": "Callowfield yellow",
+   "zh": "浅野黄",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "还有浅野黄，从树皮提取。"
+  },
+  {
+   "en": "Camon's crew",
+   "zh": "凯蒙的集团",
+   "note": "mb2:50",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "无论是在凯蒙的集团或是在依蓝德的政府中。"
+  },
+  {
+   "en": "Finwick blue",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kelsier's bones",
+   "zh": "卡西尔的骨头",
+   "note": "mb3:59",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "它把装着卡西尔骨头的袋子藏在城外。"
+  },
+  {
+   "en": "Tougier",
+   "zh": "图吉珥",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "三百年前有七千名司卡反抗军被歼灭的图吉珥大屠杀"
+  },
+  {
+   "en": "Central Dominance",
+   "zh": "中央统御区",
+   "note": "mb3:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "被带去中央统御区，那里还有足够的无迷雾日光种田"
+  },
+  {
+   "en": "Crescent Dominance",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Crescent Wastelands",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Dominance",
+   "zh": "统御区",
+   "note": "mb3:15",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "越深入西方统御区，因迷雾失去的日照时数就越多"
+  },
+  {
+   "en": "Eastern Dominance",
+   "zh": "东方统御区",
+   "note": "mb2:3",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "东方统御区的土壤比北方的陶土含量高"
+  },
+  {
+   "en": "FellSpire",
+   "zh": "",
+   "note": "无法确认中译(zh无对应)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Hannerdam",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Gnat",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Savant",
+   "zh": "",
+   "note": "正文无书证（mb3:15对照区未对应）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "zh_region为迷雾/统御主内容，与pewter/bronze savant不对应"
+  },
+  {
+   "en": "Connector",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Feruchemy/table",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Aika",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ala",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Aleen",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Chain",
+   "zh": "锁链",
+   "note": "mb5:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "他们会像锁链一样勒紧你的脖子（a chain around your neck）"
+  },
+  {
+   "en": "Icy Tongue",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Jezinor",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Jin",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kabsal",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Kwaan's inscription",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Leras's knife",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Luthadel Garrison",
+   "zh": "陆沙德警备队",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我们要找到方法让陆沙德警备队动弹不得，令全城区失去镇压动乱的力量。"
+  },
+  {
+   "en": "Mistfallen",
+   "zh": "迷雾病人",
+   "note": "mb3:40",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "军队的大部分人都会有时间学习重新信任迷雾病人。迷雾病人，纹心想。有意思的名字。"
+  },
+  {
+   "en": "Pek",
+   "zh": "佩币",
+   "note": "mb3:26",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "鬼影微笑，掏出一枚佩币，这是公民所铸造的钱币，等同一枚铜夹币。"
+  },
+  {
+   "en": "Sazed's note",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Sazed's rings",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shakewelts",
+   "zh": "颤抖症",
+   "note": "mb3:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这感觉有点像是颤抖症，但颤抖症往往是因为——"
+  },
+  {
+   "en": "Skaa rebellion",
+   "zh": "司卡反抗军",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那到底是什么样的行动？司卡反抗军要我们帮什么忙？"
+  },
+  {
+   "en": "Soundstick",
+   "zh": "木条",
+   "note": "mb2:1",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "他手中握着一对木条，设计成互击时会发出巨大声响的样式。"
+  },
+  {
+   "en": "Spikeway",
+   "zh": "金属大道",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "费里斯跟陆沙德之间的金属大道让两者之间的旅程变得很短。金属棍不是他放的。"
+  },
+  {
+   "en": "Spook's note",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Valla",
+   "zh": "法拉",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "在统御主的主宰下，法拉族比任何其他宗教都撑得更久"
+  },
+  {
+   "en": "House Venture",
+   "zh": "泛图尔",
+   "note": "mb1:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是泛图尔的继承人；泛图尔的堡垒"
+  },
+  {
+   "en": "Worktide",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ascension of the Lord Ruler",
+   "zh": "统御主升华",
+   "note": "mb3:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "在统御主升华前，在深黯来到大地前"
+  },
+  {
+   "en": "Classical Scadrial",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Baywrap",
+   "zh": "菜卷",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "拿着四个菜卷重新出现。哈姆…咬了一口菜卷"
+  },
+  {
+   "en": "Heartroot",
+   "zh": "心根",
+   "note": "mb2:55",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "依蓝德随口说了句他不喜欢心根茶"
+  },
+  {
+   "en": "Laget",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ravamak",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Speckleberry",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Birchbane",
+   "zh": "毒桦",
+   "note": "mb2:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "而且还是毒桦；能从肉桂中闻出毒桦的气味"
+  },
+  {
+   "en": "Black Frayn",
+   "zh": "黑费恩草",
+   "note": "mb2:52",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "其中有黑费恩草——的确是种很棘手的迷幻药"
+  },
+  {
+   "en": "Arriev",
+   "zh": "亚瑞耶夫",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "上圣祭司亚瑞耶夫——审核你提案的委员会长"
+  },
+  {
+   "en": "Cabe",
+   "zh": "凯贝",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你错过凯贝大人的舞会"
+  },
+  {
+   "en": "Kallib",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Leonore",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Saja",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Yadramak",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Aledin",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Allrianne's mother",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Antillius Shezler",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ardous Geffenry",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Audil Lekal",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Callins Geffenry",
+   "zh": "",
+   "note": "待失落金属中译（无扫描书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Aluminum",
+   "zh": "铝",
+   "note": "mb1-3/4:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "他燃烧钢…是铝，他意识到。铝和另外几种铝合金对镕金术不会产生反应，既不能推也不能拉。"
+  },
+  {
+   "en": "Dragonsteel (metal)",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "God Metal",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Gold",
+   "zh": "金",
+   "note": "mb1:27",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "第九种金属是金。…燃烧金是种有点……不舒服的经验。"
+  },
+  {
+   "en": "Raysium",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Silver",
+   "zh": "银",
+   "note": "mb6:11",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "韦恩从口袋里摸出一把银质拆信刀。他是打哪弄来的？"
+  },
+  {
+   "en": "Mistborn film",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: Birthright",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "User:Adamkarma/Synod",
+   "zh": "",
+   "note": "wiki页面引用，正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Eiser",
+   "zh": "艾瑟",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "两个月前我才因为艾瑟行动被标记了。"
+  },
+  {
+   "en": "Ire's orb",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn: House War",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Penrod",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Renates",
+   "zh": "雷奈特",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "雷奈特族之强迫迁徙"
+  },
+  {
+   "en": "House Renoux",
+   "zh": "雷弩",
+   "note": "mb1:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "所有人都认定雷弩家族早晚会成为上族的一分子"
+  },
+  {
+   "en": "Shelldry",
+   "zh": "贝牌",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你明天还是打算来跟我们一起玩贝牌吗"
+  },
+  {
+   "en": "House Shunah",
+   "zh": "书纳",
+   "note": "mb1:30",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "书纳也已经宣布它不会再举行舞会了"
+  },
+  {
+   "en": "Steel alphabet",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Streetspice",
+   "zh": "迷幻药",
+   "note": "mb1:17",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "这可能跟迷幻药一样容易上瘾"
+  },
+  {
+   "en": "House Teniert",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Terris Prophecies",
+   "zh": "泰瑞司预言",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "泰瑞司预言说我会有拯救世界的力量"
+  },
+  {
+   "en": "Tinningdar",
+   "zh": "提宁达",
+   "note": "mb5:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "被称作提宁达的泰瑞司长袍，正面带有V字图案"
+  },
+  {
+   "en": "Truths of the Bennet",
+   "zh": "班内特之实言",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你应该听听看班内特之实言"
+  },
+  {
+   "en": "House Urbain",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Larn (Scadrial)",
+   "zh": "拉恩",
+   "note": "mb2:42",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“这是拉恩。”德穆向依蓝德介绍年轻司卡。"
+  },
+  {
+   "en": "Mennis",
+   "zh": "曼尼斯",
+   "note": "mb1:序章",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你叫什么名字？”“曼尼斯。”"
+  },
+  {
+   "en": "Midge",
+   "zh": "",
+   "note": "扫描全库 en_hits_total=0（正文无书证）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Milev",
+   "zh": "米雷夫",
+   "note": "mb1:3",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "米雷夫端起箱子交给卡西尔。"
+  },
+  {
+   "en": "Redd",
+   "zh": "雷德",
+   "note": "mb1:31",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“他叫雷德，审判者们当场就杀了他。”"
+  },
+  {
+   "en": "Shum",
+   "zh": "束姆",
+   "note": "mb1:序章",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "束姆——曼尼斯靠着的小伙子。"
+  },
+  {
+   "en": "Tase",
+   "zh": "塔司",
+   "note": "mb1:33",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "其中一名学徒，纹想他的名字是塔司。"
+  },
+  {
+   "en": "Tawnson",
+   "zh": "陶森",
+   "note": "mb1:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“请他们过来吧，陶森。”"
+  },
+  {
+   "en": "Trap",
+   "zh": "陷阱",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“陷阱呢？”“陷阱死了。”"
+  },
+  {
+   "en": "Ulef",
+   "zh": "乌雷",
+   "note": "mb1:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“纹！”乌雷的头探入房间。"
+  },
+  {
+   "en": "Vent (Scadrial)",
+   "zh": "狂风",
+   "note": "mb1:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“她让我想到狂风。”"
+  },
+  {
+   "en": "Vet (Scadrial)",
+   "zh": "斐特",
+   "note": "mb2:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "依蓝德对叫斐特的人投以感谢的笑容。"
+  },
+  {
+   "en": "Bobbie",
+   "zh": "",
+   "note": "zh_region未明确对应，无法确认中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "英文为一种犬，中文对照区无对应译名"
+  },
+  {
+   "en": "Brollin",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Farlet",
+   "zh": "法雷",
+   "note": "mb1:序章",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "稀释的法雷汤好吃很多"
+  },
+  {
+   "en": "Marewill flower",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Perchwither",
+   "zh": "枯鲈草",
+   "note": "mb5:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是枯鲈草，是一种生物性发光真菌"
+  },
+  {
+   "en": "Ramshadow",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Seranese long-haired goat",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Stairperch",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Sunwraith",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Human",
+   "zh": "人类",
+   "note": "mb3:59",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "那只自称为人类的克罗司"
+  },
+  {
+   "en": "Dajer",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Esandi",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全扫描 en_hits_total=0"
+  },
+  {
+   "en": "Longsfollow",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "River Longsfollow",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Chakath",
+   "zh": "",
+   "note": "中文译本省略该地名，无法采证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Keep Shezler",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mantiz",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Burnlands",
+   "zh": "炎地",
+   "note": "mb2:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "教导炎地边境的人民（the borders of the burnlands）"
+  },
+  {
+   "en": "Conway Canal",
+   "zh": "康道运河",
+   "note": "mb3:25",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "前方通往西方的宽广康道运河（the broad Conway Canal）"
+  },
+  {
+   "en": "Devanex",
+   "zh": "戴凡奈",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "如戴凡奈大屠杀（the Massacre at Devanex）"
+  },
+  {
+   "en": "Lejanos",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Luth-Davn Canal",
+   "zh": "陆沙德运河",
+   "note": "mb1:25",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "奔陆沙德运河旁边的宽广曳道（beside the Luth-Davn Canal）"
+  },
+  {
+   "en": "Myrshek Village",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Tavira",
+   "zh": "",
+   "note": "正文无书证 (en_hits_total=0)",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Moash",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Rebeke Salvage",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Vasher",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Blessing",
+   "zh": "祝福",
+   "note": "mb6:3",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我们不能，坎得拉祝福不能被滥用"
+  },
+  {
+   "en": "Blessing of Awareness",
+   "zh": "意识的祝福",
+   "note": "mb3:20",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "获得意识的祝福的四代或五代可以站在一段距离之外"
+  },
+  {
+   "en": "Blessing of Presence",
+   "zh": "存在的祝福",
+   "note": "mb3:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "可是坦迅有“存在的祝福”，不会这么轻易崩溃"
+  },
+  {
+   "en": "Blessing of Stability",
+   "zh": "稳定的祝福",
+   "note": "mb3:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "鲜少被使用的稳定的祝福则是情绪上的包容"
+  },
+  {
+   "en": "Charred",
+   "zh": "",
+   "note": "无法确认（书证仅为形容词“焦黑”用法）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "哈姆戳着一块焦黑的木头"
+  },
+  {
+   "en": "Cinderheart",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Crystal spike",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Ever-Slaying Sword",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Hemalurgy/table",
+   "zh": "",
+   "note": "非正文术语（表格页签，非专名词条）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Dean",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Deluse Couvre",
+   "zh": "德鲁斯·库佛",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "它的作者——德鲁斯·库佛继续写了一些更诽谤的书"
+  },
+  {
+   "en": "Dilisteni",
+   "zh": "迪黎斯坦尼",
+   "note": "mb1:12",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你在读什么？”“迪黎斯坦尼。”依蓝德说道《伟大的试炼》"
+  },
+  {
+   "en": "Haridan",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Harmon",
+   "zh": "哈门",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "哈门，一名年纪较大、胡须凌乱的窃贼说道（Harmon, an older scraggly-bearded burglar）"
+  },
+  {
+   "en": "Heberen",
+   "zh": "贺伯伦",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你喜欢读贺伯伦吗？”指一本厚重大书（Enjoying Heberen?）"
+  },
+  {
+   "en": "Hrud",
+   "zh": "贺鲁德",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“两年了……”贺鲁德，一名安静，五官扁平的打手说道（said Hrud, a flat-faced, quiet thug）"
+  },
+  {
+   "en": "Kar",
+   "zh": "卡尔",
+   "note": "mb1:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你常说这种话，卡尔，但从来都拿不出证据。”卡尔缓缓转身（Kar, the Inquisitor）"
+  },
+  {
+   "en": "Dulac",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Gereh",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Lemex's nurse",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shan Elariel's steward",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Bendal",
+   "zh": "班达",
+   "note": "mb1:37",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "很可惜班达不在这里。卡尔说道（对应 It is unfortunate that Bendal isn't here）"
+  },
+  {
+   "en": "Bevidon",
+   "zh": "贝维登",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "嘿，贝维登。我今天休假，赛提斯在吗？（对应 Hey, Bevidon）"
+  },
+  {
+   "en": "Biord",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Braches",
+   "zh": "布拉克斯",
+   "note": "mb1:22",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "一向好奇心很重的布拉克斯答应要去询问他（对应 Braches—inquisitive, as always）"
+  },
+  {
+   "en": "Cled",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cobble",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中人名译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Cosahn",
+   "zh": "珂珊",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沙赛德以平静语调说道，珂珊要帮你修剪"
+  },
+  {
+   "en": "Disten",
+   "zh": "迪斯敦",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "迪斯敦是凯蒙的小队长之一。他少了一只手"
+  },
+  {
+   "en": "Dockson",
+   "zh": "多克森",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沿着墙边走来。是多克森。他比卡西尔矮一点"
+  },
+  {
+   "en": "Fatren",
+   "zh": "法特伦",
+   "note": "mb3:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "法特伦眯起眼睛，望着一如往常躲在深色薄暮后的红色太阳"
+  },
+  {
+   "en": "Hammond",
+   "zh": "哈姆德",
+   "note": "mb1:4",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你不应该想这种问题，哈姆德——你会伤透脑筋的"
+  },
+  {
+   "en": "Jasten",
+   "zh": "",
+   "note": "正文无书证（zh_region 未命中译名）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Fathvell",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Fets",
+   "zh": "",
+   "note": "mb2:21 译作'下棋'未保留专名",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "有点像是下棋…吃下一子…逼到死角"
+  },
+  {
+   "en": "House Gardre",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "House Geffenry",
+   "zh": "詹芬利家族",
+   "note": "mb1:23",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "詹芬利家族一直在向太齐尔请求结盟"
+  },
+  {
+   "en": "House Hasting",
+   "zh": "海斯丁家族",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我们都知道海斯丁在计划什么"
+  },
+  {
+   "en": "House Haught",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Historica",
+   "zh": "史论",
+   "note": "mb5:07",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "《创始箴言录》史论记载，与迷雾融为一体"
+  },
+  {
+   "en": "Ishathon",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Rudd",
+   "zh": "鲁德",
+   "note": "mb1:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“鲁德，请将蓝衣侍者派进来”对应 Rudd 称呼，侍者角色"
+  },
+  {
+   "en": "Ruddy",
+   "zh": "鲁迪",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“鲁迪？”多克森说道，对应 Smoker 队员 Ruddy 之名"
+  },
+  {
+   "en": "Sertes",
+   "zh": "赛提斯",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“赛提斯在吗？”对应 Is Sertes around，警备队队长"
+  },
+  {
+   "en": "Sixteen",
+   "zh": "十六",
+   "note": "mb1:25",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“十六个小时过后，再看看你是什么感觉”对应 sixteen hours"
+  },
+  {
+   "en": "Vin's earring",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Worldbringers",
+   "zh": "世界引领者",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“在整个世界引领者秘密大会前谴责我”对应 Conclave of Worldbringers"
+  },
+  {
+   "en": "A House of Ashes",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Alloy of Law (rule book)",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Alloy of Law: Masks of the Past",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Always Another Secret",
+   "zh": "永远都有另一个秘密",
+   "note": "mb1:5",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“永远都有另一个秘密。他抱起三只酒杯，走回纹跟多克森的桌子。”"
+  },
+  {
+   "en": "Mistborn Adventure Game",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Mistborn Adventure Game (rule book)",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Skaa: Tin & Ash",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Terris: Wrought of Copper",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "The Treatise Metallurgic",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Allomancy/table",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Tevidian Tekiel",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Themos Tresting",
+   "zh": "赛摩斯·特雷斯廷",
+   "note": "mb1:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "赛摩斯·特雷斯廷，据说一名乡区领地的领主遭到杀害"
+  },
+  {
+   "en": "Tren-Pedri Delouse",
+   "zh": "蓝佩得莉·德鲁斯",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "蓝佩得莉·德鲁斯贵女一些有意思的消息（简称特蓝佩得莉，译名前后不一）"
+  },
+  {
+   "en": "Triss",
+   "zh": "特丽斯",
+   "note": "mb1:30",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "要一起来吗，特丽斯？"
+  },
+  {
+   "en": "Troalin",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Zane Venture",
+   "zh": "詹·泛图尔",
+   "note": "mb3:52",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "她看着它杀死詹·泛图尔，一名当纹没有天金时仍燃烧天金的迷雾之子"
+  },
+  {
+   "en": "Bilg",
+   "zh": "比格",
+   "note": "mb1:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "比格。坐在右边第四张桌子的大块头"
+  },
+  {
+   "en": "Cladent",
+   "zh": "克莱登",
+   "note": "mb2:49",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "请不要因为你不同意就批判他人的信仰，克莱登大人"
+  },
+  {
+   "en": "Jess (Scadrial)",
+   "zh": "洁丝",
+   "note": "mb1:0",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "众判处其子对司卡有害，众人同情“可怜的洁丝”"
+  },
+  {
+   "en": "Kareien",
+   "zh": "凯芮安",
+   "note": "mb1:22",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“凯芮安跟我的事提醒了每个人”"
+  },
+  {
+   "en": "Kelsier",
+   "zh": "卡西尔",
+   "note": "mb1:2",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“新来的人，卡西尔，摇摇头”"
+  },
+  {
+   "en": "Kelsier's mother",
+   "zh": "",
+   "note": "正文无明确中译（无名角色描述语）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "zh_region 未见“母亲”明确译名对应"
+  },
+  {
+   "en": "Vin's mother",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "en_hits_total=0，无中译书证"
+  },
+  {
+   "en": "Iyatil",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "en_hits_total=0，涉密史/失落金属未扫"
+  },
+  {
+   "en": "Terrisman",
+   "zh": "泰瑞司人",
+   "note": "mb1:8",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "“你是泰瑞司人”沙赛德身份"
+  },
+  {
+   "en": "Axindweth",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "en_hits_total=0，涉失落金属未扫"
+  },
+  {
+   "en": "House Izenry",
+   "zh": "依森瑞",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "怪在依森瑞身上，他们是太齐尔的政敌"
+  },
+  {
+   "en": "Jaism",
+   "zh": "珈教",
+   "note": "mb1:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "也许你想听听珈教，由一人创立，以珈称呼"
+  },
+  {
+   "en": "Longtales",
+   "zh": "神话",
+   "note": "mb3:27",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "跟怪物和传说有关，有人说是神话"
+  },
+  {
+   "en": "Noble",
+   "zh": "贵族",
+   "note": "mb6:scan",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "贵族们才不在乎凝聚，贵族出身的市长等"
+  },
+  {
+   "en": "Straff Venture",
+   "zh": "史特拉夫·泛图尔",
+   "note": "mb3:14",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "史特拉夫·泛图尔刚死的那个时期"
+  },
+  {
+   "en": "Tegas",
+   "zh": "代加",
+   "note": "mb1:28",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "承诺会出席代加大人于明天下午的午餐聚会"
+  },
+  {
+   "en": "Telden Hasting",
+   "zh": "泰尔登·海斯丁",
+   "note": "mb3:50",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "泰尔登，纹此时认出他，泰尔登·海斯丁"
+  },
+  {
+   "en": "Teven Renoux",
+   "zh": "泰文·雷弩",
+   "note": "mb1:9",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我是法蕾特·雷弩贵女，泰文·雷弩大人的四表妹"
+  },
+  {
+   "en": "Battle of Hathsin",
+   "zh": "",
+   "note": "正文无书证（en_hits_total=0）",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "全书英文本未命中该专名，无可采证官方中译"
+  },
+  {
+   "en": "Courteline",
+   "zh": "库特蓝",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "半个世纪前在库特蓝爆发的司卡暴动"
+  },
+  {
+   "en": "Holstep",
+   "zh": "霍斯太普",
+   "note": "mb1:24",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "同时攻击了北方的霍斯太普警备队"
+  },
+  {
+   "en": "Kandra Homeland",
+   "zh": "坎得拉故乡",
+   "note": "mb5:17",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "这是坎得拉故乡（宓兰语）"
+  },
+  {
+   "en": "Summer Hill",
+   "zh": "夏丘",
+   "note": "mb1:21",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "我守卫夏丘真的就是英雄将因此得名之重担"
+  },
+  {
+   "en": "Terris Dominance",
+   "zh": "泰瑞司统御区",
+   "note": "mb3:77",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "去泰瑞司统御区找你们的人民"
+  },
+  {
+   "en": "Vennias",
+   "zh": "文尼亚",
+   "note": "mb1:20",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "把他放在文尼亚的渗透点，混入教廷的门徒中"
+  },
+  {
+   "en": "Western Dominance",
+   "zh": "西方统御区",
+   "note": "mb3:15",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "越深入西方统御区，因迷雾失去的日照越多"
+  },
+  {
+   "en": "Battle of Luthadel",
+   "zh": "陆沙德之战",
+   "note": "mb3:81",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "多克森跟歪脚在陆沙德之战被屠杀，卡西尔、多克森等老成员回顾陆沙德之战。"
+  },
+  {
+   "en": "Broken Quill",
+   "zh": "折羽酒吧",
+   "note": "mb1:19",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "依蓝德大人在他于折羽酒吧聚会的贵族朋友们之间，对那女孩赞誉有加。"
+  },
+  {
+   "en": "Camon's safe house",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Clubs's shop",
+   "zh": "歪脚的店铺",
+   "note": "mb3:27",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "傍晚在歪脚店铺中的桌子旁，跟集团的人共同欢笑。"
+  },
+  {
+   "en": "Fourwell Crossroads",
+   "zh": "四井路口",
+   "note": "mb1:11",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你可以在四井路口朝西走三个街口的地方找到他。"
+  },
+  {
+   "en": "Siege of Luthadel",
+   "zh": "陆沙德围城战",
+   "note": "mb3:66",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "沙赛德一年前在陆沙德围城战之后，储存清醒能量。"
+  },
+  {
+   "en": "Square of the Survivor",
+   "zh": "幸存者广场",
+   "note": "mb1:36",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "去找他们，他们在幸存者广场集合……就是海司辛幸存者今天被杀掉的地方。"
+  },
+  {
+   "en": "Arguois",
+   "zh": "阿谷瓦山洞",
+   "note": "mb1:6",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "你知道阿谷瓦山洞的事？……反抗军过去许多年来都藏在里面。"
+  }
+ ]
+}

@@ -1,0 +1,101 @@
+{
+ "batch": 48,
+ "results": [
+  {
+   "en": "Kordel",
+   "zh": "柯玳",
+   "note": "mb1:16",
+   "status": "ok",
+   "confidence": "medium",
+   "evidence": "它不是从克雷尼恩或柯玳所开始(即 Khlennium 或 Kordel)"
+  },
+  {
+   "en": "Malwish Empire",
+   "zh": "",
+   "note": "待失落金属中译",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": "Malwish 相关仅见于 The Lost Metal，无中译"
+  },
+  {
+   "en": "New Empire",
+   "zh": "新帝国",
+   "note": "mb3:10",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "新帝国中的每个城市都有自己的版本"
+  },
+  {
+   "en": "North Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Northern Dominance",
+   "zh": "北方统御区",
+   "note": "mb1:18",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "书背上写着《北方统御区之气候变化》"
+  },
+  {
+   "en": "Ruin's Perpendicularity",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Shrouded Isles",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "South Seran",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Southern Dominance",
+   "zh": "南方统御区",
+   "note": "mb3:1",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "会来到南方统御区中如此偏远的城市"
+  },
+  {
+   "en": "Southern Islands",
+   "zh": "南方诸岛",
+   "note": "mb1:29",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "班内特人…住在南方诸岛上"
+  },
+  {
+   "en": "Steelfield",
+   "zh": "",
+   "note": "正文无书证",
+   "status": "pending",
+   "confidence": "low",
+   "evidence": ""
+  },
+  {
+   "en": "Storage cavern",
+   "zh": "储藏窟",
+   "note": "mb3:14",
+   "status": "ok",
+   "confidence": "high",
+   "evidence": "第四个储藏窟是他们的了"
+  }
+ ]
+}

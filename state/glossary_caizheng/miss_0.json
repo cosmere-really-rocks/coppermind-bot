@@ -1,0 +1,69 @@
+{
+  "batch": 0,
+  "results": [
+    {
+      "en": "Battle of Luthadel",
+      "zh": "陆沙德之战",
+      "note": "mb3:81",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "多克森跟歪脚在陆沙德之战被屠杀，卡西尔、多克森等老成员回顾陆沙德之战。"
+    },
+    {
+      "en": "Broken Quill",
+      "zh": "折羽酒吧",
+      "note": "mb1:19",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "依蓝德大人在他于折羽酒吧聚会的贵族朋友们之间，对那女孩赞誉有加。"
+    },
+    {
+      "en": "Camon's safe house",
+      "zh": "",
+      "note": "正文无书证",
+      "status": "pending",
+      "confidence": "low",
+      "evidence": ""
+    },
+    {
+      "en": "Clubs's shop",
+      "zh": "歪脚的店铺",
+      "note": "mb3:27",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "傍晚在歪脚店铺中的桌子旁，跟集团的人共同欢笑。"
+    },
+    {
+      "en": "Fourwell Crossroads",
+      "zh": "四井路口",
+      "note": "mb1:11",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "你可以在四井路口朝西走三个街口的地方找到他。"
+    },
+    {
+      "en": "Siege of Luthadel",
+      "zh": "陆沙德围城战",
+      "note": "mb3:66",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "沙赛德一年前在陆沙德围城战之后，储存清醒能量。"
+    },
+    {
+      "en": "Square of the Survivor",
+      "zh": "幸存者广场",
+      "note": "mb1:36",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "去找他们，他们在幸存者广场集合……就是海司辛幸存者今天被杀掉的地方。"
+    },
+    {
+      "en": "Arguois",
+      "zh": "阿谷瓦山洞",
+      "note": "mb1:6",
+      "status": "ok",
+      "confidence": "high",
+      "evidence": "你知道阿谷瓦山洞的事？……反抗军过去许多年来都藏在里面。"
+    }
+  ]
+}
