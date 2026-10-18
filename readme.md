@@ -102,6 +102,12 @@
   - **方案2b**：`glossary_assist` 采证高价值真缺口并入 `dict/mistborn.json`（961→**969** 条）：`Sovereign=君主`（悲悼护腕 mb6 ch21-23，非「主权」）、`Ashmount=灰山`（永世英雄 mb3 ch34）、`Edwarn=埃德温`（全名 埃德温·拉德利安 已有）、`Mr. Suit/西装先生`、`Winsting=温斯汀`、`Breeze=微风`、`Allrianne=奥瑞安妮`（全名 奥瑞安妮·拉德利安）。无书证术语（Steinel/Mycondwel/Icy Ben Oldson/West's Haven/Channeral Range/Faleast Range/Sycamore Street Gang/Getruda/Dumad/Clubs）全书 0 命中 → 追加归档 `pending_archive.md` 勿强译。
   - **重跑验证**（`scripts/batch.py --stage translate` 全 20 页）：✅ 全 20 页均已含 `{{en|...}}`（Wayne/Elendel 补齐）；✅ Set/kandra/metalminds/skaa/harmonium/Edwarn/Sovereign/Breeze/Winsting/Ashmount 等不再「伪未收录」，正文统一 组织/坎得拉/金属意识/...；✅ stoplist 防误翻生效（小写 red/well/dug/rioting 等不再误命中专名；Set→组织 与 Cett→塞特 不撞）。剩余可接受点：MeLaan infobox `| 种族 = kandra`（未走确定性替换）、Elendel 正文「Allrianne 女士」（LLM 未用 奥瑞安妮，改自译 阿莉安）；untranslated_terms 数量因 LLM 详略不同有波动（Waxillium 本次多报到普通词，正文均已译对，属上报口径差异非质量回归）。
   - 备份 `dict/mistborn.json.bak.review-*`。
+- ✅ 2026-10-18 **残点2 + Mistborn(series) 三项翻译修复**：
+  - **残点2收尾**（重跑 Wayne/MeLaan/Elendel 验证）：`_sub_glossary_in_string` 加**归一化整值兜底**（infobox `| 种族 = kandra`→坎得拉、`Set`→组织、`metalminds`→金属意识，全小写套 stoplist 防误翻）；`extract_en_terms` 增捕**大写短语内单个大写词**（"Lady Allrianne Ladrian"分离出 Allrianne、"Mr. Suit"分离出 Suit）；SYSTEM_PROMPT rule 2 强化「切片给出 zh 必须原样使用、禁自造音译」。`dict/mistborn.json` 新增 `Suit=西装先生`（Mr. Suit 简写变体）969→**970**。验证：Mr. Suit→西装先生、Allrianne→奥瑞安妮、`| 种族 = 坎得拉`；`review_verify` 伪未收录清零。
+  - **① `{{for}}` 模板参数翻译**：新增 `translate_for_template`（convert 后确定性替换参数 1/2/3/pre 的可译专名）+ SYSTEM_PROMPT rule 2.2（{{for}} 的 pre=/目标/描述属需翻译导语文案）。`{{for|Allomancy|the kind of Allomancer|pre=This article is about [[Brandon Sanderson]]'s series}}` → `{{for|镕金术|the kind of 熔金术师|pre=本文介绍的是[[布兰登·桑德森]]的系列作品}}`（参数1/pre 全译；参数2 虚词结构 LLM 偶留英文为已知小瑕疵）。
+  - **② `<references>/<ref>` 脚注翻译**：SYSTEM_PROMPT rule 2.3（脚注说明属需翻译正文，标签/name/自闭合保留）。实测两块 7 条脚注全部译中。
+  - **③ 子页链接 [[X/Statistical analysis|数字]]→[[永世英雄/数据分析|数字]]**：新增 `translate_wikilink_targets`（父+后缀均有译名才重写、display 保留）+ `load_merged_glossary`（主表 mistborn.json + 辅表 common.json 合并，次表补主表缺失）。新增 **`dict/common.json`**（跨站通用词：`Statistical analysis=数据分析`，**不塞入 mistborn.json**）。
+  - **重跑验证**：`Mistborn (series)` 三项全达标，写回 `bot测试:Mistborn (series)`（newrevid 17178）；全 8 处 `/Statistical analysis` 统一译《xxx/数据分析》。提交 `ccff85c`。<br>**待办**：`{{for}}` 参数2（"the kind of 熔金术师"）虚词结构偶留英文，可在规则 2.2 中加「描述参数整句译成中文」强化。
 
 ## 凭据
 
