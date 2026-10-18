@@ -109,6 +109,9 @@
   - **③ 子页链接 [[X/Statistical analysis|数字]]→[[永世英雄/数据分析|数字]]**：新增 `translate_wikilink_targets`（父+后缀均有译名才重写、display 保留）+ `load_merged_glossary`（主表 mistborn.json + 辅表 common.json 合并，次表补主表缺失）。新增 **`dict/common.json`**（跨站通用词：`Statistical analysis=数据分析`，**不塞入 mistborn.json**）。
   - **重跑验证**：`Mistborn (series)` 三项全达标，写回 `bot测试:Mistborn (series)`（newrevid 17178）；全 8 处 `/Statistical analysis` 统一译《xxx/数据分析》。提交 `ccff85c`。
   - **补强（2026-10-18 晚）**：SYSTEM_PROMPT rule 2.2 强化「描述/`pre=` 参数须**整句**译成中文，不得残留整段英文虚词」。重跑并重写（newrevid 17179）：`{{for|镕金术|熔金术师这一类|pre=本文介绍的是[[布兰登·桑德森]]的系列作品}}`——参数 2 由 `the kind of 熔金术师` 整句化 `熔金术师这一类`。提交见 `git log`。
+- ✅ 2026-10-18 **Mistborn(series) 书目表格布局 + LLM 无限推理修复**：
+  - **布局修复**：`Mistborn (series)` 页 7 个书目表格（`{| class='infobox bib mistborn cosmere' width=100%`）英文站占满宽度、中文站却窄/乱——根因：**huijiwiki 平台全局把 `.infobox` 定义为信息框样式**（窄/右浮/固定宽），`width=100%` HTML 属性优先级压不过 CSS，表格被当信息框渲染。修复：`convert_templates.py` 新增 `_strip_bib_infobox_class`，对 class 含 `bib` 的表格顶行剥离 `infobox` 词（保留其余 class 与 width=100%），非 bib 表不动。重跑写回（newrevid 17180），网页端 7/7 表格 `class='bib mistborn cosmere' width=100%`，`infobox` 残留 0。
+  - **LLM 无限推理修复**：重跑时 3 块全失败「无法解析 JSON」——排查发现 `deepseek-v4-flash-0731` 对长 wikitext 翻译块**病态无限推理**（`finish_reason=length`，reasoning_tokens 吃光 max_tokens（8000~20000 均如此），**content 为空**）。对照实验：「短任务正常」「`thinking:{"type":"disabled"}` 稳定产出（reasoning=0、finish=stop）」「`budget_tokens` 参数无效」。修复：`translate.py::llm_chat` 默认发送 `thinking={"type":"disabled"}`（`LLMConfig.thinking` 字段，`LLM_THINKING=enabled` 可恢复推理）。提交 `c8862f9`。
 
 ## 凭据
 
