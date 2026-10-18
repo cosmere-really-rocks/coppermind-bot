@@ -116,6 +116,12 @@
   - **机制**：新增 **`dict/keep_en.json`**（译名表无 + 中文书证 0 + 无官方译名的书名/作品名名单）；`translate.py::build_user_prompt` 读名单，本块出现即提示 LLM「保留英文、禁自译、列 untranslated_terms」。`load_keep_en()` 加载。
   - **查证入译名表 2 词**（中文站已有页面=社区通行译名）：`Mistborn: Secret History = 迷雾之子：秘史`（pageid 1585）、`Arcanum Unbounded = 无界秘典`（pageid 2872，台译 无垠秘典）；其余 23 词经中文站页面探测无对应译名页 → 留 keep_en。
   - **重跑验证**：三个点名词保留英文并入 untranslated；秘史/无界秘典 用官方译名；章节标题 `Original Trilogy`→`原始三部曲` 属标题翻译（规则 4）不算违规。写回 `bot测试:Mistborn (series)`（newrevid 17181）。提交 `9bc6fd4`。
+- ✅ 2026-10-18 **Mistborn(series) 页面渲染错误修复**（用户报告「脚本错误：函数{{{1}}}不存在」「name=aa 使用不同内容定义了多次」「alloy 未在先前文字中使用」）：
+  - **根因 1**：正文 `{{ref|name=aa}}`/`{{ref|name=alloy}}`（无 group、无 text 的纯占位引用）没被归一，中文站 `Template:Ref` 走 `#invoke:Ref` 用空卷码查表 → 「函数{{{1}}}不存在」；占位引用与 `<references>` 内 `{{url ref|name=aa}}`/`{{bws ref|name=alloy}}` 定义错配 → aa 重复定义 + alloy 未使用。
+  - **修复**：`convert_templates.py::_scan_refs` 增加「无 group + name + 无 text → `<ref name=X/>`」兜底；LLM 偶发把 `<ref name=X/>` 变回 `{{ref name="X"}}`（无管道/带引号）也能归一——`translate.py::assemble` 对最终译文幂等重跑 `_scan_refs`。
+  - **方案 A'（保留 group="fn"）**：此前把 `<references group=fn>` 剥成无 group，使 fn 脚注混入默认组、页面出现多个默认组 `<references>` 结算点，跨块占位引用（alloy 位于第二个 fn references 之前）被提前结算为「未定义」（最小页实验 4/5/6 复现并验证）。保留 group 后 fn 脚注独立成组，默认组只剩主 `<references>`。
+  - **附加**：`Template:Wob ref` 链接文本 `{{{text|{{{2}}}|}}}`（嵌套 `{{{2}}}` 缺默认值管道）让单参数 `{{wob ref|9171}}` 渲染出 46 处 `{{{2}}}` 字面量——`_expand_wob_refs` 把单参数 wob ref 展开为 `<ref>[[wob:N|wob:N]]</ref>`（绕开模板缺陷、不依赖缺失的 `Template:Ref/broken`）。
+  - **验证**：重跑写回 `bot测试:Mistborn (series)`（newrevid 17190），渲染 error 0、`{{{2}}}`/`{{{1}}}` 0、cite_note-aa/alloy/TLWI 等全部正常；keep_en/官方译名/数据分析 修复不回归。提交 `ea79bfb`。
 
 ## 凭据
 
