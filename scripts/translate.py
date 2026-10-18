@@ -109,7 +109,12 @@ def load_llm_config(args) -> LLMConfig:
 # 术语裁切（决议 #9）：从英文 wikitext 提取候选专名 → 只送给 LLM 相关子集
 # --------------------------------------------------------------------------- #
 def extract_en_terms(wikitext):
-    """从 wikitext 提取候选专名：[[内链]]目标 + 正文大写词（启发式）。"""
+    """从 wikitext 提取候选专名：[[内链]]目标 + 正文大写词（启发式）。
+
+    review 修复（方案2a）：除大写词外，也捕获**小写**候选词（如 kandra/metalmind/
+    harmonium/skaa/noble 等，译名表键本身可能是小写），否则这些小写金属/概念词不会进
+    gloss_slice → LLM 看不到译名 → 误报「未收录」且正文残留英文。
+    """
     code = mwparserfromhell.parse(wikitext)
     terms = set()
     for tl in code.filter_wikilinks():
@@ -120,7 +125,83 @@ def extract_en_terms(wikitext):
     for m in re.finditer(r"\b([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*)\b", body):
         if len(m.group(1)) > 2:
             terms.add(m.group(1))
+    # 小写候选：单个[阿尔法]词（≥3 字母），用于命中译名表里的小写键/屈折形式。
+    # 数量可能较多，但 slice_glossary 只会保留「命中译名表」的，噪声会在此被过滤。
+    for m in re.finditer(r"\b([a-z][a-z\-]+)\b", body):
+        w = m.group(1)
+        if len(w) >= 3 and not w.lower().startswith(("the ", "and ", "for ")):
+            terms.add(w)
     return terms
+
+
+def _norm_glossary_key(s: str) -> str:
+    """把词条键/正文形式归一化用于「大小写/屈折/冠词」模糊匹配。
+
+    规则：去前导冠词（The/A/An）、去尾属格 's/’s、去尾复数 s（±撇号），再小写。
+    例：The Set→set；Set→set；kandra/Kandra/kandra's→kandra；metalminds→metalmind。
+    """
+    t = re.sub(r"\s+", " ", s.strip())
+    t = re.sub(r"^(the|a|an)\s+", "", t, flags=re.I)
+    t = re.sub(r"[:’']\s*s$", "", t)
+    t = re.sub(r"s$", "", t)
+    return t.lower()
+
+
+def build_norm_glossary(glossary):
+    """归一化译名索引：{norm_key: (规范英文键, 词条)}，优先保留更长(更具体)的键。
+
+    让正文里的屈折/大小写/缺冠词形式能命中规范词条（如 Set 命中 The Set）。
+    仅收录有 zh 的词条（zh_variable 无固定译名者不入，避免 LLM 拿到 None）。
+    """
+    idx = {}
+    for k, entry in glossary.items():
+        zh = (entry or {}).get("zh")
+        if not zh:
+            continue
+        nk = _norm_glossary_key(k)
+        if nk not in idx or len(k) > len(idx[nk][0]):
+            idx[nk] = (k, entry)
+    return idx
+
+
+# 通用英文词（小写正文里出现时，不自动按译名表匹配）。
+# 用途：extract_en_terms 额外捕获小写词后，若不设防，常见英文词会误命中专名译名
+# （如正文小写 red/blue/well → 专名 雷德/布卢/威尔斯，或动词/名词/数词被误翻）。
+# 仅对「全小写正文形态」生效；大写专名（如 Set）仍按规范归一匹配。
+GENERIC_EN_STOPLIST = {
+    "a", "an", "the", "and", "or", "of", "to", "in", "on", "for", "with", "at", "by",
+    "as", "from", "is", "are", "was", "were", "be", "been", "being", "do", "does", "did",
+    "have", "has", "had", "this", "that", "these", "those", "it", "its", "he", "she",
+    "they", "we", "you", "his", "her", "their", "our", "your", "him", "them", "not",
+    "no", "but", "if", "so", "such", "which", "what", "when", "where", "who", "why",
+    "how", "will", "would", "can", "could", "should", "shall", "may", "might", "must",
+    "into", "over", "under", "about", "after", "before", "between", "through", "during",
+    "same", "very", "only", "just", "also", "than", "then", "there", "here", "one",
+    "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+    "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+    "nineteen", "twenty", "thirty", "forty", "fifty", "hundred", "thousand",
+    # 与专名/金属译名撞车的通用词、颜色词、动词、数词
+    "red", "blue", "green", "yellow", "black", "white", "well", "felt", "dug", "rough",
+    "trap", "traps", "chain", "chains", "path", "paths", "collapse", "origin",
+    "origins", "sequence", "resolution", "sentry", "consortium", "governor",
+    "governors", "senate", "citizen", "citizens", "butler", "crack", "rioting",
+    "set", "sets",
+    "mark", "marks", "side", "back", "front", "top", "bottom", "left", "right", "old",
+    "new", "good", "bad", "big", "small", "hard", "soft", "high", "low", "far",
+    "near", "long", "short", "full", "empty", "open", "closed", "light", "dark",
+    "city", "town", "street", "road", "house", "door", "window", "room", "wall",
+    "floor", "table", "water", "fire", "day", "night", "year", "month", "week",
+    "hour", "minute", "second", "time", "person", "man", "woman", "child", "people",
+    "life", "death", "love", "war", "peace", "king", "queen", "court", "law",
+    "order", "power", "world", "land", "sea", "river", "mountain", "valley", "north",
+    "south", "east", "west", "greater", "less", "more", "most", "few", "many",
+    "much", "little", "human", "humans", "survivors", "survivor",
+}
+
+
+def _is_lowercase(t: str) -> bool:
+    """判断是否为全小写正文形态（用于决定是否套用通用词停用表）。"""
+    return any(ch.isalpha() for ch in t) and all(ch.islower() or ch in "-'’ " for ch in t)
 
 
 def load_glossary(path: Path):
@@ -129,8 +210,25 @@ def load_glossary(path: Path):
 
 
 def slice_glossary(glossary, en_terms):
-    """返回命中译名表的子集 {EN: zh}，按 EN 排序，供放进提示词。"""
-    return {t: glossary[t] for t in sorted(en_terms) if t in glossary}
+    """返回命中译名表的子集，按 EN 排序，供放进提示词。
+
+    review 修复（方案2a）：用归一化索引匹配，正文写成 Set/kandra/metalminds 也能命中
+    规范词条（The Set/Kandra/metalmind）。返回键用**正文实际出现的形态**，值带 {zh,
+    canonical}，让 LLM 明确「正文这个英文 → 这个中文」；canonical 供需要时核对规范名。
+    对**全小写**正文形态额外套用 GENERIC_EN_STOPLIST，避免把通用英文词误当专名翻译
+    （如正文小写 red→雷德），只让真正的领域词（kandra/mistwraith/金属名等）命中。
+    """
+    idx = build_norm_glossary(glossary)
+    sliced = {}
+    for t in sorted(en_terms):
+        if _is_lowercase(t) and _norm_glossary_key(t) in GENERIC_EN_STOPLIST:
+            continue
+        hit = idx.get(_norm_glossary_key(t))
+        if not hit:
+            continue
+        canonical, entry = hit
+        sliced[t] = {"zh": entry["zh"], "canonical": canonical}
+    return sliced
 
 
 # --------------------------------------------------------------------------- #
@@ -610,6 +708,26 @@ def untranslated_lead_english(src_text: str, translation: str) -> bool:
     return dst_prose >= 4
 
 
+def ensure_en_tag(body: str, title_en: str) -> str:
+    """决议#10 兜底：body 已含 {{CmPermission}}，若仍缺 {{en|title}} 则补上。
+
+    {{en}} 本应由块0 LLM 在导语 '''中文名''' 之后安放，实测偶发丢失（如 Wayne/Elendel）。
+    此处确定性兜底：已存在则不动；否则插在首个 '''加粗标题''' 后；无标题则插首行。
+    """
+    if re.search(r"\{\{\s*en\s*[|}]", body):
+        return body
+    m = re.search(r"'''.+?'''", body)
+    tag = "{{en|" + title_en + "}}"
+    if m:
+        return body[:m.end()] + tag + body[m.end():]
+    if body.startswith("{{CmPermission"):
+        # 紧跟 CmPermission 模板闭合后插入，保持 CmPermission 置顶
+        close = body.find("}}")
+        if close != -1:
+            return body[: close + 2] + tag + body[close + 2:]
+    return tag + "\n" + body
+
+
 def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: str,
              registry: list[dict] | None = None):
     """把各块译文拼成完整 wikitext，填回决议#13 的英文原文占位符，并插入页面级包装（决议#10-12）。"""
@@ -647,9 +765,12 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
         meta_note = "纯正文翻译（--no-wrap，未加页面级包装）"
     else:
         body = "{{CmPermission|" + title_en + "}}\n" + body
+        # 决议#10 兜底：{{en}} 本应由块0 LLM 安放（导语 '''中文名''' 之后），偶发丢失；
+        # 此处确定性兜底，保证 CmPermission/ensync 依赖的 #var:en 一定被定义。
+        body = ensure_en_tag(body, title_en)
         if "{{ensync|" not in body:
             body = body.rstrip("\n") + "\n{{ensync|" + str(revid) + "}}\n"
-        meta_note = "已加页面级包装 {{CmPermission}}（顶）/{{en}}（首行）/{{ensync}}（尾，revid=" + str(revid) + "）"
+        meta_note = "已加页面级包装 {{CmPermission}}（顶）/{{en}}（首行自动兜底）/{{ensync}}（尾，revid=" + str(revid) + "）"
 
     contract = {
         "meta": {
