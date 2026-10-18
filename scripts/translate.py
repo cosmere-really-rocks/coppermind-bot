@@ -869,6 +869,18 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
              registry: list[dict] | None = None):
     """把各块译文拼成完整 wikitext，填回决议#13 的英文原文占位符，并插入页面级包装（决议#10-12）。"""
     body = "\n".join(t for t, _ in chunk_results).strip("\n") + "\n"
+    # 兜底：LLM 偶发把 <ref name="X"/> 变回模板形态 {{ref name="X"}}（无管道/带引号），
+    # 中文站 Template:Ref 会 #invoke:Ref 报「函数{{{1}}}不存在」。用最新转换器的
+    # _scan_refs 幂等归一一次（标准 <ref> 不受影响，残留模板形态被转回占位引用）。
+    try:
+        import importlib.util as _ilu2
+        _sp = _ilu2.spec_from_file_location("ct_scanrefs", HERE / "convert_templates.py")
+        _cm = _ilu2.module_from_spec(_sp)
+        sys.modules[_sp.name] = _cm
+        _sp.loader.exec_module(_cm)
+        body = _cm._scan_refs(body)
+    except Exception:
+        pass  # 兜底失败不影响主流程（原文即标准形态时无需归一）
     # 决议#13：把 %%ORIGINAL_BLOCK_N%% 填回英文原文（若模型翻掉/漏了一并汇报）
     if registry:
         body, missing_tokens = unmask_protected_blocks(body, registry)

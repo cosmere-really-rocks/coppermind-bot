@@ -257,7 +257,16 @@ def _split_top_params(body):
 
 
 def _scan_refs(text):
-    """把一串文本里的 {{ref|...group=fn...}} 转成标准 <ref>，其余原样保留。"""
+    """把一串文本里的 {{ref|...}} 转成标准 <ref>，其余原样保留。
+
+    - group=fn：英文站脚注组（<references group="fn"> 体系）→ 标准 <ref name=X>text</ref>
+      或 <ref name=X/>（方案 A，各处定义保留原位）。
+    - 无 group + name + 无 text：英文站「占位引用」{{ref|name=X}}（如 {{ref|name=aa}}），
+      其正文实际内容由 <references> 内的 {{url ref|name=X}}/{{bws ref|name=X}} 提供。
+      中文站 Template:Ref 会 #invoke:Ref 用空卷码查表报「函数{{{1}}}不存在」，
+      故必须转成标准占位 <ref name="X"/>，与同名定义配对（引用前置于定义是合法用法）。
+    - 其余（有卷/章参数的书目引用、{{ref|text=...}} 等）原样保留。
+    """
     res, i = [], 0
     while i < len(text):
         if text[i:i + 2] == "{{":
@@ -265,19 +274,44 @@ def _scan_refs(text):
             inner = text[i + 2:j - 2]
             m = re.match(r"\s*([^|{}]+)", inner)
             tname = m.group(1).strip().lower() if m else ""
+            # LLM 可能把 <ref name="X"/> 变回模板形态 `{{ref name="X"}}`（无管道线、
+            # 属性带引号）。对这种「无管道、仅 name=」形态单独识别成占位引用。
+            nm = re.match(r'^\s*ref\s+name\s*=\s*["\']?([^"\'\s|}]+)["\']?\s*$', inner, re.I)
+            if nm:
+                rep = '<ref name="%s"/>' % nm.group(1)
+                res.append(rep)
+                i = j
+                continue
             if tname == "ref":
                 params = {k.strip().lower(): v.strip() for k, v in _split_top_params(inner[m.end():])}
-                if params.get("group", "").lower() == "fn":
-                    name, fn_text = params.get("name"), params.get("text")
+                name, fn_text = params.get("name"), params.get("text")
+                group = params.get("group", "").lower()
+                if group == "fn":
                     if name and fn_text is not None:
-                        rep = '<ref name="%s">%s</ref>' % (name, fn_text)
+                        rep = '<ref name="%s" group="fn">%s</ref>' % (name, fn_text)
                     elif fn_text is not None:
-                        rep = "<ref>%s</ref>" % fn_text
+                        rep = '<ref group="fn">%s</ref>' % fn_text
                     elif name:
-                        rep = '<ref name="%s"/>' % name
+                        rep = '<ref name="%s" group="fn"/>' % name
                     else:
                         rep = text[i:j]
                     res.append(rep)
+                    i = j
+                    continue
+                if not group and name and fn_text is None:
+                    # 无 group 的命名占位引用 → 标准占位 <ref name=X/>（正文引用，
+                    # 定义在 <references> 内的 {{url ref|name=X}}/{{bws ref|name=X}}）
+                    rep = '<ref name="%s"/>' % name
+                    res.append(rep)
+                    i = j
+                    continue
+            else:
+                # 非 ref 模板（如 {{columns|...}}、{{date|...}}）：其参数值里可能嵌套
+                # {{ref|name=X}}（如 Publication 段的 Film rights 行），递归归一，
+                # 再按原模板重组。仅当内部确实含 ref 时才重写，否则原样返回。
+                sub = _scan_refs(inner)
+                if sub != inner:
+                    res.append("{{" + sub + "}}")
                     i = j
                     continue
             res.append(text[i:j])
@@ -286,6 +320,24 @@ def _scan_refs(text):
         res.append(text[i])
         i += 1
     return "".join(res)
+
+
+def _expand_wob_refs(text):
+    """把 {{wob ref|N}}（单参数，最常见的 Arcanum 问答引用）展开成等价的 [[wob:N|wob:N]] 独立 <ref>。
+
+    背景：中文站 Template:Wob ref 的链接文本写的是 {{{text|{{{2}}}|}}}（嵌套 {{{2}}} 缺默认值
+    管道），对只有数字参数 1 的调用（{{wob ref|9171}}）会渲染出字面量 {{{2}}}（46 处）。
+    英文站此时显示 [[wob:N|wob:N]]（interwiki 前缀显示）。这里把单参数调用展开为
+    <ref>[[wob:N|wob:N]]</ref>，绕开中文站模板缺陷，且不依赖缺失的 Template:Ref/broken。
+    带 text/date 等扩展参数的调用保留原样（交给中文站模板，与英文站行为一致）。
+    """
+    def _expand(m):
+        num = m.group(1)
+        return "<ref>[[wob:%s|wob:%s]]</ref>" % (num, num)
+
+    # 单参数：{{wob ref|9171}} / {{wob_ref|9171}}（容忍下划线与大小写、两侧空白）
+    pat = re.compile(r"\{\{\s*wob[_ ]?ref\s*\|\s*(\d+)\s*\}\}", re.I)
+    return pat.sub(_expand, text)
 
 
 def _convert_footnote_groups(wikitext):
@@ -297,23 +349,33 @@ def _convert_footnote_groups(wikitext):
     标准 <ref>，英文脚注 text 随即作为普通正文交给翻译（方案 A，用户 2026-10-17 确认）。
 
     覆盖四种形态：
-      - 正文内联无 name：{{ref|group=fn|text=X}}         -> <ref>X</ref>
-      - 正文内联有 name：{{ref|name=N|group=fn}}        -> <ref name="N"/>
+      - 正文内联无 name：{{ref|group=fn|text=X}}         -> <ref group="fn">X</ref>
+      - 正文内联有 name：{{ref|name=N|group=fn}}        -> <ref name="N" group="fn"/>
       - 定义块：<references group=fn>{{ref|group=fn|text=X|name=N}}</references>
-                                                         -> <references><ref name="N">X</ref></references>
-      - 自闭合：<references group=fn/>                  -> <references/>
+                                                         -> <references group="fn"><ref name="N" group="fn">X</ref></references>
+      - 自闭合：<references group=fn/>                  -> <references group="fn"/>
+
+    说明 A'（2026-10-18）：不能剥掉 group="fn"。若 <references group=fn> 变成无 group 的
+    <references>，fn 脚注会混入默认组，让页面出现多个无 group 的 <references> 结算点；
+    跨块的默认组占位引用（如 {{ref|name=alloy}} 位于第二个 fn references 之前）会在中间那个
+    references 渲染时被提前结算为「未定义」，主 references 里的 {{bws ref|name=alloy}} 便报
+    “没有在先前的文字中使用”。保留 group="fn" 后 fn 脚注独立成组，默认组只剩主 <references>
+    一个结算点，占位引用与结尾定义正常配对（最小页实验 6 验证 0 错误）。
     """
     def defblock(m):
         op, inner, close = m.group(1), m.group(2), m.group(3)
-        op = re.sub(r"\s+group\s*=\s*[\"']?fn[\"']?", "", op)
+        # 保留 group="fn"（统一成 group="fn" 形式；op 无 group 属性时补上）
+        op = re.sub(r"group\s*=\s*[\"']?fn[\"']?", 'group="fn"', op, flags=re.I)
+        if not re.search(r"group\s*=", op, re.I):
+            op = op.rstrip(">") + ' group="fn">'
         return op + _scan_refs(inner) + close
 
-    # 1) 定义块整体处理（先把块内 {{ref...}} 当定义转，再剥离 group 属性）
+    # 1) 定义块整体处理（先把块内 {{ref...}} 当定义转，并保留 group="fn"）
     pat = re.compile(r"(<references\b[^>]*?group\s*=\s*[\"']?fn[\"']?[^>]*>)(.*?)(</references\s*>)", re.S | re.I)
     out = pat.sub(defblock, wikitext)
 
     # 2) 自闭合 <references group=fn/>
-    out = re.sub(r"<references\b[^>]*?group\s*=\s*[\"']?fn[\"']?[^>]*?/>", "<references/>", out, flags=re.I)
+    out = re.sub(r"<references\b[^>]*?group\s*=\s*[\"']?fn[\"']?[^>]*?/>", '<references group="fn"/>', out, flags=re.I)
 
     # 3) 剩余的正文内联 {{ref|...group=fn...}}
     out = _scan_refs(out)
@@ -327,9 +389,12 @@ def convert_wikitext(wikitext, rules):
     按 rules 里的 src_template 驱动：凡英文 infobox 模板名匹配即转换为对应
     中文 {{Infobox X}}（字段映射见 field_map）。其它模板保留原样。
     """
-    # 先做脚注 group 归一（方案 A：{{ref|group=fn}}/<references group=fn> -> 标准 <ref>/<references>），
+    # 先做脚注 group 归一（方案 A'：{{ref|group=fn}}/<references group=fn> -> 标准 <ref>/<references>，
+    # **保留 group="fn"**，见 _convert_footnote_groups 说明），
+    # 再展开 {{wob ref|N}}（中文站 Template:Wob ref 对单参数调用会原样输出 {{{2}}} 字面量）。
     # 必须在 parse 之前，否则 mwparserfromhell 会把 <references> 里嵌套的 {{ref}} 结构复杂化。
     wikitext = _convert_footnote_groups(wikitext)
+    wikitext = _expand_wob_refs(wikitext)
 
     code = mwparserfromhell.parse(wikitext)
     report = {
