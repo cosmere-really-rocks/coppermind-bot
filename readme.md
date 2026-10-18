@@ -96,6 +96,12 @@
   - 其余不一致均在更早批次已解决或为「用户口径保留差异」（Origin/Pinnacle/Shadesmar/Valette Renoux/Wax/Mistborn 等）。全表 796 条。
 - ✅ 2026-10-18 爬取 `Category:Mistborn` 全量（递归展开 **1116 页**；其中 Era_2 等 564 页已抓/跳过，本次新抓 **550 页**，0 错误）。复用 `fetch_en.fetch_one` + cloudscraper（与 Era_2 同法），慢速限速 `2.0s/页`（决议#14，防反爬，全程未触发封禁）。脚本 `scripts/fetch_mistborn_crawl.py`（按 `state/mistborn_need_fetch.json` 清单断点续跑、每 25 页存索引）；范围清单 `state/mistborn_category_list.json`。验证：1116/1116 全快照、0 缺失。
 - ✅ 2026-10-18 译名表补全轮·caizheng 采证并入（`state/glossary_caizheng/` 工作目录）：对 `state/mistborn_glossary_terms.json` 的 **327 条**候选词条按批次书证采证（批次文件 `batch_*.json`/`miss_*.json` 逐条给出 zh+书证+置信），汇总 `consolidated.json`：**168 条 ok**（含人物/地理/地点/机构/物品/金属/祝福等），已并入 `dict/mistborn.json`（全表 796→**961** 条；脚本 `scripts/glossary_caizheng_merge.py`）；**159 条不可采证**（仅 tlm/密史无中译、维基子页/元信息、正文无书证、意译未成专名）已归档 `state/glossary_caizheng/pending_archive.md`（勿重跑）。并入门类一致：Venture 家族=泛图尔、Tekiel=太齐尔、Cett=塞特、Kelsier=卡西尔、硝镪病等。备份 `dict/mistborn.json.bak.caizheng-*`。
+- ✅ 2026-10-18 **20 词条翻译 review 轮·方案1+2 落地**（用户定按 1+2 继续，不写站）：review 发现 Wayne/Elendel 两页缺 `{{en}}`、extract_en_terms 屈折/大小写误判致使大量「伪未收录」+英文残留。
+  - **方案1**：给 `translate.py` 加 `ensure_en_tag` 确定性兜底（块0 LLM 漏安放 `{{en|title}}` 时，在首个 `'''加粗标题'''` 后自动补上；无标题页紧跟 `{{CmPermission}}` 后补）——决议#10 落地更稳，`CmPermission`/`ensync` 依赖的 `#var:en` 必被定义。已单测 + 小页实测。
+  - **方案2a**：`extract_en_terms` 增捕**小写词**（kandra/metalmind/harmonium 等，原只捕大写首字母词故漏配）；`slice_glossary` 改用归一化索引（`_norm_glossary_key`：去冠词/去属格/去复数/小写），使 `Set`→`The Set`、`metalminds`→`metalmind`、`kandra's`→`Kandra` 命中规范词条；对**全小写正文词**套 `GENERIC_EN_STOPLIST` 防通用英文误翻（如小写 `red`→专名 雷德）。Effect：Elendel 命中 110→168 条，英文残留/伪未收录显著下降。
+  - **方案2b**：`glossary_assist` 采证高价值真缺口并入 `dict/mistborn.json`（961→**969** 条）：`Sovereign=君主`（悲悼护腕 mb6 ch21-23，非「主权」）、`Ashmount=灰山`（永世英雄 mb3 ch34）、`Edwarn=埃德温`（全名 埃德温·拉德利安 已有）、`Mr. Suit/西装先生`、`Winsting=温斯汀`、`Breeze=微风`、`Allrianne=奥瑞安妮`（全名 奥瑞安妮·拉德利安）。无书证术语（Steinel/Mycondwel/Icy Ben Oldson/West's Haven/Channeral Range/Faleast Range/Sycamore Street Gang/Getruda/Dumad/Clubs）全书 0 命中 → 追加归档 `pending_archive.md` 勿强译。
+  - **重跑验证**（`scripts/batch.py --stage translate` 全 20 页）：✅ 全 20 页均已含 `{{en|...}}`（Wayne/Elendel 补齐）；✅ Set/kandra/metalminds/skaa/harmonium/Edwarn/Sovereign/Breeze/Winsting/Ashmount 等不再「伪未收录」，正文统一 组织/坎得拉/金属意识/...；✅ stoplist 防误翻生效（小写 red/well/dug/rioting 等不再误命中专名；Set→组织 与 Cett→塞特 不撞）。剩余可接受点：MeLaan infobox `| 种族 = kandra`（未走确定性替换）、Elendel 正文「Allrianne 女士」（LLM 未用 奥瑞安妮，改自译 阿莉安）；untranslated_terms 数量因 LLM 详略不同有波动（Waxillium 本次多报到普通词，正文均已译对，属上报口径差异非质量回归）。
+  - 备份 `dict/mistborn.json.bak.review-*`。
 
 ## 凭据
 
