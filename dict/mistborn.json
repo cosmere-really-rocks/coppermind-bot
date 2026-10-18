@@ -168,6 +168,10 @@
     "Arbitan": {
       "zh": "阿比坦"
     },
+    "Arcanum Unbounded": {
+      "zh": "无界秘典",
+      "note": "中文站页面「无界秘典」(pageid 2872) 含台译『无垠秘典』；2016 年三界宙中短篇合集。"
+    },
     "Archivist": {
       "zh": "库藏"
     },
@@ -2137,6 +2141,10 @@
     "Mistborn": {
       "zh": "迷雾之子"
     },
+    "Mistborn: Secret History": {
+      "zh": "迷雾之子：秘史",
+      "note": "中文站已建页面「迷雾之子：秘史」(pageid 1585) 为社区通行译名；2016 年出版的迷雾之子中篇。"
+    },
     "Mistcloak": {
       "zh": "迷雾斗篷",
       "note": "书证 mb6:13,mb6:31；执法镕金13章「身后还披着随风摆动的迷雾斗篷」；31章「外面披着正式的迷雾斗篷」。"
@@ -2527,6 +2535,10 @@
     },
     "Searan": {
       "zh": "席兰"
+    },
+    "Secret History": {
+      "zh": "迷雾之子：秘史",
+      "note": "别名，同 Mistborn: Secret History。"
     },
     "Seeker": {
       "zh": "搜寻者"

@@ -58,6 +58,7 @@ ROOT = HERE.parent
 EN_SNAPSHOT = ROOT / "en_snapshot"
 DEFAULT_GLOSSARY = ROOT / "dict" / "mistborn.json"
 DEFAULT_COMMON = ROOT / "dict" / "common.json"
+KEEP_EN_FILE = ROOT / "dict" / "keep_en.json"
 DEFAULT_BASE_URL = "https://token.glint-mvt.com/v1"
 DEFAULT_MODEL = "deepseek-v4-flash-0731"
 DEFAULT_WIKI = "coppermind.huijiwiki.com"
@@ -232,6 +233,19 @@ def load_merged_glossary(primary: Path, secondary: Path | None = None) -> dict:
     if secondary is not None and secondary.exists():
         merged.update({k: v for k, v in load_glossary(secondary).items() if k not in merged})
     return merged
+
+
+def load_keep_en(path: Path = KEEP_EN_FILE) -> list[str]:
+    """读取「保留英文」名单（dict/keep_en.json）。
+
+    规则 2 要求：译名表/中文书证均未收录、又无官方中文译名的疑似专名**保留英文**并列入
+    untranslated_terms，不得自造译名。keep_en 名单正是这类词的显式提示：LLM 在块里遇到
+    这些词（书名/作品名等）时保留英文，避免「像专名就自译」（如 The Long Way In→长路漫漫）。
+    """
+    if not path.exists():
+        return []
+    d = json.loads(path.read_text(encoding="utf-8"))
+    return d.get("terms", [])
 
 
 def slice_glossary(glossary, en_terms):
@@ -676,6 +690,14 @@ def build_user_prompt(chunk: Chunk, glossary_slice: dict, en_title: str, is_firs
     gloss_lines = "\n".join(f"- {en} = {data['zh']}" for en, data in glossary_slice.items()) if glossary_slice else "（（本文无命中译名表））"
     parts = []
     parts.append("译名表（仅与本词条相关的子集，优先采用）:\n" + gloss_lines)
+    # 保留英文名单（规则 2 例外显式化）：本块出现名单内词时，提示 LLM 保留英文、勿自造译名
+    keep_en = [t for t in load_keep_en() if t in chunk.text]
+    if keep_en:
+        parts.append(
+            "**以下专名必须保留英文、禁止翻译或改译**（译名表未收录、无官方中文译名，" +
+            "不要因为它们像书名/作品名就自造译名）：" + "、".join(keep_en) +
+            "。保留原文即可，并把它们列入 untranslated_terms（reason=保留英文）。"
+        )
     if is_first:
         parts.append(
             "这是**第 1 块**（含 Infobox + 导语）。英文词条名 = " + en_title +
