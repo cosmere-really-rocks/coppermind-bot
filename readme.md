@@ -122,6 +122,15 @@
   - **方案 A'（保留 group="fn"）**：此前把 `<references group=fn>` 剥成无 group，使 fn 脚注混入默认组、页面出现多个默认组 `<references>` 结算点，跨块占位引用（alloy 位于第二个 fn references 之前）被提前结算为「未定义」（最小页实验 4/5/6 复现并验证）。保留 group 后 fn 脚注独立成组，默认组只剩主 `<references>`。
   - **附加**：`Template:Wob ref` 链接文本 `{{{text|{{{2}}}|}}}`（嵌套 `{{{2}}}` 缺默认值管道）让单参数 `{{wob ref|9171}}` 渲染出 46 处 `{{{2}}}` 字面量——`_expand_wob_refs` 把单参数 wob ref 展开为 `<ref>[[wob:N|wob:N]]</ref>`（绕开模板缺陷、不依赖缺失的 `Template:Ref/broken`）。
   - **验证**：重跑写回 `bot测试:Mistborn (series)`（newrevid 17190），渲染 error 0、`{{{2}}}`/`{{{1}}}` 0、cite_note-aa/alloy/TLWI 等全部正常；keep_en/官方译名/数据分析 修复不回归。提交 `ea79bfb`。
+- ✅ 2026-10-18 **keep_en 从人工名单升级为自动机制**（用户质疑「其他页面咋整，不能靠逐个 review」）：
+  - **痛点**：keep_en.json 靠 review 一个页面补一批，1123 个快照页无法人工逐页维护。
+  - **三层自动判定**（`translate.py::detect_keep_en_terms` / `detect_zhwiki_refs`）：
+    1. **动态 keep_en**：每块自动识别「斜体书名 + [[链接目标]] + 不在译名表 + 不可贪心拆译」的专名提示保留英文（如 The Long Way In / Mistborn: Birthright）；`Mistborn: The Final Empire` 因可拆译（迷雾之子+最后帝国）自动排除，`'''粗体'''` 不会被误当斜体。
+    2. **zhwiki ref**：中文站已有对应页面的专名提示采用中文站标题（如 Brandon Sanderson → 布兰登·桑德森、Kaladin → 卡拉丁），不再保留英文。
+    3. **静态 keep_en.json** 保留为人工确认词的落库，与动态结果合并提示。
+  - **数据来源**：`scripts/scan_zhwiki_titles.py` 全站扫描中文站 → `dict/zhwiki_titles.json`（847 页：CmPermission/{{en}}/Infobox 原名 提取）+ `dict/zhwiki_aliases.json`（723 条：英文标题重定向页 Elend→依蓝德·泛图尔 等）。
+  - **附带修复**：`untranslated_lead_english` 误判——`<ref>`/`[[wob:N|wob:N]]` 被当叙述性英文（Atium 页导语校验 3 次重试失败），现在剥离这两类再计数。
+  - **验证**：Mistborn(series) 重跑 10 项回归全过（官方译名/keep_en/无自译）；Atium（从未 review 过的页面）真实翻译正确：天金/灭绝/存留/亚提/谐金 等译名表词全部译对，`[[神瑛]]`/`[[纹]]` 用 zhwiki ref，wob ref 修复后导语校验不再误报。提交 `（待提交）`。
 
 ## 凭据
 

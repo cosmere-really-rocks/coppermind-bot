@@ -59,6 +59,8 @@ EN_SNAPSHOT = ROOT / "en_snapshot"
 DEFAULT_GLOSSARY = ROOT / "dict" / "mistborn.json"
 DEFAULT_COMMON = ROOT / "dict" / "common.json"
 KEEP_EN_FILE = ROOT / "dict" / "keep_en.json"
+ZHWIKI_TITLES_FILE = ROOT / "dict" / "zhwiki_titles.json"
+ZHWIKI_ALIASES_FILE = ROOT / "dict" / "zhwiki_aliases.json"
 DEFAULT_BASE_URL = "https://token.glint-mvt.com/v1"
 DEFAULT_MODEL = "deepseek-v4-flash-0731"
 DEFAULT_WIKI = "coppermind.huijiwiki.com"
@@ -246,6 +248,199 @@ def load_keep_en(path: Path = KEEP_EN_FILE) -> list[str]:
         return []
     d = json.loads(path.read_text(encoding="utf-8"))
     return d.get("terms", [])
+
+
+# 命名空间/维护前缀：这些词条不是需要翻译的正文专名（站务页、interwiki 外链、文件/分类）
+_KEEP_EN_IGNORE_PREFIXES = (
+    "user:", "user talk:", "category:", "file:", "image:", "template:", "module:",
+    "wob:", "bws:", "wp:", "wikipedia:", "coppermind: arcanum", "es:", "uk:", "de:",
+    "fr:", "ru:", "zh:", "en:", "talk:", "portal:", "draft:",
+)
+# 属格/数词/普适后缀：拆译判定时跳过（"'s", " s" 等）
+_WORD_SPLIT_RE = re.compile(r"[^A-Za-z]+")
+
+
+def _can_split_translate(phrase: str, glossary: dict, idx: dict) -> bool:
+    """贪心判定 phrase 能否完全拆译：每个实词都能命中译名表（或归一命中），
+    或属于通用停用词。如 "Mistborn: The Final Empire" = Mistborn(✓)+The(stop)+Final Empire(✓)
+    可拆译（迷雾之子/最后帝国都在表）→ 不该保留英文；"The Long Way In" 有 Long/Way
+    拆不动 → 应保留英文。用于过滤「形似专名但实际由已收专名组成」的词条。
+    """
+    tokens = _WORD_SPLIT_RE.split(phrase)
+    i = 0
+    n = len(tokens)
+    while i < n:
+        w = tokens[i]
+        if not w:
+            i += 1
+            continue
+        if w.lower() in GENERIC_EN_STOPLIST:
+            i += 1
+            continue
+        # 贪心：从当前词起找最长的连续词条（含空格）命中译名表
+        matched = False
+        for end in range(n, i, -1):
+            cand = " ".join(tokens[i:end])
+            if not cand:
+                continue
+            if cand in glossary or idx.get(_norm_glossary_key(cand)):
+                matched = True
+                i = end
+                break
+        if matched:
+            continue
+        # 单词也不命中 → 拆译不了
+        return False
+    return True
+
+
+def detect_keep_en_terms(chunk_text: str, glossary: dict, zhwiki_rev: dict | None = None) -> list[str]:
+    """动态识别本块「应保留英文」的疑似专名（不再依赖逐页人工 review）。
+
+    信号：''斜体书名'' 与 [[链接目标]]（书名/作品名惯例形态），过滤命名空间前缀；
+    排除已在译名表（精确/归一命中）的词；排除能整体拆译的词（如 Mistborn: The Final
+    Empire 由已收专名组成）；排除中文站已建页面的词（zhwiki_rev 命中——有可用译名，
+    不该保留英文，改由 zhwiki 参考提示给出）。剩余词提示 LLM 保留英文——机制对任意
+    页面自动生效，dict/keep_en.json 静态名单仅作为已确认词的补充（两者提示词里合并）。
+    """
+    idx = build_norm_glossary(glossary)
+    candidates = []
+
+    def _ok(t: str) -> bool:
+        t = t.strip()
+        low = t.lower()
+        if len(t) < 3:
+            return False
+        if low.startswith(_KEEP_EN_IGNORE_PREFIXES):
+            return False
+        if "/" in t or "#" in t:  # 子页/锚点不是独立专名
+            return False
+        if t in glossary or idx.get(_norm_glossary_key(t)):
+            return False
+        if zhwiki_rev and t in zhwiki_rev:  # 中文站已有页面 → 不保留英文
+            return False
+        if _can_split_translate(t, glossary, idx):
+            return False
+        return True
+
+    # 1) 内链目标 [[...]]（含 ''[[X]]'' 斜体内链）
+    for mm in re.finditer(r"\[\[\s*([^\]|]+?)\s*(?:\|[^\]]*)?\]\]", chunk_text):
+        t = mm.group(1).strip()
+        if _ok(t) and t not in candidates:
+            candidates.append(t)
+    # 2) 斜体书名 ''X''（非链接）——排除 '''粗体'''（三个引号里嵌两个引号，会误匹配）
+    for mm in re.finditer(r"''([^''\n]{3,80})''", chunk_text):
+        # 前后皆单引号 → '''粗体'''，跳过
+        if (mm.start() > 0 and chunk_text[mm.start() - 1] == "'") or \
+           (mm.end() < len(chunk_text) and chunk_text[mm.end()] == "'"):
+            continue
+        t = mm.group(1).strip().strip("[]")
+        if not re.match(r"^[A-Z][A-Za-z :'.,\-()0-9]*$", t):
+            continue  # 斜体只取「大写开头、字母字符」形态（书名/作品名，容忍 (rule book) 后缀）
+        if _ok(t) and t not in candidates:
+            candidates.append(t)
+    return sorted(candidates)
+
+
+def detect_zhwiki_refs(chunk_text: str, glossary: dict, zhwiki_rev: dict) -> list[tuple[str, str]]:
+    """动态识别本块「中文站已有页面」的专名（不在译名表、但中文站有页）。
+
+    返回 [(en, zh_page_title), ...]：提示 LLM 采用中文站页面标题作为译名参考
+    （如 Brandon Sanderson → 布兰登·桑德森），而不是保留英文或自造译名。
+    仅取内链/斜体形态的本块出现词，避免对普通正文扫词。
+    """
+    idx = build_norm_glossary(glossary)
+    out = []
+
+    def _ref(t: str):
+        t = t.strip()
+        if len(t) < 3 or "/" in t or "#" in t:
+            return None
+        if t in glossary or idx.get(_norm_glossary_key(t)):
+            return None  # 已进译名表，走译名表即可
+        zhs = zhwiki_rev.get(t)
+        if not zhs:
+            return None
+        # 取最短中文标题（避免「三界宙/历史」这类子页）
+        zh = min((z for z in zhs if "/" not in z), key=len, default=None)
+        if not zh:
+            return None
+        return (t, zh)
+
+    for mm in re.finditer(r"\[\[\s*([^\]|]+?)\s*(?:\|[^\]]*)?\]\]", chunk_text):
+        r = _ref(mm.group(1))
+        if r and r not in out:
+            out.append(r)
+    for mm in re.finditer(r"''([^''\n]{3,80})''", chunk_text):
+        if (mm.start() > 0 and chunk_text[mm.start() - 1] == "'") or \
+           (mm.end() < len(chunk_text) and chunk_text[mm.end()] == "'"):
+            continue
+        t = mm.group(1).strip().strip("[]")
+        if not re.match(r"^[A-Z][A-Za-z :'.,\-()0-9]*$", t):
+            continue
+        r = _ref(t)
+        if r and r not in out:
+            out.append(r)
+    return out
+
+
+def _dedup_keep_en(terms: list[str]) -> list[str]:
+    """合并静态 + 动态保留英文名单：保序去重。"""
+    seen, out = set(), []
+    for t in terms:
+        if t and t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out
+
+
+def load_zhwiki_titles(path: Path = ZHWIKI_TITLES_FILE) -> dict:
+    """读取「中文站已建页面」映射（dict/zhwiki_titles.json: zh_title -> en_title）。
+
+    由 scripts/scan_zhwiki_titles.py 全站扫描生成：凡中文站有对应页面的专名，说明该译名
+    已被社区/本项目确立（或该词不该按「无译名」处理）。动态 keep_en 用它排除候选——
+    中文站已有页面的专名不保留英文（它有可用的中文页面/译名）。
+    """
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_zhwiki_aliases(path: Path = ZHWIKI_ALIASES_FILE) -> dict:
+    """读取「英文重定向短名 → 中文目标页」别名（dict/zhwiki_aliases.json: en_alias -> zh）。
+
+    由扫描器第二阶段生成：中文站常见「英文短名页重定向到中文规范页」（如 Elend → 依蓝德·
+    泛图尔、Kelsier → 卡西尔、Wax → 瓦克斯利姆·拉德利安）。这些是链接目标里最常见的形态
+    （[[Elend]] 而非 [[Elend Venture]]），补进反向索引让它们也能命中「中文站已有页面」。
+    """
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def build_zhwiki_reverse(zh_map: dict, aliases: dict | None = None) -> dict:
+    """反向索引：en_title -> [zh_title,...]（同一英文名可能有多个中文页面）。
+
+    合并两个来源：
+      - zh_map：中文页标题 -> 规范英文原名（CmPermission）
+      - aliases：英文短名 -> 中文目标页（重定向页，如 Elend -> 依蓝德·泛图尔）
+    """
+    inv: dict = {}
+    for zh, en in zh_map.items():
+        if not en or not zh:
+            continue
+        if en not in inv:
+            inv[en] = []
+        if zh not in inv[en]:
+            inv[en].append(zh)
+    for en, zh in (aliases or {}).items():
+        if not en or not zh:
+            continue
+        if en not in inv:
+            inv[en] = []
+        if zh not in inv[en]:
+            inv[en].append(zh)
+    return inv
 
 
 def slice_glossary(glossary, en_terms):
@@ -686,17 +881,33 @@ SYSTEM_PROMPT = """你是一名精通「迷雾之子」(Mistborn) 系列英文�
 """
 
 
-def build_user_prompt(chunk: Chunk, glossary_slice: dict, en_title: str, is_first: bool) -> str:
+def build_user_prompt(chunk: Chunk, glossary_slice: dict, en_title: str, is_first: bool,
+                      glossary: dict | None = None) -> str:
     gloss_lines = "\n".join(f"- {en} = {data['zh']}" for en, data in glossary_slice.items()) if glossary_slice else "（（本文无命中译名表））"
     parts = []
     parts.append("译名表（仅与本词条相关的子集，优先采用）:\n" + gloss_lines)
-    # 保留英文名单（规则 2 例外显式化）：本块出现名单内词时，提示 LLM 保留英文、勿自造译名
+    # 保留英文名单：静态 dict/keep_en.json（已确认词）+ 动态识别（本块自动判定的
+    # 未收录专名）。两者合并提示，机制对任意页面自动生效，不依赖逐页人工 review。
     keep_en = [t for t in load_keep_en() if t in chunk.text]
+    zhwiki_refs: list[tuple[str, str]] = []
+    if glossary is not None:
+        try:
+            zhwiki_rev = build_zhwiki_reverse(load_zhwiki_titles(), load_zhwiki_aliases())
+            keep_en = _dedup_keep_en(keep_en + detect_keep_en_terms(chunk.text, glossary, zhwiki_rev))
+            zhwiki_refs = detect_zhwiki_refs(chunk.text, glossary, zhwiki_rev)
+        except Exception:
+            pass
     if keep_en:
         parts.append(
-            "**以下专名必须保留英文、禁止翻译或改译**（译名表未收录、无官方中文译名，" +
-            "不要因为它们像书名/作品名就自造译名）：" + "、".join(keep_en) +
+            "**以下专名必须保留英文、禁止翻译或改译**（译名表未收录、无官方中文译名，"
+            "中文站也无对应页面，不要因为它们像书名/作品名就自造译名）：" + "、".join(keep_en) +
             "。保留原文即可，并把它们列入 untranslated_terms（reason=保留英文）。"
+        )
+    if zhwiki_refs:
+        refs_str = "；".join(f"{en} → {zh}" for en, zh in zhwiki_refs)
+        parts.append(
+            "**以下专名中文站已有对应页面，请采用其页面标题作为译名参考**（若与译名表冲突"
+            "以译名表为准）：" + refs_str + "。"
         )
     if is_first:
         parts.append(
@@ -734,10 +945,10 @@ def parse_chunk_reply(content: str):
 
 
 def translate_chunk(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title: str, is_first: bool,
-                    max_output_tokens: int = 8000):
+                    gloss: dict | None = None, max_output_tokens: int = 8000):
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": build_user_prompt(chunk, glossary_slice, en_title, is_first)},
+        {"role": "user", "content": build_user_prompt(chunk, glossary_slice, en_title, is_first, gloss)},
     ]
     reply = llm_chat(cfg, messages, max_output_tokens=max_output_tokens)
     data = parse_chunk_reply(reply)
@@ -749,7 +960,8 @@ def translate_chunk(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title
 
 
 def translate_chunk_with_retry(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title: str,
-                               is_first: bool, max_output_tokens: int = 8000, max_retries: int = 2):
+                               is_first: bool, gloss: dict | None = None,
+                               max_output_tokens: int = 8000, max_retries: int = 2):
     """翻译一块；对 chunk0（导语）做「导语英文残留」校验，命中则重试。
 
     实测偶发 LLM 只翻标题+加 {{en}}、却把导语正文保留英文。提示词已强化，但为避免漏网，
@@ -757,7 +969,7 @@ def translate_chunk_with_retry(cfg: LLMConfig, chunk: Chunk, glossary_slice: dic
     """
     for attempt in range(max_retries + 1):
         translation, untranslated = translate_chunk(cfg, chunk, glossary_slice, en_title,
-                                                    is_first, max_output_tokens)
+                                                    is_first, gloss, max_output_tokens)
         if not is_first or chunk.index != 0:
             return translation, untranslated
         if not untranslated_lead_english(chunk.text, translation):
@@ -816,6 +1028,9 @@ def untranslated_lead_english(src_text: str, translation: str) -> bool:
 
     def strip_noise(text: str) -> str:
         s = re.sub(r"%%ORIGINAL_BLOCK_\d+%%", " ", text)
+        s = re.sub(r"</?ref[^>]*>", " ", s)             # <ref> 标签
+        s = re.sub(r"<references\b[^>]*>", " ", s, flags=re.I)
+        s = re.sub(r"\[\[wob:\d+\|wob:\d+\]\]", " ", s)  # wob 引用标记（非叙述性英文）
         s = re.sub(r"\{\{[^{}]*\}\}", " ", s)          # 模板
         s = re.sub(r"\[\[[^\]|]*\|([^\]]*)\]\]", r"\1 ", s)  # 内链取显示文本
         s = re.sub(r"\[\[[^\]]*\]\]", " ", s)
@@ -1240,7 +1455,7 @@ def main():
     if args.dry_run:
         # 预演：打印每块提示词概要与长度，不调用 LLM
         for c in chunks:
-            prompt = build_user_prompt(c, gloss_slice, args.title, is_first=(c.index == 0))
+            prompt = build_user_prompt(c, gloss_slice, args.title, is_first=(c.index == 0), glossary=glossary)
             sys.stderr.write(f"\n--- 提示词 chunk{c.index}（{len(prompt)} 字符）一句预览 ---\n")
             sys.stderr.write(prompt[:300].replace("\n", " ") + "\n")
         sys.stderr.write("[dry-run] 预演完成，未调用 LLM，未写文件。\n")
@@ -1256,7 +1471,7 @@ def main():
         with ThreadPoolExecutor(max_workers=args.concurrency) as ex:
             futs = {
                 ex.submit(translate_chunk_with_retry, cfg, c, gloss_slice, args.title, c.index == 0,
-                          args.max_output_tokens): c.index
+                          glossary, args.max_output_tokens): c.index
                 for c in chunks
             }
             ordered = sorted(futs, key=lambda f: futs[f])
@@ -1270,7 +1485,7 @@ def main():
             sys.stderr.write(f"[翻译] chunk{c.index}/{len(chunks)-1}（{c.title or '头部'}）…\n")
             try:
                 chunk_results.append(translate_chunk_with_retry(cfg, c, gloss_slice, args.title,
-                                                                c.index == 0, args.max_output_tokens))
+                                                                c.index == 0, glossary, args.max_output_tokens))
             except Exception as e:
                 errs.append((c.index, str(e)))
 
