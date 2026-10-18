@@ -1094,6 +1094,10 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
         sys.modules[_sp.name] = _cm
         _sp.loader.exec_module(_cm)
         body = _cm._scan_refs(body)
+        # 同名 ref 模板（file/bws/tor/reddit ref）文本可能被 LLM 分块翻译得不一致
+        # （一处译中一处留英）→ 中文站报「name 属性 X 使用不同内容定义了多次」。
+        # 统一同名多次调用的文本参数为首次非空值（同一来源，显示一致性优先）。
+        body = _cm._normalize_dup_ref_texts(body)
     except Exception:
         pass  # 兜底失败不影响主流程（原文即标准形态时无需归一）
     # 决议#13：把 %%ORIGINAL_BLOCK_N%% 填回英文原文（若模型翻掉/漏了一并汇报）

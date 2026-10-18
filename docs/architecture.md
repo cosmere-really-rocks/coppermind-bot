@@ -149,7 +149,55 @@ references 之前）会被提前结算为「未定义」→ 主 `<references>` �
 管道**），单参数调用渲染出 46 处 `{{{2}}}` 字面量。展开成独立 `<ref>` 绕开模板缺陷，且不依赖
 缺失的 `Template:Ref/broken`。带 text/date 等扩展参数的调用保留原样。
 
-### 4.4 infobox 类
+### 4.4 引用缺失修复三件套（20 篇渲染校验暴露，2025-06 批量后）
+
+渲染校验（`parse` 拿 HTML 查 `引用错误|脚本错误|{{{2}}}`）发现 5 页 20 个错误，根因分三类：
+
+**(1) `_fix_single_arg_book_refs`：{{book ref|X}}（纯单参）→ `{{book ref|X|}}`**
+
+中文站 `Template:Book ref` 的 cite name 生成式是 `{{b|{{{1}}}}}-{{{part|{{{2}}}-{{{3|chapter}}}}}}`，
+其中 `{{{2}}}` **无默认值管道**。英文站合法单参调用 `{{book ref|11m}}`（引用整本书、无章节，
+全库 122 处：eltania ×56、11m ×49、sfs ×8、yumi ×3、Eltania ×3、tress ×1、mb5 ×1、mb4 ×1）
+渲染出字面量 `{{{2}}}` 进 cite id（如 `cite_ref-执法镕金-{{{2}}}-chapter_94`）。补一个空第二参数
+后 name 干净（`执法镕金--chapter`），链接文本不变（《执法镕金》）。仅匹配无管道单参；多参
+（AoL|2）、三参（Sa2|i|9）、命名参数（part=、review=）不动。
+
+**(2) `_expand_nested_refs_in_fn`：fn 脚注内嵌引用模板 → 纯链接**
+
+英文站 `{{ref|group=fn|text=…{{book ref|mb4|1}}{{book ref|mb4|17}}…}}` 的 text 参数里可合法
+**嵌套**书引用。中文站这些模板都渲染成独立 `<ref>`，嵌套在 `<ref group="fn">` 里就成了
+「ref 内嵌 ref」→ MediaWiki 报「<references> 的 <ref> 标记带有冲突的组(group)属性」或
+「没有找到与 </ref> 对应的 <ref>」（10+ 页，Wayne/Hoid/Pewter/Terris/Steel Ministry 等）。
+处理：把 fn 块内的引用模板展开为等效链接/文本，不产生嵌套引用结算：
+  - `{{book ref|X|N}}`/`X|prologue|epilogue|i|day`/`part=` → `[[{{b|X}}/梗概#锚点|《{{b|X}}》文本]]`
+    （锚点与中文站模板一致：第N章/序幕/尾声/插曲N/第N日/秘典等）
+  - `{{wob ref|N}}` → `[[wob:N|wob:N]]`（interwiki 纯链接，不带 `<ref>`）
+  - `{{file ref|F|说明}}` → `[[文件:F|说明]]`；`{{map ref|M}}` → `[[文件:M.png|M]]`
+  - `{{epigraph ref|书|章}}` → `《{{b|书}}》题词第N章`（题词页链接目标未稳定，仅保文本）
+  - `{{msh ref|部分|章}}` → `[[迷雾之子：秘史/梗概#第X部分第N章|《迷雾之子：秘史》第X部分第N章]]`
+**必须在 `_expand_wob_refs` 之前调用**，否则 wob 已变 `<ref>[[wob:N|wob:N]]</ref>` 无法再识别。
+
+**(3) `_scan_refs` 增加 `{{ref|text=X}}`（无 name/group）→ `<ref>X</ref>`**
+
+英文站 `{{ref|text=…}}`（纯 text 脚注，15 页 16 处，如 Demoux (city) 页码旁注）此前原样
+保留，中文站 `Template:Ref` 是 `#invoke:Ref` 书目查表模板，text= 无法渲染 →「脚本错误：
+函数{{{1}}}不存在」。转标准默认组 `<ref>`。
+
+**(4) `_normalize_dup_ref_texts`：同名 ref 模板文本统一（assemble 阶段）**
+
+英文站 cite 语义：**同一 name 的 `<ref>` 多次出现、文本必须一致**，否则中文站报
+「无效 <ref> 标签；name 属性 X 使用不同内容定义了多次」。英文站模板（`{{file ref|F|文本}}`/
+`{{bws ref|slug|文本|…}}`/`{{tor ref}}`/`{{reddit ref}}` 等）name 由参数 1 生成、文本由
+参数 2（或 text=）生成；源页同文多次调用渲染多个同 name 同 text 的 `<ref>` 不报错，但
+**LLM 分块翻译后同一模板在不同块的 text 可能一处译成中文、一处保留英文 → 报重复定义**
+（Elendel 的 file ref/Shadows of Self 的 bws ref 实测）。assemble 合并译文后调用
+`_normalize_dup_ref_texts`：把同名（模板名+参数1）多次调用的文本参数统一为**首次出现的
+非空值**——语义保持一致、渲染 0 错；只改文本参数不删调用，计数不变。转换层同文时无副作用。
+
+另：**渲染验证必须用完整 wikitext，不要截断**——Wayne 等 fn references 位于 87KB 处，
+截断渲染会假报「组名为 fn 的 <ref> 存在但没有找到对应 <references group=fn>」。
+
+### 4.5 infobox 类
 
 - Infobox「字段 = 值」按译名表确定性替换（`translate_infobox_values`），结构化短字段不依赖 LLM。
 - `{{for|...|pre=}}` 参数确定性替换（`translate_for_template`）。

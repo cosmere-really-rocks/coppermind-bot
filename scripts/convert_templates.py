@@ -305,6 +305,15 @@ def _scan_refs(text):
                     res.append(rep)
                     i = j
                     continue
+                if not group and not name and fn_text is not None:
+                    # 无 group/name 的纯 text 脚注：{{ref|text=X}}（15 页 16 处，
+                    # 如 Demoux (city) 的页码旁注）。中文站 Template:Ref 是 #invoke:Ref
+                    # 书目查表模板，text= 无法渲染 → “函数{{{1}}}不存在”。转标准
+                    # <ref>X</ref>（默认组），语义与占位/正文引用一致。
+                    rep = '<ref>%s</ref>' % fn_text
+                    res.append(rep)
+                    i = j
+                    continue
             else:
                 # 非 ref 模板（如 {{columns|...}}、{{date|...}}）：其参数值里可能嵌套
                 # {{ref|name=X}}（如 Publication 段的 Film rights 行），递归归一，
@@ -320,6 +329,19 @@ def _scan_refs(text):
         res.append(text[i])
         i += 1
     return "".join(res)
+
+
+def _fix_single_arg_book_refs(text):
+    """给纯单参 {{book ref|X}} 补空第二参数：{{book ref|X}} -> {{book ref|X|}}。
+
+    背景：英文站合法调用 {{book ref|11m}}（引用整本书、无章节号）在中文站 Template:Book ref
+    的 name 生成式里是 {{b|{{{1}}}}}-{{{part|{{{2}}}-{{{3|chapter}}}}}} —— {{{2}}} 缺默认值
+    管道，单参调用渲染出字面量 {{{2}}} 进 cite id（122 处，如 Pits of Eltania/Kelsier/Wayne）。
+    补一个空第二参数让 {{{2}}} 展开为空串，name 变成「执法镕金--chapter」等干净形态。
+    仅处理「无管道分割的单参」：多参（AoL|2）、三参（Sa2|i|9）、带命名参数（part=）不匹配。
+    """
+    pat = re.compile(r"(\{\{\s*book ref\s*\|)([^|{}]+)(\}\})", re.I)
+    return pat.sub(lambda m: "%s%s|%s" % (m.group(1), m.group(2).strip(), m.group(3)), text)
 
 
 def _expand_wob_refs(text):
@@ -338,6 +360,183 @@ def _expand_wob_refs(text):
     # 单参数：{{wob ref|9171}} / {{wob_ref|9171}}（容忍下划线与大小写、两侧空白）
     pat = re.compile(r"\{\{\s*wob[_ ]?ref\s*\|\s*(\d+)\s*\}\}", re.I)
     return pat.sub(_expand, text)
+
+
+def _expand_nested_refs_in_fn(text):
+    """展开 fn 脚注块（<ref group="fn">…</ref>）内嵌套的引用类模板为纯链接/文本。
+
+    背景：英文站 <references group=fn> 脚注的 text 参数里可合法嵌套引用模板
+    （{{book ref|mb4|1}}/{{file ref}}/{{map ref}}/{{epigraph ref}}/{{wob ref|N}} 等），
+    中文站这些模板都渲染成 <ref>（独立引用结算），嵌套在 <ref group="fn"> 里就成了
+    「ref 内嵌 ref」→ MediaWiki 报“<references> 的 <ref> 标记带有冲突的组(group)属性”
+    或“没有找到与 </ref> 对应的 <ref>”（10+ 页，如 Wayne/Hoid/Pewter/Steel Ministry）。
+    这里把 fn 块内的引用模板展开为等效链接/文本，不产生嵌套引用结算：
+      - {{book ref|X|N}}/X|prologue/…      -> [[{{b|X}}/梗概#锚点|《{{b|X}}》文本]]（与中文站模板
+                                            链接目标一致，见 _expand_book_ref_link）
+      - {{wob ref|N}} / {{wob_ref|N}}      -> [[wob:N|wob:N]]（interwiki 纯链接，不带 <ref>）
+      - {{file ref|F|说明}}               -> [[文件:F|说明]]（文件链接）
+      - {{map ref|M}}                      -> [[文件:M.png|M]]（中文站 map ref 指文件）
+      - {{epigraph ref|书|章}}             -> 《{{b|书}}》题词第N章（题词页链接目标未稳定，保文本）
+      - {{date|…}} / 其他非 ref 模板       -> 原样保留
+    仅处理 fn 块内：普通正文里的引用模板保持原样（由中文站模板渲染成独立引用）。
+    必须在 _expand_wob_refs 之前调用，否则 wob ref 已变 <ref>[[wob:N|wob:N]]</ref> 无法再识别。
+    """
+    def _book_link(m):
+        rest = m.group(1)
+        parts = [p.strip() for p in rest.split("|") if p.strip() not in ("", "=")]
+        if not parts:
+            return "{{book ref}}"
+        book = parts[0]
+        chap = parts[1] if len(parts) > 1 else ""
+        if len(parts) >= 3:  # 三参：book|i|3 / book|day|5 / book|c|N
+            v = {
+                "i": ("插曲%s", "插曲%s"),
+                "interlude": ("插曲%s", "插曲%s"),
+                "day": ("第%s日", "第%s日"),
+                "c": ("第%s章", "第%s章"),
+            }.get(chap.lower())
+            if v:
+                num = parts[2]
+                return "[[%s/梗概#%s|《%s》%s]]" % (
+                    "{{b|%s}}" % book, v[0] % num, "{{b|%s}}" % book, v[1] % num)
+            return "《{{b|%s}}》" % book
+        low = chap.lower()
+        special = {
+            "prologue": ("序幕", "序幕"),
+            "epilogue": ("尾声", "尾声"),
+            "endnote": ("尾注", "尾注"),
+            "ars": ("秘典", "秘典"),
+            "ack": ("鸣谢", "鸣谢"),
+            "end": ("附录", "附录"),
+        }
+        if low.startswith("part="):
+            partname = low.split("=", 1)[1].strip()
+            if partname in special:
+                a, l = special[partname]
+                return "[[%s/梗概#%s|《%s》%s]]" % ("{{b|%s}}" % book, a, "{{b|%s}}" % book, l)
+            return "《{{b|%s}}》" % book
+        if not chap or low == "chapterless":
+            return "《{{b|%s}}》" % book
+        if low in special:
+            a, l = special[low]
+            return "[[%s/梗概#%s|《%s》%s]]" % ("{{b|%s}}" % book, a, "{{b|%s}}" % book, l)
+        if re.match(r"^\d+$", chap):
+            return "[[%s/梗概#第%s章|《%s》第%s章]]" % ("{{b|%s}}" % book, chap,
+                                                   "{{b|%s}}" % book, chap)
+        return "《{{b|%s}}》" % book
+
+    def _block(m):
+        inner = m.group(2)
+        # 1) book ref（多参形态：X|章 或 X|i|N 等）
+        inner = re.sub(r"\{\{\s*book ref\s*\|([^{}]+)\}\}", _book_link, inner, flags=re.I)
+        # 2) wob ref：{{wob ref|N}} -> [[wob:N|wob:N]]（纯链接，无 <ref>）
+        inner = re.sub(r"\{\{\s*wob[_ ]?ref\s*\|\s*(\d+)\s*\}\}",
+                       lambda mm: "[[wob:%s|wob:%s]]" % (mm.group(1), mm.group(1)),
+                       inner, flags=re.I)
+        # 3) file ref：{{file ref|F|说明}} -> [[文件:F|说明]]（图片引用脚注改内联文件链接）
+        inner = re.sub(r"\{\{\s*file ref\s*\|([^|{}]+)(?:\|([^{}]*))?\}\}",
+                       lambda mm: "[[文件:%s|%s]]" % (mm.group(1).strip(), mm.group(2).strip())
+                       if mm.group(2) else "[[文件:%s]]" % mm.group(1).strip(),
+                       inner, flags=re.I)
+        # 4) map ref：{{map ref|M}} -> [[文件:M.png|M]]
+        inner = re.sub(r"\{\{\s*map ref\s*\|([^|{}]+)\}\}",
+                       lambda mm: "[[文件:%s.png|%s]]" % (mm.group(1).strip(), mm.group(1).strip()),
+                       inner, flags=re.I)
+        # 5) epigraph ref：{{epigraph ref|书|章}} -> 《{{b|书}}》题词第N章（保留文本，不做链接）
+        inner = re.sub(r"\{\{\s*epigraph ref\s*\|([^|{}]+)(?:\|([^{}]*))?\}\}",
+                       lambda mm: "《{{b|%s}}》题词第%s章" % (mm.group(1).strip(), mm.group(2).strip())
+                       if mm.group(2) else "《{{b|%s}}》题词" % mm.group(1).strip(),
+                       inner, flags=re.I)
+        # 6) msh ref：{{msh ref|部分|章}} -> [[迷雾之子：秘史/梗概#第X部分第N章|《迷雾之子：秘史》第X部分第N章]]
+        inner = re.sub(r"\{\{\s*msh ref\s*\|([^|{}]+)(?:\|([^{}]*))?\}\}",
+                       lambda mm: "[[迷雾之子：秘史/梗概#第%s部分第%s章|《迷雾之子：秘史》第%s部分第%s章]]"
+                       % (mm.group(1).strip(), mm.group(2).strip(), mm.group(1).strip(), mm.group(2).strip()),
+                       inner, flags=re.I)
+        return m.group(1) + inner + m.group(3)
+
+    pat_block = re.compile(r"(<ref group=\"fn\">)(.*?)(</ref>)", re.S)
+    return pat_block.sub(_block, text)
+
+
+def _normalize_dup_ref_texts(text):
+    """统一同名 ref 模板多次调用的文本参数，消除「同一 name 不同内容」渲染错误。
+
+    背景：中文站 ref 类模板（{{file ref|文件|文本}}/{{bws ref|slug|文本|…}}/{{tor ref}}/
+    {{reddit ref}} 等）的 cite name 由参数 1 生成、显示文本由参数 2（或 text=）生成。
+    英文站多处调用同文 → 渲染多个同 name 同 text 的 <ref>，MediaWiki 不报错；但 LLM
+    分块翻译后，同一模板在不同块里的 text 可能一处译成中文、一处保留英文 →
+    中文站报「无效 <ref> 标签；name 属性 X 使用不同内容定义了多次」
+    （Elendel 的 file ref/Shadows of Self 的 bws ref 实测）。
+    这里把同名（模板名+参数1）多次调用的文本参数统一为**第一次出现的非空值**，
+    语义保持（同一来源），显示一致，渲染不再报错。仅统一带文本的调用；无文本的
+    调用保持原样（避免引入「无 text 版本」的模板缺陷）。转换层同文时无副作用。
+    """
+    # 收集：键=(模板名小写, 参数1) -> [text 样值...]（仅第一个非空值；无 text 调用不记）
+    samples = {}
+    code = mwparserfromhell.parse(text)
+    for node in code.filter_templates():
+        name = str(node.name).strip().lower()
+        if not name.endswith(" ref"):
+            continue
+        a1 = tval = None
+        for p in node.params:
+            pn = str(p.name).strip().lower()
+            if a1 is None and pn == "1":
+                a1 = str(p.value).strip()
+            elif tval is None and (pn == "2" or pn == "text"):
+                tval = str(p.value).strip()
+        if not a1 or not tval:
+            continue
+        key = (name, a1)
+        samples.setdefault(key, None)
+        if samples[key] is None:
+            samples[key] = tval
+    # 需要归一化的键：同键至少出现两次文本（第一次非空 + 后续不同）
+    to_fix = set()
+    counts = {}
+    for node in code.filter_templates():
+        name = str(node.name).strip().lower()
+        if not name.endswith(" ref"):
+            continue
+        a1 = tval = None
+        for p in node.params:
+            pn = str(p.name).strip().lower()
+            if a1 is None and pn == "1":
+                a1 = str(p.value).strip()
+            elif tval is None and (pn == "2" or pn == "text"):
+                tval = str(p.value).strip()
+        if not a1 or not tval:
+            continue
+        key = (name, a1)
+        counts[key] = counts.get(key, 0) + 1
+        if counts[key] >= 2 and tval != samples[key]:
+            to_fix.add(key)
+    if not to_fix:
+        return text
+    # 重写：同名键的文本参数统一为首次非空值
+    fixed = set()
+    for node in code.filter_templates():
+        name = str(node.name).strip().lower()
+        if not name.endswith(" ref"):
+            continue
+        a1 = None
+        for p in node.params:
+            pn = str(p.name).strip().lower()
+            if a1 is None and pn == "1":
+                a1 = str(p.value).strip()
+                break
+        if not a1:
+            continue
+        key = (name, a1)
+        if key not in to_fix:
+            continue
+        first = samples[key]
+        for p in node.params:
+            pn = str(p.name).strip().lower()
+            if pn == "2" or pn == "text":
+                p.value = first
+                fixed.add(key)
+    return str(code)
 
 
 def _convert_footnote_groups(wikitext):
@@ -391,9 +590,13 @@ def convert_wikitext(wikitext, rules):
     """
     # 先做脚注 group 归一（方案 A'：{{ref|group=fn}}/<references group=fn> -> 标准 <ref>/<references>，
     # **保留 group="fn"**，见 _convert_footnote_groups 说明），
-    # 再展开 {{wob ref|N}}（中文站 Template:Wob ref 对单参数调用会原样输出 {{{2}}} 字面量）。
+    # 再展开 {{wob ref|N}}（中文站 Template:Wob ref 对单参数调用会原样输出 {{{2}}} 字面量），
+    # 以及给纯单参 {{book ref|X}} 补空第二参数（中文站 Template:Book ref 的 name 生成式
+    # {{{2}}} 缺默认值管道，单参调用渲染 {{{2}}} 进 cite id，122 处）。
     # 必须在 parse 之前，否则 mwparserfromhell 会把 <references> 里嵌套的 {{ref}} 结构复杂化。
     wikitext = _convert_footnote_groups(wikitext)
+    wikitext = _expand_nested_refs_in_fn(wikitext)
+    wikitext = _fix_single_arg_book_refs(wikitext)
     wikitext = _expand_wob_refs(wikitext)
 
     code = mwparserfromhell.parse(wikitext)
