@@ -112,6 +112,10 @@
 - ✅ 2026-10-18 **Mistborn(series) 书目表格布局 + LLM 无限推理修复**：
   - **布局修复**：`Mistborn (series)` 页 7 个书目表格（`{| class='infobox bib mistborn cosmere' width=100%`）英文站占满宽度、中文站却窄/乱——根因：**huijiwiki 平台全局把 `.infobox` 定义为信息框样式**（窄/右浮/固定宽），`width=100%` HTML 属性优先级压不过 CSS，表格被当信息框渲染。修复：`convert_templates.py` 新增 `_strip_bib_infobox_class`，对 class 含 `bib` 的表格顶行剥离 `infobox` 词（保留其余 class 与 width=100%），非 bib 表不动。重跑写回（newrevid 17180），网页端 7/7 表格 `class='bib mistborn cosmere' width=100%`，`infobox` 残留 0。
   - **LLM 无限推理修复**：重跑时 3 块全失败「无法解析 JSON」——排查发现 `deepseek-v4-flash-0731` 对长 wikitext 翻译块**病态无限推理**（`finish_reason=length`，reasoning_tokens 吃光 max_tokens（8000~20000 均如此），**content 为空**）。对照实验：「短任务正常」「`thinking:{"type":"disabled"}` 稳定产出（reasoning=0、finish=stop）」「`budget_tokens` 参数无效」。修复：`translate.py::llm_chat` 默认发送 `thinking={"type":"disabled"}`（`LLMConfig.thinking` 字段，`LLM_THINKING=enabled` 可恢复推理）。提交 `c8862f9`。
+- ✅ 2026-10-18 **「无译名专名不翻译」规则落地（keep_en 名单）**：用户指出 `Mistborn (series)` 页把译名表/书证均无的作品名自译（`长路漫漫`/`迷雾之子：传承`/`迷雾之子：出生权`），违反规则 2「译名表没有的疑似专名保留英文」。处理：
+  - **机制**：新增 **`dict/keep_en.json`**（译名表无 + 中文书证 0 + 无官方译名的书名/作品名名单）；`translate.py::build_user_prompt` 读名单，本块出现即提示 LLM「保留英文、禁自译、列 untranslated_terms」。`load_keep_en()` 加载。
+  - **查证入译名表 2 词**（中文站已有页面=社区通行译名）：`Mistborn: Secret History = 迷雾之子：秘史`（pageid 1585）、`Arcanum Unbounded = 无界秘典`（pageid 2872，台译 无垠秘典）；其余 23 词经中文站页面探测无对应译名页 → 留 keep_en。
+  - **重跑验证**：三个点名词保留英文并入 untranslated；秘史/无界秘典 用官方译名；章节标题 `Original Trilogy`→`原始三部曲` 属标题翻译（规则 4）不算违规。写回 `bot测试:Mistborn (series)`（newrevid 17181）。提交 `9bc6fd4`。
 
 ## 凭据
 
