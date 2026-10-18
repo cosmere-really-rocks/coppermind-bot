@@ -70,6 +70,22 @@ CASES = [
      "见{{ref|group=fn|text=脚注}}。", '见<ref group="fn">脚注</ref>。'),
     ("占位", ct._scan_refs,
      '见{{ref|name=X}}。', '见<ref name="X"/>。'),
+    # --- _convert_lang_links ---
+    ("es简单", ct._convert_lang_links,
+     "[[es: Mistborn (saga)]]",
+     "[https://es.coppermind.net/wiki/Mistborn_(saga) es: Mistborn (saga)]"),
+    ("uk西里尔", ct._convert_lang_links,
+     "[[uk: З-імли-народжені (серія)]]",
+     "[https://uk.coppermind.net/wiki/%D0%97-%D1%96%D0%BC%D0%BB%D0%B8-%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%B6%D0%B5%D0%BD%D1%96_(%D1%81%D0%B5%D1%80%D1%96%D1%8F) uk: З-імли-народжені (серія)]"),
+    ("en保留", ct._convert_lang_links,
+     "[[en: Mistborn (series)]]", "[[en: Mistborn (series)]]"),
+    ("wob保留", ct._convert_lang_links,
+     "[[wob:9171|wob:9171]]", "[[wob:9171|wob:9171]]"),
+    ("category不动", ct._convert_lang_links,
+     "[[category: series]]", "[[category: series]]"),
+    ("es带显示文本", ct._convert_lang_links,
+     "[[es: Foo|自定义文本]]",
+     "[https://es.coppermind.net/wiki/Foo 自定义文本]"),
 ]
 
 

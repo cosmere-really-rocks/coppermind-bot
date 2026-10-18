@@ -197,6 +197,19 @@ references 之前）会被提前结算为「未定义」→ 主 `<references>` �
 另：**渲染验证必须用完整 wikitext，不要截断**——Wayne 等 fn references 位于 87KB 处，
 截断渲染会假报「组名为 fn 的 <ref> 存在但没有找到对应 <references group=fn>」。
 
+### 4.6 `_convert_lang_links`：语言间链接 [[es: X]]/[[uk: X]] → 完整外部链接
+
+英文站页尾的 `[[es: X]]`/`[[uk: X]]` 是 MediaWiki 语言链接，指向各语言站
+`<lang>.coppermind.net` 子域（es.coppermind.net、uk.coppermind.net）。中文站（灰机）的
+interwiki 表只配了 en/cm/wob 等 87 个前缀，**没有 es/uk 语言前缀** → 这些链接在中文站
+渲染成「Es:Mistborn (saga)」本地红链（实测全站含 `[[es:` 的页面皆如此）。
+`_convert_lang_links` 把中文站**未配置前缀**的语言链接转成完整外部链接
+`[https://<lang>.coppermind.net/wiki/<URL编码标题> <lang>: <标题>]`（链接文本保留英文站
+形态）；en/wob/cm/wikipedia 等已配置前缀原样保留。语言站基 URL 在 `lang_base` 表维护
+（es/uk/de/fr/pt/ru/he/it/nl/zh→灰机），新语言码可追加。英文站 API 用 cloudscraper
+（scripts/fetch_en.py 的 get_session）可达，langlinks url 已逐条核对（Mistborn (series)
+→ es/uk、Wayne/Elendel/Allik Neverfar/Ghostbloods → es，目标页 pageid 均存在）。
+
 ### 4.5 infobox 类
 
 - Infobox「字段 = 值」按译名表确定性替换（`translate_infobox_values`），结构化短字段不依赖 LLM。

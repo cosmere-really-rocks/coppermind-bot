@@ -458,6 +458,68 @@ def _expand_nested_refs_in_fn(text):
     return pat_block.sub(_block, text)
 
 
+_CN_INTERWIKI_PREFIXES = frozenset("""
+17s-news 17s-post 17s-topic 17s-user acronym advogato arxiv bws bwsp c2find cache cm
+commons dictionary docbook doi drumcorpswiki dwjwiki elibre emacswiki en foldoc foxwiki
+freebsdman gej gentoo-wiki google googlegroups hammondwiki hrwiki imdb jargonfile
+kmwiki linuxwiki lojban lqwiki lugkr meatball mediawikiwiki mediazilla memoryalpha
+metawiki metawikimedia mozillawiki mw oeis openwiki pmid ppr pythoninfo rfc s23wiki
+seattlewireless senseislibrary shoutwiki sourceforge sourcewatch squeak tejo theopedia
+tmbw tmnet tor twiki uea uncyclopedia unreal usemod webseitzwiki wiki wikia wikibooks
+wikif1 wikihow wikimedia wikinews wikinfo wikipedia wikiquote wikisource wikispecies
+wikiversity wikivoyage wikt wiktionary wob wotdb
+""".split())
+
+
+def _convert_lang_links(text):
+    """把语言间链接 [[es: Title]]/[[uk: Title]] 转成完整外部链接。
+
+    背景：英文站页尾的 [[es: X]]/[[uk: X]] 是 MediaWiki 语言链接，指向各语言站点
+    （<lang>.coppermind.net 子域，如 es.coppermind.net/uk.coppermind.net）。中文站
+    （灰机）的 interwiki 表只配了 en/cm/wob 等（87 个前缀），**没有 es/uk 语言前缀**，
+    导致这些链接在中文站渲染成本地页面「Es:Mistborn (saga)」红链而非语言站外链。
+    （实测：中文站全站含 [[es: 的页面都渲染成红链。）
+
+    这里把「中文站 interwiki 表未配置的」语言前缀链接转成外部链接
+    [https://<lang>.coppermind.net/wiki/<URL编码标题> <lang>: <标题>]，
+    链接文本保留英文站形态（es: Mistborn (saga)）。若目标不遵循 <lang>.coppermind.net
+    规律（如中文站在灰机），可由 lang->url 覆盖表补充；目前 es/uk 均符合。
+    已配置前缀（en/cm/wob/wikipedia 等）原样保留。无文本的 [[xx:Title]] 也转。
+    """
+    # 小写语言前缀 -> 语言站基 URL（当前仅覆盖英文站使用的语言码；新语言码可在此追加）
+    lang_base = {
+        "es": "https://es.coppermind.net/wiki/",
+        "uk": "https://uk.coppermind.net/wiki/",
+        "de": "https://de.coppermind.net/wiki/",
+        "fr": "https://fr.coppermind.net/wiki/",
+        "pt": "https://pt.coppermind.net/wiki/",
+        "ru": "https://ru.coppermind.net/wiki/",
+        "he": "https://he.coppermind.net/wiki/",
+        "it": "https://it.coppermind.net/wiki/",
+        "nl": "https://nl.coppermind.net/wiki/",
+        "zh": "https://coppermind.huijiwiki.com/wiki/",
+    }
+    code = mwparserfromhell.parse(text)
+    from urllib.parse import quote
+    changed = False
+    for node in code.filter_wikilinks():
+        raw = str(node.title).strip()
+        m = re.match(r"^([a-z]{2,3})\s*:\s*(.+)$", raw, flags=re.IGNORECASE)
+        if not m:
+            continue
+        lang, target = m.group(1).lower(), m.group(2).strip()
+        if lang in _CN_INTERWIKI_PREFIXES:
+            continue  # 中文站已配置的前缀（en/wob/cm/wikipedia 等）原样保留
+        base = lang_base.get(lang)
+        if not base:
+            continue  # 未知语言前缀不动（可能是有意保留的文本）
+        display = ("%s: %s" % (lang, target)) if node.text is None else str(node.text)
+        url = base + quote(target.replace(" ", "_"), safe="()'%:-")
+        code.replace(node, "[%s %s]" % (url, display))
+        changed = True
+    return str(code) if changed else text
+
+
 def _normalize_dup_ref_texts(text):
     """统一同名 ref 模板多次调用的文本参数，消除「同一 name 不同内容」渲染错误。
 
@@ -598,6 +660,9 @@ def convert_wikitext(wikitext, rules):
     wikitext = _expand_nested_refs_in_fn(wikitext)
     wikitext = _fix_single_arg_book_refs(wikitext)
     wikitext = _expand_wob_refs(wikitext)
+    # 语言间链接 [[es: X]]/[[uk: X]]：中文站 interwiki 表未配 es/uk 前缀，渲染成红链；
+    # 转成指向各语言站 <lang>.coppermind.net 的完整外部链接（保留链接文本形态）。
+    wikitext = _convert_lang_links(wikitext)
 
     code = mwparserfromhell.parse(wikitext)
     report = {
