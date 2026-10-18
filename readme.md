@@ -107,7 +107,8 @@
   - **① `{{for}}` 模板参数翻译**：新增 `translate_for_template`（convert 后确定性替换参数 1/2/3/pre 的可译专名）+ SYSTEM_PROMPT rule 2.2（{{for}} 的 pre=/目标/描述属需翻译导语文案）。`{{for|Allomancy|the kind of Allomancer|pre=This article is about [[Brandon Sanderson]]'s series}}` → `{{for|镕金术|the kind of 熔金术师|pre=本文介绍的是[[布兰登·桑德森]]的系列作品}}`（参数1/pre 全译；参数2 虚词结构 LLM 偶留英文为已知小瑕疵）。
   - **② `<references>/<ref>` 脚注翻译**：SYSTEM_PROMPT rule 2.3（脚注说明属需翻译正文，标签/name/自闭合保留）。实测两块 7 条脚注全部译中。
   - **③ 子页链接 [[X/Statistical analysis|数字]]→[[永世英雄/数据分析|数字]]**：新增 `translate_wikilink_targets`（父+后缀均有译名才重写、display 保留）+ `load_merged_glossary`（主表 mistborn.json + 辅表 common.json 合并，次表补主表缺失）。新增 **`dict/common.json`**（跨站通用词：`Statistical analysis=数据分析`，**不塞入 mistborn.json**）。
-  - **重跑验证**：`Mistborn (series)` 三项全达标，写回 `bot测试:Mistborn (series)`（newrevid 17178）；全 8 处 `/Statistical analysis` 统一译《xxx/数据分析》。提交 `ccff85c`。<br>**待办**：`{{for}}` 参数2（"the kind of 熔金术师"）虚词结构偶留英文，可在规则 2.2 中加「描述参数整句译成中文」强化。
+  - **重跑验证**：`Mistborn (series)` 三项全达标，写回 `bot测试:Mistborn (series)`（newrevid 17178）；全 8 处 `/Statistical analysis` 统一译《xxx/数据分析》。提交 `ccff85c`。
+  - **补强（2026-10-18 晚）**：SYSTEM_PROMPT rule 2.2 强化「描述/`pre=` 参数须**整句**译成中文，不得残留整段英文虚词」。重跑并重写（newrevid 17179）：`{{for|镕金术|熔金术师这一类|pre=本文介绍的是[[布兰登·桑德森]]的系列作品}}`——参数 2 由 `the kind of 熔金术师` 整句化 `熔金术师这一类`。提交见 `git log`。
 
 ## 凭据
 
