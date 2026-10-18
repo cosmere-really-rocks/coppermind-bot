@@ -125,6 +125,12 @@ def extract_en_terms(wikitext):
     for m in re.finditer(r"\b([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*)\b", body):
         if len(m.group(1)) > 2:
             terms.add(m.group(1))
+    # 大写短语里的**单个**大写词也单独捕获（如 "Lady Allrianne Ladrian" 分离出 Allrianne、
+    # "Mr. Suit" 里 Suit 单独命中），否则这类带头衔/句点的裸正文专名进不了切片 →
+    # LLM 得不到规范译名、自造音译（如 苏特先生/阿莉安 而非 西装先生/奥瑞安妮）。
+    # slice_glossary 只会保留命中译名表的，故无害。
+    for m in re.finditer(r"\b[A-Z][a-z]{3,}\b", body):
+        terms.add(m.group(0))
     # 小写候选：单个[阿尔法]词（≥3 字母），用于命中译名表里的小写键/屈折形式。
     # 数量可能较多，但 slice_glossary 只会保留「命中译名表」的，噪声会在此被过滤。
     for m in re.finditer(r"\b([a-z][a-z\-]+)\b", body):
@@ -241,6 +247,8 @@ def _sub_glossary_in_string(value: str, gloss: dict) -> str:
     - 优先整值匹配：把整个值（含 [[...]] 包裹的目标）视为一个整体，若命中单一译名词条则整值替换。
     - 其次最长匹配优先的片段替换（避免 "Seran" 抢在 "Seran Range" 之前）。
     - 图片文件名（含扩展名/File:）不替换。
+    - review 方案2 延伸：整值匹配增加**归一化**兜底——正文/字段写成小写（kandra）、缺冠词（Set）
+      或屈折形式时也能命中规范词条（Kandra/组织）；对全小写值套 GENERIC_EN_STOPLIST 防通用英文误翻。
     """
     if re.search(r"(?i)(File:|Image:)|\.(png|jpe?g|gif|webp|svg)(\||$)", value):
         return value
@@ -249,6 +257,14 @@ def _sub_glossary_in_string(value: str, gloss: dict) -> str:
     if bare in gloss and gloss[bare].get("zh"):
         zh = gloss[bare]["zh"]
         return "[[" + zh + "]]" if bare != value.strip() else zh
+    # 整值匹配（归一化兜底）：kandra→Kandra、Set→The Set、metalminds→metalmind
+    idx = build_norm_glossary(gloss)
+    if not (_is_lowercase(bare) and _norm_glossary_key(bare) in GENERIC_EN_STOPLIST):
+        hit = idx.get(_norm_glossary_key(bare))
+        if hit is not None:
+            _canonical, entry = hit
+            zh = entry["zh"]
+            return "[[" + zh + "]]" if bare != value.strip() else zh
     # 片段替换：按长度降序，长词条优先
     terms = sorted(gloss, key=len, reverse=True)
     out = value
@@ -546,7 +562,7 @@ SYSTEM_PROMPT = """你是一名精通「迷雾之子」(Mistborn) 系列英文�
 
 翻译硬规则（必须严格遵守）：
 1. 【保留结构】所有模板 {{...}}、内链 [[...]]、引用 {{book ref|...}}/{{date|...}}/{{image|...}}/{{file ref|...}}/{{for|...}}/{{columns|...}} 等一律原样保留、位置不变。不要增删模板与参数，不要改变模板名。只翻译模板之外的自然语言正文。
-2. 【专名按译名表】专有名词一律按「译名表」翻译（含正文与 {{Infobox}} 里 `字段 = 值` 的值）；译名表没有的疑似专名**保留英文**，并列入 untranslated_terms。图片文件名、ISBN、日期数字、书目代号等非译文内容的**值**原样保留不译。
+2. 【专名按译名表】专有名词一律按「译名表」翻译（含正文与 {{Infobox}} 里 `字段 = 值` 的值）；译名表没有的疑似专名**保留英文**，并列入 untranslated_terms。图片文件名、ISBN、日期数字、书目代号等非译文内容的**值**原样保留不译。**重要**：凡「译名表」切片中明确给出的 `英文 = 中文`，就**必须原样使用该中文**，禁止另造译名/音译（如切片给 `Mr. Suit = 西装先生` 就用 西装先生，不要写成 苏特先生）。只有在切片里**没有**对应条目时，才允许按常见做法自行判断或保留英文。
 3. 【原文引用不译】(决议#13)：文中可能出现形如 %%ORIGINAL_BLOCK_1%% 的占位符，它们是**小说原著引文**（台词/称号列表）的替身。**必须原样保留、不翻译、不增删、不改动**（管道自会填回英文原文）。除此之外，正常叙述正文照常翻译。
 4. 【章节标题】== 章节 == / === 小节 === 标题翻译成简体中文；标题行顶格的等号数目与格式必须原样保留。
 5. 【首行(仅块0)】第一条正文行='''中文译名'''，并在其后紧跟 {{en|英文词条名}}。只有块0需要，其余块不得重复加。
