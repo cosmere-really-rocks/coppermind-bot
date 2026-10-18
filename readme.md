@@ -2,6 +2,10 @@
 
 目标：从英文 Coppermind 站抓取 wikitext → 翻译成中文 → 通过 MediaWiki API 写回同名的中文站（红铜智库）。
 
+> **给后来的 AI / 开发者**：先读 [docs/architecture.md](docs/architecture.md)——那里记录了
+> 译名表体系、keep_en 全自动三层机制（动态识别/中文站映射/静态名单）、引用与模板归一、
+> LLM 调用细节、写站与验证手法等**实现思路与设计决策**。本 readme 是操作层面的流水账记录。
+
 ## 两个站点
 
 | 站 | 域 | API 端点 | 鉴权 |
