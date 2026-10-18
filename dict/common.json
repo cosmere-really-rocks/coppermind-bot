@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "purpose": "跨站/通用译名表（与 mistborn.json 并列，独立文件）。放不属于单一作品专名的通用词条，如维基子页后缀「Statistical analysis=数据分析」。由 translate.py 在主译名表之外合并加载。",
+    "priority": "secondary（低于 mistborn.json；同一 norm 键以主表为准）"
+  },
+  "terms": {
+    "Statistical analysis": {
+      "zh": "数据分析",
+      "note": "Coppermind 词条的数据统计子页后缀（斜杠后字段）。用于把 [[The Hero of Ages/Statistical analysis|数字]] 这类子页链接译成 [[永世英雄/数据分析|数字]]。"
+    }
+  }
+}

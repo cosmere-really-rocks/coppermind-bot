@@ -57,6 +57,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 EN_SNAPSHOT = ROOT / "en_snapshot"
 DEFAULT_GLOSSARY = ROOT / "dict" / "mistborn.json"
+DEFAULT_COMMON = ROOT / "dict" / "common.json"
 DEFAULT_BASE_URL = "https://token.glint-mvt.com/v1"
 DEFAULT_MODEL = "deepseek-v4-flash-0731"
 DEFAULT_WIKI = "coppermind.huijiwiki.com"
@@ -215,6 +216,19 @@ def load_glossary(path: Path):
     return d.get("terms", d)
 
 
+def load_merged_glossary(primary: Path, secondary: Path | None = None) -> dict:
+    """合并加载译名表：primary（如 mistborn.json）为主，secondary（如 common.json）为辅。
+
+    common.json 是跨站通用词条（如子页后缀 Statistical analysis=数据分析），与主译名表并列、
+    不混写进 mistborn.json。合并规则：主表键优先（同键以主表为准），次表仅补主表没有的键。
+    返回 {en_key: entry}；entry 保持各表自带字段（zh/note/...）。
+    """
+    merged = dict(load_glossary(primary))
+    if secondary is not None and secondary.exists():
+        merged.update({k: v for k, v in load_glossary(secondary).items() if k not in merged})
+    return merged
+
+
 def slice_glossary(glossary, en_terms):
     """返回命中译名表的子集，按 EN 排序，供放进提示词。
 
@@ -335,6 +349,77 @@ def translate_infobox_values(wikitext: str, glossary: dict) -> dict:
             out_lines.append(ln)
     new_block = "\n".join(out_lines)
     return wikitext[:start] + new_block + wikitext[end:], stats
+
+
+def _lookup_glossary_zh(glossary, term: str) -> str | None:
+    """取单个词条的译名 zh：精确键优先，归一化兜底（复用以译名替换的一致口径）。"""
+    if term in glossary and glossary[term].get("zh"):
+        return glossary[term]["zh"]
+    idx = build_norm_glossary(glossary)
+    if not (_is_lowercase(term) and _norm_glossary_key(term) in GENERIC_EN_STOPLIST):
+        hit = idx.get(_norm_glossary_key(term))
+        if hit:
+            return hit[1]["zh"]
+    return None
+
+
+def translate_wikilink_targets(wikitext: str, glossary: dict):
+    """把 [[Parent/Subpage|display]] 这类子页链接的目标翻译成 [[父译名/子译名|display]]。
+
+    背景：[[The Hero of Ages/Statistical analysis|225,372]] 这类词条数据统计子页链接，
+    目标含 '/'。仅当「父段+所有后缀段」都能从译名表（主表 + common.json 合并）取到 zh
+    时才重写，避免部分/臆测翻译；display（如数字 225,372）保持原样。返回 (新wikitext, stats)。
+    """
+    stats = []
+    def repl(m):
+        inner = m.group(1)
+        disp = None
+        target = inner
+        if "|" in inner:
+            target, disp = inner.split("|", 1)
+        if "/" not in target:
+            return m.group(0)
+        parts = [p.strip() for p in target.split("/")]
+        zhs = [_lookup_glossary_zh(glossary, p) for p in parts]
+        if any(z is None for z in zhs):
+            return m.group(0)
+        new_target = "/".join(zhs)
+        stats.append((target, new_target))
+        link = "[[" + new_target
+        if disp is not None and disp.strip():
+            link += "|" + disp
+        return link + "]]"
+    out = re.sub(r"\[\[([^\[\]{}]+?)\]\]", repl, wikitext)
+    return out, stats
+
+
+def translate_for_template(wikitext: str, glossary: dict):
+    """把 {{for|目标|描述|pre=导语}} 模板的参数值按译名表做确定性替换。
+
+    中文站 Template:For 渲染：`{{pre}}。欲寻{{{2}}}，请见：[[{{{1}}}|{{{3}}}]]`。
+    参数 1（目标页名）/2（描述）/3（显示文本）多为专名，可确定性译；`pre=` 为导语文案，
+    可译的专名（如 Brandon Sanderson）在此替换，整句剩余留给 LLM（见提示词 rule 2.2）。
+    返回 (新wikitext, 替换统计)。
+    """
+    code = mwparserfromhell.parse(wikitext)
+    stats = []
+    for node in code.filter_templates(recursive=False):
+        if str(node.name).strip().lower() != "for":
+            continue
+        changed = False
+        # 只处理现有参数：位置参数（名 1/2/3）与命名参数（pre）。
+        for pp in list(node.params):
+            key = str(pp.name).strip()
+            if key not in ("1", "2", "3", "pre"):
+                continue
+            pv = str(pp.value)
+            nv = _sub_glossary_in_string(pv, glossary)
+            if nv != pv:
+                pp.value = nv
+                if not changed:
+                    stats.append({str(x.name).strip(): str(x.value) for x in node.params})
+                    changed = True
+    return str(code), stats
 
 
 def ensure_infobox_original_name(wikitext: str, en_title: str) -> tuple[str, bool]:
@@ -563,6 +648,8 @@ SYSTEM_PROMPT = """你是一名精通「迷雾之子」(Mistborn) 系列英文�
 翻译硬规则（必须严格遵守）：
 1. 【保留结构】所有模板 {{...}}、内链 [[...]]、引用 {{book ref|...}}/{{date|...}}/{{image|...}}/{{file ref|...}}/{{for|...}}/{{columns|...}} 等一律原样保留、位置不变。不要增删模板与参数，不要改变模板名。只翻译模板之外的自然语言正文。
 2. 【专名按译名表】专有名词一律按「译名表」翻译（含正文与 {{Infobox}} 里 `字段 = 值` 的值）；译名表没有的疑似专名**保留英文**，并列入 untranslated_terms。图片文件名、ISBN、日期数字、书目代号等非译文内容的**值**原样保留不译。**重要**：凡「译名表」切片中明确给出的 `英文 = 中文`，就**必须原样使用该中文**，禁止另造译名/音译（如切片给 `Mr. Suit = 西装先生` 就用 西装先生，不要写成 苏特先生）。只有在切片里**没有**对应条目时，才允许按常见做法自行判断或保留英文。
+2.2【{{for}} 模板参数要译】页首的消歧模板 `{{for|目标|描述|pre=导语}}` 的参数是**需翻译的导语文案**：`pre=` 值、第 1/2 参数（目标页名、描述、显示文本）都要译成简体中文；但模板名 `for` 与 `<...>` 结构、参数顺序原样保留。已译的表内专名不要重复改。其它模板的参数仍按第 1 条保留原样。
+2.3【脚注说明要译】`<references>` 与 `<ref name="X">说明文字</ref>` 里的**脚注说明文字**属于需翻译的正文（引文/书证说明），要译成简体中文；但 `<ref>/<references>` 标签本身、`name=` 属性、`<ref name="X"/>` 自闭合用法一律原样保留（自闭合占位引用不展开、不译）。
 3. 【原文引用不译】(决议#13)：文中可能出现形如 %%ORIGINAL_BLOCK_1%% 的占位符，它们是**小说原著引文**（台词/称号列表）的替身。**必须原样保留、不翻译、不增删、不改动**（管道自会填回英文原文）。除此之外，正常叙述正文照常翻译。
 4. 【章节标题】== 章节 == / === 小节 === 标题翻译成简体中文；标题行顶格的等号数目与格式必须原样保留。
 5. 【首行(仅块0)】第一条正文行='''中文译名'''，并在其后紧跟 {{en|英文词条名}}。只有块0需要，其余块不得重复加。
@@ -1045,8 +1132,8 @@ def main():
     rules = _ct.load_rules()
     wikitext, _convert_report = _ct.convert_wikitext(raw_wikitext, rules)
 
-    # 译名表裁切
-    glossary = load_glossary(Path(args.glossary))
+    # 译名表裁切：主表 mistborn.json + 辅表 common.json（跨站通用词，如子页后缀 Statistical analysis）
+    glossary = load_merged_glossary(Path(args.glossary), DEFAULT_COMMON)
     en_terms = extract_en_terms(wikitext)
     gloss_slice = slice_glossary(glossary, en_terms)
 
@@ -1057,6 +1144,21 @@ def main():
         sys.stderr.write("[Infobox 值替换]（按译名表确定性替换，正文翻译仍交给 LLM）:\n")
         for k, (old, new) in infobox_stats.items():
             sys.stderr.write(f"  {k}: {old} -> {new}\n")
+
+    # 页首 {{for|目标|描述|pre=导语}} 模板：参数值确定性替换（目标/描述/显示 + 可译专名）。
+    wikitext, for_stats = translate_for_template(wikitext, glossary)
+    if for_stats:
+        sys.stderr.write(f"[{{{{for}}}} 模板参数翻译] {len(for_stats)} 处：\n")
+        for s in for_stats:
+            sys.stderr.write(f"  {{for|...| {s} }}\n")
+
+    # 子页链接 [[父/子页|display]] 目标翻译（如 [[The Hero of Ages/Statistical analysis|225,372]]
+    # -> [[永世英雄/数据分析|225,372]]，父段与后缀段均需有译名才重写）。
+    wikitext, link_stats = translate_wikilink_targets(wikitext, glossary)
+    if link_stats:
+        sys.stderr.write("[子页链接目标翻译]（父+后缀均有译名才重写）:\n")
+        for old, new in link_stats:
+            sys.stderr.write(f"  {old} -> {new}\n")
 
     # 决议：给依赖 {{#var_final:en}} 的 {{Infobox ...}} 缺『原名』时补英文名，绕开
     # 模板回退到 #var_final:en 导致的 UNIQ--finalizedvar-* 渲染占位符（en 变量在
