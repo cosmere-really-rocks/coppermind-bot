@@ -21,3 +21,11 @@ __pycache__/
 *.swp
 .idea/
 .vscode/
+
+# 备份文件（dict/*.bak.<tag>-<ts> 等回滚档）—— 本地用，不提交
+*.bak.*
+*.bak-*
+
+# state/ 运行产物（日志/批次/测试垃圾）—— 已跟踪的 state 留档不受影响；
+# 新留档要入库用 git add -f 或在此加 ! 例外
+state/*
