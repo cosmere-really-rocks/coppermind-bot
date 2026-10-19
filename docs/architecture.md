@@ -237,6 +237,25 @@ interwiki 表只配了 en/cm/wob 等 87 个前缀，**没有 es/uk 语言前缀*
 `action=move`（write.py::HuijiClient.move，noredirect=0 保留重定向）移到中文标题，
 保留历史与站内链接。
 
+### 4.8 `{{notice}}` 模板参数要译（提示词规则 2.3）+ 重跑引用噪音教训
+
+**问题**：页首提示框 `{{notice|style=...|b=引言|正文}}` 的参数是**自然语言文案**（b= 引言多为
+Brandon 语录、无名字位置参数为剧透警告），但提示词规则 1「所有模板参数原样保留」把它们整块
+留成英文——20 篇中 Ghostbloods 的 notice 半译（内链译、句子未译）即此因。英文快照含
+{{notice}} 的页：Ghostbloods/Hoid/Kelsier/Mistborn: Secret History/Sazed。
+
+**修复**：提示词规则 2.3——notice 的 `b=` 与位置参数整句译成简体中文（含内链目标如
+[[Rosharan]]→[[柔刹]]、[[cosmere]]→[[三界宙]]），`style=` 与模板名/参数顺序原样保留。
+验证：Hoid/Kelsier/Secret History/Sazed 重跑 translate 后 notice 全部自动翻译。
+
+**教训（LLM 重跑噪音）**：重跑整页 translate 会引入**引用编号幻觉**——Ghostbloods 重跑后
+`{{book ref|mb7|47}}` 被改成 `mb7|39`、`sa4|13`→`sa4|64`、`sa2|43`→`sa2|64` 等，且
+`{{en|词条名}}` 错位进 notice 参数、infobox 原名被误译。**站上已写页不要靠整页重跑更正文案**
+（渲染校验不抓引用编号错误）；改文案应直接编辑站上页面或「改提示词+仅重跑受影响小页」，
+写回前必须与英文源 `{{book ref|...}}` 编号逐一核对。Ghostbloods 最终恢复为引用与英文源
+完全一致的版本（mb7|47×7 / sa4|13×11 / sa2|43×3 全对上）。
+
+
 - Infobox「字段 = 值」按译名表确定性替换（`translate_infobox_values`），结构化短字段不依赖 LLM。
 - `{{for|...|pre=}}` 参数确定性替换（`translate_for_template`）。
 - 子页链接 `[[父/子页|display]]` 父段与后缀段**都有译名**才重写（`translate_wikilink_targets`）。
