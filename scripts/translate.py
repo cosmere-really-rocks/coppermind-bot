@@ -681,6 +681,65 @@ def translate_wikilink_targets(wikitext: str, glossary: dict):
     return out, stats
 
 
+# 普通内链目标翻译（LLM 前确定性替换）。背景：{{columns|...}} 等模板参数内的普通
+# [[城市名]] 链接属于「模板参数」按规则 1 原样保留，LLM 不译、translate_wikilink_targets
+# 只处理含 '/' 的子页目标 → Elendel Basin 的外城列表 18 个城市名全留英文。此处把
+# [[X]] / [[X|disp]]（X 无 '/'、无命名空间前缀、非 interwiki/语言链接）按译名表译目标；
+# 目标有 variants（多义词，如 Demoux 人物/城市）时**跳过**——宁保英文不误译（城市
+# Demoux 若按默认 zh=德穆 会被错译成人物名）。disp 无独立译名时保留原样。
+_NS_PREFIX_RE = re.compile(r"^(file|image|category|template|module|user|user talk|talk|portal|draft|summary|mediawiki|help)\s*:", re.I)
+
+
+def translate_plain_links(wikitext: str, glossary: dict):
+    """把普通内链 [[X]] / [[X|disp]] 的目标按译名表确定性译成中文。
+
+    返回 (新wikitext, stats)。规则：
+    - 目标含 '/'（子页）、':'-命名空间前缀（file/category/wob 等 interwiki 或语言链接）、
+      variants 多义词（如 Demoux 人物/城市，城市译名待定）→ 跳过；
+    - 目标命中译名表非空 zh → [[中文]]；带 disp 且 disp 也有译名 → [[中文|中文]]，
+      disp 无译名 → [[中文|原disp]]；
+    - 目标无译名 → 原样保留。
+    调用时机：LLM 之前（与 translate_wikilink_targets 同级），让 {{columns}} 等模板参数
+    内的普通链接也确定性译出（这些参数内的内链 LLM 按规则 1 不会动）。
+    """
+    def repl(m):
+        inner = m.group(1)
+        disp = None
+        target = inner
+        if "|" in inner:
+            target, disp = inner.split("|", 1)
+        target = target.strip()
+        if not target or "/" in target:
+            return m.group(0)
+        if ":" in target and _NS_PREFIX_RE.match(target):
+            return m.group(0)  # 命名空间/文件/category 链接不动
+        ent = glossary.get(target)
+        if isinstance(ent, dict) and ent.get("variants"):
+            # 多义词（人物/城市等）：默认 zh 可能只对应其中一义，宁保英文不误译
+            return m.group(0)
+        zh = _lookup_glossary_zh(glossary, target)
+        if not zh:
+            return m.group(0)
+        stats.append((target, zh))
+        link = "[[" + zh
+        if disp is not None and disp.strip():
+            dzh = _lookup_glossary_zh(glossary, disp.strip())
+            if not dzh:
+                # disp 是目标去掉消歧后缀的根名（如 [[Doriel (city)|Doriel]]：disp 与
+                # 目标同城）→ 复用目标译名，避免 [[多瑞尔|Doriel]] 半英半中。
+                target_root = re.sub(r"\s*\([^)]*\)\s*$", "", target).strip()
+                if disp.strip().lower() == target_root.lower():
+                    dzh = zh
+            if dzh:
+                link += "|" + dzh
+            else:
+                link += "|" + disp
+        return link + "]]"
+    stats = []
+    out = re.sub(r"\[\[([^\[\]{}]+?)\]\]", repl, wikitext)
+    return out, stats
+
+
 def translate_for_template(wikitext: str, glossary: dict):
     """把 {{for|目标|描述|pre=导语}} 模板的参数值按译名表做确定性替换。
 
@@ -1507,6 +1566,15 @@ def main():
     if link_stats:
         sys.stderr.write("[子页链接目标翻译]（父+后缀均有译名才重写）:\n")
         for old, new in link_stats:
+            sys.stderr.write(f"  {old} -> {new}\n")
+
+    # 普通内链 [[X]] / [[X|disp]] 目标翻译（LLM 前确定性）：{{columns}} 等模板参数内的
+    # 普通链接按规则 1 原样保留、LLM 不译 → 外城列表等 18 个城市名全留英文。此处对
+    # 目标按译名表译中；variants 多义词（Demoux 人物/城市）跳过宁保英文不误译。
+    wikitext, plain_stats = translate_plain_links(wikitext, glossary)
+    if plain_stats:
+        sys.stderr.write("[普通内链目标翻译]（译名表命中，LLM 前确定性）:\n")
+        for old, new in plain_stats:
             sys.stderr.write(f"  {old} -> {new}\n")
 
     # 决议：给依赖 {{#var_final:en}} 的 {{Infobox ...}} 缺『原名』时补英文名，绕开

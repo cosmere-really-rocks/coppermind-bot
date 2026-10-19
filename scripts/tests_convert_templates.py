@@ -146,8 +146,27 @@ def main():
     for name, src, want in prepost_cases:
         check("PrePost|" + name, _tr.translate_prepost_links(src, _gl)[0], want)
 
-    print("\n%d/%d passed" % (len(CASES) + len(title_cases) + len(prepost_cases) - failed,
-                              len(CASES) + len(title_cases) + len(prepost_cases)))
+    # --- 普通内链目标翻译（{{columns}} 等模板参数内的 [[X]]，LLM 前确定性）---
+    plain_cases = [
+        ("有译名", "[[Bilming]]", "[[比尔明]]"),
+        ("带disp均译", "[[Doriel (city)|Doriel]]", "[[多瑞尔|多瑞尔]]"),
+        ("disp无译名保留", "[[New Seran|新城市]]", "[[新赛朗|新城市]]"),
+        ("variants多义跳过", "[[Demoux]]", "[[Demoux]]"),
+        ("variants多义跳过2", "[[Origin]]", "[[Origin]]"),
+        ("无译名保留", "[[Alendel]]", "[[Alendel]]"),
+        ("无译名保留2", "[[Vindiel-Cameux]]", "[[Vindiel-Cameux]]"),
+        ("文件链接不动", "[[File:Ghostblood.svg|300px]]", "[[File:Ghostblood.svg|300px]]"),
+        ("分类链接不动", "[[Category:series]]", "[[Category:series]]"),
+        ("子页链接不动", "[[The Hero of Ages/Statistical analysis|225,372]]", "[[The Hero of Ages/Statistical analysis|225,372]]"),
+        ("interwiki不动", "[[wob:9171|wob:9171]]", "[[wob:9171|wob:9171]]"),
+        ("语言链接不动", "[[es: Mistborn (saga)]]", "[[es: Mistborn (saga)]]"),
+        ("正文内链", "见 [[Spook]] 事迹", "见 [[鬼影]] 事迹"),
+    ]
+    for name, src, want in plain_cases:
+        check("PlainLink|" + name, _tr.translate_plain_links(src, _gl)[0], want)
+
+    print("\n%d/%d passed" % (len(CASES) + len(title_cases) + len(prepost_cases) + len(plain_cases) - failed,
+                              len(CASES) + len(title_cases) + len(prepost_cases) + len(plain_cases)))
     return 1 if failed else 0
 
 

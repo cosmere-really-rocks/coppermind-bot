@@ -273,6 +273,24 @@ Ghostbloods 的「Post [[灰烬灾变]]」即此。
 - 站上已写页（鬼影/鬼血会共 3 处，含 image caption 的 `post [[Catacendre]]`）已直接应用
   此函数修正（不重跑 LLM，规避 §4.8 引用噪音），渲染验证 0 错误。
 
+### 4.10 普通内链目标翻译（`translate_plain_links`，LLM 前确定性）
+
+**问题**：`{{columns|...}}` 等模板参数内的普通 `[[城市名]]` 链接按规则 1（模板参数原样
+保留）LLM 不译——Elendel Basin 外城列表 18 个城市名全留英文（Alendel/Bilming/...）。
+`translate_wikilink_targets` 只处理含 `/` 的子页目标，够不着普通链接。
+
+**修复**：`translate_plain_links(wikitext, glossary)`（LLM 前，与 wikilink_targets 同级）
+把 `[[X]]` / `[[X|disp]]`（X 无 `/`、非命名空间前缀/interwiki/语言链接）按译名表确定性
+译目标：
+- `[[Bilming]]→[[比尔明]]`；带 disp 且 disp 也有译名（或 disp 是目标去消歧后缀的根名，
+  如 `[[Doriel (city)|Doriel]]→[[多瑞尔|多瑞尔]]`）→ 一起译；disp 无译名 → 保留原 disp。
+- **variants 多义词跳过**（Demoux 人物/城市：城市译名待 tlm，默认 zh=德穆 是人物名，
+  若按默认翻会把外城列表里的城市错译成人名；Origin/Pinnacle 同理）→ 宁保英文不误译。
+- 无译名（Alendel/Drypost/Garmet/Vindiel-Cameux 等 8 个）→ 保留，与 keep_en 一致。
+- 与动态 keep_en 无冲突：keep_en 只判**不在译名表**的词，本函数只翻**译名表命中**的词。
+- Elendel Basin 全链验证与手工修正结果完全一致；站上该页已手工应用同规则（newrevid
+  17251），渲染 0 错误。
+
 ## 5. 写站与验证（write.py）
 
 - `HuijiClient.edit(title, content, summary)` 是正确方法名（不是 edit_page）；`read_page` 只读。
