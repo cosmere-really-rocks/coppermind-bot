@@ -1,0 +1,1567 @@
+{
+ "generated_at": "2026-10-19T19:34:33",
+ "applied": [
+  {
+   "key": "Adolin",
+   "zh": "阿多林",
+   "from": "Adolin Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Aesudan",
+   "zh": "颐淑丹",
+   "from": "Aesudan Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Neverfar",
+   "zh": "奈弗法",
+   "from": "Allik Neverfar",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Alloran",
+   "zh": "阿洛兰",
+   "from": "Alloran Feltri",
+   "role": "名",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Feltri",
+   "zh": "费特里",
+   "from": "Alloran Feltri",
+   "role": "姓",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Allri",
+   "zh": "亚莉",
+   "from": "Allri Innate",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Innate",
+   "zh": "因内特",
+   "from": "Allri Innate",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Ladrian",
+   "zh": "拉德利安",
+   "from": "Allrianne Ladrian",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Antillius",
+   "zh": "安提利乌斯",
+   "from": "Antillius Shezler",
+   "role": "名",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Shezler",
+   "zh": "谢兹勒",
+   "from": "Antillius Shezler",
+   "role": "姓",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Ape",
+   "zh": "亚佩",
+   "from": "Ape Manton",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Manton",
+   "zh": "曼顿",
+   "from": "Ape Manton",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Aradan",
+   "zh": "亚拉单",
+   "from": "Aradan Yomen",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Aratin",
+   "zh": "亚拉廷",
+   "from": "Aratin Khal",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Khal",
+   "zh": "考尔",
+   "from": "Aratin Khal",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Ardous",
+   "zh": "奥杜司",
+   "from": "Ardous Geffenry",
+   "role": "名",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Ashweather",
+   "zh": "灰侯",
+   "from": "Ashweather Cett",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Augustin",
+   "zh": "奥古斯丁",
+   "from": "Augustin Tekiel",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Avarak",
+   "zh": "亚法拉克",
+   "from": "Avarak Matal",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Matal",
+   "zh": "马塔尔",
+   "from": "Avarak Matal",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Aving",
+   "zh": "亚凡",
+   "from": "Aving Cett",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Balat",
+   "zh": "巴拉特",
+   "from": "Balat Davar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Davar",
+   "zh": "达瓦",
+   "from": "Balat Davar",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Barlesha",
+   "zh": "巴雷沙",
+   "from": "Barlesha Lhan",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Hatthew",
+   "zh": "哈休",
+   "from": "Cali Hatthew",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Chanasha",
+   "zh": "恰娜莎",
+   "from": "Chanasha Hasareh",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Hasareh",
+   "zh": "哈萨雷",
+   "from": "Chanasha Hasareh",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Charrs",
+   "zh": "查斯",
+   "from": "Charrs Entrone",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Entrone",
+   "zh": "恩创",
+   "from": "Charrs Entrone",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Chesterton",
+   "zh": "切斯特顿",
+   "from": "Chesterton Divide",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Divide",
+   "zh": "迪维德",
+   "from": "Chesterton Divide",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Claude",
+   "zh": "克劳德",
+   "from": "Claude Aradel",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Crews",
+   "zh": "克鲁斯",
+   "from": "Crews Geffenry",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Dalinar",
+   "zh": "达力拿",
+   "from": "Dalinar Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Dandos",
+   "zh": "丹多斯",
+   "from": "Dandos Heraldin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Heraldin",
+   "zh": "赫拉尔丁",
+   "from": "Dandos Heraldin",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Danlan",
+   "zh": "丹岚",
+   "from": "Danlan Morakotha",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Morakotha",
+   "zh": "摩拉库萨",
+   "from": "Danlan Morakotha",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Dedri",
+   "zh": "戴德利",
+   "from": "Dedri Vasting",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Vasting",
+   "zh": "法司丁",
+   "from": "Dedri Vasting",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Deluse",
+   "zh": "德鲁斯",
+   "from": "Deluse Couvre",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Couvre",
+   "zh": "库佛",
+   "from": "Deluse Couvre",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Devlin",
+   "zh": "德弗林",
+   "from": "Devlin Airs",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Airs",
+   "zh": "艾尔斯",
+   "from": "Devlin Airs",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Douglas",
+   "zh": "道格拉斯",
+   "from": "Douglas Venture",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Venture",
+   "zh": "泛图尔",
+   "from": "Douglas Venture",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Dowser",
+   "zh": "道瑟尔",
+   "from": "Dowser Maline",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Maline",
+   "zh": "马利纳",
+   "from": "Dowser Maline",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "D’Denir",
+   "zh": "德戴尼尔",
+   "from": "D’Denir Celabrin",
+   "role": "名",
+   "src": "raw/破战者译名表.xlsx#译者提供的译名表"
+  },
+  {
+   "key": "Celabrin",
+   "zh": "塞拉布林",
+   "from": "D’Denir Celabrin",
+   "role": "姓",
+   "src": "raw/破战者译名表.xlsx#译者提供的译名表"
+  },
+  {
+   "key": "Edgard",
+   "zh": "埃德加德",
+   "from": "Edgard Ladrian",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Elhokar",
+   "zh": "艾尔霍卡",
+   "from": "Elhokar Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Elit",
+   "zh": "艾立特",
+   "from": "Elit Ruthar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Eliza",
+   "zh": "伊莉莎",
+   "from": "Eliza Marin",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Marin",
+   "zh": "马林",
+   "from": "Eliza Marin",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Elizandra",
+   "zh": "伊丽赞德菈",
+   "from": "Elizandra Dramali",
+   "role": "名",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子；raw/无界秘典译名表.xlsx#镕金术师贾克"
+  },
+  {
+   "key": "Dramali",
+   "zh": "德拉马利",
+   "from": "Elizandra Dramali",
+   "role": "姓",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子；raw/无界秘典译名表.xlsx#镕金术师贾克"
+  },
+  {
+   "key": "Elors",
+   "zh": "艾洛斯",
+   "from": "Elors Durnsed",
+   "role": "名",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Durnsed",
+   "zh": "顿斯德",
+   "from": "Elors Durnsed",
+   "role": "姓",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Evenstrom",
+   "zh": "伊凡史托姆",
+   "from": "Evenstrom Tekiel",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Evi",
+   "zh": "伊薇",
+   "from": "Evi Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Eylita",
+   "zh": "艾丽塔",
+   "from": "Eylita Tavinar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Farnsward",
+   "zh": "法恩斯华德",
+   "from": "Farnsward Dubs",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Dubs",
+   "zh": "达布斯",
+   "from": "Farnsward Dubs",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Felise",
+   "zh": "费丽思",
+   "from": "Felise Demoux",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Fen",
+   "zh": "芬恩",
+   "from": "Fen Rnamdi",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Rnamdi",
+   "zh": "雷纳姆迪",
+   "from": "Fen Rnamdi",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Ferson",
+   "zh": "费尔森",
+   "from": "Ferson Penrod",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Penrod",
+   "zh": "潘洛德",
+   "from": "Ferson Penrod",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Ganlos",
+   "zh": "甘洛丝",
+   "from": "Ganlos Riera",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Riera",
+   "zh": "里耶拉",
+   "from": "Ganlos Riera",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Gave",
+   "zh": "盖夫",
+   "from": "Gave Entrone",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Gavilar",
+   "zh": "迦维拉尔",
+   "from": "Gavilar Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Gavinor",
+   "zh": "迦维诺尔",
+   "from": "Gavinor Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Gneorndin",
+   "zh": "奈容汀",
+   "from": "Gneorndin Cett",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Halam",
+   "zh": "哈拉姆",
+   "from": "Halam Khal",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Helaran",
+   "zh": "赫拉兰",
+   "from": "Helaran Davar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Hughes",
+   "zh": "休斯",
+   "from": "Hughes Entrone",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Ialai",
+   "zh": "雅莱",
+   "from": "Ialai Sadeas",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Sadeas",
+   "zh": "撒迪亚斯",
+   "from": "Ialai Sadeas",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Idren",
+   "zh": "艾德伦",
+   "from": "Idren Seeris",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Seeris",
+   "zh": "席瑞斯",
+   "from": "Idren Seeris",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Isabaline",
+   "zh": "伊萨巴琳",
+   "from": "Isabaline Frellia",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Frellia",
+   "zh": "弗雷利亚",
+   "from": "Isabaline Frellia",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Isadan",
+   "zh": "艾萨丹",
+   "from": "Isadan Sao",
+   "role": "名",
+   "src": "raw/伊岚翠译名表.xlsx#伊岚翠"
+  },
+  {
+   "key": "Isasik",
+   "zh": "伊萨斯克",
+   "from": "Isasik Shulin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Ivanar",
+   "zh": "伊瓦纳",
+   "from": "Ivanar Ruthar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Jackstom",
+   "zh": "杰克斯托姆",
+   "from": "Jackstom Harms",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Harms",
+   "zh": "哈姆斯",
+   "from": "Jackstom Harms",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Jal",
+   "zh": "亚尔",
+   "from": "Jal Mala",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Mala",
+   "zh": "迈拉",
+   "from": "Jal Mala",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Jammi",
+   "zh": "杰米",
+   "from": "Jammi Walls",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Walls",
+   "zh": "沃尔斯",
+   "from": "Jammi Walls",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Janala",
+   "zh": "嘉娜拉",
+   "from": "Janala Lustow",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Jasnah",
+   "zh": "迦熙娜",
+   "from": "Jasnah Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Jayla",
+   "zh": "叶拉",
+   "from": "Jayla Ruthar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Julius",
+   "zh": "朱利叶斯",
+   "from": "Julius Gopez",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Gopez",
+   "zh": "戈佩斯",
+   "from": "Julius Gopez",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Jushu",
+   "zh": "尤术",
+   "from": "Jushu Davar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Kale",
+   "zh": "凯尔",
+   "from": "Kale Tekiel",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Kaves",
+   "zh": "卡维斯",
+   "from": "Kaves Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Koravellium",
+   "zh": "科拉维利乌姆",
+   "from": "Koravellium Avast",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#三界宙术语；raw/飓光志译名表.xlsx#三界宙术语；raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Avast",
+   "zh": "阿万斯特",
+   "from": "Koravellium Avast",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#三界宙术语；raw/飓光志译名表.xlsx#三界宙术语；raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Kredik",
+   "zh": "克雷迪克",
+   "from": "Kredik Shaw",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Shaw",
+   "zh": "霄",
+   "from": "Kredik Shaw",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Lamentation",
+   "zh": "悲叹",
+   "from": "Lamentation Winebare",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Winebare",
+   "zh": "瓦恩拜尔",
+   "from": "Lamentation Winebare",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Lin",
+   "zh": "林",
+   "from": "Lin Davar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Loradar",
+   "zh": "洛拉达",
+   "from": "Loradar Vamah",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Vamah",
+   "zh": "瓦马尔",
+   "from": "Loradar Vamah",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Makepeace",
+   "zh": "调停者",
+   "from": "Makepeace Hapshire",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Hapshire",
+   "zh": "罕不什尔",
+   "from": "Makepeace Hapshire",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Malasha",
+   "zh": "玛拉莎",
+   "from": "Malasha Seveks",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Seveks",
+   "zh": "塞维克斯",
+   "from": "Malasha Seveks",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Malise",
+   "zh": "玛丽瑟",
+   "from": "Malise Gevelmar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Gevelmar",
+   "zh": "吉维尔马",
+   "from": "Malise Gevelmar",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Marshall",
+   "zh": "马歇尔",
+   "from": "Marshall Dillon",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Dillon",
+   "zh": "迪伦",
+   "from": "Marshall Dillon",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Melend",
+   "zh": "梅莱德",
+   "from": "Melend Liese",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Liese",
+   "zh": "李艾斯",
+   "from": "Melend Liese",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Meleran",
+   "zh": "梅勒兰",
+   "from": "Meleran Khal",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Meridas",
+   "zh": "梅里达斯",
+   "from": "Meridas Amaram",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Amaram",
+   "zh": "亚马兰",
+   "from": "Meridas Amaram",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Mi'chelle",
+   "zh": "米歇尔",
+   "from": "Mi'chelle Ostlin",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Ostlin",
+   "zh": "欧斯特林",
+   "from": "Mi'chelle Ostlin",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Milen",
+   "zh": "米伦",
+   "from": "Milen Davenpleu",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Davenpleu",
+   "zh": "戴文普鲁",
+   "from": "Milen Davenpleu",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Miles",
+   "zh": "迈尔斯",
+   "from": "Miles Dagouter",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Dagouter",
+   "zh": "达古特",
+   "from": "Miles Dagouter",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Hundredlives",
+   "zh": "百命",
+   "from": "Miles Hundredlives",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Mishinah",
+   "zh": "米希娜",
+   "from": "Mishinah Bethab",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Nacomb",
+   "zh": "纳孔",
+   "from": "Nacomb Gaval",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Gaval",
+   "zh": "伽瓦尔",
+   "from": "Nacomb Gaval",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Nanhel",
+   "zh": "南赫尔",
+   "from": "Nanhel Eltorv",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Eltorv",
+   "zh": "埃尔托夫",
+   "from": "Nanhel Eltorv",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Natata",
+   "zh": "纳塔塔",
+   "from": "Natata Ved",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Navani",
+   "zh": "纳瓦妮",
+   "from": "Navani Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Noways",
+   "zh": "诺维斯",
+   "from": "Noways Joe",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Joe",
+   "zh": "乔",
+   "from": "Noways Joe",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Philen",
+   "zh": "费伦",
+   "from": "Philen Frandeu",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Frandeu",
+   "zh": "傅兰敦",
+   "from": "Philen Frandeu",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Rame",
+   "zh": "拉梅",
+   "from": "Rame Maldor",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Maldor",
+   "zh": "摩尔多",
+   "from": "Rame Maldor",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Reenst",
+   "zh": "瑞恩斯特",
+   "from": "Reenst Rile",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Rile",
+   "zh": "里莱",
+   "from": "Reenst Rile",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Relis",
+   "zh": "瑞里斯",
+   "from": "Relis Ruthar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Remmingtel",
+   "zh": "雷鸣特",
+   "from": "Remmingtel Tarcsel",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Tarcsel",
+   "zh": "塔瑟尔",
+   "from": "Remmingtel Tarcsel",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Renarin",
+   "zh": "雷纳林",
+   "from": "Renarin Kholin",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Replar",
+   "zh": "雷普拉",
+   "from": "Replar Innate",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Reral",
+   "zh": "瑞劳",
+   "from": "Reral Makoram",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Makoram",
+   "zh": "马可兰",
+   "from": "Reral Makoram",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Reshelle",
+   "zh": "蕾谢尔",
+   "from": "Reshelle Tekiel",
+   "role": "名",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Strobe",
+   "zh": "史特罗布",
+   "from": "Rian Strobe",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Rich",
+   "zh": "瑞奇",
+   "from": "Rich Young",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Young",
+   "zh": "杨",
+   "from": "Rich Young",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Rick",
+   "zh": "里克",
+   "from": "Rick Stranger",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Stranger",
+   "zh": "斯特朗格",
+   "from": "Rick Stranger",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Rik",
+   "zh": "瑞克",
+   "from": "Rik Hoskin",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Hoskin",
+   "zh": "霍斯金",
+   "from": "Rik Hoskin",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Rillir",
+   "zh": "瑞里尔",
+   "from": "Rillir Roshone",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Roshone",
+   "zh": "荣寿",
+   "from": "Rillir Roshone",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Ross",
+   "zh": "罗斯",
+   "from": "Ross Campbell",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Campbell",
+   "zh": "坎贝尔",
+   "from": "Ross Campbell",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#白沙"
+  },
+  {
+   "key": "Rushur",
+   "zh": "卢舒尔",
+   "from": "Rushur Kris",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Kris",
+   "zh": "克里思",
+   "from": "Rushur Kris",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Rust",
+   "zh": "罗斯特",
+   "from": "Rust Elthal",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Elthal",
+   "zh": "艾瑟",
+   "from": "Rust Elthal",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Rysn",
+   "zh": "莱丝",
+   "from": "Rysn Ftori",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Ftori",
+   "zh": "弗托里",
+   "from": "Rysn Ftori",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Salinor",
+   "zh": "萨利诺尔",
+   "from": "Salinor Eved",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Eved",
+   "zh": "艾维德",
+   "from": "Salinor Eved",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Salmen",
+   "zh": "沙门",
+   "from": "Salmen Tekiel",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Shallan",
+   "zh": "沙兰",
+   "from": "Shallan Davar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Silence",
+   "zh": "寂静",
+   "from": "Silence Montane",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Montane",
+   "zh": "蒙塔内",
+   "from": "Silence Montane",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Sophi",
+   "zh": "索菲",
+   "from": "Sophi Tarcsel",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Stase",
+   "zh": "史黛西",
+   "from": "Stase Blanches",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Blanches",
+   "zh": "白兰史",
+   "from": "Stase Blanches",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Straff",
+   "zh": "史特拉夫",
+   "from": "Straff Venture",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Sudi",
+   "zh": "苏蒂",
+   "from": "Sudi Valam",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Kamar",
+   "zh": "卡马",
+   "from": "Sur Kamar",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Tark",
+   "zh": "塔克",
+   "from": "Tark Vestingdow",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Vestingdow",
+   "zh": "威斯汀多",
+   "from": "Tark Vestingdow",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Teshav",
+   "zh": "忒夏芙",
+   "from": "Teshav Khal",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Teven",
+   "zh": "泰文",
+   "from": "Teven Renoux",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Themos",
+   "zh": "赛摩斯",
+   "from": "Themos Tresting",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Tresting",
+   "zh": "特雷斯廷",
+   "from": "Themos Tresting",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Tim",
+   "zh": "蒂姆",
+   "from": "Tim Vashin",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Vashin",
+   "zh": "瓦辛",
+   "from": "Tim Vashin",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Tobal",
+   "zh": "托瓦尔",
+   "from": "Tobal Copper",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Fah",
+   "zh": "法",
+   "from": "Tonk Fah",
+   "role": "姓",
+   "src": "raw/破战者译名表.xlsx#译者提供的译名表"
+  },
+  {
+   "key": "Toralin",
+   "zh": "托拉林",
+   "from": "Toralin Roshone",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Torol",
+   "zh": "托洛尔",
+   "from": "Torol Sadeas",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Tren-Pedri",
+   "zh": "蓝佩得莉",
+   "from": "Tren-Pedri Delouse",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Delouse",
+   "zh": "德鲁斯",
+   "from": "Tren-Pedri Delouse",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Turinad",
+   "zh": "图里纳德",
+   "from": "Turinad Sebarial",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Sebarial",
+   "zh": "塞巴里尔",
+   "from": "Turinad Sebarial",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Valette",
+   "zh": "法蕾特",
+   "from": "Valette Entrone",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Vedekar",
+   "zh": "维德卡",
+   "from": "Vedekar Perel",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Waxillium",
+   "zh": "瓦克斯利姆",
+   "from": "Waxillium Dawnshot",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Dawnshot",
+   "zh": "晓击",
+   "from": "Waxillium Dawnshot",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Westweather",
+   "zh": "韦斯特维泽",
+   "from": "Westweather Cett",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Wikim",
+   "zh": "维吉姆",
+   "from": "Wikim Davar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "William",
+   "zh": "威廉",
+   "from": "William Ann",
+   "role": "名",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Ann",
+   "zh": "安",
+   "from": "William Ann",
+   "role": "姓",
+   "src": "raw/无界秘典译名表.xlsx#地狱森林"
+  },
+  {
+   "key": "Yancey",
+   "zh": "雅西",
+   "from": "Yancey Yaceczko",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Yaceczko",
+   "zh": "雅捷茨科",
+   "from": "Yancey Yaceczko",
+   "role": "姓",
+   "src": ""
+  }
+ ],
+ "conflicts": [
+  {
+   "key": "Lhan",
+   "existing_zh": "拉罕",
+   "candidate_zh": "洛汗",
+   "from": "Barlesha Lhan",
+   "role": "姓",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Cali",
+   "existing_zh": "卡莉",
+   "candidate_zh": "卡利",
+   "from": "Cali Hatthew",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Callins",
+   "existing_zh": "卡林斯",
+   "candidate_zh": "柯林司",
+   "from": "Callins Geffenry",
+   "role": "名",
+   "src": "raw/迷雾之子译名表.xlsx#迷雾之子"
+  },
+  {
+   "key": "Aradel",
+   "existing_zh": "阿拉戴尔",
+   "candidate_zh": "亚拉戴尔",
+   "from": "Claude Aradel",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Elend",
+   "existing_zh": "依蓝德·泛图尔",
+   "candidate_zh": "依蓝德",
+   "from": "Elend Venture",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Entrone",
+   "existing_zh": "恩创",
+   "candidate_zh": "恩特隆",
+   "from": "Gave Entrone",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Entrone",
+   "existing_zh": "恩创",
+   "candidate_zh": "恩特隆",
+   "from": "Hughes Entrone",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Rian",
+   "existing_zh": "利恩",
+   "candidate_zh": "瑞安",
+   "from": "Rian Strobe",
+   "role": "名",
+   "src": ""
+  },
+  {
+   "key": "Sur",
+   "existing_zh": "苏尔",
+   "candidate_zh": "素",
+   "from": "Sur Kamar",
+   "role": "名",
+   "src": "raw/飓光志译名表.xlsx#总表"
+  },
+  {
+   "key": "Tonk",
+   "existing_zh": "袋骡",
+   "candidate_zh": "汤克",
+   "from": "Tonk Fah",
+   "role": "名",
+   "src": "raw/破战者译名表.xlsx#译者提供的译名表"
+  },
+  {
+   "key": "Entrone",
+   "existing_zh": "恩创",
+   "candidate_zh": "恩特隆",
+   "from": "Valette Entrone",
+   "role": "姓",
+   "src": ""
+  },
+  {
+   "key": "Cett",
+   "existing_zh": "塞特",
+   "candidate_zh": "塞特大人",
+   "from": "Westweather Cett",
+   "role": "姓",
+   "src": ""
+  }
+ ],
+ "stats": {
+  "full_names_scanned": 1156,
+  "applied": 208,
+  "conflicts": 12,
+  "already_covered": 88,
+  "skipped_stopword": 4,
+  "skipped_shape": 997
+ }
+}

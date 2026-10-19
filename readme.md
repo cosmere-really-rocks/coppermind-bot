@@ -135,6 +135,13 @@
   - **数据来源**：`scripts/scan_zhwiki_titles.py` 全站扫描中文站 → `dict/zhwiki_titles.json`（847 页：CmPermission/{{en}}/Infobox 原名 提取）+ `dict/zhwiki_aliases.json`（723 条：英文标题重定向页 Elend→依蓝德·泛图尔 等）。
   - **附带修复**：`untranslated_lead_english` 误判——`<ref>`/`[[wob:N|wob:N]]` 被当叙述性英文（Atium 页导语校验 3 次重试失败），现在剥离这两类再计数。
   - **验证**：Mistborn(series) 重跑 10 项回归全过（官方译名/keep_en/无自译）；Atium（从未 review 过的页面）真实翻译正确：天金/灭绝/存留/亚提/谐金 等译名表词全部译对，`[[神瑛]]`/`[[纹]]` 用 zhwiki ref，wob ref 修复后导语校验不再误报。提交 `（待提交）`。
+- ✅ 2026-10-19 **译者译名表 6 份 xlsx 并入**（`dict/raw/` 新增：三界宙翻译勘误表/伊岚翠/无界秘典/破战者/迷雾之子/飓光志；脚本 `scripts/glossary_xlsx_import.py`，43 个 sheet 按格式分派解析）：
+  - 全表 978→**3932 条**（新增 2954、与现表一致确认 253、冲突 36 未覆盖、新表互斥 54 按优先级择一记入 note）；覆盖扩展至三界宙其他书系（飓光志/伊岚翠/破战者/无界秘典）。备份 `dict/mistborn.json.bak.xlsximport-*`。
+  - 冲突/勘误/pending 报告：`state/glossary_xlsx_import/conflicts.md`（勘误表为句子级 10 条未并入）；pending 241 条需书证补译（迷雾之子相关可采现有中文 epub，伊岚翠/破战者/飓光志待电子书）。
+  - keep_en 清理 4 条（已有官方译名入表：Allomancer Jak…/Mistborn Adventure Game/Birthright/House War）；章节标题/章节题词/Sheet17 三个 sheet 不入译名表。
+  - ⚠️ `dict/mistborn.json` 实质已是**全系列（三界宙）译名表**（meta.name 已改，文件名暂不改）；**按书拆分不做**（用户确认方向：跨世界串门频繁 + 切片机制已省 token，异义用 variants/note 治理）。
+  - ✅ 2026-10-19 拆名专项（`scripts/glossary_split_names.py`，用户口径）：人名形全名拆出裸名 **208 条**（Shallan=沙兰/Davar=达瓦 等；名/姓各自入典），拆名冲突 12 条未并入；全表 3932→**4140** 条。`conflicts.md` 各决策表已加「处理方法」空列待人工填写（填写后勿再重跑 report）。
+  - ✅ 2026-10-19 **A类36条已裁定落地**：26条改以新表（src 记 `A类裁定2026-10-19:<旧值>` 可回滚）；Felt/Red/Vet 加作品 variants（迷雾之子/飓光志 同词异人或异译）；Hoid/Arcanum Unbounded 按用户 note；Allomantic Agreement/Book of the False Dawn 维持现值；Pinnacle 维持已有 variants；Sixteen 删除（通用数词）；Misra 待定。规则入库：**作品内的作品在译名表中不加书名号**。后续用户复核：Arcanum Unbounded note=真实世界的书（2016 中短篇合集）；Shum=束姆(迷雾人名)/黍麻(飓光志作物)、The Path=道(迷雾宗教)/白沙=宗师之路(不同宗教，非同一宗教) 均改为作品 variants（zh 取迷雾义）。✅ 书名号全表清理：作品内的作品 45 条去书名号（回滚档 booktitle_strip.json）。✅ 2026-10-19 **B类 54 条中 25 条已按用户裁定落地**（改值7、维持6、补note3、variants8、删 battle=战役）；余 29 条留 B 表待定。裁定记录见 meta.notes；改值可按 src 中 `B类裁定2026-10-19:<旧值>` 回滚。复核完毕：Edgedancer 加 variants（缘舞骑士/短篇名缘舞）、Lightweaver 主用织光骑士+尤伦（Yolish）语境织光师、Deo 的迪奥币=货币（非人名）。
 
 ## 凭据
 

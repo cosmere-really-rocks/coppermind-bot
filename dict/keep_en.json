@@ -1,36 +1,32 @@
 {
- "meta": {
-  "purpose": "「保留英文」名单：看似专名（书名/作品名/人名等）、但译名表与中文书证均未收录、且尚无官方中文译名的词条。规则 2 要求「译名表没有的疑似专名保留英文并列入 untranslated_terms」，此名单确保 LLM 不因“像专名就自造译名”而擅自翻译。",
-  "usage": "translate.py::build_user_prompt 会读取本文件；若某块正文出现名单内词，就在提示词里明示「以下专名保留英文不译」。词条加入时机：译名表无 + 中文书证 0 命中 + 无可靠官方译名。",
-  "note": "勿与译名表重复：若词条后来获得官方译名并入 mistborn.json/common.json，应从本名单移除。"
- },
- "terms": [
-  "A Vial Plot",
-  "A Weekend with Lord Lomax",
-  "Allomancer Jak and the Pits of Eltania",
-  "Alloy of Law (rule book)",
-  "Book of Nails",
-  "Boxed In",
-  "Changing Hands",
-  "Chasmfiend (magazine)",
-  "Elendel Supremacy Bill",
-  "Harmony's Sword",
-  "Hope in Ashes",
-  "Mending the Cracks",
-  "Mistborn Adventure Game",
-  "Mistborn Adventure Game (rule book)",
-  "Mistborn Legacy",
-  "Mistborn Scenarios",
-  "Mistborn Starter Set",
-  "Mistborn film",
-  "Mistborn: Birthright",
-  "Mistborn: Ghostbloods",
-  "Mistborn: House War",
-  "Mistborn: The Deckbuilding Game",
-  "New Ascendancy",
-  "Peter Ahlstrom",
-  "The Long Way In",
-  "To Scrape the Sky",
-  "Trell (Trellism)"
- ]
+  "meta": {
+    "purpose": "「保留英文」名单：看似专名（书名/作品名/人名等）、但译名表与中文书证均未收录、且尚无官方中文译名的词条。规则 2 要求「译名表没有的疑似专名保留英文并列入 untranslated_terms」，此名单确保 LLM 不因“像专名就自造译名”而擅自翻译。",
+    "usage": "translate.py::build_user_prompt 会读取本文件；若某块正文出现名单内词，就在提示词里明示「以下专名保留英文不译」。词条加入时机：译名表无 + 中文书证 0 命中 + 无可靠官方译名。",
+    "note": "勿与译名表重复：若词条后来获得官方译名并入 mistborn.json/common.json，应从本名单移除。"
+  },
+  "terms": [
+    "A Vial Plot",
+    "A Weekend with Lord Lomax",
+    "Alloy of Law (rule book)",
+    "Book of Nails",
+    "Boxed In",
+    "Changing Hands",
+    "Chasmfiend (magazine)",
+    "Elendel Supremacy Bill",
+    "Harmony's Sword",
+    "Hope in Ashes",
+    "Mending the Cracks",
+    "Mistborn Adventure Game (rule book)",
+    "Mistborn Legacy",
+    "Mistborn Scenarios",
+    "Mistborn Starter Set",
+    "Mistborn film",
+    "Mistborn: Ghostbloods",
+    "Mistborn: The Deckbuilding Game",
+    "New Ascendancy",
+    "Peter Ahlstrom",
+    "The Long Way In",
+    "To Scrape the Sky",
+    "Trell (Trellism)"
+  ]
 }
