@@ -250,6 +250,36 @@ def load_keep_en(path: Path = KEEP_EN_FILE) -> list[str]:
     return d.get("terms", [])
 
 
+def resolve_zh_title(title_en: str, glossary: dict | None = None) -> str:
+    """把英文快照标题解析为中文页标题（供写站目标页使用）。
+
+    背景：batch.py 曾直接以「前缀+英文标题」写站（bot测试:Ghostbloods），而正文词条已按
+    译名表译为中文（鬼血会）→ 标题与正文割裂。这里把标题解析优先级：
+      1. 合并译名表命中且有非空 zh -> 用中文（Ghostbloods -> 鬼血会）
+      2. 中文站既有页面（zhwiki_titles 反查，如 Mistborn (series) -> 迷雾之子(系列)，
+         中文站已有该页）-> 用既有页面标题
+      3. 否则 -> 保留英文（Red (Scadrial)/Demoux (city)/Tyrian Sea 等查无可靠中译名，
+        宁可留英文不自造译名，与 keep_en 铁律一致）
+    注意 entry 可能是 {"zh": "..."} 或 {"zh": None, ...}（待定），None 视为未命中。
+    """
+    if glossary is None:
+        glossary = load_merged_glossary(DEFAULT_GLOSSARY, DEFAULT_COMMON)
+    ent = glossary.get(title_en)
+    if isinstance(ent, dict) and isinstance(ent.get("zh"), str) and ent["zh"].strip():
+        return ent["zh"].strip()
+    if isinstance(ent, str) and ent.strip():
+        return ent.strip()
+    # 中文站既有页面标题（zhwiki_titles zh->en 反查，同一 en 可能有多个 zh 页面，取第一个）
+    try:
+        zt = load_zhwiki_titles()
+        for zh, en in zt.items():
+            if en == title_en and zh and zh.strip():
+                return zh.strip()
+    except Exception:
+        pass
+    return title_en
+
+
 # 命名空间/维护前缀：这些词条不是需要翻译的正文专名（站务页、interwiki 外链、文件/分类）
 _KEEP_EN_IGNORE_PREFIXES = (
     "user:", "user talk:", "category:", "file:", "image:", "template:", "module:",

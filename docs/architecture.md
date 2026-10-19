@@ -197,6 +197,15 @@ references 之前）会被提前结算为「未定义」→ 主 `<references>` �
 另：**渲染验证必须用完整 wikitext，不要截断**——Wayne 等 fn references 位于 87KB 处，
 截断渲染会假报「组名为 fn 的 <ref> 存在但没有找到对应 <references group=fn>」。
 
+### 4.5 infobox 类
+
+- Infobox「字段 = 值」按译名表确定性替换（`translate_infobox_values`），结构化短字段不依赖 LLM。
+- `{{for|...|pre=}}` 参数确定性替换（`translate_for_template`）。
+- 子页链接 `[[父/子页|display]]` 父段与后缀段**都有译名**才重写（`translate_wikilink_targets`）。
+- 表格 bib 表头 `class=` 里的 `infobox` 词被剥离（`_strip_bib_infobox_class`），避免中文
+  `wikitable infobox` 冲突布局损坏。
+- 站务模板整删（update/expand/meta:*/demoted/dialogue/edit note/user:*）；nosnippet unwrap 保内文。
+
 ### 4.6 `_convert_lang_links`：语言间链接 [[es: X]]/[[uk: X]] → 完整外部链接
 
 英文站页尾的 `[[es: X]]`/`[[uk: X]]` 是 MediaWiki 语言链接，指向各语言站
@@ -210,7 +219,23 @@ interwiki 表只配了 en/cm/wob 等 87 个前缀，**没有 es/uk 语言前缀*
 （scripts/fetch_en.py 的 get_session）可达，langlinks url 已逐条核对（Mistborn (series)
 → es/uk、Wayne/Elendel/Allik Neverfar/Ghostbloods → es，目标页 pageid 均存在）。
 
-### 4.5 infobox 类
+### 4.7 写站目标标题解析：`resolve_zh_title`（batch.py 写站阶段）
+
+**背景**：batch.py 曾直接以「前缀+英文标题」写站（`bot测试:Ghostbloods`），而正文词条已按
+译名表译为中文（鬼血会）→ 标题与正文割裂。现在写站目标标题经 `_resolve_zh_title`（batch.py）
+/ `resolve_zh_title`（translate.py，同规则）解析，优先级：
+
+1. **合并译名表**命中且有非空 zh → 用中文（Ghostbloods→鬼血会、Spook→鬼影、Elendel→依蓝戴）
+2. **中文站既有页面标题**（zhwiki_titles zh→en 反查，如 Mistborn (series)→迷雾之子(系列)，
+   中文站已有该页）→ 用既有页面标题
+3. **否则保留英文**——Red (Scadrial)/Demoux (city)/Tyrian Sea/Vindiel-Cameux/Sycamore Street
+   Gang/Noble Houses Collective/Survivorday/Harmontide/Mistwatch Eve 查无可靠中译名，宁可留
+   英文不自造译名（与 keep_en 铁律一致）；译名表 entry 的 zh 为 None（如 Demoux (city)
+   pending tlm-untranslated）同样视为未命中。
+
+20 篇实测：11 个中文标题 + 9 个英文标题。已写站的旧英文标题测试页用 MediaWiki
+`action=move`（write.py::HuijiClient.move，noredirect=0 保留重定向）移到中文标题，
+保留历史与站内链接。
 
 - Infobox「字段 = 值」按译名表确定性替换（`translate_infobox_values`），结构化短字段不依赖 LLM。
 - `{{for|...|pre=}}` 参数确定性替换（`translate_for_template`）。

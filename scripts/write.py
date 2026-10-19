@@ -137,6 +137,17 @@ class HuijiClient:
         })
         return body["edit"]
 
+    def move(self, from_title: str, to_title: str, reason: str = "") -> dict:
+        """移动页面（保留历史与重定向，MediaWiki action=move）。"""
+        self.ensure_logged_in()
+        token = self.get_token("csrf")
+        body = self._post({
+            "action": "move", "from": from_title, "to": to_title,
+            "reason": reason, "movetalk": "1", "noredirect": "0",
+            "bot": "1", "token": token, "format": "json",
+        })
+        return body.get("move", body)
+
     def read_page(self, title: str) -> dict | None:
         """读取页面（只读）。返回 {missing, title, pageid, revid, wikitext} 或 None。"""
         body = self._post({

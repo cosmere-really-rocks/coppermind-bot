@@ -59,6 +59,36 @@ def snapshot_titles() -> list[str]:
     )
 
 
+_ZH_TITLE_GLOSSARY = None
+_ZH_TITLE_ZHWIKI = None
+
+
+def _resolve_zh_title(title_en: str) -> str:
+    """英文标题 -> 中文页标题（惰性加载译名表；查无可靠中译名则保留英文）。"""
+    global _ZH_TITLE_GLOSSARY, _ZH_TITLE_ZHWIKI
+    if _ZH_TITLE_GLOSSARY is None:
+        import importlib.util as _ilu
+        _sp = _ilu.spec_from_file_location("tr_resolve", HERE / "translate.py")
+        _tr = _ilu.module_from_spec(_sp)
+        sys.modules[_sp.name] = _tr
+        _sp.loader.exec_module(_tr)
+        _ZH_TITLE_GLOSSARY = _tr.load_merged_glossary(
+            ROOT / "dict" / "mistborn.json", ROOT / "dict" / "common.json")
+        _ZH_TITLE_ZHWIKI = _tr.load_zhwiki_titles()
+    ent = _ZH_TITLE_GLOSSARY.get(title_en)
+    if isinstance(ent, dict):
+        zh = ent.get("zh")
+        if isinstance(zh, str) and zh.strip():
+            return zh.strip()
+    elif isinstance(ent, str) and ent.strip():
+        return ent.strip()
+    # 中文站既有页面标题（如 Mistborn (series) -> 迷雾之子(系列)）
+    for zh, en in _ZH_TITLE_ZHWIKI.items():
+        if en == title_en and zh and zh.strip():
+            return zh.strip()
+    return title_en
+
+
 def has_infobox(title: str) -> bool:
     p = EN_SNAPSHOT / title / "wikitext.txt"
     if not p.exists():
@@ -122,8 +152,12 @@ def run_stage(args, title: str) -> list[str]:
             return status
         write_cmd = [str(PY), str(HERE / "write.py"), "--title", title]
         if args.write_target_prefix:
-            # 非破坏性验证：写到计划前缀下的临时页（如 "BOT测试:Allik Neverfar"）
-            write_cmd += ["--target", args.write_target_prefix + title]
+            # 非破坏性验证：写到计划前缀下的临时页（如 "BOT测试:Allik Neverfar"）。
+            # 目标标题经 resolve_zh_title 解析为中文（Ghostbloods->鬼血会）；查无可靠
+            # 中译名的标题（Red (Scadrial)/Demoux (city)/Tyrian Sea 等）保留英文，
+            # 与正文 keep_en 铁律一致，避免自造译名。
+            target_title = args.write_target_prefix + _resolve_zh_title(title)
+            write_cmd += ["--target", target_title]
         if args.skip_if_same:
             write_cmd += ["--skip-if-same"]
         if args.force:

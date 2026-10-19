@@ -91,8 +91,9 @@ CASES = [
 
 def main():
     failed = 0
-    for name, fn, src, want in CASES:
-        got = fn(src)
+
+    def check(name, got, want):
+        nonlocal failed
         if got == want:
             print("  OK  %s" % name)
         else:
@@ -100,7 +101,29 @@ def main():
             print("  FAIL %s" % name)
             print("    got : %r" % got)
             print("    want: %r" % want)
-    print("\n%d/%d passed" % (len(CASES) - failed, len(CASES)))
+
+    for name, fn, src, want in CASES:
+        check(name, fn(src), want)
+
+    # --- 写站标题解析（batch.py::_resolve_zh_title / translate.py::resolve_zh_title）---
+    _bspec = importlib.util.spec_from_file_location("batch_mod", os.path.join(HERE, "batch.py"))
+    bt = importlib.util.module_from_spec(_bspec)
+    sys.modules[_bspec.name] = bt
+    _bspec.loader.exec_module(bt)
+    title_cases = [
+        ("有译名|Ghostbloods", "Ghostbloods", "鬼血会"),
+        ("有译名|Spook", "Spook", "鬼影"),
+        ("有译名|Elendel", "Elendel", "依蓝戴"),
+        ("站内既有页|Mistborn (series)", "Mistborn (series)", "迷雾之子(系列)"),
+        ("无译名|Red (Scadrial)", "Red (Scadrial)", "Red (Scadrial)"),
+        ("无译名|Demoux (city)", "Demoux (city)", "Demoux (city)"),
+        ("无译名|Tyrian Sea", "Tyrian Sea", "Tyrian Sea"),
+        ("无译名|Harmontide", "Harmontide", "Harmontide"),
+    ]
+    for name, src, want in title_cases:
+        check("标题|" + name, bt._resolve_zh_title(src), want)
+
+    print("\n%d/%d passed" % (len(CASES) + len(title_cases) - failed, len(CASES) + len(title_cases)))
     return 1 if failed else 0
 
 
