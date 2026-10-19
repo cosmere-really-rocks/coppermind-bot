@@ -255,15 +255,23 @@ Brandon 语录、无名字位置参数为剧透警告），但提示词规则 1�
 写回前必须与英文源 `{{book ref|...}}` 编号逐一核对。Ghostbloods 最终恢复为引用与英文源
 完全一致的版本（mb7|47×7 / sa4|13×11 / sa2|43×3 全对上）。
 
+### 4.9 Post/Pre 时代前缀 → `[[中文X|中文X后/前]]`（`translate_prepost_links`）
 
-- Infobox「字段 = 值」按译名表确定性替换（`translate_infobox_values`），结构化短字段不依赖 LLM。
-- `{{for|...|pre=}}` 参数确定性替换（`translate_for_template`）。
-- 子页链接 `[[父/子页|display]]` 父段与后缀段**都有译名**才重写（`translate_wikilink_targets`）。
-- 表格 bib 表头 `class=` 里的 `infobox` 词被剥离（`_strip_bib_infobox_class`），避免中文
-  `wikitable infobox` 冲突布局损坏。
-- 站务模板整删（update/expand/meta:*/demoted/dialogue/edit note/user:*）；nosnippet unwrap 保内文。
+**问题**：历史/事件/时代词条广泛出现 `Post [[Catacendre]]`、`post-[[Catacendre]]`、
+`pre-[[Catacendre]]`、`pre [[Final Empire]]` 等形态（全库 51 页 55+ 处，含 infobox 的
+`|era=` 行），LLM 只译内链目标（[[灰烬灾变]]）、把 Post/Pre 留成英文——用户报告
+Ghostbloods 的「Post [[灰烬灾变]]」即此。
 
----
+**修复**：`translate_prepost_links(wikitext, glossary)`（LLM 前确定性转换，与
+`translate_infobox_values` 同级调用）把 `(Post|Pre)[\s-]?[[X]]` 转成 `[[中文X|中文X后/前]]`
+（Post→后、Pre→前）。要点：
+- 目标 X 按译名表取 zh；目标已是中文（infobox 先行译过）直接用目标；无可靠译名→整段
+  原样保留（Battar 的 pre-[[Desolation]] 即因此正确保留，天灾无译名不自造）。
+- 带管道 `post-[[Catacendre|Catacendric]]`：目标按 X 译、disp 丢弃（Catacendric 等形容词
+  形态显示文本不独立成词，统一为「灰烬灾变后」）。
+- 幂等：转换后 `[[中文|中文后/前]]` 不再被匹配；`Post office` 等独立词不误伤（须紧跟 [[）。
+- 站上已写页（鬼影/鬼血会共 3 处，含 image caption 的 `post [[Catacendre]]`）已直接应用
+  此函数修正（不重跑 LLM，规避 §4.8 引用噪音），渲染验证 0 错误。
 
 ## 5. 写站与验证（write.py）
 

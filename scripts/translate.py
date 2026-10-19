@@ -607,6 +607,50 @@ def _lookup_glossary_zh(glossary, term: str) -> str | None:
     return None
 
 
+# Post/Pre 时代前缀：`Post [[Catacendre]]` / `post-[[Catacendre]]` / `pre-[[Catacendre]]` /
+# `pre [[Final Empire]]` 等，后接 [[链接]]（可带管道显示文本）。这类前缀在历史/事件/时代
+# 语境广泛出现（全库 55 处、跨 40+ 页），LLM 常只译内链目标、把 Post/Pre 留英文。
+# 确定性转换为 `[[中文目标|中文目标后/前]]`（如 [[灰烬灾变|灰烬灾变后]]），链接文本与
+# 目标语义一致；目标无可靠译名则原样保留（不自造译名，与 keep_en 铁律一致）。
+_PREPOST_LINK_RE = re.compile(
+    r"(?i)\b(Post|Pre)\s*-?\s*(\[\[([^\[\]|]+)(?:\|[^\[\]]*)?\]\])")
+
+
+def translate_prepost_links(wikitext: str, glossary: dict):
+    """把 `Post/Pre [[X]]` 时代前缀转成 `[[中文X|中文X后/前]]`（确定性，LLM 前）。
+
+    返回 (新wikitext, 替换统计 [(原文→新文), ...])。
+    - 链接目标 X 按译名表取 zh；X 无译名→原样保留整段。
+    - 带管道 [[X|disp]]：目标按 X 译，disp 丢弃（Catacendric 等形容词形态的显示文本
+      本就不独立成词，统一为「中文X后/前」）。
+    - 幂等：已转换的 [[中文|中文后/前]] 不再匹配（中文不满足 [^\[\]|]+ 的英文构词，
+      且 Post/Pre 前缀已消失）。
+    """
+    def repl(m):
+        prefix = m.group(1)
+        inner = m.group(2)
+        target = m.group(3).strip()
+        # 目标已是非 ASCII（中文：infobox 已先行译完目标）→ 直接以目标为基础加前后缀。
+        # 否则按译名表查 zh；查不到 → 保留原样（不自造译名）。
+        if re.search(r"[^\x00-\x7F]", target):
+            zh = target
+        else:
+            zh = _lookup_glossary_zh(glossary, target)
+        if not zh:
+            return m.group(0)  # 无可靠译名 → 保留（不自造）
+        suffix = "后" if prefix.lower() == "post" else "前"
+        return "[[" + zh + "|" + zh + suffix + "]]"
+
+    out = _PREPOST_LINK_RE.sub(repl, wikitext)
+    stats = []
+    if out != wikitext:
+        # 统计：逐处提取已转换的 [[zh|zh后/前]]
+        import re as _re
+        for mm in _re.finditer(r"\[\[([^\[\]|]+)\|([^\[\]]+?后|前)\]\]", out):
+            stats.append(("Post/Pre 时代前缀", mm.group(0)))
+    return out, stats
+
+
 def translate_wikilink_targets(wikitext: str, glossary: dict):
     """把 [[Parent/Subpage|display]] 这类子页链接的目标翻译成 [[父译名/子译名|display]]。
 
@@ -1440,6 +1484,15 @@ def main():
         sys.stderr.write("[Infobox 值替换]（按译名表确定性替换，正文翻译仍交给 LLM）:\n")
         for k, (old, new) in infobox_stats.items():
             sys.stderr.write(f"  {k}: {old} -> {new}\n")
+
+    # Post/Pre 时代前缀（历史/事件/时代词条广泛出现）：`Post [[Catacendre]]` →
+    # `[[灰烬灾变|灰烬灾变后]]`。必须在 LLM 前确定性转换（LLM 常只译内链目标、留 Post/Pre
+    # 英文前缀）；目标无可靠译名则原样保留。
+    wikitext, prepost_stats = translate_prepost_links(wikitext, glossary)
+    if prepost_stats:
+        sys.stderr.write(f"[Post/Pre 时代前缀] 转换 {len(prepost_stats)} 处：\n")
+        for s in prepost_stats:
+            sys.stderr.write(f"  {s[1]}\n")
 
     # 页首 {{for|目标|描述|pre=导语}} 模板：参数值确定性替换（目标/描述/显示 + 可译专名）。
     wikitext, for_stats = translate_for_template(wikitext, glossary)
