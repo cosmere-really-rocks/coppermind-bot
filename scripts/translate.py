@@ -16,8 +16,8 @@
   - 超长词条分块：按 `== 章节 ==` / `=== 小节 ===` 边界切块，每块 ≤ --max-chars，Infobox+导语固定为 chunk0，
     绝不在一节/一模板内部切开；单节过长时独成一块并告警。
   - 术语裁切（决议 #9）：仅把本文出现的译名词条切片送给 LLM，省 token。
-  - LLM 配置与 DSH 一致：默认 base_url=https://token.glint-mvt.com/v1、model=deepseek-v4-flash-0731，
-    api key 从环境变量 DEEPGLINT2_API_KEY 读取（可 --api-key / .env 覆盖）。
+  - LLM 配置与 DSH 一致：默认 base_url=https://token.glint-mvt.com/v1、model=qwen3.8-27b
+    （2026-10-18 deepseek 涨价切换），api key 从环境变量 LLM_API_KEY 读取（可 --api-key / .env 覆盖）。
   - 输出遵守 JSON 契约：translation + untranslated_terms（决议 #4），原文引用/称号列表标记「需查中译本」（决议 #13）。
 
 用法：
@@ -62,7 +62,7 @@ KEEP_EN_FILE = ROOT / "dict" / "keep_en.json"
 ZHWIKI_TITLES_FILE = ROOT / "dict" / "zhwiki_titles.json"
 ZHWIKI_ALIASES_FILE = ROOT / "dict" / "zhwiki_aliases.json"
 DEFAULT_BASE_URL = "https://token.glint-mvt.com/v1"
-DEFAULT_MODEL = "deepseek-v4-flash-0731"
+DEFAULT_MODEL = "qwen3.8-27b"  # 2026-10-18 切换：deepseek 涨价，换 qwen3.8-27b（provider/api key 不变）
 DEFAULT_WIKI = "coppermind.huijiwiki.com"
 
 
@@ -532,8 +532,31 @@ def _sub_glossary_in_string(value: str, gloss: dict) -> str:
             continue
         # 链接目标形式
         out = re.sub(r"\[\[" + re.escape(t) + r"\]\]", "[[" + zh + "]]", out)
-        # 裸词形式（词边界）
-        out = re.sub(r"(?<![A-Za-z])" + re.escape(t) + r"(?![A-Za-z])", zh, out)
+        # 裸词形式（词边界），但跳过「嵌在更长英文短语中」的命中：
+        # 如 Survivor of the Flames（无整条译名的称号）只应整体保留英文，不可把
+        # Survivor 单独换成 幸存者 造成「幸存者 of the Flames」半译。t 若是短语的
+        # 一部分（后随「空格+小写词」/前有「小写词+空格」/带 's 所有格），跳过。
+        # 2026-10-19 修：原实现在 finditer 遍历中直接改写 out，同一词条在一个值里多次
+        # 命中时后续匹配的旧偏移落在已被改短的字符串上 → 错位切片（实测把
+        # `[[Maxillium Ladrian|Maxillium]], [[...]]` 切成 `[[麦克斯利姆 Ladrian|Maxi麦克斯利姆[[…`，
+        # 吞掉 `]], `——历史「内链括号不配对」多源于此）。改为：先在未改动的 out 上收集
+        # 待替换区间与 in_phrase 判定，再按倒序一次性应用（倒序保证已应用的替换不影响
+        # 尚未应用区间的偏移）。
+        reps = []
+        for m in re.finditer(r"(?<![A-Za-z])" + re.escape(t) + r"(?![A-Za-z])", out):
+            before = out[max(0, m.start() - 24):m.start()]
+            after = out[m.end():m.end() + 24]
+            in_phrase = (
+                re.search(r"[a-z]{2,}\s+$", before)      # 前有小写英文词
+                or re.search(r"^\s+[a-z]", after)         # 后有空格+小写英文词
+                or re.search(r"'\s*$", before)            # 所有格 's 前段
+                or re.search(r"^\s*-?\s*[a-z][a-z'\-]{1,}", after)  # 后随连字符小写
+            )
+            if in_phrase:
+                continue
+            reps.append((m.start(), m.end()))
+        for s, e in reversed(reps):
+            out = out[:s] + zh + out[e:]
     return out
 
 
@@ -582,17 +605,41 @@ def translate_infobox_values(wikitext: str, glossary: dict) -> dict:
             key = pm.group(1)
             val = pm.group(2)
             # 值内部若还藏着未闭合等价的子模板（如图片），跳过该行
-            new_val = _sub_glossary_in_string(val, glossary)
-            if new_val != val:
+            new_val = _translate_cat_residents(val, glossary)
+            new_val2 = _sub_glossary_in_string(new_val, glossary)
+            if new_val2 != val:
                 param_name = key.strip().lstrip("|").strip()
-                stats[param_name] = (val, new_val)
-                out_lines.append(key + new_val)
+                stats[param_name] = (val, new_val2)
+                out_lines.append(key + new_val2)
             else:
                 out_lines.append(ln)
         else:
             out_lines.append(ln)
     new_block = "\n".join(out_lines)
     return wikitext[:start] + new_block + wikitext[end:], stats
+
+
+_CAT_RESIDENTS_RE = re.compile(
+    r"cat\s*=\s*Residents of\s+([A-Za-z][A-Za-z' \-]*?)(?=[,}\|]|$)", re.I)
+
+
+def _translate_cat_residents(value: str, glossary: dict) -> str:
+    """把 {{tag|X|cat=Residents of Y}} 的分类参数 `cat=Residents of Y` 确定性地
+    转为 `cat=Y的居民`（Y 按译名表译中；Y 无可靠译名则原样保留英文，不自造）。
+
+    背景：英文站 {{tag|Luthadel|cat=Residents of Luthadel}} 实际归入
+    Category:Residents of Luthadel；中文站对应分类是「陆沙德的居民」。LLM 会把
+    cat 参数当普通英文混译（Residents of Elen依蓝戴）或改回英文——确定性转换
+    在 LLM 前完成，LLM 只能原样保留（规则 1/3b 已要求占位符与参数不动）。
+    """
+    def repl(m):
+        place = m.group(1).strip()
+        zh = _lookup_glossary_zh(glossary, place)
+        if zh:
+            return "cat=" + zh + "的居民"
+        return m.group(0)
+
+    return _CAT_RESIDENTS_RE.sub(repl, value)
 
 
 def _lookup_glossary_zh(glossary, term: str) -> str | None:
@@ -740,6 +787,66 @@ def translate_plain_links(wikitext: str, glossary: dict):
     return out, stats
 
 
+# 常见章节标题 EN→ZH 预翻译表（由本批 20 页实际译法归纳，取多数口径：
+# Notes→注释 16x、History→历史 10x、Appearance and Personality→外貌与性格 6x…；
+# 个别页的少数派译法如 Notes→备注、Relationships→关系 以多数为准归一）。
+_SECTION_HEADING_MAP = {
+    "notes": "注释",
+    "history": "历史",
+    "appearance and personality": "外貌与性格",
+    "relationships": "人际关系",
+    "trivia": "趣闻",
+    "attributes and abilities": "属性与能力",
+    "metallic arts": "金属技艺",
+    "feruchemy": "藏金术",
+    "allomancy": "镕金术",
+    "hemalurgy": "血金术",
+    "quotes": "语录",
+    "early life": "早年生活",
+    "awards": "奖项",
+    "structure": "结构",
+    "economy": "经济",
+    "culture": "文化",
+    "geography": "地理",
+    "politics": "政治",
+    "family": "家庭",
+    "appearance": "外貌",
+    "personality": "性格",
+    "formation": "组建",
+    "publication": "出版",
+    "development": "创作",
+    "summary": "剧情",
+    "synopsis": "概要",
+    "resources": "资源",
+    "fighting": "战斗",
+    "religions": "宗教",
+    "currency": "货币",
+    "calendar": "历法",
+    "education": "教育",
+    "fashion": "时尚",
+    "architecture": "建筑",
+    "government and politics": "政府与政治",
+}
+_SECTION_HEAD_RE = re.compile(
+    r"^(={2,6})[ \t]*([A-Za-z][A-Za-z0-9 ,:'\-()]*?)[ \t]*(={2,6})[ \t]*$", re.M)
+
+
+def translate_section_headings(wikitext: str):
+    """常见章节标题确定性预翻译（LLM 前）。只匹配纯 ASCII 标题 → 表内映射为中文；
+    长尾标题不在此表，漏译由 verify 3a ASCII 标题门禁拦截。返回 (新文本, 统计)。"""
+    stats = []
+
+    def _sub(m):
+        key = m.group(2).strip().lower()
+        zh = _SECTION_HEADING_MAP.get(key)
+        if not zh:
+            return m.group(0)
+        stats.append(f"{m.group(2)} -> {zh}")
+        return f"{m.group(1)} {zh} {m.group(3)}"
+
+    return _SECTION_HEAD_RE.sub(_sub, wikitext), stats
+
+
 def translate_for_template(wikitext: str, glossary: dict):
     """把 {{for|目标|描述|pre=导语}} 模板的参数值按译名表做确定性替换。
 
@@ -854,6 +961,193 @@ def unmask_protected_blocks(translated_body: str, registry: list[dict]) -> str:
 
 
 # --------------------------------------------------------------------------- #
+# 引用模板占位（确定性防「引用编号幻觉」）
+# --------------------------------------------------------------------------- #
+# 实测（Spook 重跑）：LLM 在翻译中含 {{book ref|mb1|24}} 等引用模板时，会把编号改掉
+# （mb1|24→mb1|22、mb2|25→mb2|6、mb3|16→mb3|53…），Ghostbloods 重跑同样幻 觉过
+# （§4.8 教训）。这是「写回前必须人工核引用」的根本原因。根治：LLM 前把这些
+# 引用模板整段替换为 %%REF_N%% 占位符，LLM 接触不到编号无从幻觉（规则只要求
+# 占位符原样保留），assemble 时按英文源顺序确定性填回 → 引用编号 100% 与英文源一致。
+_REF_TMPL_RE = re.compile(
+    r"\{\{\s*(?:book ref|msh ref|Rpg ref|date)\b[^{}]*\}\}", re.I)
+
+
+def mask_ref_templates(wikitext: str):
+    """把 {{book ref|X|Y}}/{{msh ref|X|Y}}/{{Rpg ref|X|Y}}/{{date|X|Y}} 替换为 %%REF_N%%。
+
+    返回 (masked, refs)；refs 为按出现顺序记录的英文源模板原文。
+    应在 mask_protected_blocks 之后调用（Quote/columns 整块已占位，其内部 ref
+    随之保护，不会出现在这里）。wob ref 已在 convert 阶段转 <ref>（非模板），不涉及。
+
+    注意：占位符必须是**真正的双百分号** %%REF_N%%（f-string 生成，不能用 %-格式化——
+    `"%%REF_%d%%" % i` 的 %% 会被转义成单 %，得到 %REF_0%：形态太弱，LLM 会把
+    单 % 当普通标点改写（实测输出 %{{date|1021|fe}}% 残留），且参照 unmask 的双 %
+    无法匹配，引用填回静默失败）。
+    """
+    refs = []
+
+    def repl(m):
+        refs.append(m.group(0))
+        return f"%%REF_{len(refs) - 1}%%"
+
+    return _REF_TMPL_RE.sub(repl, wikitext), refs
+
+
+def unmask_ref_templates(translated_body: str, refs: list[str]):
+    """把译文里的 %%REF_N%% 填回英文源 ref 模板原文。
+
+    返回 (body, missing_tokens)。2026-10-18 起确定性修复两类模型占位符损伤
+    （qwen3.8-27b 实测均出现过）：
+
+    A) **顶替型**：恰缺 1 个序号 i、占位符总数恰好等于 refs 数、恰有 1 个序号 d
+       被连续抄了两次（模型把 %%REF_i%% 抄成 %%REF_d%%，如 mb5|24→mb5|epilogue）。
+       英文源顺序保证 i 落在 (前驱 p, d) 之间 → 重复段的**首个**占位即 i 的槽位，
+       按位置重映射为 refs[i]，两处各归其位。
+    B) **丢失型**：模型删掉占位符文本，但其余占位符保持相对顺序 → 在邻居
+       （前驱/后继占位符）之间回插（邻居位置即英文源位置）。
+
+    两种修复都要求「保守可证」的条件；条件不满足（乱序/多缺/全缺）原样列出
+    missing 交门禁把关，不做无谓干预。占位符替换改为**单遍位置化**（含修复
+    事件合并），杜绝全局 replace 的重复命中歧义。
+    """
+    out = translated_body
+    found = [(m.start(), m.end(), int(m.group(1)))
+             for m in re.finditer(r"%%REF_(\d+)%%", out)]
+    counts: dict = {}
+    for _, _, n in found:
+        counts[n] = counts.get(n, 0) + 1
+    missing = [i for i in range(len(refs)) if counts.get(i, 0) == 0]
+    remap: dict = {}        # found 下标 → 实际应填的 refs 下标（情形A 重映射）
+    reinsertions: list = []  # (pos, text) 回插事件（情形B）
+
+    # 情形A：单缺失 + 单序号连续重复（且占位符总数与 refs 相等 → 重复即顶替）
+    if len(missing) == 1 and len(found) == len(refs):
+        i = missing[0]
+        dups = [n for n, c in counts.items() if c > 1]
+        if len(dups) == 1 and counts[dups[0]] == 2:
+            d = dups[0]
+            ks = [k for k, (_, _, n) in enumerate(found) if n == d]
+            if len(ks) == 2 and ks[1] == ks[0] + 1:
+                p_prev = found[ks[0] - 1][2] if ks[0] > 0 else None
+                if (p_prev is None or p_prev < i) and i < d:
+                    remap[ks[0]] = i   # 重复段首占位 = 缺失序号的槽位
+                    missing.remove(i)
+
+    # 情形B：仍有缺失 + 序列（含重映射后）单调 + 缺得少 → 邻居间回插
+    seq_ns = [remap.get(k, n) for k, (_, _, n) in enumerate(found)]
+    seq_ok = all(seq_ns[k] < seq_ns[k + 1] for k in range(len(seq_ns) - 1))
+    if missing and found and seq_ok and len(found) >= max(1, len(refs) - 3):
+        for i in list(missing):
+            prev_ns = [n for n in seq_ns if n < i]
+            next_ns = [n for n in seq_ns if n > i]
+            if next_ns:
+                q = next_ns[0]
+                k = next(idx for idx, n in enumerate(seq_ns) if n == q)
+                pos = found[k][0]           # 后继占位起点（插在其前）
+            elif prev_ns:
+                q = prev_ns[-1]
+                k = next(idx for idx, n in enumerate(seq_ns) if n == q)
+                pos = found[k][1]           # 前驱占位终点（插在其后）
+            else:
+                continue                    # 无邻居（全缺等）→ 留给 missing
+            reinsertions.append((pos, refs[i]))
+            missing.remove(i)
+
+    # 单遍位置化应用：token 替换 + 回插事件合并（同位置时回插在前）
+    events = []
+    for k, (s, e, n) in enumerate(found):
+        events.append((s, 1, e, "tok", remap.get(k, n)))
+    for pos, text in reinsertions:
+        events.append((pos, 0, pos, "ins", text))
+    events.sort(key=lambda x: (x[0], x[1]))
+    pieces = []
+    last = 0
+    for pos, _rank, end, kind, payload in events:
+        pieces.append(out[last:pos])
+        if kind == "tok":
+            pieces.append(refs[payload] if 0 <= payload < len(refs)
+                          else f"%%REF_{payload}%%")
+        else:
+            pieces.append(payload)
+        last = end
+    pieces.append(out[last:])
+    out = "".join(pieces)
+    still_missing = [f"%%REF_{i}%%" for i in missing]
+    return out, still_missing
+
+
+# --------------------------------------------------------------------------- #
+# infobox「原名」占位（防 LLM 把英文原名翻译掉）
+# --------------------------------------------------------------------------- #
+# infobox 的「| 原名 = Spook」语义上是英文原名（{{CmPermission}}/{{en}} 依赖它定义
+# #var_final:en），LLM 却偶发把它译成中文（Spook→鬼影），破坏渲染。LLM 前占位、
+# assemble 填回英文标题，确定性保证原名恒为英文。
+_ORIGINAL_NAME_TOKEN = "%%ORIGINAL_NAME%%"
+_INFOBOX_ORIG_NAME_RE = re.compile(r"^(\|\s*原名\s*=\s*)(.*)$", re.M)
+
+
+def mask_infobox_original_name(wikitext: str, title_en: str):
+    """把 infobox 的「| 原名 = X」值替换为占位符。
+
+    返回 (masked, title_en)；无原名行则原样返回。assemble 时用
+    unmask_infobox_original_name 填回英文标题。
+    """
+    if _INFOBOX_ORIG_NAME_RE.search(wikitext):
+        return _INFOBOX_ORIG_NAME_RE.sub(lambda mm: mm.group(1) + _ORIGINAL_NAME_TOKEN, wikitext, count=1), title_en
+    return wikitext, title_en
+
+
+def unmask_infobox_original_name(translated_body: str, title_en: str) -> str:
+    if _ORIGINAL_NAME_TOKEN in translated_body and title_en:
+        return translated_body.replace(_ORIGINAL_NAME_TOKEN, title_en)
+    return translated_body
+
+
+# --------------------------------------------------------------------------- #
+# infobox「纯内链列表」值占位（对所有页面/模型自动生效）。
+# 背景：qwen3.8-27b 对 `|children=[[A|B]], [[C|D]]` 这类字段 3 连败——合并成
+# `[[A|B[[C|D]]` 断链（Wax/Marasi 两页同型）。值为「仅内链 + 分隔符」的字段
+# 此时已过 translate_plain_links（译名表能译的目标已译），LLM 对纯链接值没有
+# 合理改写空间 → 占位直通，assemble 填回；漏保占位符交 verify 结构检查把关。
+# --------------------------------------------------------------------------- #
+_LINKLIST_LINE_RE = re.compile(
+    # 2026-10-19 修：字段名放开为任意非 '=‘ 字符——convert 层已把 Infobox 参数名译成
+    # 中文（children→子嗣），原 ASCII 限定导致掩码不命中、纯链接值漏给 LLM。
+    # 值形态仍严格限定「仅 [[..]] + 分隔符」，不会波及其他字段行。
+    # '=' 后的空白收进组一，占位与回填逐字还原（原 \s* 在组外会吞掉该空格）。
+    r"^(\|[^\n=]*?=\s*)"
+    r"(\[\[[^\[\]{}]+\]\](?:\s*[,;，、]\s*\[\[[^\[\]{}]+\]\])*)\s*$",
+    re.M)
+
+
+def mask_infobox_link_lists(wikitext: str):
+    """纯内链列表型 infobox 字段（children/relatives/image…）→ %%LINKLIST_n%%。
+
+    返回 (masked, registry)；registry[i] = 原值，assemble 时原样填回。
+    """
+    registry: list[str] = []
+
+    def _sub(m):
+        registry.append(m.group(2))
+        return f"{m.group(1)}%%LINKLIST_{len(registry) - 1}%%"
+
+    return _LINKLIST_LINE_RE.sub(_sub, wikitext), registry
+
+
+def unmask_infobox_link_lists(translated_body: str, registry: list[str] | None) -> str:
+    if not registry:
+        return translated_body
+    for i, val in enumerate(registry):
+        tok = f"%%LINKLIST_{i}%%"
+        if tok in translated_body:
+            translated_body = translated_body.replace(tok, val)
+        else:
+            sys.stderr.write(f"[提醒] LINKLIST 占位符被改写未保留（LLM 动了不该动的字段）: {tok} —— "
+                             f"verify [占位符] 会拦截\n")
+    return translated_body
+
+
+# --------------------------------------------------------------------------- #
 # 分块（超长词条支持）。按 == 章节 == / === 小节 === 边界切，Infobox+导语固定 chunk0。
 # --------------------------------------------------------------------------- #
 @dataclass
@@ -906,7 +1200,10 @@ def chunk_wikitext(wikitext: str, max_chars: int):
     """把 wikitext 切成 ≤ max_chars 的块。
 
     规则：
-      - 头部（Infobox+导语，首个无标题段）固定为 chunk0。
+      - 头部（Infobox+导语，首个无标题段）固定为 chunk0，且**独立成块**
+        （不再把后续章节并入 chunk0）。实测（Spook rerun3）：chunk0 若同时含
+        导语+整个章节（6509 字符），LLM 偶发「只译标题、导语正文留英文」——
+        把导语孤立成小块后翻译成功率显著更高，也让「导语校验」可独立重试。
       - 按段累加；加入下一段会超过 max_chars 时开新块（块边界必在章节边界）。
       - 单段自身超过 max_chars 时独成一块并告警（不硬切，避免破坏模板/语义）。
       - 块内字符数按原始文本计（近似 token 量）。
@@ -931,10 +1228,8 @@ def chunk_wikitext(wikitext: str, max_chars: int):
         seg_text = (head_line + "\n" + body) if head_line else body
         seg_chars = len(seg_text)
         if first:
-            # 头部固定 chunk0
-            cur_parts.append(seg_text)
-            cur_chars += seg_chars
-            cur_title = text
+            # 头部固定 chunk0 且独立成块（导语专注翻译，见 docstring）
+            chunks.append(Chunk(index=0, text=seg_text, title=text, char_count=seg_chars))
             first = False
             continue
         if seg_chars > max_chars:
@@ -1005,7 +1300,9 @@ SYSTEM_PROMPT = """你是一名精通「迷雾之子」(Mistborn) 系列英文�
 2.2【{{for}} 模板参数要译】页首的消歧模板 `{{for|目标|描述|pre=导语}}` 的参数是**需翻译的导语文案**：`pre=` 值、第 1/2 参数（目标页名、描述、显示文本）都要译成简体中文；**不得在任一参数内残留整段英文**——描述参数第 2 参数是完整英文短语（如 `the kind of Allomancer`），必须整句译成对应中文（如 `熔金术师这一类`），而不是只换掉里面的专名；`pre=` 导语同理整句翻译。但模板名 `for` 与 `<...>` 结构、参数顺序原样保留。已译的表内专名不要重复改。其它模板的参数仍按第 1 条保留原样。
 2.3【notice 模板参数要译】页首的提示框 `{{notice|style=...|b=引言|正文}}` 是**需翻译的自然语言**：`b=` 值（页面引言，多为 Brandon 语录）与无名字位置参数（剧透警告正文）都要整句译成简体中文，**不得残留整段英文**；`style=` 参数与模板名 `notice`、参数顺序原样保留。内链目标按译名表（如 [[Rosharan]]→[[柔刹]]、[[cosmere]]→[[三界宙]]）。若 notice 与其它模板嵌套（如 Hoid 页 `{{notice}}` 后紧跟 `{{theory}}`），各自独立处理。
 2.4【脚注说明要译】`<references>` 与 `<ref name="X">说明文字</ref>` 里的**脚注说明文字**属于需翻译的正文（引文/书证说明），要译成简体中文；但 `<ref>/<references>` 标签本身、`name=` 属性、`<ref name="X"/>` 自闭合用法一律原样保留（自闭合占位引用不展开、不译）。
+2.5【Infobox 值中普通英文要译】{{Infobox}} 的 `字段 = 值` 里，除模板 {{...}}、链接 [[...]]、引用、数字、图片文件名之外的自然语言——包括**普通英文短语**（如 `Several post-[[Catacendre]] noble houses` 里的 Several/noble houses 应译为 数个/贵族家族）——都必须译成简体中文，不得残留整段或半段英文。只有「译名表未收录的疑似专名」才保留英文并列入 untranslated_terms。
 3. 【原文引用不译】(决议#13)：文中可能出现形如 %%ORIGINAL_BLOCK_1%% 的占位符，它们是**小说原著引文**（台词/称号列表）的替身。**必须原样保留、不翻译、不增删、不改动**（管道自会填回英文原文）。除此之外，正常叙述正文照常翻译。
+3b.【引用占位符保留】文中可能出现形如 %%REF_0%% / %%REF_12%% / %%LINKLIST_0%% 的占位符，它们是**引用模板**（{{book ref|...}}/{{msh ref|...}}/{{Rpg ref|...}}/{{date|...}}）与 **infobox 纯内链字段**（children/relatives 等的 `[[A|B]], [[C|D]]` 链接列表）的替身（编号由管道自动填回，你接触不到原编号，也不要臆测内容）。**必须原样保留、不翻译、不增删、不改写**——包括 %%ORIGINAL_NAME%%（infobox 原名占位符）也一样原样保留。
 4. 【章节标题】== 章节 == / === 小节 === 标题翻译成简体中文；标题行顶格的等号数目与格式必须原样保留。
 5. 【首行(仅块0)】第一条正文行='''中文译名'''，并在其后紧跟 {{en|英文词条名}}。只有块0需要，其余块不得重复加。
 5b.【导语必翻(仅块0)】块0 除 Infobox 与首行标题外，通常还有**导语/首段正文**（Infobox 之后、首个 `== 章节 ==` 之前的全部叙述文字）。这些导语正文**必须逐句翻译成简体中文**；**严禁只把标题翻成中文、却把导语正文保留成英文**。除 %%ORIGINAL_BLOCK_*%% 占位符和译名表未收录的专名外，块0 中不得残留任何英文句子。
@@ -1079,11 +1376,18 @@ def parse_chunk_reply(content: str):
 
 
 def translate_chunk(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title: str, is_first: bool,
-                    gloss: dict | None = None, max_output_tokens: int = 8000):
+                    gloss: dict | None = None, max_output_tokens: int = 8000,
+                    feedback: str | None = None):
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": build_user_prompt(chunk, glossary_slice, en_title, is_first, gloss)},
     ]
+    if feedback:
+        # 纠错反馈重试：把上一次失败的具体问题回喂给 LLM（如导语残留英文句子），
+        # 并要求基于同一块原文整段重译，而不是凭空重来（凭空重来会重复同样错误）。
+        messages.append(
+            {"role": "user", "content": "注意：你上一次的译文违反了硬规则（见下），"
+             "请基于「原始 wikitext」重新完整翻译本块，其余规则不变。\n\n上次问题：\n" + feedback})
     reply = llm_chat(cfg, messages, max_output_tokens=max_output_tokens)
     data = parse_chunk_reply(reply)
     translation = str(data.get("translation", "")).strip()
@@ -1096,22 +1400,30 @@ def translate_chunk(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title
 def translate_chunk_with_retry(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title: str,
                                is_first: bool, gloss: dict | None = None,
                                max_output_tokens: int = 8000, max_retries: int = 2):
-    """翻译一块；对 chunk0（导语）做「导语英文残留」校验，命中则重试。
+    """翻译一块；对 chunk0（导语）做「导语英文残留」校验，命中则带反馈重试。
 
-    实测偶发 LLM 只翻标题+加 {{en}}、却把导语正文保留英文。提示词已强化，但为避免漏网，
-    这里在校验失败时重试（上行重试通常即可修好，见 Demoux (city)）。重试仍失败则保留并告警。
+    实测偶发 LLM 只翻标题+加 {{en}}、却把导语正文保留英文（Spook 重跑连续 3 次
+    都如此）。新逻辑：重试时把上一次残留的英文句子片段回喂给 LLM（feedback），
+    明确要求整段翻译——而非让 LLM 凭空重来。重试仍失败则保留并告警（写回前门禁
+    verify_translation.py 会再次拦截）。
     """
+    last_translation, last_untranslated = None, []
+    last_feedback = None
     for attempt in range(max_retries + 1):
         translation, untranslated = translate_chunk(cfg, chunk, glossary_slice, en_title,
-                                                    is_first, gloss, max_output_tokens)
+                                                    is_first, gloss, max_output_tokens,
+                                                    feedback=last_feedback)
+        last_translation, last_untranslated = translation, untranslated
         if not is_first or chunk.index != 0:
             return translation, untranslated
         if not untranslated_lead_english(chunk.text, translation):
             return translation, untranslated
+        last_feedback = lead_english_feedback(chunk.text, translation)
         sys.stderr.write(
-            f"[导语校验] chunk0 导语疑似残留英文（本次=第{attempt + 1}次），将重试…\n")
-    sys.stderr.write("[导语校验] 重试上限已用尽，导语仍疑似含英文，保留当前译文（请人工复核）。\n")
-    return translation, untranslated
+            f"[导语校验] chunk0 导语疑似残留英文（本次=第{attempt + 1}次），"
+            f"带反馈重试…残留片段：{last_feedback[:80]}\n")
+    sys.stderr.write("[导语校验] 重试上限已用尽，导语仍疑似含英文，保留当前译文（写回前由质量门禁拦截）。\n")
+    return last_translation, last_untranslated
 
 
 # --------------------------------------------------------------------------- #
@@ -1194,16 +1506,62 @@ def untranslated_lead_english(src_text: str, translation: str) -> bool:
     return dst_prose >= 4
 
 
-def ensure_en_tag(body: str, title_en: str) -> str:
-    """决议#10 兜底：body 已含 {{CmPermission}}，若仍缺 {{en|title}} 则补上。
+def lead_english_feedback(src_text: str, translation: str) -> str:
+    """生成导语残留英文的纠错反馈（供带反馈重试）。
 
-    {{en}} 本应由块0 LLM 在导语 '''中文名''' 之后安放，实测偶发丢失（如 Wayne/Elendel）。
-    此处确定性兜底：已存在则不动；否则插在首个 '''加粗标题''' 后；无标题则插首行。
+    取译文中导语区里「连续 ≥3 个叙述性英文词」的句子片段，最多给 3 段；
+    并附上对应英文原文片段与中文对照示例，让 LLM 明确「这些英文句子
+    必须译成中文而不是保留」。若提取不到则给通用提示。
     """
-    if re.search(r"\{\{\s*en\s*[|}]", body):
-        return body
-    m = re.search(r"'''.+?'''", body)
+    def lead_region(text: str) -> str:
+        seg = re.split(r"\n==|\n;", text)[0]
+        i = seg.rfind("}}\n\n")
+        return seg[i + 4:] if i >= 0 else seg
+
+    en_lead = lead_region(src_text)
+    tr_lead = lead_region(translation)
+    fragments = []
+    for m in re.finditer(r"([A-Za-z][A-Za-z'\- ]{8,})", tr_lead):
+        frag = m.group(1).strip()
+        words = [w for w in re.findall(r"[A-Za-z]+", frag)
+                 if w.lower() in _UNTRANSLATED_STOPWORDS or w != w.upper()]
+        if len(words) >= 3 and frag not in fragments:
+            fragments.append(frag[:120])
+        if len(fragments) >= 3:
+            break
+    if fragments:
+        # 英文原文中找对应片段（截断前缀匹配首词），给中文译法对照
+        pairs = []
+        for f in fragments:
+            first = re.findall(r"[A-Za-z]+", f)
+            head = first[0] if first else ""
+            i = en_lead.find(head)
+            if i >= 0:
+                en_snip = en_lead[i:i + 90].replace("\n", " ")
+                pairs.append(f"“{f}” → 译成中文（如“{en_snip}”对应整句中的 {f} 需译成中文句子）")
+            else:
+                pairs.append(f"“{f}” → 译成中文")
+        return ("导语正文仍是英文（未译成中文）。请把以下英文片段所在句子**整句**译成简体中文"
+                "（不是只换专名，是整句翻译；专名按译名表，其余自然语言全译）：\n"
+                + "\n".join(pairs)
+                + "\n\n参考：英文原文导语是 “" + en_lead[:200].replace("\n", " ") + "…”"
+                  "，这些内容都必须出现在中文译文里。")
+    return "导语正文整段仍是英文（未译成中文）。请把 Infobox 之后、首个章节之前的全部叙述文字逐句译成简体中文，严禁只翻标题、正文留英文。"
+
+
+def ensure_en_tag(body: str, title_en: str) -> str:
+    """决议#10 兜底：确保 {{en|title}} 恰好一处、且位于导语首行粗体标题之后。
+
+    2026-10-18 增强：qwen3.8-27b 实测把 {{en|Ghostbloods}} 安放进 notice 模板
+    （LLM 自己「放」的也可能错位）。现改为：先移除全部 {{en|...}}（错位/重复的
+    一并清除），再按规范位置确定性插入——idempotent，正确位置的原有 tag
+    移除后会在同一位重插，结果与原样一致。
+    """
+    # 1. 清除所有形态的 {{en|...}} / {{en}}（含错位进 notice 的）
+    body = re.sub(r"\{\{\s*en\s*(?:\|[^}]*)?\}\}", "", body, flags=re.I)
+    # 2. 规范位置插入：首个 '''加粗标题''' 之后
     tag = "{{en|" + title_en + "}}"
+    m = re.search(r"'''.+?'''", body)
     if m:
         return body[:m.end()] + tag + body[m.end():]
     if body.startswith("{{CmPermission"):
@@ -1214,8 +1572,259 @@ def ensure_en_tag(body: str, title_en: str) -> str:
     return tag + "\n" + body
 
 
+def ensure_lead_title(body: str, title_en: str) -> str:
+    """导语首行粗体标题的确定性兜底（R5/R2）：
+
+    若译名表有该页英文标题的官方译名 zh，且首行 `'''X'''` 不含 zh → 强制纠正为 zh。
+    覆盖两类实测违规（2026-10-18 qwen3.8-27b 批次）：
+      a) 首行仍是英文（LLM 只动导语正文没动标题）→ 直接换成官方译名；
+      b) 首行是自造中文译名（如 Shadows of Self 页译成「自影」，官方为「旧影森森」）。
+    保守条件（防误伤）：仅当标题**不含**官方译名时才纠正（`鬼影（锡眼）` 这类
+    含官方译名的扩展写法保留）；译名表无该标题条目时一律不动（宁保留不自造）。
+    返回 (body, 纠正标记)。
+    """
+    global _GLOS_FINISH_CACHE
+    if _GLOS_FINISH_CACHE is None:
+        _GLOS_FINISH_CACHE = load_merged_glossary(DEFAULT_GLOSSARY, DEFAULT_COMMON)
+    zh = _lookup_glossary_zh(_GLOS_FINISH_CACHE, title_en)
+    if not zh:
+        return body, False
+    # 仅在导语区搜索（首个 === 级/== 级章节标题之前，上限 800 字符）——
+    # 防止正文中部的粗体强调（如 '''卡西尔'''）被误当导语标题纠正。
+    _hpos = len(body)
+    for _hm in re.finditer(r"\n={2,4} ", body):
+        _hpos = _hm.start()
+        break
+    head = body[:min(_hpos, 800)]
+    m = re.search(r"'''\s*([^'\n]{1,80}?)\s*'''", head)
+    if not m:
+        return body, False
+    lead = m.group(1).strip()
+    if not lead or zh in lead:
+        return body, False  # 已含官方译名（正确或扩展写法）→ 不动
+    return body[:m.start(1)] + zh + body[m.end(1):], True
+
+
+# --------------------------------------------------------------------------- #
+# 非正文掩码 + 确定性译名收尾（R2「表内必译」的机制化兜底）
+#
+# 2026-10-18 qwen3.8-27b 批次实测：LLM 大面积漏译正文表内词（MeLaan/Kelsier/
+# Aradel 裸留英文），门禁只能拦截、不能修复。此掩码是 verify_translation 的
+# 单一来源（tr.mask_nonprose），_glossary_finish_pass 在 assemble 内、LLM 之后
+# 确定性执行——对所有页面/所有模型自动生效，使 R2 不依赖 LLM 自觉。
+#
+# 掩掉（等长空格替换，位置与 verify 完全同源）：
+#   1. {{...}} 模板整体（map ref 数据键 / file ref 文件名 / for 目标 /
+#      CmPermission / 分类模板参数 / Quote 原文块——非需译正文）；
+#   2. 方括号外链 [url 显示]（interwiki，URL 与显示保留英文合法）；
+#   3. 斜体 ''..''（书名/刊名保留区；'''粗体'''不掩——页内标题属正文）；
+#   4. 括号英文原名标注 （English Name） / (English Name)；
+#   5. <ref name="..." 属性（引用 id 键，动了会错位同名引用）；
+#   6. keep_en 静态名单词组整体出现处（词组内的子词不被误替换）；
+#   7. 配对引号内引用原词（ASCII + 中文弯引号；双关语/标题引述保留英文合法）。
+# --------------------------------------------------------------------------- #
+
+def _mask_span_spans(body: str, pattern: str, flags=0):
+    """把匹配 pattern 的区段替换为空格，返回 (掩码文本, 原始 spans)。等长替换；
+    换行符保留（行结构不塌——verify 3c 等按行 zip 的检查依赖行数一致）。"""
+    out = []
+    spans = []
+    last = 0
+    for m in re.finditer(pattern, body, flags):
+        out.append(body[last:m.start()])
+        out.append("".join("\n" if c == "\n" else " " for c in m.group(0)))
+        spans.append((m.start(), m.end()))
+        last = m.end()
+    out.append(body[last:])
+    return "".join(out), spans
+
+
+_KEEP_EN_CACHE: list | None = None
+
+
+def _keep_en_terms() -> list:
+    global _KEEP_EN_CACHE
+    if _KEEP_EN_CACHE is None:
+        try:
+            _KEEP_EN_CACHE = load_keep_en()
+        except Exception:
+            _KEEP_EN_CACHE = []
+    return _KEEP_EN_CACHE
+
+
+def mask_nonprose(body: str) -> str:
+    """掩码「非需译正文」区段（等长空格替换），供裸词扫描与译名收尾替换共用。"""
+    out = body
+    # 1. 模板（括号平衡；Quote/sidequote/columns 原文块整体也在此掩掉）
+    res = []
+    i = 0
+    n = len(out)
+    while i < n:
+        if out.startswith("{{", i):
+            depth = 0
+            j = i
+            while j < n:
+                if out.startswith("{{", j):
+                    depth += 1
+                    j += 2
+                elif out.startswith("}}", j):
+                    depth -= 1
+                    j += 2
+                    if depth <= 0:
+                        break
+                else:
+                    j += 1
+            res.append("".join("\n" if c == "\n" else " "
+                                       for c in out[i:min(j, n)]))
+            i = j
+        else:
+            res.append(out[i])
+            i += 1
+    out = "".join(res)
+    # 2. 方括号外链 [url ...]
+    out, _ = _mask_span_spans(out, r"\[(?:https?://|//)[^\[\]]+\]")
+    # 3. 斜体（非粗体）''text'' —— 先保护粗体
+    bolds = []
+    def _save_bold(m):
+        bolds.append(m.group(0))
+        return f"\x00{len(bolds) - 1}\x00"
+    out = re.sub(r"'''.+?'''", _save_bold, out, flags=re.S)
+    out, _ = _mask_span_spans(out, r"''[^'\n]+''")
+    out = re.sub(r"\x00(\d+)\x00", lambda m: bolds[int(m.group(1))], out)
+    # 4. 括号英文原名标注
+    out, _ = _mask_span_spans(out, r"[（(]\s*[A-Za-z][A-Za-z0-9 .,'&:\-]{2,80}\s*[）)]")
+    # 5. ref 的 name 属性（自闭合与开标签同模式：动了会拆散同名引用对）
+    out, _ = _mask_span_spans(out, r'<ref\s+name="[^"]*"', re.I)
+    # 6. keep_en 静态名单词组整体出现处
+    try:
+        _ke = [t for t in _keep_en_terms() if len(t) >= 3]
+        if _ke:
+            _ke.sort(key=len, reverse=True)
+            for t in _ke:
+                pre = r"(?<![A-Za-z])" if t[0].isalpha() else ""
+                suf = r"(?![A-Za-z])" if t[-1].isalpha() else ""
+                out, _ = _mask_span_spans(out, pre + re.escape(t) + suf)
+    except Exception:
+        pass
+    # 7. 配对引号内的引用原词（ASCII 与中文弯引号）
+    out, _ = _mask_span_spans(out, r'"([A-Za-z][^"\n]{1,70})"')
+    out, _ = _mask_span_spans(out, r"“([A-Za-z][^”\n]{1,70})”")
+    out, _ = _mask_span_spans(out, r"'([A-Z][^'\n]{1,70})'")
+    out, _ = _mask_span_spans(out, r"‘([A-Z][^’\n]{1,70})’")
+    return out
+
+
+_WIKILINK_BLOCK_RE = re.compile(r"\[\[[^\[\]]*\]\]")
+
+
+def _finish_exempt_spans(body: str) -> list:
+    """收尾替换的豁免区间：wikilink 整体（目标与显示文本）+ 原名行（+80 容忍，
+    与 verify 的 is_in_struct 同源）。"""
+    spans = [m.span() for m in _WIKILINK_BLOCK_RE.finditer(body)]
+    for m in re.finditer(r"\| 原名\s*=", body):
+        spans.append((m.start(), min(m.end() + 80, len(body))))
+    return spans
+
+
+def glossary_finish_terms(glossary: dict | None = None) -> list:
+    """收尾替换/裸词扫描共用的词表：全译名表有 zh、长度≥3、非 keep_en、
+    不含链接/占位符特殊字符的 (en, zh)，按 en 长度降序（长词优先）。"""
+    if glossary is None:
+        glossary = load_merged_glossary(DEFAULT_GLOSSARY, DEFAULT_COMMON)
+    keep = set(_keep_en_terms())
+    terms = []
+    for en, v in glossary.items():
+        if not isinstance(v, dict):
+            continue
+        zh = v.get("zh")
+        if not zh or len(en) < 3 or en in keep:
+            continue
+        if any(c in en for c in "[{|%/\\"):
+            continue
+        terms.append((en, zh))
+    terms.sort(key=lambda x: -len(x[0]))
+    return terms
+
+
+_GLOS_FINISH_CACHE: dict | None = None
+
+
+def _glossary_finish_pass(body: str):
+    """确定性译名收尾：LLM 之后按译名表把正文残留的表内英文词替换为官方译名。
+
+    豁免与 verify 完全同源（mask_nonprose 掩码区 + wikilink 整体 + 原名行）——
+    凡 verify 会判为 [裸词] 的位置，这里都会被替换；反之不替换 verify 已豁免的位置。
+    返回 (body, 替换处数, 明细列表)。
+    """
+    global _GLOS_FINISH_CACHE
+    if _GLOS_FINISH_CACHE is None:
+        _GLOS_FINISH_CACHE = load_merged_glossary(DEFAULT_GLOSSARY, DEFAULT_COMMON)
+    # 0) 中英杂交所有格反向修复：LLM 把英文词组头部译了、's 尾巴留着
+    #    （实测 qwen3.8-27b 连续两跑把 keep_en 的 Harmony's Sword 写成 和谐's Sword，
+    #    keep_en 提示也拦不住）。`中文词's + 英文词` 形态在正常中文里不存在 →
+    #    按译名表反向还原为英文原词组（keep_en 整词保留是铁律）。
+    n_hybrid = 0
+    for _en, _v in _GLOS_FINISH_CACHE.items():
+        if not isinstance(_v, dict):
+            continue
+        _zh = _v.get("zh")
+        if not _zh or len(_zh) < 2:
+            continue
+        try:
+            _hp = re.compile(r"(?<![A-Za-z])" + re.escape(_zh) + r"'s(?=\s+[A-Za-z])")
+        except re.error:
+            continue
+        if _hp.search(body):
+            body = _hp.sub(_en + "'s", body)
+            n_hybrid += 1
+    terms = glossary_finish_terms(_GLOS_FINISH_CACHE)
+    masked = mask_nonprose(body)
+    exempt = _finish_exempt_spans(body)
+
+    def _exempted(start: int, end: int) -> bool:
+        # 与 verify 同源：整段落在掩码区 → 不碰；起点落在 wikilink/原名行 → 不碰
+        if masked[start:end].strip() == "":
+            return True
+        return any(a <= start < b for a, b in exempt)
+
+    # 收集替换区间（长词优先、跨度去重），与 verify 裸词扫描同一套匹配
+    replacements = []  # (start, end, zh)
+    for en, zh in terms:
+        if en not in body:
+            continue
+        try:
+            pat = re.compile(r"(?<![A-Za-z])" + re.escape(en) + r"(?:'s)?(?![A-Za-z])")
+        except re.error:
+            continue
+        for m in pat.finditer(body):
+            if any(m.start() < b and m.end() > a for a, b, _z in replacements):
+                continue
+            if _exempted(m.start(), m.end()):
+                continue
+            replacements.append((m.start(), m.end(), zh))
+    if not replacements:
+        return body, n_hybrid, ([f"杂交所有格反向修复 x{n_hybrid}"] if n_hybrid else [])
+    replacements.sort(key=lambda x: x[0])
+    out = []
+    last = 0
+    details = [f"杂交所有格反向修复 x{n_hybrid}"] if n_hybrid else []
+    for s, e, zh in replacements:
+        out.append(body[last:s])
+        # 所有格形态 `Kelsier's` → `卡西尔的`：'s 按中文「的」落位，避免 卡西尔's
+        seg = body[s:e]
+        if seg.endswith("'s"):
+            out.append(zh + "的")
+        else:
+            out.append(zh)
+        details.append(f"{seg} -> {zh if not seg.endswith(chr(39) + 's') else zh + '的'}")
+        last = e
+    out.append(body[last:])
+    return "".join(out), len(replacements) + n_hybrid, details
+
+
 def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: str,
-             registry: list[dict] | None = None):
+             registry: list[dict] | None = None, refs: list[str] | None = None,
+             orig_title: str | None = None, linklist_reg: list[str] | None = None):
     """把各块译文拼成完整 wikitext，填回决议#13 的英文原文占位符，并插入页面级包装（决议#10-12）。"""
     body = "\n".join(t for t, _ in chunk_results).strip("\n") + "\n"
     # 兜底：LLM 偶发把 <ref name="X"/> 变回模板形态 {{ref name="X"}}（无管道/带引号），
@@ -1239,6 +1848,31 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
         body, missing_tokens = unmask_protected_blocks(body, registry)
         if missing_tokens:
             sys.stderr.write("[提醒] 以下原文占位符未在译文中保留（模型漏掉，人工复核）：" + ", ".join(missing_tokens) + "\n")
+    # 引用模板占位填回：%%REF_N%% → 英文源 ref 模板原文（编号 100% 与英文源一致）。
+    # 顺序：引用填回要在原文块填回之后？——不，ref 占位在 mask_protected_blocks 之后产生，
+    # 原文块（Quote/columns）内部的 ref 已随整块保护、不在 refs 里；正文 ref 的占位符
+    # 独立存在，与此处顺序无关。这里先填回 ref（正文 ref 不依赖任何原文块结构）。
+    if refs:
+        body, missing_refs = unmask_ref_templates(body, refs)
+        if missing_refs:
+            sys.stderr.write("[提醒] 以下引用占位符未在译文中保留（模型漏掉，写回前必须补）：" + ", ".join(missing_refs) + "\n")
+    # infobox「原名」占位填回英文标题
+    if orig_title:
+        body = unmask_infobox_original_name(body, orig_title)
+    # infobox 纯内链列表占位填回（children/relatives/image 等）
+    if linklist_reg:
+        body = unmask_infobox_link_lists(body, linklist_reg)
+    # 确定性译名收尾：LLM 之后按译名表替换正文残留表内词（掩码保护区不碰）。
+    # R2「表内必译」的机制化兜底——2026-10-18 起对所有页面/所有模型自动生效。
+    n_finish = 0
+    try:
+        body, n_finish, _fin_details = _glossary_finish_pass(body)
+        if n_finish:
+            sys.stderr.write(f"[译名收尾] 确定性替换 {n_finish} 处表内残留英文：" +
+                             "、".join(_fin_details[:8]) + ("…" if len(_fin_details) > 8 else "") + "\n")
+    except Exception as _fin_err:
+        n_finish = 0
+        sys.stderr.write(f"[提醒] 译名收尾替换失败（不影响主流程）: {_fin_err}\n")
     untranslated = []
     seen = set()
     # 决议#13：原文引用块（{{Quote}}/{{columns}}）确定性填回英文原文，也确定性列入
@@ -1262,7 +1896,20 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
                 continue
             seen.add(k)
             untranslated.append(item)
+    # 收尾替换后，纯英文条目若已不在正文（被确定性替换掉了），「保留英文」不再成立 → 移除。
+    # 引用原文条目（含全角括号/占位符字样）不会被 plain-ASCII 判定误删。
+    if untranslated:
+        _plain_en = re.compile(r"[A-Za-z0-9][A-Za-z0-9 .,'&:\-()]*")
+        _kept = []
+        for u in untranslated:
+            en = u.get("en") if isinstance(u, dict) else None
+            if (en and _plain_en.fullmatch(en)
+                    and not re.search(r"(?<![A-Za-z])" + re.escape(en) + r"(?![A-Za-z])", body)):
+                continue  # 已被收尾替换，条目作废
+            _kept.append(u)
+        untranslated = _kept
 
+    _lead_fixed = False
     if no_wrap:
         meta_note = "纯正文翻译（--no-wrap，未加页面级包装）"
     else:
@@ -1270,9 +1917,15 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
         # 决议#10 兜底：{{en}} 本应由块0 LLM 安放（导语 '''中文名''' 之后），偶发丢失；
         # 此处确定性兜底，保证 CmPermission/ensync 依赖的 #var:en 一定被定义。
         body = ensure_en_tag(body, title_en)
+        # 导语首行标题确定性兜底：未译英文标题/自造译名 → 官方译名（含 zh 才纠正）
+        body, _lead_fixed = ensure_lead_title(body, title_en)
+        if _lead_fixed:
+            sys.stderr.write(f"[导语标题兜底] 首行粗体标题已纠正为译名表官方译名（{title_en}）\n")
         if "{{ensync|" not in body:
             body = body.rstrip("\n") + "\n{{ensync|" + str(revid) + "}}\n"
         meta_note = "已加页面级包装 {{CmPermission}}（顶）/{{en}}（首行自动兜底）/{{ensync}}（尾，revid=" + str(revid) + "）"
+    if n_finish:
+        meta_note += f"；确定性译名收尾替换 {n_finish} 处（LLM 后按译名表兜底）"
 
     contract = {
         "meta": {
@@ -1577,6 +2230,16 @@ def main():
         for old, new in plain_stats:
             sys.stderr.write(f"  {old} -> {new}\n")
 
+    # 常见章节标题确定性预翻译（LLM 前）：qwen3.8-27b 实测把 `== Notes ==` 等
+    # 高频标题原样留英（全批 5 处）。映射表由本批 20 页「EN→实际 ZH」数据归纳
+    # （Notes→注释 16x、History→历史 10x…），保证跨页一致；长尾标题交给 LLM，
+    # 漏译由 verify 3a「ASCII 标题」门禁拦截重跑。
+    wikitext, head_stats = translate_section_headings(wikitext)
+    if head_stats:
+        sys.stderr.write(f"[章节标题预翻译] {len(head_stats)} 处（常见标题，LLM 前确定性）:\n")
+        for s in head_stats:
+            sys.stderr.write(f"  {s}\n")
+
     # 决议：给依赖 {{#var_final:en}} 的 {{Infobox ...}} 缺『原名』时补英文名，绕开
     # 模板回退到 #var_final:en 导致的 UNIQ--finalizedvar-* 渲染占位符（en 变量在
     # {{en}}（位于 infobox 之后）才定义）。book/character/location/... 均适用。
@@ -1586,6 +2249,22 @@ def main():
     wikitext, registry = mask_protected_blocks(wikitext)
     if registry:
         sys.stderr.write(f"[原文块保护]（决议#13，占位符替换后填回英文原文）: {len(registry)} 处\n")
+
+    # 引用模板占位（防引用编号幻觉，见 mask_ref_templates docstring）：把
+    # {{book ref|...}}/{{msh ref|...}}/{{Rpg ref|...}}/{{date|...}} 换成 %%REF_N%%，
+    # LLM 接触不到编号，assemble 时按英文源顺序确定性填回。
+    wikitext, refs = mask_ref_templates(wikitext)
+    if refs:
+        sys.stderr.write(f"[引用占位]（防引用编号幻觉，LLM 后按英文源填回）: {len(refs)} 处\n")
+
+    # infobox「原名」占位：LLM 偶发把英文原名译掉（Spook→鬼影），占位后 assemble 填回英文标题
+    wikitext, _orig_title = mask_infobox_original_name(wikitext, args.title)
+
+    # infobox 纯内链列表值占位（children/relatives/image…）：LLM 对纯链接值无改写
+    # 空间，且实测会把多链接合并成断链 → 占位直通，assemble 填回（见函数注释）。
+    wikitext, _linklist_reg = mask_infobox_link_lists(wikitext)
+    if _linklist_reg:
+        sys.stderr.write(f"[infobox 内链列表占位]（纯链接字段直通，LLM 后填回）: {len(_linklist_reg)} 处\n")
 
     # 从 snapshot meta.json 取 revid（ensync 用）
     revid = "CHANGE_ME_REVID"
@@ -1652,7 +2331,8 @@ def main():
         raise SystemExit(f"共 {len(errs)} 块失败，未写 translation.json。可用 --dry-run 预演排障。")
 
     # 组装
-    contract = assemble(args.title, revid, chunk_results, args.no_wrap, args.target_wiki, registry)
+    contract = assemble(args.title, revid, chunk_results, args.no_wrap, args.target_wiki, registry,
+                        refs=refs, orig_title=_orig_title, linklist_reg=_linklist_reg)
 
     # 决议#13 增强：原文块按中译本书证采证中文（quote/columns）。
     # - 半自动（默认）：产出 quote_resolutions（proposed_cn 供 review），不替换，英文保留。

@@ -142,6 +142,19 @@ def run_stage(args, title: str) -> list[str]:
         return status
     status.append("translate:dry" if args.dry_run else "translate:ok")
 
+    # ---- 自动质量门禁（零 review 机制保证：写回前自动核对，不过则拒绝写回）----
+    # 覆盖：引用编号与英文源一致（防 LLM 幻觉）、占位符无残留、导语无英文残留、
+    # 无裸词/半译残留、{{en}} 不错位。全部通过才允许 write；失败记 verify:FAIL 并跳过写回。
+    if "write" in args.stage and not args.dry_run:
+        gate_cmd = [str(PY), str(HERE / "verify_translation.py"), "--title", title]
+        gc = subprocess.run(gate_cmd, capture_output=True, text=True)
+        if gc.returncode != 0:
+            status.append("verify:FAIL")
+            sys.stderr.write(f"[{title}] 质量门禁未通过（拒绝写回）：\n{(gc.stdout or '')[-1200:]}"
+                             f"{(gc.stderr or '')[-1200:]}\n")
+            return status
+        status.append("verify:ok")
+
     # ---- write ----
     if "write" in args.stage:
         # dry-run 时 translate 未产出/未更新 translation.json：若本无该文件，则 write 无从 dry-run，
