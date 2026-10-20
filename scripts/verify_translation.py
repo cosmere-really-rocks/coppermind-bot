@@ -207,7 +207,10 @@ def check_one(title_en: str, wiki: str) -> list[str]:
         n_half = 0
         for lidx, (orig_ln, mask_ln) in enumerate(zip(body.split("\n"),
                                                      _masked_body.split("\n")), 1):
-            if not orig_ln or orig_ln[0] in "|={" or orig_ln.startswith("[[category"):
+            # ! 行=表格属性行（class/colspan/style 本为英文结构位）、<!-- -->=源注释
+            # （读者不可见、按设计保留英文）——均不属正文半译（2026-10-20 修，level2 实测误伤）。
+            if (not orig_ln or orig_ln[0] in "|={!" or orig_ln.startswith("[[category")
+                    or orig_ln.lstrip().startswith("<!--")):
                 continue
             l = re.sub(r"<ref[^>]*>.*?</ref>", " ", mask_ln)
             l = re.sub(r"</?ref[^>]*>", " ", l)
@@ -313,7 +316,13 @@ def check_one(title_en: str, wiki: str) -> list[str]:
         if any(a <= ln_pos < b and a >= 0 for a, b in quote_spans):
             continue
         if re.search(r"[\u4e00-\u9fff]", ln) and re.search(r"[A-Za-z]{4,}", ln):
-            stripped = re.sub(r"\{\{[^{}]{0,150}\}\}", " ", ln)
+            # 字段行只判值（2026-10-20 修）：|world= / |prereq= 的 key 是模板/表格结构位，
+            # 按设计英文——剔除 key 后只在 value 上做残留/夹杂信号；值全中文则整行跳过。
+            _k = re.match(r"^(\s*\|\s*[A-Za-z][\w \-]{0,40})=(.*)$", ln)
+            src_ln = ("|" + _k.group(2)) if _k else ln
+            if not re.search(r"[A-Za-z]{4,}", src_ln):
+                continue
+            stripped = re.sub(r"\{\{[^{}]{0,150}\}\}", " ", src_ln)
             stripped = re.sub(r"\[\[[^\]]*\]\]", " ", stripped)
             stripped = re.sub(r"<[^>]+>", " ", stripped)
             for m in re.finditer(r"[A-Za-z][A-Za-z'\- ]{3,}", stripped):
