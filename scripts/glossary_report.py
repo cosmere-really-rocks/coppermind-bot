@@ -62,7 +62,8 @@ def main():
                 if x.get("zh"):
                     if rnd == "二" or not cur or not cur.get("zh"):
                         verdict[pg] = {"zh": x["zh"], "evidence": x.get("evidence", ""),
-                                       "round": rnd, "batch": bn}
+                                       "round": rnd, "batch": bn,
+                                       "ch": x.get("ch")}
                 elif cur is None or not cur.get("zh"):
                     verdict[pg] = {"zh": None, "reason": x.get("reason", ""),
                                    "round": rnd, "batch": bn}
@@ -108,10 +109,11 @@ def main():
             ref = (cat, rs[0][0].lower(), rs[0][1].strip())
             st = s.get("status")
             if st == "located" and v.get("zh"):
+                ref_v = (ref[0], ref[1], v.get("ch") or ref[2])
                 confirmed.append({"cat": cat, "page": pg,
                                   "base": v.get("base") or s.get("base", pg),
                                   "zh": v["zh"], "evidence": v.get("evidence", ""),
-                                  "ref": ref, "round": v.get("round", "一")})
+                                  "ref": ref_v, "round": v.get("round", "一")})
             elif st == "located" or (v and not v.get("zh")):
                 unclear.append((cat, pg, ref, v.get("reason") or "ZH 未覆盖原句"))
             elif st == "en_only_no_zh":
