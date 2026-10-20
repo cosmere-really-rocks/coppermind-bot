@@ -16,8 +16,8 @@
   - 超长词条分块：按 `== 章节 ==` / `=== 小节 ===` 边界切块，每块 ≤ --max-chars，Infobox+导语固定为 chunk0，
     绝不在一节/一模板内部切开；单节过长时独成一块并告警。
   - 术语裁切（决议 #9）：仅把本文出现的译名词条切片送给 LLM，省 token。
-  - LLM 配置与 DSH 一致：默认 base_url=https://token.glint-mvt.com/v1、model=qwen3.8-27b
-    （2026-10-18 deepseek 涨价切换），api key 从环境变量 LLM_API_KEY 读取（可 --api-key / .env 覆盖）。
+  - LLM 配置与 DSH 一致：默认 base_url=https://token.glint-mvt.com/v1、model=mimo-v2.6-flash
+    （2026-10-20 用户指定），api key 从环境变量 LLM_API_KEY 读取（可 --api-key / .env 覆盖）。
   - 输出遵守 JSON 契约：translation + untranslated_terms（决议 #4），原文引用/称号列表标记「需查中译本」（决议 #13）。
 
 用法：
@@ -33,7 +33,7 @@
   --dry-run        只做分块与提示词预演，不调用 LLM（输出分块清单到 stderr，不写文件）
   --no-wrap        不插入页面级包装（CmPermission/en/ensync），仅输出纯正文翻译
   --llm-base-url   覆盖 baseURL（默认同 DSH：https://token.glint-mvt.com/v1）
-  --llm-model      覆盖模型（默认 deepseek-v4-flash-0731）
+  --llm-model      覆盖模型（默认 mimo-v2.6-flash）
   --api-key        覆盖 API key（默认读环境变量 DEEPGLINT2_API_KEY）
   --timeout        单次 LLM 请求超时秒（默认 300）
   --max-retries    单块失败重试次数（默认 3）
@@ -62,7 +62,7 @@ KEEP_EN_FILE = ROOT / "dict" / "keep_en.json"
 ZHWIKI_TITLES_FILE = ROOT / "dict" / "zhwiki_titles.json"
 ZHWIKI_ALIASES_FILE = ROOT / "dict" / "zhwiki_aliases.json"
 DEFAULT_BASE_URL = "https://token.glint-mvt.com/v1"
-DEFAULT_MODEL = "qwen3.8-27b"  # 2026-10-18 切换：deepseek 涨价，换 qwen3.8-27b（provider/api key 不变）
+DEFAULT_MODEL = "mimo-v2.6-flash"  # 2026-10-20 用户指定（原 qwen3.8-27b；可用 .env LLM_MODEL / --llm-model 覆盖）
 DEFAULT_WIKI = "coppermind.huijiwiki.com"
 
 
@@ -84,8 +84,24 @@ class LLMConfig:
     thinking: str = "disabled"
 
 
+def _load_env_file():
+    """把项目 .env 里的 LLM_*/DEEPGLINT2_* 键灌入 os.environ（setdefault，不覆盖已有）。"""
+    envf = ROOT / ".env"
+    if not envf.exists():
+        return
+    for line in envf.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        k = k.strip()
+        if k.startswith(("LLM_", "DEEPGLINT2_")):
+            os.environ.setdefault(k, v.strip())
+
+
 def load_llm_config(args) -> LLMConfig:
-    """解析 LLM 配置。优先级：命令行 > .env > 环境变量 DEEPGLINT2_API_KEY > DSH 默认。"""
+    """解析 LLM 配置。优先级：命令行 > 环境变量 > .env > 内置默认。"""
+    _load_env_file()
     cfg = LLMConfig()
     cfg.base_url = args.llm_base_url or os.environ.get("LLM_BASE_URL") or DEFAULT_BASE_URL
     cfg.model = args.llm_model or os.environ.get("LLM_MODEL") or DEFAULT_MODEL
