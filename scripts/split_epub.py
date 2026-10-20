@@ -49,6 +49,9 @@ OUT_DIR = os.path.join(ROOT, "dict", "epub_out")
 #   keep_extra  : 追加到白名单的正则（默认白名单之上）
 #   drop_extra  : 优先于白名单的排除正则
 #   strip       : 清理阶段剔除的正则（如 Warbreaker 的 Annotations 链接行）
+#   split       : 纠正漏切的章——正文里还留着章标题（如 <p>第五十八章</p>），
+#                 toc/打包没切成独立章节时，按 label 找到该章，再在 'at' 标记处
+#                 切成两章，第二章标题取 'into'
 # ---------------------------------------------------------------------------
 BOOKS = [
     # ---- Elantris ----
@@ -73,7 +76,10 @@ BOOKS = [
      # 注解版：每章开头有指向 Annotations_* 的链接行，正文注解在书末独立文件（会被截断丢弃）
      "strip": [r'(?is)<p[^>]*class="[^"]*annotations[^"]*"[^>]*>.*?</p>']},
     {"src": "dict/epub/Warbreaker/破战者.epub",
-     "out": "zh_破战者", "lang": "zh"},
+     "out": "zh_破战者", "lang": "zh",
+     # 打包 epub 把“第五十八章”标题漏并进第五十七章文件（toc.ncx 也缺条目），
+     # 而英文版是 58 章 → 在正文里的 <p>第五十八章</p> 处切开，凑齐 60/60 对齐
+     "split": [{"label": "第五十七章", "at": "第五十八章", "into": "第五十八章"}]},
     # ---- The Stormlight Archive ----
     {"src": "dict/epub/stormlight/The Way of Kings - Brandon Sanderson.epub",
      "out": "the_way_of_kings", "lang": "en"},
@@ -348,6 +354,36 @@ def write_chapter(outdir, order, label, body, lang):
     return fn
 
 
+def apply_splits(label, body, specs, warnings):
+    """纠正漏切的章：在正文里的章标题标记处切成两章，标记段落升级为 <h1>。"""
+    parts = [(label, body)]
+    for spec in specs or []:
+        if spec.get("label") != label or not parts:
+            continue
+        cur_label, cur_body = parts.pop()
+        marker, into = spec["at"], spec.get("into", spec["at"])
+        m = re.search(
+            r"(?is)<(p|h[1-6]|div)[^>]*>[^<>]*" + re.escape(marker) + r"[^<>]*</\1>",
+            cur_body)
+        if m:
+            cut = cur_body.find(m.group(0))
+            head, tail = cur_body[:cut], cur_body[cut + len(m.group(0)):]
+            parts.append((cur_label, head.strip()))
+            parts.append((into, (f'<h1 class="chapter-title">{html_mod.escape(into)}</h1>'
+                                 + tail).strip()))
+            warnings.append(f"按正文标题切章: {label!r} -> {label!r} + {into!r}")
+        else:
+            i = cur_body.find(marker)
+            if i < 0:
+                warnings.append(f"split 标记未找到: {marker!r} in {label!r}")
+                parts.append((cur_label, cur_body))
+                continue
+            cut = cur_body.rfind("<", 0, i)
+            parts.append((cur_label, cur_body[:cut].strip()))
+            parts.append((into, cur_body[cut:].strip()))
+    return parts
+
+
 def run_toc(book, cfg, outdir, dry_run):
     warnings = book.warnings
     entries = book.resolve_entries()
@@ -396,13 +432,16 @@ def run_toc(book, cfg, outdir, dry_run):
             print(f"    {label!r}  [{s[0]}:{s[1]}] -> [{e[0]}:{e[1]}]")
         return len(rows)
     out = []
-    for order, (label, s, e) in enumerate(rows):
+    order = 0
+    for label, s, e in rows:
         body, text = assemble(book, s, e, cfg["lang"], label, warnings)
         if not body:
             warnings.append(f"空章节被跳过: {label!r}")
             continue
-        write_chapter(outdir, order, label, body, cfg["lang"])
-        out.append((order, label, text))
+        for lab, part in apply_splits(label, body, cfg.get("split"), warnings):
+            write_chapter(outdir, order, lab, part, cfg["lang"])
+            out.append((order, lab, R.text_of(part).strip()))
+            order += 1
     report(outdir, out, warnings)
     return len(out)
 

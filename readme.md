@@ -60,7 +60,7 @@
 | 伊岚翠 正传 | elantris | zh_伊岚翠 | 65 / 65 |
 | 伊岚翠 短篇 The Hope of Elantris | the_hope_of_elantris | （中译附在【简体版】皇帝魂 同一 epub 内，未单独提取） | 1 / — |
 | 皇帝魂 | the_emperors_soul | zh_皇帝魂 | 17 / 17 |
-| 破战者 | warbreaker | zh_破战者 | 60 / 59（中译把末两章并成第五十七章，前 56 章逐章对齐）|
+| 破战者 | warbreaker | zh_破战者 | 60 / 60 |
 | 飓光志1 王者之路 | the_way_of_kings | zh_王者之路 | 87 / 87 |
 | 飓光志2 光辉真言 | words_of_radiance | zh_光辉真言 | 105 / 105 |
 | 飓光志3 渡誓 | oathbringer | zh_渡誓 | 138 / 138 |
@@ -76,6 +76,7 @@
 - `飓光志3：渡誓` 只有 azw3 → 用 `mobi` 包转成同目录 `【重庆社版】飓光志3：渡誓 (azw3转epub).epub`（不提交）。
 - `【简体版】皇帝魂` 同 epub 后半附赠《保卫至福净土》《长子》《第十一种金属》《军团》→ 用 `slice: [0,21]` 只取皇帝魂本体。
 - `Warbreaker (Retail)` 是注解版：章首 Annotations 链接行已剔除、书末 Annotations_* 独立条目截断丢弃；第45章中英版都极短（源书如此，已核对中译同章）。
+- **破战者 60/60 的来龙去脉**：中译 epub（重庆社·小龙译）打包时把 `第五十八章` 标题漏成 `part0061.xhtml` 里的普通 `<p>`、toc.ncx 也缺该条目，所以看起来只有 59 章；补传的两个源 `破战者 ([美]布兰登·桑德森) (z-lib…).epub/.mobi` 经逐字节校验与原 epub 除 `content.opf` 外完全相同，**换源解决不了**。最终用 `split` 配置按正文该标题切开（`{"label":"第五十七章","at":"第五十八章","into":"第五十八章"}`），恢复 60/60 逐章对齐——中英每章字数比的离散度 sd 从 0.069 降到 0.027。
 
 
 **译名表**：`dict/mistborn.json` 为**全系列**（era1+era2）译名表；源文件在本地 `dict/raw/`（不提交）。补全方法见 `rules/glossary_alignment.md`（中英章节对齐，以官方中译本），数据模型含 `renderings`（长语块）/`variants`（同名多义）/`zh_variable`（无固定译名）三可选字段（迁移脚本 `scripts/glossary_migrate.py`）。2025-10-16 已落地约 60 条书证译名（人物/地理/地点/定居点/宗教，见 rules doc）。
