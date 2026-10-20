@@ -62,12 +62,14 @@ BOOKS = {
     "sa3": ("oathbringer", "zh_渡誓"), "ob": ("oathbringer", "zh_渡誓"),
     "elantris": ("elantris", "zh_伊岚翠"),
     "tes": ("the_emperors_soul", "zh_皇帝魂"),
+    # —— 2026-10-20 破战者中文书就绪 ——
+    "wb": ("warbreaker", "zh_破战者"), "warbreaker": ("warbreaker", "zh_破战者"),
     "sa4": ("rhythm_of_war", None), "sa5": ("wind_and_truth", None),
     "sa3.5": ("dawnshard", None),
 }
 # 中英按「文件序号」对齐的英书（glossary_alignment §0.1；aol 按章节号对齐，不在此列）
 INDEX_ALIGN_EN = {"the_way_of_kings", "words_of_radiance", "oathbringer", "elantris",
-                  "the_emperors_soul", "the_final_empire", "the_well_of_ascension",
+                  "the_emperors_soul", "warbreaker", "the_final_empire", "the_well_of_ascension",
                   "the_hero_of_ages", "shadows_of_self", "the_bands_of_mourning"}
 AOL_BROADSHEET = re.compile(r"9781429994897")  # aol 英文里报章插页文件名标记（跳过）
 
@@ -138,10 +140,32 @@ def context(text: str, i: int, term: str, window: int) -> str:
     return ("…" if lo > 0 else "") + seg + ("…" if hi < len(text) else "")
 
 
+_SNAP_INDEX = None
+
+
+def snap_dir(page: str) -> Path:
+    """页面快照目录：默认 SNAP/<page>；含 '/' 的标题在 en_index 里映射为下划线目录。"""
+    global _SNAP_INDEX
+    d = SNAP / page
+    if (d / "wikitext.txt").exists():
+        return d
+    if _SNAP_INDEX is None:
+        try:
+            _SNAP_INDEX = json.loads((ROOT / "state" / "en_index.json").read_text(encoding="utf-8"))
+        except Exception:
+            _SNAP_INDEX = {}
+    ent = _SNAP_INDEX.get(page) or {}
+    snap = ent.get("snapshot")
+    if snap:
+        d2 = ROOT / snap
+        if (d2 / "wikitext.txt").exists():
+            return d2
+    return d
+
+
 def page_book_refs(page: str):
     """从快照 wikitext 解析 book ref（书码, 章）；返回 list[(code, ch)]。"""
-    d = SNAP / page
-    wt = d / "wikitext.txt"
+    wt = snap_dir(page) / "wikitext.txt"
     if not wt.exists():
         return []
     txt = wt.read_text(encoding="utf-8", errors="replace")
@@ -153,8 +177,7 @@ def page_book_refs(page: str):
 
 def kind_of_page(page: str):
     """页面标题类型：人物/地理/其他（用于提示词）。"""
-    d = SNAP / page
-    wt = d / "wikitext.txt"
+    wt = snap_dir(page) / "wikitext.txt"
     txt = ""
     if wt.exists():
         txt = wt.read_text(encoding="utf-8", errors="replace").lower()

@@ -11,21 +11,26 @@
 """
 from __future__ import annotations
 
+import argparse
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ST = ROOT / "state"
 
-READY = {"sa1", "twok", "sa2", "wor", "sa3", "ob", "elantris"}
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import glossary_assist as GA  # noqa: E402
+# 已就绪书码：有中译 + 英书按序号对齐（动态，含新就绪书）
+READY = {c for c, (en, zh) in GA.BOOKS.items() if zh and en in GA.INDEX_ALIGN_EN}
 BOOK_CN = {"sa1": "飓光志1·王者之路", "twok": "飓光志1·王者之路",
            "sa2": "飓光志2·光辉真言", "wor": "飓光志2·光辉真言",
            "sa3": "飓光志3·渡誓", "ob": "飓光志3·渡誓",
-           "elantris": "伊岚翠", "tes": "皇帝魂"}
+           "elantris": "伊岚翠", "tes": "皇帝魂", "wb": "破战者", "warbreaker": "破战者"}
 
 
 def load(name, default=None):
-    p = ST / name
+    p = Path(name) if str(name).startswith("/") or "/" in str(name) else ST / name
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else default
 
 
@@ -34,13 +39,24 @@ def chs(ch):
 
 
 def main():
-    v2 = load("missing_translation_3cats.json")
-    scout = load("glossary_scout_3cats.json")
-    r1 = load("round1_batches.json", {})
-    r2 = load("round2_batches.json", {})
-    nscan = load("noref_scan.json", {}) or {}
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--missing", default="missing_translation_3cats.json")
+    ap.add_argument("--scout", default="glossary_scout_3cats.json")
+    ap.add_argument("--r1", default="round1_batches.json")
+    ap.add_argument("--r2", default="round2_batches.json")
+    ap.add_argument("--nscan", default="noref_scan.json")
+    ap.add_argument("--nver", default="noref_batches.json")
+    ap.add_argument("--out", default="missing_translation_report.md")
+    ap.add_argument("--total", type=int, default=2554, help="该清单范围的主命名空间词条页总数")
+    ap.add_argument("--label", default="三分类（Elantris / The Emperor's Soul / Stormlight_Archive）")
+    args = ap.parse_args()
+    v2 = load(args.missing)
+    scout = load(args.scout)
+    r1 = load(args.r1, {})
+    r2 = load(args.r2, {})
+    nscan = load(args.nscan, {}) or {}
     nver = {}
-    for rows in (load("noref_batches.json", {}) or {}).values():
+    for rows in (load(args.nver, {}) or {}).values():
         for x in rows:
             pg = x.get("page")
             if not isinstance(pg, str):
@@ -130,16 +146,16 @@ def main():
 
     out = []
     a = out.append
-    a("# 三分类缺译名排查 + 电子书采证报告\n")
-    a("> 范围：Category:Elantris / Category:The Emperor's Soul / Category:Stormlight_Archive")
+    a(f"# 缺译名排查 + 电子书采证报告（{args.label}）\n")
+    a(f"> 范围：{args.label}")
     a("> 规则（用户 2026-10-19）：有 book ref → 按 ref 到已就绪电子书（飓光志1~3·伊岚翠·皇帝魂）采证；")
     a("> 仅 map/file ref → 跳过；无 ref / 只引未就绪书 → 如实列出。")
     a("> 判定为「译名必须在中文原文真实出现」，附书证；未采到的一律标 unclear，不臆造。\n")
     a("## §0 总览\n")
     a("| 项 | 行数 |")
     a("|---|---|")
-    a(f"| 词条页（主命名空间，三类合计） | 2554 |")
-    a(f"| 已有译名（译名表/中文站/keep_en，归一化匹配） | {2554 - total_rows} |")
+    a(f"| 词条页（主命名空间，本清单范围） | {args.total} |")
+    a(f"| 已有译名（译名表/中文站/keep_en，归一化匹配） | {args.total - total_rows} |")
     a(f"| **缺译名（v2）** | **{total_rows}** |")
     a(f"| ├ 可用书 ref · 已采到官方中译（**待裁定入表**） | {len(confirmed)} |")
     a(f"| ├ 可用书 ref · 已定位但中译未取到 | {len(unclear)} |")
@@ -213,13 +229,13 @@ def main():
             a(f"- [{cat}] {pg}")
         a("")
 
-    (ST / "missing_translation_report.md").write_text("\n".join(out), encoding="utf-8")
+    (ST / args.out if not str(args.out).startswith("/") else Path(args.out)).write_text("\n".join(out), encoding="utf-8")
     print(f"confirmed={len(confirmed)} unclear={len(unclear)} en_not_found={len(en_not_found)} "
           f"wait_book={len(wait_book)} map={len(skip_map)} noref={len(skip_noref)} "
           f"| noref_scan: hit={len(noref_confirmed)} unclear={len(noref_unclear)} "
           f"en_only={len(noref_enonly)} miss={len(noref_miss)} "
           f"| sum={got} v2={total_rows} {'OK' if got == total_rows else 'MISMATCH'}")
-    print("->", ST / "missing_translation_report.md")
+    print("->", args.out)
 
 
 if __name__ == "__main__":

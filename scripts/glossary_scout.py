@@ -30,7 +30,7 @@ OUT_JSON = ROOT / "state" / "glossary_scout_3cats.json"
 OUT_MD = ROOT / "state" / "glossary_scout_3cats.md"
 
 # 已就绪（可采证）书码；TES 页面 ref 记作 Elantris，命中不到时补扫 tes 全书
-READY = {"sa1", "twok", "sa2", "wor", "sa3", "ob", "elantris"}
+READY = {c for c, (en, zh) in GA.BOOKS.items() if zh and en in GA.INDEX_ALIGN_EN}
 FALLBACK_BOOKS = {"tes": ("the_emperors_soul", "zh_皇帝魂")}
 
 
@@ -84,8 +84,10 @@ def find_book(base: str, refs, ctx: int = 200):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ctx", type=int, default=200)
+    ap.add_argument("--input", default=str(INPUT), help="缺译名清单 json")
+    ap.add_argument("--tag", default="3cats", help="输出文件后缀")
     args = ap.parse_args()
-    data = json.loads(INPUT.read_text(encoding="utf-8"))
+    data = json.loads(Path(args.input).read_text(encoding="utf-8"))
     result, cards = {}, []
     for cat, items in data.items():
         rows = []
@@ -113,13 +115,15 @@ def main():
                 rows.append({"page": page, "base": base, "status": "en_not_found",
                              "refs": ready, "tried": tried})
         result[cat] = rows
-    OUT_JSON.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
-    head = "# 采证对照卡（3 分类缺译名·已就绪书）\n\n> 逐卡在 ZH> 行内找官方中译；采不到就标 无命中。\n\n"
-    OUT_MD.write_text(head + "\n".join(cards), encoding="utf-8")
+    out_json = ROOT / "state" / f"glossary_scout_{args.tag}.json"
+    out_md = ROOT / "state" / f"glossary_scout_{args.tag}.md"
+    out_json.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
+    head = f"# 采证对照卡（{args.tag} 缺译名·已就绪书）\n\n> 逐卡在 ZH> 行内找官方中译；采不到就标 无命中。\n\n"
+    out_md.write_text(head + "\n".join(cards), encoding="utf-8")
     from collections import Counter
     for cat, rows in result.items():
         print(cat, dict(Counter(r["status"] for r in rows)))
-    print("对照卡:", len(cards), "->", OUT_MD)
+    print("对照卡:", len(cards), "->", out_md)
 
 
 if __name__ == "__main__":

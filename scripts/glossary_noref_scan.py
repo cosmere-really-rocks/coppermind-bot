@@ -31,6 +31,7 @@ CAT_BOOKS = {
     "Elantris": ["elantris", "tes"],
     "The Emperor's Soul": ["tes", "elantris"],
     "Stormlight_Archive": ["sa1", "sa2", "sa3", "sa4", "sa5", "sa3.5"],
+    "Warbreaker": ["wb"],
 }
 
 
@@ -55,11 +56,15 @@ def scan_one(base: str, books, ctx: int = 200):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ctx", type=int, default=200)
+    ap.add_argument("--input", default=str(ST / "missing_translation_3cats.json"))
+    ap.add_argument("--tag", default="3cats")
+    ap.add_argument("--books", default="", help="未知分类的兜底书码（逗号分隔）")
     args = ap.parse_args()
-    v2 = json.loads((ST / "missing_translation_3cats.json").read_text(encoding="utf-8"))
+    fallback = [b.strip() for b in args.books.split(",") if b.strip()]
+    v2 = json.loads(Path(args.input).read_text(encoding="utf-8"))
     out, cards, n_hit, n_en, n_miss = {}, [], 0, 0, 0
     for cat, rows in v2.items():
-        books = CAT_BOOKS[cat]
+        books = CAT_BOOKS.get(cat) or fallback
         for m in rows:
             if not m.get("no_ref"):
                 continue
@@ -80,10 +85,10 @@ def main():
             else:
                 n_miss += 1
                 out[pg] = {"base": base, "status": "miss", "books": books}
-    (ST / "noref_scan.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
-    (ST / "noref_cards.md").write_text("# 无ref全文扫采证卡\n\n" + "\n".join(cards), encoding="utf-8")
+    (ST / f"noref_scan_{args.tag}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    (ST / f"noref_cards_{args.tag}.md").write_text("# 无ref全文扫采证卡\n\n" + "\n".join(cards), encoding="utf-8")
     print(f"无ref 总数 {n_hit + n_en + n_miss} | 中译区命中 {n_hit} | 仅英书命中 {n_en} | 无命中 {n_miss}")
-    print("-> state/noref_scan.json, state/noref_cards.md")
+    print(f"-> state/noref_scan_{args.tag}.json, state/noref_cards_{args.tag}.md")
 
 
 if __name__ == "__main__":
