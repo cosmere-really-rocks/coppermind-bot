@@ -1469,12 +1469,22 @@ def translate_chunk_with_retry(cfg: LLMConfig, chunk: Chunk, glossary_slice: dic
     """
     last_translation, last_untranslated = None, []
     last_feedback = None
+    body_retried = False
     for attempt in range(max_retries + 1):
         translation, untranslated = translate_chunk(cfg, chunk, glossary_slice, en_title,
                                                     is_first, gloss, max_output_tokens,
                                                     feedback=last_feedback)
         last_translation, last_untranslated = translation, untranslated
         if not is_first or chunk.index != 0:
+            # 正文块半译校验（2026-10-20 用户裁定：导语 → 所有块；复用 feedback 通道，限 1 次）
+            if not body_retried:
+                fb = body_english_feedback(translation)
+                if fb:
+                    body_retried = True
+                    last_feedback = fb
+                    sys.stderr.write(f"[半译校验] 正文块疑似残留成句英文（本轮第 {attempt + 1} 次调用），"
+                                     "带反馈重试（限 1 次）…\n")
+                    continue
             return translation, untranslated
         if not untranslated_lead_english(chunk.text, translation):
             return translation, untranslated
@@ -1647,6 +1657,46 @@ def _first_bold_outside_templates(body: str, lo: int = 0, hi=None):
             continue
         return m
     return None
+
+
+def body_english_feedback(translation: str):
+    """生成正文块「半译残留」的纠错反馈（2026-10-20 用户裁定：从导语扩到所有块）。
+
+    判定与 verify 门禁 3c **完全同源**（同一 mask_nonprose 掩码、同一「叙述词」口径），
+    因此天然回答「AI 觉得不该翻怎么办」：
+      - 引用/模板/URL/斜体书名/括号原名/keep_en/引号内原词 → 掩码后贡献 0 词，豁免；
+      - 首字母大写的专名串不计（只数小写叙述词或停用词），表外词「宁保英文」不误伤；
+      - 掩码后单行仍 ≥6 个叙述性英文词 = 按全部管线规则都该翻 → 回喂该行。
+    只回喂一次；仍失败保留现译，由写回前门禁终裁（最坏维持现状，不会误写站）。
+    返回 None 表示无需重试。
+    """
+    try:
+        masked = mask_nonprose(translation)
+        snippets = []
+        for orig_ln, mask_ln in zip(translation.split("\n"), masked.split("\n")):
+            if not orig_ln or orig_ln[0] in "|={" or orig_ln.startswith("[[category"):
+                continue
+            l = re.sub(r"<ref[^>]*>.*?</ref>", " ", mask_ln)
+            l = re.sub(r"</?ref[^>]*>", " ", l)
+            l = re.sub(r"\[\[[^\[\]]*\]\]", " ", l)
+            words = re.findall(r"[A-Za-z]+", l)
+            prose = [w for w in words
+                     if w.lower() in _UNTRANSLATED_STOPWORDS or w == w.lower()]
+            if len(prose) >= 6:
+                snip = orig_ln.strip()[:160]
+                if snip and snip not in snippets:
+                    snippets.append(snip)
+            if len(snippets) >= 4:
+                break
+        if not snippets:
+            return None
+        lines = "\n".join(f"  {i + 1}. {sn}" for i, sn in enumerate(snippets))
+        return ("译文残留整段英文（下行已掩掉引用/模板/URL/斜体书名等按规则保留英文的"
+                "部分，主体仍是英文叙述句）——这些句子必须整句翻译成简体中文：专名按"
+                "译名表；引用原文、URL、模板名、书名斜体、括号原名标注保持原样即可，"
+                "其余叙述文字全部翻译。残留行：\n" + lines)
+    except Exception:
+        return None
 
 
 def ensure_en_tag(body: str, title_en: str) -> str:
