@@ -842,7 +842,51 @@ _SECTION_HEADING_MAP = {
     "fashion": "时尚",
     "architecture": "建筑",
     "government and politics": "政府与政治",
+    # 2026-10-20 批次补（口径取自既有译文语料：封面画廊2x/脚注1x/统计分析1x/村庄1x）
+    "cover gallery": "封面画廊",
+    "footnotes": "脚注",
+    "statistical analysis": "统计分析",
+    "the village": "村庄",
 }
+
+# ============ 全字典表驱动的章节标题兜底（2026-10-20 用户裁定：所有字典表全量进）============
+# 来源（_sub 内优先级）：精选表（最高） > 下面合并出的字典表（中文站别名 < 中文站标题 < 译名表）。
+# 仅收纯 ASCII 键与非空 zh；按 casefold 精确匹配（标题正则保证纯 ASCII）。
+_HEADING_DICT_MAP = None
+
+
+def _heading_dict_map() -> dict:
+    global _HEADING_DICT_MAP
+    if _HEADING_DICT_MAP is not None:
+        return _HEADING_DICT_MAP
+    out = {}
+
+    def put(k, zh):
+        if k and zh and str(k).isascii():
+            out.setdefault(str(k).casefold(), str(zh))
+
+    try:  # 低优先先放（setdefault 保先到者）：别名 < 标题反查 < 译名表
+        for en, zh in load_zhwiki_aliases().items():
+            put(en, zh)
+    except Exception:
+        pass
+    try:
+        for zh, en in load_zhwiki_titles().items():
+            put(en, zh)
+    except Exception:
+        pass
+    try:
+        merged = load_merged_glossary(DEFAULT_GLOSSARY, DEFAULT_COMMON)
+        terms = merged.get("terms", merged) if isinstance(merged, dict) else merged
+        for en, v in terms.items():
+            if isinstance(v, dict):
+                put(en, v.get("zh"))
+    except Exception:
+        pass
+    _HEADING_DICT_MAP = out
+    return out
+
+
 _SECTION_HEAD_RE = re.compile(
     r"^(={2,6})[ \t]*([A-Za-z][A-Za-z0-9 ,:'\-()]*?)[ \t]*(={2,6})[ \t]*$", re.M)
 
@@ -853,8 +897,8 @@ def translate_section_headings(wikitext: str):
     stats = []
 
     def _sub(m):
-        key = m.group(2).strip().lower()
-        zh = _SECTION_HEADING_MAP.get(key)
+        raw = m.group(2).strip()
+        zh = _SECTION_HEADING_MAP.get(raw.lower()) or _heading_dict_map().get(raw.casefold())
         if not zh:
             return m.group(0)
         stats.append(f"{m.group(2)} -> {zh}")
@@ -1565,6 +1609,46 @@ def lead_english_feedback(src_text: str, translation: str) -> str:
     return "导语正文整段仍是英文（未译成中文）。请把 Infobox 之后、首个章节之前的全部叙述文字逐句译成简体中文，严禁只翻标题、正文留英文。"
 
 
+def _template_spans(body: str):
+    # 全文 {{...}}（配平嵌套）区间——导语加粗锚点必须跳过这些区段
+    spans, i, n = [], 0, len(body)
+    while i < n - 1:
+        j = body.find("{{", i)
+        if j < 0:
+            break
+        depth, k, end = 0, j, -1
+        while k < n:
+            two = body[k:k + 2]
+            if two == "{{":
+                depth += 1; k += 2; continue
+            if two == "}}":
+                depth -= 1; k += 2
+                if depth == 0:
+                    end = k; break
+                continue
+            k += 1
+        if end < 0:
+            spans.append((j, n)); break
+        spans.append((j, end)); i = end
+    return spans
+
+
+def _first_bold_outside_templates(body: str, lo: int = 0, hi=None):
+    # 导语锚点：第一个不在 {{...}} 模板内的 '''粗体'''（含捕获组的标题形态）。
+    # 2026-10-20 修复（Ghostbloods 跨 mimo/deepseek 复现）：notice 位于导语之前，其
+    # 内部粗体（'''extensive spoilers'''）曾被 ensure_en_tag / ensure_lead_title 当作
+    # 导语标题——tag 插错位、正文粗体被误改成页名。锚点跳过模板区后两处同修。
+    spans = _template_spans(body)
+    hi = len(body) if hi is None else hi
+    for m in re.finditer(r"'''\s*([^'\n]{1,80}?)\s*'''", body):
+        if m.start() < lo or m.start() >= hi:
+            continue
+        if any(sm <= m.start() < em for sm, em in spans):
+            continue
+        return m
+    return None
+
+
 def ensure_en_tag(body: str, title_en: str) -> str:
     """决议#10 兜底：确保 {{en|title}} 恰好一处、且位于导语首行粗体标题之后。
 
@@ -1575,9 +1659,9 @@ def ensure_en_tag(body: str, title_en: str) -> str:
     """
     # 1. 清除所有形态的 {{en|...}} / {{en}}（含错位进 notice 的）
     body = re.sub(r"\{\{\s*en\s*(?:\|[^}]*)?\}\}", "", body, flags=re.I)
-    # 2. 规范位置插入：首个 '''加粗标题''' 之后
+    # 2. 规范位置插入：首个**模板区之外**的加粗标题之后（跳过 notice 等模板内粗体）
     tag = "{{en|" + title_en + "}}"
-    m = re.search(r"'''.+?'''", body)
+    m = _first_bold_outside_templates(body)
     if m:
         return body[:m.end()] + tag + body[m.end():]
     if body.startswith("{{CmPermission"):
@@ -1611,8 +1695,7 @@ def ensure_lead_title(body: str, title_en: str) -> str:
     for _hm in re.finditer(r"\n={2,4} ", body):
         _hpos = _hm.start()
         break
-    head = body[:min(_hpos, 800)]
-    m = re.search(r"'''\s*([^'\n]{1,80}?)\s*'''", head)
+    m = _first_bold_outside_templates(body, hi=min(_hpos, 800))
     if not m:
         return body, False
     lead = m.group(1).strip()
