@@ -808,6 +808,10 @@ def translate_plain_links(wikitext: str, glossary: dict):
 # 个别页的少数派译法如 Notes→备注、Relationships→关系 以多数为准归一）。
 _SECTION_HEADING_MAP = {
     "notes": "注释",
+    "references": "参考资料",
+    "setting": "背景设定",
+    "main characters": "主要角色",
+    "views on religion": "宗教观",
     "history": "历史",
     "appearance and personality": "外貌与性格",
     "relationships": "人际关系",
@@ -891,6 +895,20 @@ _SECTION_HEAD_RE = re.compile(
     r"^(={2,6})[ \t]*([A-Za-z][A-Za-z0-9 ,:'\-()]*?)[ \t]*(={2,6})[ \t]*$", re.M)
 
 
+def _heading_plural_candidates(raw: str) -> list:
+    """标题复数回退（2026-10-20）：词表只有单数（soulstamp）、标题写复数（Soulstamps）
+    时差一个 s 就漏过全字典表。仅在标题精确查询未中后尝试：ies→y / es / 去 s。"""
+    w = raw.casefold()
+    out = []
+    if w.endswith("ies") and len(w) > 4:
+        out.append(w[:-3] + "y")
+    if w.endswith("es") and len(w) > 3:
+        out.append(w[:-2])
+    if w.endswith("s") and len(w) > 3:
+        out.append(w[:-1])
+    return out
+
+
 def translate_section_headings(wikitext: str):
     """常见章节标题确定性预翻译（LLM 前）。只匹配纯 ASCII 标题 → 表内映射为中文；
     长尾标题不在此表，漏译由 verify 3a ASCII 标题门禁拦截。返回 (新文本, 统计)。"""
@@ -898,7 +916,10 @@ def translate_section_headings(wikitext: str):
 
     def _sub(m):
         raw = m.group(2).strip()
-        zh = _SECTION_HEADING_MAP.get(raw.lower()) or _heading_dict_map().get(raw.casefold())
+        dmap = _heading_dict_map()
+        zh = (_SECTION_HEADING_MAP.get(raw.lower())
+              or dmap.get(raw.casefold())
+              or next((dmap[c] for c in _heading_plural_candidates(raw) if c in dmap), None))
         if not zh:
             return m.group(0)
         stats.append(f"{m.group(2)} -> {zh}")
