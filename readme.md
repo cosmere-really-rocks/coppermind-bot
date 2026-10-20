@@ -51,7 +51,32 @@
 | 时代二 卷四 | the_lost_metal | （尚无中译） | 75 / — |
 | 时代 1.5 | secret_history | （尚无中译） | 33 / — |
 
-分章脚本：`scripts/extract_books.py`（一文件一章节的英文书）、`scripts/reconstruct_epub.py`（EN split 流 + 中文合订，含内嵌 `###` 标题拆分）；探针/中英同章对照用 `scripts/epub_prep.py`。
+分章脚本：`scripts/extract_books.py`（一文件一章节的英文书）、`scripts/reconstruct_epub.py`（EN split 流 + 中文合订，含内嵌 `###` 标题拆分）、`scripts/split_epub.py`（**第二批：TOC 驱动**，见下表）；探针/中英同章对照用 `scripts/epub_prep.py`。
+
+**第二批分章（飓光志 / 伊岚翠 / 破战者 / 皇帝魂；`scripts/split_epub.py`，同为 `dict/epub_out/`、本地不提交）**
+
+| 系列·书 | EN 目录 | ZH 目录 | 章节数 EN/ZH |
+|---|---|---|---|
+| 伊岚翠 正传 | elantris | zh_伊岚翠 | 65 / 65 |
+| 伊岚翠 短篇 The Hope of Elantris | the_hope_of_elantris | （中译附在【简体版】皇帝魂 同一 epub 内，未单独提取） | 1 / — |
+| 皇帝魂 | the_emperors_soul | zh_皇帝魂 | 17 / 17 |
+| 破战者 | warbreaker | zh_破战者 | 60 / 59（中译把末两章并成第五十七章，前 56 章逐章对齐）|
+| 飓光志1 王者之路 | the_way_of_kings | zh_王者之路 | 87 / 87 |
+| 飓光志2 光辉真言 | words_of_radiance | zh_光辉真言 | 105 / 105 |
+| 飓光志3 渡誓 | oathbringer | zh_渡誓 | 138 / 138 |
+| 飓光志4 节奏之战 | rhythm_of_war | （尚无中译） | 131 / — |
+| 飓光志5 风历真谛 | wind_and_truth | （尚无中译） | 168 / — |
+| 飓光志 短篇 Dawnshard | dawnshard | （尚无中译） | 21 / — |
+| 飓光志 短篇 Elsecaller + King Lopen | elsecaller_and_king_lopen | — | 2（一 epub 两短篇）/ — |
+
+处理要点（`scripts/split_epub.py --dry-run` 先看分章方案，`--book <目录名>` 单跑）：
+- **TOC 驱动**：以 toc.ncx/nav 为章节边界，白名单认「真章节」标签（第X章 / 第X天 / Chapter N / `1: TITLE` / `I-N` / 序章·序幕·引子·尾声·后记 / Prologue·Epilogue·Postscript…）；分部页（Part / 第X部分 / 插曲 / Interludes 标题页）、地图、彩插不自成一章，并入相邻章；末章按其后的尾注/秘典/Annotations/Ars Arcanum 条目截断，前言版权目录整段丢弃。
+- **文件内锚点切分**：如 `渡誓` 一个 `part0008` 内含 1..32 章（`id="hh2-N"`），按锚点切；Oathbringer 里 `#pg_NNNN` 分页书签条目直接过滤。
+- **补题**：章题是图片的书（王者之路英文版、风历真谛、节奏之战、渡誓中译）正文无标题 → 自动生成 `<h1 class="chapter-title">`；正文已有标题的不重复补。
+- `飓光志3：渡誓` 只有 azw3 → 用 `mobi` 包转成同目录 `【重庆社版】飓光志3：渡誓 (azw3转epub).epub`（不提交）。
+- `【简体版】皇帝魂` 同 epub 后半附赠《保卫至福净土》《长子》《第十一种金属》《军团》→ 用 `slice: [0,21]` 只取皇帝魂本体。
+- `Warbreaker (Retail)` 是注解版：章首 Annotations 链接行已剔除、书末 Annotations_* 独立条目截断丢弃；第45章中英版都极短（源书如此，已核对中译同章）。
+
 
 **译名表**：`dict/mistborn.json` 为**全系列**（era1+era2）译名表；源文件在本地 `dict/raw/`（不提交）。补全方法见 `rules/glossary_alignment.md`（中英章节对齐，以官方中译本），数据模型含 `renderings`（长语块）/`variants`（同名多义）/`zh_variable`（无固定译名）三可选字段（迁移脚本 `scripts/glossary_migrate.py`）。2025-10-16 已落地约 60 条书证译名（人物/地理/地点/定居点/宗教，见 rules doc）。
 
@@ -141,7 +166,10 @@
   - keep_en 清理 4 条（已有官方译名入表：Allomancer Jak…/Mistborn Adventure Game/Birthright/House War）；章节标题/章节题词/Sheet17 三个 sheet 不入译名表。
   - ⚠️ `dict/mistborn.json` 实质已是**全系列（三界宙）译名表**（meta.name 已改，文件名暂不改）；**按书拆分不做**（用户确认方向：跨世界串门频繁 + 切片机制已省 token，异义用 variants/note 治理）。
   - ✅ 2026-10-19 拆名专项（`scripts/glossary_split_names.py`，用户口径）：人名形全名拆出裸名 **208 条**（Shallan=沙兰/Davar=达瓦 等；名/姓各自入典），拆名冲突 12 条未并入；全表 3932→**4140** 条。`conflicts.md` 各决策表已加「处理方法」空列待人工填写（填写后勿再重跑 report）。
-  - ✅ 2026-10-19 **A类36条已裁定落地**：26条改以新表（src 记 `A类裁定2026-10-19:<旧值>` 可回滚）；Felt/Red/Vet 加作品 variants（迷雾之子/飓光志 同词异人或异译）；Hoid/Arcanum Unbounded 按用户 note；Allomantic Agreement/Book of the False Dawn 维持现值；Pinnacle 维持已有 variants；Sixteen 删除（通用数词）；Misra 待定。规则入库：**作品内的作品在译名表中不加书名号**。后续用户复核：Arcanum Unbounded note=真实世界的书（2016 中短篇合集）；Shum=束姆(迷雾人名)/黍麻(飓光志作物)、The Path=道(迷雾宗教)/白沙=宗师之路(不同宗教，非同一宗教) 均改为作品 variants（zh 取迷雾义）。✅ 书名号全表清理：作品内的作品 45 条去书名号（回滚档 booktitle_strip.json）。✅ 2026-10-19 **B类 54 条中 25 条已按用户裁定落地**（改值7、维持6、补note3、variants8、删 battle=战役）；余 29 条留 B 表待定。裁定记录见 meta.notes；改值可按 src 中 `B类裁定2026-10-19:<旧值>` 回滚。复核完毕：Edgedancer 加 variants（缘舞骑士/短篇名缘舞）、Lightweaver 主用织光骑士+尤伦（Yolish）语境织光师、Deo 的迪奥币=货币（非人名）。
+  - ✅ 2026-10-19 **A类36条已裁定落地**：26条改以新表（src 记 `A类裁定2026-10-19:<旧值>` 可回滚）；Felt/Red/Vet 加作品 variants（迷雾之子/飓光志 同词异人或异译）；Hoid/Arcanum Unbounded 按用户 note；Allomantic Agreement/Book of the False Dawn 维持现值；Pinnacle 维持已有 variants；Sixteen 删除（通用数词）；Misra 待定。规则入库：**作品内的作品在译名表中不加书名号**。后续用户复核：Arcanum Unbounded note=真实世界的书（2016 中短篇合集）；Shum=束姆(迷雾人名)/黍麻(飓光志作物)、The Path=道(迷雾宗教)/白沙=宗师之路(不同宗教，非同一宗教) 均改为作品 variants（zh 取迷雾义）。✅ 书名号全表清理：作品内的作品 45 条去书名号（回滚档 booktitle_strip.json）。
+  - ✅ 2026-10-19 **英文维基 6 分类递归爬取完成**（`fetch_category.py --list` 展开 + `fetch_mistborn_crawl.py` 抓取，决议#14 慢速 delay=2.0s）：Category:General Cosmere / Cosmere celestial bodies / Elantris / The Emperor's Soul / Warbreaker / Stormlight_Archive；子分类 267、页面并集 **3073**（新抓 **2765**、已有快照 308），115.9 min，**0 错误 0 缺失 0 站方不存在**，快照全落 `en_snapshot/`。清单 `state/cosmere_lists/*.json`、需抓清单 `state/cosmere_need_fetch.json`、日志 `state/cosmere_crawl.log`。
+  - ✅ 2026-10-19 **三分类缺译名排查 + 电子书采证**（Elantris / The Emperor's Soul / Stormlight_Archive）：词条页 2554 中已有译名 1995（`translate` 归一化匹配复查，消 166 条大小写/屈折误报），缺 559；按规则分流——可用书 ref 采证出 **80 行官方中译（待裁定入表，含书证）**、定位未取到 3、就绪书正文无命中 73、缺中译本 171（sa4/5·中篇·mb7）、仅 map ref 10 与无 ref 222 跳过。工具：`glossary_scout.py`（批量定位）、`glossary_round2.py`（句对齐加强卡）、`glossary_report.py`（终报）+ 扩展版 `glossary_assist.py`（新增 sa1-3/伊岚翠/皇帝魂 书码、飓光志文件名体例、按文件序号中英对齐）。报告 `state/missing_translation_report.md`；判定底稿 state/round1_batches.json、round2_batches.json。
+  - ✅ 2026-10-19 **B类 54 条中 25 条已按用户裁定落地**（改值7、维持6、补note3、variants8、删 battle=战役）；余 29 条留 B 表待定。裁定记录见 meta.notes；改值可按 src 中 `B类裁定2026-10-19:<旧值>` 回滚。复核完毕：Edgedancer 加 variants（缘舞骑士/短篇名缘舞）、Lightweaver 主用织光骑士+尤伦（Yolish）语境织光师、Deo 的迪奥币=货币（非人名）。
 
 ## 凭据
 

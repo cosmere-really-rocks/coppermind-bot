@@ -56,7 +56,19 @@ BOOKS = {
     "mb6": ("the_bands_of_mourning", "zh_悲悼护腕"), "bom": ("the_bands_of_mourning", "zh_悲悼护腕"),
     "mb7": ("the_lost_metal", None), "tlm": ("the_lost_metal", None), "mbe6": ("the_lost_metal", None),
     "sh": ("secret_history", None), "eltania": ("secret_history", None),
+    # —— 2026-10-19 新增：飓光志1-3（中译已就绪）、伊岚翠、皇帝魂；sa4/5/dawnshard 暂无中译 ——
+    "sa1": ("the_way_of_kings", "zh_王者之路"), "twok": ("the_way_of_kings", "zh_王者之路"),
+    "sa2": ("words_of_radiance", "zh_光辉真言"), "wor": ("words_of_radiance", "zh_光辉真言"),
+    "sa3": ("oathbringer", "zh_渡誓"), "ob": ("oathbringer", "zh_渡誓"),
+    "elantris": ("elantris", "zh_伊岚翠"),
+    "tes": ("the_emperors_soul", "zh_皇帝魂"),
+    "sa4": ("rhythm_of_war", None), "sa5": ("wind_and_truth", None),
+    "sa3.5": ("dawnshard", None),
 }
+# 中英按「文件序号」对齐的英书（glossary_alignment §0.1；aol 按章节号对齐，不在此列）
+INDEX_ALIGN_EN = {"the_way_of_kings", "words_of_radiance", "oathbringer", "elantris",
+                  "the_emperors_soul", "the_final_empire", "the_well_of_ascension",
+                  "the_hero_of_ages", "shadows_of_self", "the_bands_of_mourning"}
 AOL_BROADSHEET = re.compile(r"9781429994897")  # aol 英文里报章插页文件名标记（跳过）
 
 
@@ -82,12 +94,18 @@ def chapter_file(book_dir: str, chapter: int):
     for f in d.glob("*.html"):
         if AOL_BROADSHEET.search(f.name):
             continue
-        m = re.search(r"chapter(\d+)", f.name, re.I)
+        if chapter == 999 and re.search(r"(?i)epilogue|尾声|终章", f.name):
+            return f
+        if chapter == 0 and re.search(r"(?i)prologue|序章|序幕|引子", f.name):
+            return f
+        m = re.search(r"chapter[_\s]*(\d+)", f.name, re.I)
         if m and int(m.group(1)) == chapter:
             return f
-        if chapter == 999 and re.search(r"(?i)epilogue", f.name):
+        m = re.match(r"\d{3}_(\d{1,3})(?:_|$)", f.name)  # 飓光志体例 002_1_章节名
+        if m and int(m.group(1)) == chapter:
             return f
-        if chapter == 0 and re.search(r"(?i)prologue", f.name):
+        m = re.match(r"(\d{3})_", f.name)                 # 序号前缀（伊岚翠中译 061_第六十一章）
+        if m and int(m.group(1)) == chapter:
             return f
     return None
 
@@ -206,7 +224,7 @@ def main():
             return False
         en_hits_total += len(hits)
         rec["en_contexts"] = [context(text, i, base, args.ctx) for i in hits[:3]]
-        add_zh_region(rec, text, hits, zh_dir, chnum, args)
+        add_zh_region(rec, text, hits, zh_dir, chnum, args, en_dir, fname)
         searched.append(rec)
         return True
 
@@ -276,9 +294,23 @@ def main():
     print("\n说明：工具负责“自动定位中英同章/上下文”，官方中译仍以中文电子书原文为准，由人/LLM 采证后写入 dict/mistborn.json。")
 
 
-def add_zh_region(rec, text, hits, zh_dir, ch, args):
-    """给 rec 补上中文同章对照区（按 EN 命中位置比例映射）。"""
-    zh_text, zh_fname = load_chapter_text(zh_dir, ch) if zh_dir else (None, None)
+def add_zh_region(rec, text, hits, zh_dir, ch, args, en_dir=None, en_file=None):
+    """给 rec 补上中文同章对照区（按 EN 命中位置比例映射）。
+
+    en_dir/en_file 给定时：INDEX_ALIGN_EN 类英书按「文件序号」配对中书同序号文件
+    （glossary_alignment §0.1；aol 不在 INDEX_ALIGN_EN，仍按章节号）。
+    """
+    zh_text, zh_fname = None, None
+    if zh_dir and en_dir in INDEX_ALIGN_EN and en_file:
+        m = re.match(r"(\d{3})_", en_file)
+        if m:
+            pref = m.group(1)
+            zhs = sorted((EPUB_OUT / zh_dir).glob(f"{pref}_*.html"))
+            if zhs:
+                zh_fname = zhs[0].name
+                zh_text = strip_html(zhs[0].read_text(encoding="utf-8", errors="replace"))
+    if zh_text is None and zh_dir:
+        zh_text, zh_fname = load_chapter_text(zh_dir, ch)
     if not zh_text:
         rec["zh_file"] = None
         rec["zh_note"] = "无中文版或该章缺失"
@@ -310,7 +342,8 @@ def find_whole_book(term, en_dir, zh_dir, args):
         cap = {"prologue": 0, "epilogue": 999}
         label = "epilogue" if "epilogue" in f.name.lower() else (
             "prologue" if re.match(r"0*1?_?prologue", f.name[:20].lower()) else None)
-        if label is None and not re.search(r"chapter(\d+)", f.name, re.I):
+        if label is None and not re.search(r"chapter\d+", f.name, re.I) \
+                and not (en_dir in INDEX_ALIGN_EN and re.match(r"\d{3}_", f.name)):
             continue
         text = strip_html(f.read_text(encoding="utf-8", errors="replace"))
         found = find_in(text, term)
@@ -319,7 +352,7 @@ def find_whole_book(term, en_dir, zh_dir, args):
             chnum = cap.get(label, int(mnum.group(1)) if mnum else 0)
             item = {"book": en_dir, "chapter": chnum, "label": label, "file": f.name,
                     "context": context(text, found[0], term, args.ctx)}
-            add_zh_region(item, text, found, zh_dir, chnum, args)
+            add_zh_region(item, text, found, zh_dir, chnum, args, en_dir, f.name)
             hits.append(item)
     return {"total": total, "hits": hits}
 
@@ -348,7 +381,7 @@ def locate(term: str, book=None, chapter=None, ctx: int = 220, all_hits: bool = 
             return {"found": False, "book": code, "chapter": chapter, "en_file": fname, "term_hits": 0}
         rec = {"found": True, "book": code, "chapter": chapter, "en_file": fname,
                "en_contexts": [context(text, i, term, ctx) for i in hits[:3]]}
-        add_zh_region(rec, text, hits, zh_dir, chnum, _args)
+        add_zh_region(rec, text, hits, zh_dir, chnum, _args, en_dir, fname)
         rec["term_hits"] = len(hits)
         return rec
     # 无具体书章 → 跨书扫
