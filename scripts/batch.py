@@ -118,29 +118,37 @@ def run_stage(args, title: str) -> list[str]:
         status.append("skipped:no-snapshot")
         return status
 
-    # ---- convert + translate ----
-    translate_cmd = [str(PY), str(HERE / "translate.py"), "--title", title]
-    if args.max_chars:
-        translate_cmd += ["--max-chars", str(args.max_chars)]
-    if args.dry_run:
-        translate_cmd += ["--dry-run"]
-    if args.no_wrap:
-        translate_cmd += ["--no-wrap"]
-    if args.api_key:
-        translate_cmd += ["--api-key", args.api_key]
-    if args.max_output_tokens:
-        translate_cmd += ["--max-output-tokens", str(args.max_output_tokens)]
-    if args.auto_quote_cn:
-        translate_cmd += ["--auto-quote-cn"]
-    if args.no_resolve_quotes:
-        translate_cmd += ["--no-resolve-quotes"]
-    tr = subprocess.run(translate_cmd, capture_output=True, text=True)
-    # 子进程 stderr 记录进度，只保留足够诊断
-    if tr.returncode != 0:
-        status.append("translate:FAIL")
-        sys.stderr.write(f"[{title}] translate 失败：{(tr.stderr or '')[-600:]}\n")
-        return status
-    status.append("translate:dry" if args.dry_run else "translate:ok")
+    # ---- convert + translate（受 --stage 门控：--stage write 时跳过，不再白花 LLM） ----
+    if "translate" not in args.stage and "convert" not in args.stage:
+        # --stage write：跳过翻译、直接门禁+写回（2026-10-20 修：此前门控缺失会白翻一轮 LLM）
+        if (snapshot_dir / "translation.json").exists():
+            status.append("translate:skip")
+        else:
+            status.append("translate:no-input")
+            return status
+    else:
+        translate_cmd = [str(PY), str(HERE / "translate.py"), "--title", title]
+        if args.max_chars:
+            translate_cmd += ["--max-chars", str(args.max_chars)]
+        if args.dry_run:
+            translate_cmd += ["--dry-run"]
+        if args.no_wrap:
+            translate_cmd += ["--no-wrap"]
+        if args.api_key:
+            translate_cmd += ["--api-key", args.api_key]
+        if args.max_output_tokens:
+            translate_cmd += ["--max-output-tokens", str(args.max_output_tokens)]
+        if args.auto_quote_cn:
+            translate_cmd += ["--auto-quote-cn"]
+        if args.no_resolve_quotes:
+            translate_cmd += ["--no-resolve-quotes"]
+        tr = subprocess.run(translate_cmd, capture_output=True, text=True)
+        # 子进程 stderr 记录进度，只保留足够诊断
+        if tr.returncode != 0:
+            status.append("translate:FAIL")
+            sys.stderr.write(f"[{title}] translate 失败：{(tr.stderr or '')[-600:]}\n")
+            return status
+        status.append("translate:dry" if args.dry_run else "translate:ok")
 
     # ---- 自动质量门禁（零 review 机制保证：写回前自动核对，不过则拒绝写回）----
     # 覆盖：引用编号与英文源一致（防 LLM 幻觉）、占位符无残留、导语无英文残留、
