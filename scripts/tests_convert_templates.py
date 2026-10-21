@@ -130,17 +130,17 @@ def main():
     _tspec.loader.exec_module(_tr)
     _gl = _tr.load_merged_glossary(_tr.DEFAULT_GLOSSARY, _tr.DEFAULT_COMMON)
     prepost_cases = [
-        ("Post链接", "Post [[Catacendre]]", "[[灰烬灾变|灰烬灾变后]]"),
-        ("post连字符", "post-[[Catacendre]]", "[[灰烬灾变|灰烬灾变后]]"),
-        ("post空格", "post [[Catacendre]]", "[[灰烬灾变|灰烬灾变后]]"),
-        ("pre连字符", "pre-[[Catacendre]]", "[[灰烬灾变|灰烬灾变前]]"),
-        ("Pre首个", "Pre [[Catacendre]]", "[[灰烬灾变|灰烬灾变前]]"),
+        ("Post链接", "Post [[Catacendre]]", "[[浩变|浩变后]]"),
+        ("post连字符", "post-[[Catacendre]]", "[[浩变|浩变后]]"),
+        ("post空格", "post [[Catacendre]]", "[[浩变|浩变后]]"),
+        ("pre连字符", "pre-[[Catacendre]]", "[[浩变|浩变前]]"),
+        ("Pre首个", "Pre [[Catacendre]]", "[[浩变|浩变前]]"),
         ("pre空格", "pre [[Final Empire]]", "[[最后帝国|最后帝国前]]"),
-        ("带管道", "post-[[Catacendre|Catacendric]]", "[[灰烬灾变|灰烬灾变后]]"),
-        ("中文目标(infobox已译)", "Post [[灰烬灾变]]", "[[灰烬灾变|灰烬灾变后]]"),
-        ("小写归一", "pre-[[catacendre]]", "[[灰烬灾变|灰烬灾变前]]"),
+        ("带管道", "post-[[Catacendre|Catacendric]]", "[[浩变|浩变后]]"),
+        ("中文目标(infobox已译)", "Post [[浩变]]", "[[浩变|浩变后]]"),
+        ("小写归一", "pre-[[catacendre]]", "[[浩变|浩变前]]"),
         ("无译名保留", "Post [[UnknownThing]]", "Post [[UnknownThing]]"),
-        ("幂等", "[[灰烬灾变|灰烬灾变后]]", "[[灰烬灾变|灰烬灾变后]]"),
+        ("幂等", "[[浩变|浩变后]]", "[[浩变|浩变后]]"),
         ("不误伤独立词", "Post office", "Post office"),
     ]
     for name, src, want in prepost_cases:
