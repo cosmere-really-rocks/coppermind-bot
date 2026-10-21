@@ -297,6 +297,23 @@
     "drop_always": [],
     "notes": "CN magic 模板保留英文参数 related/type/focus/prereq。"
   },
+  "magic system": {
+    "src_template": "magic system",
+    "dst_template": "Infobox magic",
+    "field_map": {
+      "name": "魔法名",
+      "image": "图像",
+      "world": "世界",
+      "universe": "分类",
+      "books": "涉及书目",
+      "related": "related",
+      "focus": "focus",
+      "prereq": "prereq",
+      "type": "type"
+    },
+    "drop_always": [],
+    "notes": "2026-10-20 补：EN 是 {{magic}} 与 {{magic system}} 两个不同 infobox（后者 id=magic_system，多 prereq/focus 行），此前仅映射了 {{magic}}，{{magic system}}（快照 16 页）原样透传致中文站 模板:Magic system 红链、信息框整体不渲染。两者同归中文站 Infobox magic（保留英文参数 related/focus/prereq/type）；earth/'world 等 EN 专有冷门参数未列，出现即进 unmapped 报告。"
+  },
   "disease": {
     "src_template": "disease",
     "dst_template": "Infobox disease",
