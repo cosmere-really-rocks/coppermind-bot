@@ -83,6 +83,11 @@ class LLMConfig:
     # 翻译块会病态地无限推理（reasoning 吃光 max_tokens，content 为空 -> JSON 解析失败），
     # 关闭 thinking 后稳定产出。保留 enabled 供需要深思的模型/任务切换。
     thinking: str = "disabled"
+    # 推理强度（OpenAI 兼容 reasoning_effort）："minimal"|"low"|"medium"|"high"|缺省。
+    # 2026-10-21 豆包 seed-2-1-turbo 实测：minimal 会把独白写进 content（同 disabled
+    # 的坑，JSON 必坏）；low 稳定产出干净 JSON 且延迟可控（~100s/块）；不传则 auto
+    # 思考量更大更慢。仅在设置时随请求发送。
+    effort: str = ""
 
 
 def _load_env_file():
@@ -106,9 +111,10 @@ def load_llm_config(args) -> LLMConfig:
     cfg = LLMConfig()
     cfg.base_url = args.llm_base_url or os.environ.get("LLM_BASE_URL") or DEFAULT_BASE_URL
     cfg.model = args.llm_model or os.environ.get("LLM_MODEL") or DEFAULT_MODEL
-    cfg.timeout = args.timeout
+    cfg.timeout = args.timeout or int(os.environ.get("LLM_TIMEOUT", "300"))
     cfg.max_retries = args.max_retries
     cfg.thinking = os.environ.get("LLM_THINKING") or "disabled"
+    cfg.effort = (os.environ.get("LLM_EFFORT") or "").strip()
 
     key = args.api_key
     if not key:
@@ -1349,6 +1355,8 @@ def llm_chat(cfg: LLMConfig, messages, max_output_tokens=8000, temperature=0.2):
     }
     if cfg.thinking != "enabled":
         payload["thinking"] = {"type": "disabled"}
+    if cfg.effort:
+        payload["reasoning_effort"] = cfg.effort
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
         url, data=data, method="POST",
@@ -2892,7 +2900,8 @@ def main():
     ap.add_argument("--llm-base-url", default=os.environ.get("LLM_BASE_URL"))
     ap.add_argument("--llm-model", default=os.environ.get("LLM_MODEL"))
     ap.add_argument("--api-key", default=None)
-    ap.add_argument("--timeout", type=int, default=300)
+    ap.add_argument("--timeout", type=int, default=None,
+                    help="单次 LLM 请求超时秒（默认读 LLM_TIMEOUT，否则 300）")
     ap.add_argument("--max-retries", type=int, default=3)
     ap.add_argument("--max-output-tokens", type=int, default=8000, help="单块 LLM 最大输出 token（长块可调大）")
     ap.add_argument("--target-wiki", default=DEFAULT_WIKI)
