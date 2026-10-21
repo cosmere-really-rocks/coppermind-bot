@@ -88,31 +88,138 @@ def strip_html(raw: str) -> str:
     return "\n".join(l for l in lines if l)
 
 
-def chapter_file(book_dir: str, chapter: int):
-    """按章号找章节文件（跳过 aol 报章插页）。chapter==999 匹配 epilogue，0 匹配 prologue。"""
+_EN_ONES = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+            "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
+            "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16, "seventeen": 17,
+            "eighteen": 18, "nineteen": 19}
+_EN_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
+            "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90}
+
+
+def _en_num(s: str):
+    """英文数词 → int（皇帝魂文件名 Day_Forty-Two / Day_One_Hundred_and_One）。解析失败 None。"""
+    total = cur = 0
+    for w in re.split(r"[_\-\s]+", s.strip().lower()):
+        if not w or w == "and":
+            continue
+        if w in _EN_ONES:
+            cur += _EN_ONES[w]
+        elif w in _EN_TENS:
+            cur += _EN_TENS[w]
+        elif w == "hundred":
+            cur = (cur or 1) * 100
+        elif w == "thousand":
+            total += (cur or 1) * 1000
+            cur = 0
+        else:
+            return None
+    return total + cur
+
+
+_ZH_DIGITS = {"零": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5,
+              "六": 6, "七": 7, "八": 8, "九": 9}
+
+
+def _zh_num(s: str):
+    """中文数词 → int（皇帝魂中译文件名 第四十二天 / 第一百零一天）。解析失败 None。"""
+    if not s:
+        return None
+    total = num = 0
+    for ch in s:
+        if ch in _ZH_DIGITS:
+            num = _ZH_DIGITS[ch]
+        elif ch == "十":
+            total += (num or 1) * 10
+            num = 0
+        elif ch == "百":
+            total += (num or 1) * 100
+            num = 0
+        elif ch == "零":
+            num = 0
+        else:
+            return None
+    return total + num
+
+
+def _file_day(name: str):
+    """文件名里的「天数」→ int（仅皇帝魂类文件命中；其它书返回 None）。
+
+    EN `004_Day_Twelve.html`→12、`015_Epilogue_Day_One_Hundred_and_One.html`→101；
+    ZH `004_第十二天.html`→12、`015_终章_第一百零一天.html`→101。
+    """
+    m = re.search(r"Day[_\-]([A-Za-z_\- ]+)\.html$", name, re.I)
+    if m:
+        return _en_num(m.group(1))
+    m = re.search(r"第([零一二三四五六七八九十百]+)天", name)
+    if m:
+        return _zh_num(m.group(1))
+    return None
+
+
+def chapter_file(book_dir: str, chapter):
+    """按章号/章节标签找章节文件（跳过 aol 报章插页）。
+
+    chapter 支持：int 章号；数字字符串；'prologue'/'epilogue'/'postscript'（及中文同义）；
+    插曲 'i-4'（英书 I-4 / 中书 1-4 文件名）。皇帝魂的「天数」按 Day_X/第N天 文件名解析——
+    不能走序号前缀规则（否则第十二天会错配 012_Day_Eighty-Five）。天数缺文件（如 41/52/57）
+    返回 None（诚实回退，由调用方决定整书搜）。999=epilogue、0=prologue（历史语义保留）。
+    """
     d = EPUB_OUT / book_dir
     if not d.is_dir():
         return None
+    ch = chapter
+    if isinstance(ch, str):
+        s = ch.strip()
+        low = s.lower()
+        if low in ("postscript", "后记"):
+            ch = 998
+        elif low in ("epilogue", "尾声", "终章"):
+            ch = 999
+        elif low in ("prologue", "序章", "序幕", "引子"):
+            ch = 0
+        elif s.isdigit():
+            ch = int(s)
+        else:
+            ch = low  # 插曲 'i-4' 或未知标签（未知 → 不命中任何文件，诚实返回 None）
+    is_tes = book_dir in ("the_emperors_soul", "zh_皇帝魂")
     for f in d.glob("*.html"):
         if AOL_BROADSHEET.search(f.name):
             continue
-        if chapter == 999 and re.search(r"(?i)epilogue|尾声|终章", f.name):
+        # 标签优先（015_Epilogue_Day_One_Hundred... 的 epilogue 语义不能被天数分支截走）
+        if ch == 998 and re.search(r"(?i)postscript|后记", f.name):
             return f
-        if chapter == 0 and re.search(r"(?i)prologue|序章|序幕|引子", f.name):
+        if ch == 999 and re.search(r"(?i)epilogue|尾声|终章", f.name):
             return f
+        if ch == 0 and re.search(r"(?i)prologue|序章|序幕|引子", f.name):
+            return f
+        # 皇帝魂「天数」文件：只按天数匹配，且跳过其后的序号前缀规则（防 012_ 错配）
+        day = _file_day(f.name)
+        if day is not None:
+            if is_tes and isinstance(ch, int) and ch == day:
+                return f
+            continue
+        if isinstance(ch, str):
+            # 插曲：EN `016_I-4_Last_Legion` / ZH `013_1-1_纳拉克`（光辉真言体例）
+            m = re.search(r"(?:^|[_\-])I-(\d+)(?:_|\.|$)", f.name, re.I)
+            if m and ch == f"i-{m.group(1)}":
+                return f
+            m = re.search(r"(?:^|[_\-])(\d+)-(\d+)(?:_|\.|$)", f.name)
+            if m and ch == f"i-{int(m.group(2))}":
+                return f
+            continue
         m = re.search(r"chapter[_\s]*(\d+)", f.name, re.I)
-        if m and int(m.group(1)) == chapter:
+        if m and int(m.group(1)) == ch:
             return f
         m = re.match(r"\d{3}_(\d{1,3})(?:_|$)", f.name)  # 飓光志体例 002_1_章节名
-        if m and int(m.group(1)) == chapter:
+        if m and int(m.group(1)) == ch:
             return f
         m = re.match(r"(\d{3})_", f.name)                 # 序号前缀（伊岚翠中译 061_第六十一章）
-        if m and int(m.group(1)) == chapter:
+        if m and int(m.group(1)) == ch:
             return f
     return None
 
 
-def load_chapter_text(book_dir: str, chapter: int):
+def load_chapter_text(book_dir: str, chapter):
     f = chapter_file(book_dir, chapter)
     if not f:
         return None, None
@@ -120,22 +227,42 @@ def load_chapter_text(book_dir: str, chapter: int):
     return strip_html(raw), f.name
 
 
+def _term_pattern(term: str):
+    """词条 → 容错匹配正则：词间允许任意空白或零空白（HTML 折行、`soul— its` vs `soul—its`
+    的破折号空格差异），直/弯撇号（'/’）等价。词边界同旧（ASCII 字母外侧）。"""
+    words = term.split()
+    if not words:
+        return None
+    parts = []
+    for w in words:
+        e = re.escape(w)
+        e = re.sub(r"['’]", "['’]", e)
+        parts.append(e)
+    return r"(?<![A-Za-z])" + r"\s*".join(parts) + r"(?![A-Za-z])"
+
+
 def find_in(text: str, term: str):
-    """返回 term 在 text 中的命中位置列表（大小写不敏感，词边界）。"""
-    hits = []
-    pat = re.compile(r"(?<![A-Za-z])" + re.escape(term) + r"(?![A-Za-z])", re.I)
-    for m in pat.finditer(text):
-        hits.append(m.start())
-    return hits
+    """返回 term 在 text 中的命中位置列表（大小写不敏感、词边界、空白/撇号容错）。"""
+    pat_s = _term_pattern(term)
+    if not pat_s:
+        return []
+    try:
+        pat = re.compile(pat_s, re.I)
+    except re.error:
+        return []
+    return [m.start() for m in pat.finditer(text)]
 
 
 def context(text: str, i: int, term: str, window: int) -> str:
     lo = max(0, i - window)
     hi = min(len(text), i + len(term) + window)
     seg = text[lo:hi]
-    # 高亮词条
-    seg = re.sub(r"(?<![A-Za-z])" + re.escape(term) + r"(?![A-Za-z])",
-                 lambda m: "【" + m.group(0) + "】", seg, flags=re.I)
+    # 高亮词条（与 find_in 同一套容错模式；失败退回字面匹配）
+    pat_s = _term_pattern(term) or re.escape(term)
+    try:
+        seg = re.sub(pat_s, lambda m: "【" + m.group(0) + "】", seg, flags=re.I)
+    except re.error:
+        pass
     seg = seg.replace("\n", " ⏎ ")
     return ("…" if lo > 0 else "") + seg + ("…" if hi < len(text) else "")
 
@@ -234,7 +361,8 @@ def main():
         """对 (书, 章) 做 EN+ZH 对照并记入 searched（无命中返回 False）。"""
         nonlocal en_hits_total
         en_dir, zh_dir = BOOKS[code]
-        chnum = {"prologue": 0, "epilogue": 999}.get(label, int(ch) if str(ch).isdigit() else 0)
+        # 章号语义（数字/标签/插曲 i-N/皇帝魂天数）统一交给 chapter_file 解析
+        chnum = ch if label is None else label
         text, fname = load_chapter_text(en_dir, chnum)
         if text is None:
             searched.append({"book": code, "chapter": ch, "label": label,
@@ -317,11 +445,14 @@ def main():
     print("\n说明：工具负责“自动定位中英同章/上下文”，官方中译仍以中文电子书原文为准，由人/LLM 采证后写入 dict/mistborn.json。")
 
 
-def add_zh_region(rec, text, hits, zh_dir, ch, args, en_dir=None, en_file=None):
+def add_zh_region(rec, text, hits, zh_dir, ch, args, en_dir=None, en_file=None,
+                  full_zh=False):
     """给 rec 补上中文同章对照区（按 EN 命中位置比例映射）。
 
     en_dir/en_file 给定时：INDEX_ALIGN_EN 类英书按「文件序号」配对中书同序号文件
     （glossary_alignment §0.1；aol 不在 INDEX_ALIGN_EN，仍按章节号）。
+    full_zh=True 时额外回填 rec['zh_full']（中书该章全文）与 rec['zh_pos']（命中比例
+    对应的中书位置）——供 translate.py 批量采证做「逐字子串」校验（正确性优先）。
     """
     zh_text, zh_fname = None, None
     if zh_dir and en_dir in INDEX_ALIGN_EN and en_file:
@@ -343,13 +474,16 @@ def add_zh_region(rec, text, hits, zh_dir, ch, args, en_dir=None, en_file=None):
     lo = max(0, zpos - args.ctx // 2)
     hi = min(len(zh_text), zpos + args.ctx // 2)
     rec["zh_file"] = zh_fname
+    rec["zh_pos"] = zpos
+    if full_zh:
+        rec["zh_full"] = zh_text
     rec["zh_region"] = ("…" if lo > 0 else "") + \
         zh_text[lo:hi].replace("\n", " ⏎ ") + ("…" if hi < len(zh_text) else "")
     rec["zh_note"] = "有官方中译，请在下方中文对照区按义项采证官方译名"
     return rec
 
 
-def find_whole_book(term, en_dir, zh_dir, args):
+def find_whole_book(term, en_dir, zh_dir, args, full_zh=False):
     """跨全书搜 term；返回命中章节列表（每处含 EN 上下文 + 对应 ZH 对照区）。"""
     hits = []
     d = EPUB_OUT / en_dir
@@ -375,17 +509,23 @@ def find_whole_book(term, en_dir, zh_dir, args):
             chnum = cap.get(label, int(mnum.group(1)) if mnum else 0)
             item = {"book": en_dir, "chapter": chnum, "label": label, "file": f.name,
                     "context": context(text, found[0], term, args.ctx)}
-            add_zh_region(item, text, found, zh_dir, chnum, args, en_dir, f.name)
+            add_zh_region(item, text, found, zh_dir, chnum, args, en_dir, f.name,
+                          full_zh=full_zh)
             hits.append(item)
     return {"total": total, "hits": hits}
 
 
-def locate(term: str, book=None, chapter=None, ctx: int = 220, all_hits: bool = False) -> dict:
+def locate(term: str, book=None, chapter=None, ctx: int = 220, all_hits: bool = False,
+           full_zh: bool = False, fallback_whole_book: bool = False) -> dict:
     """translate.py 可导入的定位 API：按 (书码, 章) 找指定英文短语在英书上下文与中书对照区。
 
     返回 dict（供 quote/称呼采证）：
       {found: bool, book, chapter, en_file, en_contexts: [...], zh_region: str|None, zh_note}
-    - book 为书码（如 mb6/bom）；chapter 为章号（数字/字符串）。
+    - book 为书码（如 mb6/bom/tes）；chapter 为章号（数字/字符串/插曲 i-N/章节标签）。
+    - full_zh=True：回填 zh_full/zh_pos（中书该章全文与命中位置，供逐字校验）。
+    - fallback_whole_book=True：该章文件缺失或章内无命中时，在**同一本书**内整书搜
+      （如皇帝魂第 41/52/57 天无独立章节文件）；命中记 fallback="whole-book"，
+      en_file/对照区为真正命中处（诚实证据，不冒充所引章节）。
     - 未给 book/chapter 时跨全书搜（all_hits）。
     """
     import argparse as _ap
@@ -395,29 +535,47 @@ def locate(term: str, book=None, chapter=None, ctx: int = 220, all_hits: bool = 
             return {"found": False, "book": book, "error": f"未知书码 {book}"}
         code = book.lower()
         en_dir, zh_dir = BOOKS[code]
-        chnum = {"prologue": 0, "epilogue": 999}.get(str(chapter).lower(), int(chapter) if str(chapter).isdigit() else 0)
-        text, fname = load_chapter_text(en_dir, chnum)
+        text, fname = load_chapter_text(en_dir, chapter)
         if text is None:
-            return {"found": False, "book": code, "chapter": chapter, "error": f"英书{en_dir}无该章"}
-        hits = find_in(text, term)
-        if not hits:
-            return {"found": False, "book": code, "chapter": chapter, "en_file": fname, "term_hits": 0}
-        rec = {"found": True, "book": code, "chapter": chapter, "en_file": fname,
-               "en_contexts": [context(text, i, term, ctx) for i in hits[:3]]}
-        add_zh_region(rec, text, hits, zh_dir, chnum, _args, en_dir, fname)
-        rec["term_hits"] = len(hits)
-        return rec
+            miss = {"found": False, "book": code, "chapter": chapter,
+                    "error": f"英书{en_dir}无该章"}
+        else:
+            hits = find_in(text, term)
+            if not hits:
+                miss = {"found": False, "book": code, "chapter": chapter,
+                        "en_file": fname, "term_hits": 0}
+            else:
+                rec = {"found": True, "book": code, "chapter": chapter, "en_file": fname,
+                       "en_contexts": [context(text, i, term, ctx) for i in hits[:3]]}
+                add_zh_region(rec, text, hits, zh_dir, chapter, _args, en_dir, fname,
+                              full_zh=full_zh)
+                rec["term_hits"] = len(hits)
+                return rec
+        # 同章未命中（章缺失/文本不在本章）→ 可选整书回退（仅当该书有中译，否则无从校验）
+        if fallback_whole_book and zh_dir:
+            fw = find_whole_book(term, en_dir, zh_dir, _args, full_zh=full_zh)
+            if fw and fw["total"]:
+                h = fw["hits"][0]
+                return {"found": True, "book": code, "chapter": chapter,
+                        "label": h.get("label"), "en_file": h["file"],
+                        "fallback": "whole-book", "en_contexts": [h["context"]],
+                        "zh_region": h.get("zh_region"), "zh_pos": h.get("zh_pos"),
+                        "zh_full": h.get("zh_full"), "zh_note": h.get("zh_note"),
+                        "term_hits": fw["total"]}
+        return miss
     # 无具体书章 → 跨书扫
     for code in ("mb6", "mb5", "mb4", "mb3", "mb2", "mb1"):
         if code not in BOOKS:
             continue
         en_dir, zh_dir = BOOKS[code]
-        fw = find_whole_book(term, en_dir, zh_dir, _args)
+        fw = find_whole_book(term, en_dir, zh_dir, _args, full_zh=full_zh)
         if fw and fw["total"]:
             h = fw["hits"][0]
             return {"found": True, "book": code, "chapter": h["chapter"], "label": h.get("label"),
-                    "en_file": h["file"], "en_contexts": [h["context"]], "zh_region": h.get("zh_region"),
-                    "zh_note": h.get("zh_note"), "term_hits": fw["total"]}
+                    "en_file": h["file"], "en_contexts": [h["context"]],
+                    "zh_region": h.get("zh_region"), "zh_pos": h.get("zh_pos"),
+                    "zh_full": h.get("zh_full"), "zh_note": h.get("zh_note"),
+                    "term_hits": fw["total"]}
     return {"found": False, "book": None, "chapter": None}
 
 

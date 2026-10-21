@@ -138,8 +138,8 @@ def run_stage(args, title: str) -> list[str]:
             translate_cmd += ["--api-key", args.api_key]
         if args.max_output_tokens:
             translate_cmd += ["--max-output-tokens", str(args.max_output_tokens)]
-        if args.auto_quote_cn:
-            translate_cmd += ["--auto-quote-cn"]
+        # quote 自动替换默认开启（2026-10-21）：显式透传两态，避免依赖子进程默认值
+        translate_cmd += ["--auto-quote-cn" if args.auto_quote_cn else "--no-auto-quote-cn"]
         if args.no_resolve_quotes:
             translate_cmd += ["--no-resolve-quotes"]
         tr = subprocess.run(translate_cmd, capture_output=True, text=True)
@@ -216,8 +216,8 @@ def main():
     ap.add_argument("--no-wrap", action="store_true", help="透传：不插页面包装")
     ap.add_argument("--summary", default=None, help="透传自定义写站摘要")
     ap.add_argument("--api-key", default=None, help="透传 LLM api key")
-    ap.add_argument("--auto-quote-cn", action="store_true",
-                    help="透传 translate 全自动 quote：book ref 采证到的原文块直接替换为中文（英文不留）")
+    ap.add_argument("--auto-quote-cn", action=argparse.BooleanOptionalAction, default=True,
+                    help="透传 translate quote 书证采证自动替换（默认开；--no-auto-quote-cn 退回半自动 review）")
     ap.add_argument("--no-resolve-quotes", action="store_true",
                     help="透传 translate 关闭原文块书证采证（回到纯英文占位符）")
     ap.add_argument("--write-target-prefix", default=None, help="写站目标页前缀（如 'BOT测试:'，用于非破坏性验证）")

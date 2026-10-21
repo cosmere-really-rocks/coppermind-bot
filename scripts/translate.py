@@ -41,6 +41,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import os
 import re
@@ -1050,11 +1051,12 @@ def unmask_protected_blocks(translated_body: str, registry: list[dict]) -> str:
 # 引用模板整段替换为 %%REF_N%% 占位符，LLM 接触不到编号无从幻觉（规则只要求
 # 占位符原样保留），assemble 时按英文源顺序确定性填回 → 引用编号 100% 与英文源一致。
 _REF_TMPL_RE = re.compile(
-    r"\{\{\s*(?:book ref|msh ref|Rpg ref|date)\b[^{}]*\}\}", re.I)
+    r"\{\{\s*(?:book ref|msh ref|Rpg ref|date|tes ref|epigraph ref)\b[^{}]*\}\}", re.I)
 
 
 def mask_ref_templates(wikitext: str):
-    """把 {{book ref|X|Y}}/{{msh ref|X|Y}}/{{Rpg ref|X|Y}}/{{date|X|Y}} 替换为 %%REF_N%%。
+    """把 {{book ref|X|Y}}/{{msh ref|X|Y}}/{{Rpg ref|X|Y}}/{{date|X|Y}}/{{tes ref|N}}/
+    {{epigraph ref|X|Y}} 替换为 %%REF_N%%。
 
     返回 (masked, refs)；refs 为按出现顺序记录的英文源模板原文。
     应在 mask_protected_blocks 之后调用（Quote/columns 整块已占位，其内部 ref
@@ -2113,21 +2115,191 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
 
 # --------------------------------------------------------------------------- #
 # 决议#13 增强：{{Quote}}/{{columns}} 原文块按「中译本书证」采证中文（接入 glossary_assist.py）
-# - 书证：块内/条内 {{book ref|书码|章}} 定位 → 英书上下文 + 中书对照区 → LLM 摘出官方中译
-# - 找不到（quote 为意译/不在书中/无 book ref）→ 仍保留英文（诚实，不硬翻）
-# - 两档：半自动（默认，产出 proposed_cn 供 review，不替换）；全自动（--auto-quote-cn 直接替换为中文）
+# - 书证：块内 {{book ref|书码|章}} / {{epigraph ref|书|章}} / {{tes ref|天}} 定位 → 英书上下文 +
+#   中书章节全文；**同章多条合并成一次 LLM 请求**（编号子条 + 共享中译本章节文本），每条返回
+#   必须通过「官方中译本原文逐字子串（空白归一）」校验，失败回退单条请求，再失败保留英文
+#   （正确性优先于省 token——用户裁定 2026-10-20）。
+# - 出处行（attribution）页面级批量翻译：{{...}}/[[...]]/HTML 先占位后还原，专名按译名表校验；
+#   半自动/全自动都替换（出处行是页面文字，不属决议#13 的英文原文保护对象）。
+# - 找不到（意译/不在书中/无 ref/该书无中译/校验不过）→ 保留英文（诚实，不硬翻）。
+# - 两档：自动（默认，2026-10-21 用户裁定，采证到的正文直接替换为中文）；半自动（--no-auto-quote-cn
+#   quote 正文不动，proposed_cn 供 review）。
 # --------------------------------------------------------------------------- #
+_REF_TMPL_ANY_RE = re.compile(r"\{\{\s*([A-Za-z][A-Za-z0-9 ]*?(?:ref|date))\s*[|}]", re.I)
+_SUPPORTED_REF_RES = (
+    ("book", re.compile(r"\{\{\s*book\s+ref\s*\|([^}]*)\}\}", re.I)),
+    ("epigraph", re.compile(r"\{\{\s*epigraph\s+ref\s*\|([^}]*)\}\}", re.I)),
+    ("tes", re.compile(r"\{\{\s*tes\s+ref\s*\|([^}]*)\}\}", re.I)),
+)
+
+
+def has_ref_any(source: str) -> bool:
+    """块内是否存在任何 ref/日期类模板（book/tes/msh/rpg/au/wob/file/map/…/date）。"""
+    return bool(_REF_TMPL_ANY_RE.search(source))
+
+
+def _ref_chapter(params):
+    """ref 的章节参数 → '12' | 'prologue'/'epilogue'/'postscript' | 'i-4'（插曲）；解析不了 None。"""
+    if not params:
+        return None
+    p0 = params[0].strip()
+    low = p0.lower()
+    if p0.isdigit():
+        return p0
+    if low in ("prologue", "epilogue", "postscript"):
+        return low
+    if re.fullmatch(r"[ivxl]+", low) and len(params) > 1 and params[1].strip().isdigit():
+        return f"{low}-{params[1].strip()}"
+    return None
+
+
 def extract_book_ref(source: str):
-    """从 {{Quote|...|Allik{{book ref|mb6|20}}}} 或 *Title{{book ref|mb6|21}} 里取 (书码, 章)。"""
-    m = re.search(r"\{\{\s*book\s+ref\s*\|([^|}]+)\|([^|}]+)", source, re.I)
-    return (m.group(1).strip().lower(), m.group(2).strip()) if m else None
+    """块内支持的书证 ref → (书码, 章)，取出现位置最靠前的一个；解析不了 → None。
+
+    支持 {{book ref|code|ch}}（含 epilogue/prologue 段、插曲 i|N、滤除 review=yes 类命名参数
+    与空参数）、{{epigraph ref|code|ch}}、{{tes ref|N|labels}}（书码固定 'tes'）。
+    msh/rpg/au/wob/file/map 等其它 ref、单参整书 ref、无法解析的章参 → None（调用方用
+    has_ref_any 区分 no-ref / unsupported-ref，均保留英文）。
+    """
+    best = None
+    for kind, pat in _SUPPORTED_REF_RES:
+        for m in pat.finditer(source):
+            if best is None or m.start() < best[0]:
+                best = (m.start(), kind, m.group(1))
+    if best is None:
+        return None
+    _, kind, raw = best
+    params = [p.strip() for p in raw.split("|")]
+    params = [p for p in params if p and not re.match(r"^[A-Za-z_][A-Za-z0-9_ ]*=", p)]
+    if not params:
+        return None
+    if kind == "tes":
+        ch = _ref_chapter(params)
+        return ("tes", ch) if ch else None
+    ch = _ref_chapter(params[1:])
+    return (params[0].lower(), ch) if ch else None
 
 
-def quote_inner_text(source: str) -> str:
-    """从 {{Quote|TEXT|attr...}} 提取正文（第一个 | 之后、到 |attr 之前）。"""
-    inner = source.split("|", 1)[1] if "|" in source else source
-    inner = re.sub(r"\{\{.*?\}\}", "", inner)
-    return inner.strip()
+# ---------------------------- quote 块参数拆分/重建 ---------------------------- #
+_SIDE_VAL_RE = re.compile(r"^\s*(?:left|right|center|centre|clear|both|none)\s*$", re.I)
+_SIZE_VAL_RE = re.compile(
+    r"^\s*[\d.]+\s*(?:px|%|em|ex|pt)?\s*;?\s*(?:\{\{.*?\}\}|\[\[.*?\]\])?\s*$", re.S)
+
+
+def split_quote_block(source: str):
+    """解析 {{quote|text|attr…|…}} → 参数结构 dict（mwparserfromhell，保原格式）。
+
+    返回 {"tpl", "text_i", "text_val", "attrs_i", "attr_vals"]}（下标 = tpl.params 序号）：
+    - 正文 = 第一个位置参数（无位置参数则命名 1=）；
+    - 出处行 = 其余非结构位置参数 + 命名 2=（跳过空参数；`right`/`400px;` 等 side/size 形态的
+      **位置**参数视为结构参数，其后不再当出处行）；
+    - 其它命名参数（side=/size=/Size=/width=/multiline=…）由 rebuild 原样保留。
+    解析不出模板 → None。
+    """
+    code = mwparserfromhell.parse(source)
+    tpl = None
+    for n in code.nodes:
+        if isinstance(n, mwparserfromhell.nodes.Template):
+            tpl = n
+            break
+    if tpl is None:
+        return None
+    positional, named = [], {}
+    for i, pr in enumerate(tpl.params):
+        if pr.showkey:
+            named[str(pr.name).strip()] = i
+        else:
+            positional.append(i)
+    text_i = positional[0] if positional else named.get("1")
+    attrs_i = []
+    struct = False
+    for i in positional[1:]:
+        v = str(tpl.params[i].value)
+        if not struct and (_SIDE_VAL_RE.match(v) or _SIZE_VAL_RE.match(v)):
+            struct = True
+        if struct or not v.strip():
+            continue
+        attrs_i.append(i)
+    if "2" in named and named["2"] not in attrs_i:
+        attrs_i.append(named["2"])
+    return {
+        "tpl": tpl,
+        "text_i": text_i,
+        "text_val": str(tpl.params[text_i].value) if text_i is not None else "",
+        "attrs_i": attrs_i,
+        "attr_vals": [str(tpl.params[i].value) for i in attrs_i],
+    }
+
+
+# ---------------------------- 定位用文本清洗 ---------------------------- #
+_TPL_NAME_RE = re.compile(r"(?i)(?:\bref\b|\bdate\b|\btes\b|\bepigraph\b)")
+
+
+def _clean_locate_text(text: str, reverse=None) -> str:
+    """正文参数值 → 用于英书定位的纯文本。
+
+    - 引用/日期/tes/epigraph 模板与 {{b|…}} 速记 → 删除；
+    - small caps 等「有位置参数的包裹模板」→ 解包取其正文（旧实现整段正则删除会把
+      `{{small caps|句子}}` 的句子整个丢掉，导致定位必失）；
+    - [[链接]] 取显示名；无显示名时若目标已被 translate_plain_links 先行译中（如 [[高图纳]]），
+      用 reverse={中文:英文} 反查回英文（否则英书定位不到）；
+    - HTML 标签删、HTML 实体还原。
+    """
+    s = text or ""
+
+    def _sub_tpl(m):
+        name, rest = m.group(1), m.group(2) or ""
+        if name.strip().lower() == "b" or _TPL_NAME_RE.search(name):
+            return ""
+        parts = [p for p in rest.lstrip("|").split("|") if p.strip()]
+        return parts[0] if parts else ""
+
+    for _ in range(6):
+        s2 = re.sub(r"\{\{\s*([^|{}]+)(\|[^{}]*)?\}\}", _sub_tpl, s)
+        if s2 == s:
+            break
+        s = s2
+
+    def _sub_link(m):
+        parts = m.group(1).split("|")
+        if len(parts) > 1 and parts[-1].strip():
+            return parts[-1]
+        tgt = parts[0].strip()
+        if reverse and tgt in reverse:
+            return reverse[tgt]
+        return tgt
+
+    s = re.sub(r"\[\[([^\[\]]+)\]\]", _sub_link, s)
+    s = re.sub(r"<[^>]+>", " ", s)
+    s = html.unescape(s)
+    return s.strip()
+
+
+def quote_locate_text(source: str, reverse=None) -> str:
+    """{{quote|TEXT|attr}} 的 TEXT → 英书定位用纯文本（不含出处行）。"""
+    p = split_quote_block(source)
+    if not p or p["text_i"] is None:
+        inner = source.split("|", 1)[1] if "|" in source else source
+        return _clean_locate_text(inner, reverse)
+    return _clean_locate_text(p["text_val"], reverse)
+
+
+def quote_inner_text(source: str, reverse=None) -> str:
+    """从 {{Quote|TEXT|attr...}} 提取正文（旧实现把出处行也算进正文，已修：只取正文参数）。"""
+    return quote_locate_text(source, reverse)
+
+
+def _reverse_glossary(glossary):
+    """{中文译名: 英文键}（按键序优先，冲突取先者）——供 _clean_locate_text 反查译中的链接。"""
+    rev = {}
+    if not glossary:
+        return rev
+    for k in sorted(glossary):
+        e = glossary.get(k)
+        zh = e.get("zh") if isinstance(e, dict) else None
+        if isinstance(zh, str) and zh and zh not in rev:
+            rev[zh] = k
+    return rev
 
 
 def distinctive_phrases(text: str, max_n: int = 5) -> list[str]:
@@ -2153,163 +2325,556 @@ def _ga():
     return m
 
 
-def locate_verbatim(term: str, ref, ctx: int):
-    """在 (书码,章) 里定位 term，返回 glossary_assist 的 locate 结果 dict。"""
+def locate_verbatim(term: str, ref, ctx: int, full_zh: bool = True,
+                    fallback_whole_book: bool = True):
+    """在 (书码,章) 里定位 term，返回 glossary_assist 的 locate 结果 dict。
+
+    - full_zh：回填 zh_full/zh_pos（中书该章全文+命中位置，供 verify_zh_official 逐字校验）。
+    - fallback_whole_book：该章无文件/章内无命中时在同一本书内整书搜（如皇帝魂 41/52/57 天
+      无独立章节文件），命中记 fallback="whole-book"。
+    - 该书无中译版 → None（调用方记 no-cn-edition，无从校验 → 保留英文）。
+    """
     if not ref:
         return None
     ga = _ga()
     code, ch = ref
     if code not in ga.BOOKS:
         return None
-    loc = ga.locate(term, code, ch, ctx=ctx)
-    return loc
+    if ga.BOOKS[code][1] is None:
+        return None
+    return ga.locate(term, code, ch, ctx=ctx, full_zh=full_zh,
+                     fallback_whole_book=fallback_whole_book)
 
 
-def resolve_unit(en_text: str, ref, cfg, ctx: int = 160):
-    """对单个英文片段（title/称呼/quote 正文）按书证采证中文。
-    返回 (zh_or_None, evidence)。zh 为 None 表示无法书证采证（保留英文）。"""
-    if not ref or not en_text:
-        return None, {"found": False, "reason": "no-ref-or-text"}
-    loc = locate_verbatim(en_text, ref, ctx)
-    if loc is None:
-        return None, {"found": False, "reason": "bad-book"}
-    if not loc.get("found"):
-        # quote 常为意译：取特征子句再试
-        for frag in distinctive_phrases(en_text):
-            loc = locate_verbatim(frag, ref, ctx)
-            if loc and loc.get("found"):
-                en_text = frag
-                break
-    if not loc or not loc.get("found"):
-        return None, {"found": False, "reason": "not-in-book", "book": ref[0], "chapter": ref[1]}
-    zh = ask_zh_from_region(en_text, loc.get("en_contexts", [""])[0], loc.get("zh_region") or "", cfg)
-    if not zh:
-        return None, {"found": True, "reason": "llm-no-match",
-                      "book": ref[0], "chapter": ref[1], "zh_region": (loc.get("zh_region") or "")[:200]}
-    evidence = {"found": True, "reason": "ok", "book": ref[0], "chapter": ref[1],
-                "en_file": loc.get("en_file"), "zh": zh, "zh_region": (loc.get("zh_region") or "")[:300]}
-    return zh, evidence
+# ---------------------------- 中译本逐字校验 ---------------------------- #
+def _norm_ws(s: str) -> str:
+    return re.sub(r"\s+", "", s or "")
+
+
+def _candidate_zh(zh: str):
+    """模型返回值的候选形态：去围栏/首尾空白的原样，及去包装引号的变体。"""
+    s = (zh or "").strip()
+    s = re.sub(r"^```[A-Za-z]*\s*|\s*```$", "", s).strip()
+    if not s:
+        return []
+    out = [s]
+    stripped = s.strip("\"'“”‘’")
+    if stripped and stripped != s:
+        out.append(stripped)
+    return out
+
+
+def _stitch_cover(z: str, full: str, expect_pos, tol) -> bool:
+    """z（已归一）能否作为「full 中若干相邻片段的拼接」被覆盖——每段≥4字且逐字在 full 中。
+
+    用于验收英文引文省略了书中旁白的场合（如 "...We don't...Rememberers."）：LLM 可按英文
+    省略方式拼接中译本相邻片段，但每段必须逐字来自中译本。首段还须落在 expect_pos 允差内。
+    """
+    n = len(z)
+    i = 0
+    while i < n:
+        remain = n - i
+        seg = min(4, remain)
+        if z[i:i + seg] not in full:
+            return False
+        if remain <= seg:
+            seg_len = remain
+        else:
+            # 前缀单调（在原文 → 其前缀必在原文）：二分找最长可命中前缀
+            lo, hi, best = seg, remain, seg
+            while lo <= hi:
+                mid = (lo + hi) // 2
+                if z[i:i + mid] in full:
+                    best = mid
+                    lo = mid + 1
+                else:
+                    hi = mid - 1
+            seg_len = best
+        pos = full.find(z[i:i + seg_len])
+        if i == 0 and expect_pos is not None and abs(pos - expect_pos) > tol:
+            return False
+        i += seg_len
+    return True
+
+
+def verify_zh_official(zh, zh_full, expect_pos=None, tol=None):
+    """校验 zh 是官方中译本章节的逐字原文（空白归一；允许按省略拼接的多段覆盖）。
+
+    通过 → 返回**应采用**的候选形态（可能已去包装引号）；不通过 → None（保留英文）。
+    expect_pos（zh_full 归一化坐标，由 locate 的 zh_pos 换算）给定时要求首段命中在其附近
+    （默认允差 max(1000, len/3)），防同章错句。正确性优先：宁可不译，不放行改写/幻觉译文。
+    """
+    n_full = _norm_ws(zh_full)
+    if not n_full:
+        return None
+    if tol is None:
+        tol = max(1000, len(n_full) // 3)
+    for cand in _candidate_zh(zh):
+        if "__NONE__" in cand:
+            return None
+        n_zh = _norm_ws(cand)
+        if len(n_zh) < 2:
+            continue
+        start = n_full.find(n_zh)
+        while start >= 0:
+            if expect_pos is None or abs(start - expect_pos) <= tol:
+                return cand
+            start = n_full.find(n_zh, start + 1)
+        if _stitch_cover(n_zh, n_full, expect_pos, tol):
+            return cand
+    return None
+
+
+def _zh_expect_pos(loc, zh_full):
+    """locate 记录的 zh_pos（原文坐标）→ zh_full 归一化坐标。"""
+    zp = (loc or {}).get("zh_pos")
+    if zp is None or not zh_full:
+        return None
+    return len(_norm_ws(zh_full[:zp]))
 
 
 def ask_zh_from_region(en_text: str, en_ctx: str, zh_region: str, cfg) -> str:
-    """让 LLM 从中文对照区里摘出 en_text 的官方中译。找不到返回 ''。"""
+    """单条回退：让 LLM 从中文对照区摘出 en_text 的官方中译。原样返回（校验交给
+    verify_zh_official），找不到返回 ''。"""
     sys_prompt = (
-        "你是《迷雾之子》官方中译本的核对器。我给你一句英文和它对应的中译本章节文本片断，"
-        "请给出这句英文在官方中译本里的确切中文译文。只输出译文本身，不要解释、不要夹杂英文、"
-        "不要在译文外加引号或标注。若这段中文片断里找不到与该英文对应的译文，只输出 __NONE__。"
+        "你是官方中译本的核对器。给出这句英文在官方中译本里的确切中文译文。只输出译文本身，"
+        "不要解释、不要夹杂英文、不要在译文外加引号或标注。若英文是书中原文的节选或拼接"
+        "（省略了中间文句），可把片断里相邻的对应片段按英文的省略方式拼接，但每段必须逐字取自"
+        "中译本、且不得加入英文里没有的文句。片断里找不到对应译文时，只输出 __NONE__。"
     )
     user = (
         "英文原文：\n" + en_text +
         "\n\n英文上下文（供定位）：\n" + (en_ctx or "")[:400] +
-        "\n\n中译本章节文本片断（可能含无关文句，请找到与英文对应的一句）：\n" +
-        (zh_region or "")[:600]
+        "\n\n中译本章节文本片断（可能含无关文句，请找到与英文对应的部分）：\n" +
+        (zh_region or "")[:1200]
     )
     try:
         reply = llm_chat(cfg, [{"role": "system", "content": sys_prompt},
                                {"role": "user", "content": user}],
-                         max_output_tokens=400, temperature=0)
+                         max_output_tokens=500, temperature=0)
     except Exception as e:
         sys.stderr.write(f"[quote-zh] LLM 采证失败：{e}\n")
         return ""
-    out = (reply or "").strip().strip('"“”')
+    out = (reply or "").strip()
     if not out or "__NONE__" in out:
         return ""
     return out
 
 
-def quote_cn_template(zh: str, blk) -> str:
-    """把受保护块的英文替换为中文模板。
-    - quote/sidequote：{{Quote|中文}}（去掉英文正文与英文属性行）
-    - 保留原本的模板名与外层结构；属性（如出处/attribution）里若含英文人名注释则保留。
+def ask_zh_batch(items, zh_shared, cfg) -> str:
+    """同章多条一次请求（省 token；用户裁定：正确性优先，同章合并）。
+
+    items: [{'id', 'en', 'en_ctx', 'win'}]；zh_shared 非空 → 中书章节全文一次下发
+    （由调用方限长），否则每条自带对照区窗口 win。返回原始 reply，解析交给 parse_batch_reply。
     """
-    if blk["type"] in ("quote", "sidequote"):
-        name = "Quote" if blk["type"] == "quote" else "sidequote"
-        return "{{" + name + "|" + zh + "}}"
-    return zh
+    sys_prompt = (
+        "你是官方中译本的核对器（收到的是按章节提供的中译本原文）。逐条给出英文在官方中译本里"
+        "对应的中文译文。规则：1) 只逐字摘录中译本原文，不改写、不增删标点、不夹杂英文、不解释；"
+        "2) 若英文是书中原文的节选或拼接（省略了中间文句），可将中译本中相邻的对应片段按英文的"
+        "省略方式拼接，但每个片段必须逐字取自中译本，且不得加入英文里没有的文句；"
+        "3) 找不到对应译文的条目，值写 __NONE__；"
+        '4) 只输出一个 JSON 对象，键为条目编号字符串（"1"、"2"…），值为译文或 __NONE__，'
+        "不要输出其它任何文字。"
+    )
+    parts = []
+    if zh_shared:
+        parts.append("中译本章节文本（可能含无关文句）：\n" + zh_shared)
+    parts.append("英文条目：")
+    for it in items:
+        parts.append(f"[{it['id']}] {it['en']}")
+        parts.append("    英文上下文（供定位）：" + (it.get("en_ctx") or "")[:400])
+        if not zh_shared:
+            parts.append("    对应中译本片段：" + (it.get("win") or "")[:1200])
+    user = "\n".join(parts)
+    return llm_chat(cfg, [{"role": "system", "content": sys_prompt},
+                          {"role": "user", "content": user}],
+                    max_output_tokens=max(600, 300 * len(items)), temperature=0)
 
 
-def resolve_columns(blk, cfg, ctx: int = 160):
-    """columns 名单：逐行 '*Title{{book ref|...}}' 分开采证。
-    返回 (column_lines_resolutions, rebuilt_columns_or_None)。
-    - 每行 {line, title, ref, found, proposed_cn, reason}
-    - rebuilt_columns：全自动用的新 columns 文本（found 的换中文，未 found 保留英文）；
-      仅当至少有一行 found 时非 None。
-    """
-    src = blk["source"]
-    # columns 行：形如 '{{columns|...\n *Title{{book ref|X|ch}}\n...}}'
-    lines = src.splitlines()
-    out = []
-    rebuilt = []
-    any_found = False
-    for ln in lines:
-        s = ln.strip()
-        if not s.startswith("*"):
-            rebuilt.append(ln)
+def parse_batch_reply(reply):
+    """批量采证回复 → {str(id): zh}；解析失败返回 None。容忍 ```json 围栏与数组形态。"""
+    s = (reply or "").strip()
+    s = re.sub(r"^```[A-Za-z]*\s*|\s*```$", "", s).strip()
+    m = re.search(r"[\[{].*[\]}]", s, re.S)
+    if not m:
+        return None
+    try:
+        data = json.loads(m.group(0))
+    except Exception:
+        return None
+    out = {}
+    if isinstance(data, dict):
+        for k, v in data.items():
+            out[str(k).strip()] = (v or "") if isinstance(v, (str, type(None))) else str(v)
+    elif isinstance(data, list):
+        for e in data:
+            if isinstance(e, dict) and "id" in e:
+                v = e.get("zh", e.get("text", ""))
+                out[str(e["id"]).strip()] = v if isinstance(v, str) else str(v)
+    else:
+        return None
+    return out
+
+
+# ---------------------------- 单位定位与分组采证 ---------------------------- #
+def _ctx_for(text: str, ctx: int) -> int:
+    """窗口随引文长度放大（ctx 是下限），防长引文的中书对照区被截断。"""
+    return max(ctx, min(2400, len(text) * 2 + 200))
+
+
+def _locate_units(units, ctx: int):
+    """确定性定位（无 LLM）：整段直查 → 特征子句。填充 u['book'/'chapter'/'loc'/'matched'/'reason']。"""
+    ga = _ga()
+    for u in units:
+        text = u.get("en") or ""
+        if not u.get("ref"):
+            u["reason"] = "unsupported-ref" if u.get("has_ref") else "no-ref"
             continue
-        title = re.sub(r"\{\{.*?\}\}", "", s).strip().lstrip("*").strip()
-        title = re.sub(r"^\[\[(.*?)\]\]$", r"\1", title).strip()
-        ref = extract_book_ref(s)
-        zh = None
-        reason = "no-ref"
-        if ref and title:
-            zh, ev = resolve_unit(title, ref, cfg, ctx)
-            reason = ev.get("reason", reason)
-            found = bool(zh)
-            if found:
-                any_found = True
-                rebuilt.append("*" + zh)
+        code, ch = u["ref"]
+        u["book"], u["chapter"] = code, ch
+        if not text:
+            u["reason"] = "no-text"
+            continue
+        if code not in ga.BOOKS:
+            u["reason"] = "bad-book"
+            continue
+        if ga.BOOKS[code][1] is None:
+            u["reason"] = "no-cn-edition"  # 该书无中译版 → 无从校验 → 保留英文（诚实）
+            continue
+        loc = locate_verbatim(text, u["ref"], _ctx_for(text, ctx))
+        matched = text
+        if loc and not loc.get("found"):
+            for frag in distinctive_phrases(text):
+                l2 = locate_verbatim(frag, u["ref"], _ctx_for(text, ctx))
+                if l2 and l2.get("found"):
+                    loc, matched = l2, frag
+                    break
+        if loc is None:
+            u["reason"] = "bad-book"
+            continue
+        u["loc"], u["matched"] = loc, matched
+        if not loc.get("found"):
+            err = loc.get("error") or ""
+            u["reason"] = "no-chapter" if "无该章" in err else "not-in-book"
+            continue
+        if not (loc.get("zh_full") or ""):
+            u["reason"] = "no-zh-chapter"  # 中书章节对照缺失 → 无法逐字校验 → 保留英文
+            continue
+        u["reason"] = None  # 待采证
+
+
+def _resolve_text_units(units, cfg, ctx: int):
+    """按 (书码, 章, 中书文件) 分组 → 同章一次 LLM 请求 → 逐条 verify；失败回退单条。"""
+    groups = {}
+    for u in units:
+        if u.get("reason") is None and (u.get("loc") or {}).get("found"):
+            key = (u["ref"][0], str(u["ref"][1]), u["loc"].get("zh_file"))
+            groups.setdefault(key, []).append(u)
+    for key, us in groups.items():
+        sys.stderr.write(f"[原文块采证] 同章合并 {key[0]}|{key[1]}"
+                         f"（{len(us)} 条，中书 {key[2] or '?'}）\n")
+        zh_full0 = (us[0].get("loc") or {}).get("zh_full") or ""
+        shared = zh_full0 if 0 < len(zh_full0) <= 12000 else None  # 超长章节退回窗口模式
+        for start in range(0, len(us), 10):  # 单请求上限 10 条
+            chunk = us[start:start + 10]
+            items = [{"id": i + 1, "en": u["en"],
+                      "en_ctx": (u["loc"].get("en_contexts") or [""])[0],
+                      "win": u["loc"].get("zh_region") or ""}
+                     for i, u in enumerate(chunk)]
+            got = None
+            try:
+                got = parse_batch_reply(ask_zh_batch(items, shared, cfg))
+            except Exception as e:
+                sys.stderr.write(f"[原文块采证] 批量请求失败（回退单条）：{e}\n")
+            for it, u in zip(items, chunk):
+                zh_full_u = u["loc"].get("zh_full") or ""
+                exp = _zh_expect_pos(u["loc"], zh_full_u)
+                zh = None
+                if got is not None:
+                    zh = verify_zh_official(got.get(str(it["id"]), ""), zh_full_u, exp)
+                if zh:
+                    u.update(found=True, zh=zh, reason="ok", via="batch")
+                    continue
+                raw2 = ask_zh_from_region(it["en"], it["en_ctx"], it["win"], cfg)
+                zh2 = verify_zh_official(raw2, zh_full_u, exp)
+                if zh2:
+                    u.update(found=True, zh=zh2, reason="ok", via="single")
+                else:
+                    u.update(found=False, zh=None,
+                             reason="llm-no-match" if not raw2 else "verify-fail")
+
+
+# ---------------------------- 出处行（attribution）批量翻译 ---------------------------- #
+_ATTR_ATOM_RE = re.compile(r"\{\{.*?\}\}|\[\[.*?\]\]|<[^>]+>", re.S)
+
+
+def mask_attr_atoms(piece: str):
+    """出处行里的引用模板/内链/HTML 标签 → ⟦n⟧ 占位（LLM 动不到，还原时原样回填）。"""
+    atoms = []
+
+    def repl(m):
+        atoms.append(m.group(0))
+        return f"⟦{len(atoms) - 1}⟧"
+    return _ATTR_ATOM_RE.sub(repl, piece), atoms
+
+
+def unmask_attr_atoms(text: str, atoms) -> str:
+    for i, a in enumerate(atoms):
+        text = text.replace(f"⟦{i}⟧", a)
+    return text
+
+
+def attr_placeholders_ok(text: str, atoms) -> bool:
+    """占位符各出现一次、相对顺序与原出处行完全一致。"""
+    return re.findall(r"⟦(\d+)⟧", text or "") == [str(i) for i in range(len(atoms))]
+
+
+def _attr_gloss_ok(zh_out, gloss_terms, raw) -> bool:
+    """出处行译文必须用上译名表里该行出现过的专名（用户规则：Shai/Forgery/Gaotona 查表）。"""
+    for t, e in (gloss_terms or {}).items():
+        if re.search(r"(?<![A-Za-z])" + re.escape(t) + r"(?![A-Za-z])", raw, re.I):
+            if (e.get("zh") or "") not in (zh_out or ""):
+                return False
+    return True
+
+
+def _attr_prompt(items, gloss_pairs):
+    gloss_txt = "；".join(gloss_pairs) if gloss_pairs else "（本页出处行无表内专名）"
+    sys_prompt = (
+        "你是 wiki 中英词条「引文出处行」（quote 模板的第二参数，格式：`原文|出处行`）的翻译器。"
+        "逐条把英文出处行译成简体中文。规则：1) ⟦n⟧ 是引用模板/内链/HTML 标签的占位符，必须原样"
+        "保留在译文里，且相对顺序不能变；2) 专名优先按下方译名表翻译；译名表未收录的英文专名"
+        "保留英文原文；3) 只输出一个 JSON 对象，键为条目编号字符串，值为该条译文；不要解释、"
+        "不要整体加引号、不要输出其它任何文字。"
+    )
+    parts = ["译名表（本页出处行出现的词）：" + gloss_txt, "出处行："]
+    for it in items:
+        parts.append(f"[{it['id']}] {it['masked']}")
+    return [{"role": "system", "content": sys_prompt},
+            {"role": "user", "content": "\n".join(parts)}]
+
+
+def _attr_valid(zh_raw, job):
+    """出处行译文校验：有中文、占位符齐且序对、译名表专名用上。通过返回可用形态，否则 None。"""
+    for c in _candidate_zh(zh_raw):
+        if not re.search(r"[一-鿿]", c):
+            continue
+        if not attr_placeholders_ok(c, job["atoms"]):
+            continue
+        if not _attr_gloss_ok(c, job["gloss"], job["raw"]):
+            continue
+        return c
+    return None
+
+
+def _resolve_attributions(units, cfg, glossary):
+    """出处行页面级批量翻译（半自动/全自动都做：出处行是页面文字，不属决议#13 保护对象）。
+
+    失败（LLM 无输出/占位符丢失/译名表专名缺失）→ 保留英文并记 attr_reason 供 review。
+    """
+    jobs = []
+    for u in units:
+        p = u.get("parsed")
+        if not p:
+            continue
+        if not p.get("attrs_i"):
+            u["attr_reason"] = "no-attr"
+            continue
+        raw = ""
+        for v in p["attr_vals"]:
+            s = v.strip()
+            if not s:
+                continue
+            if not raw:
+                raw = s
+            elif s.startswith(("{{", "[[", "<")):
+                raw += s
             else:
-                rebuilt.append(ln)
+                raw += " " + s
+        masked, atoms = mask_attr_atoms(raw)
+        u["attr_en"] = raw
+        if not re.search(r"[A-Za-z]{2,}", masked):
+            u["attr_reason"] = "no-translatable-text"
+            continue
+        jobs.append({"u": u, "raw": raw, "masked": masked, "atoms": atoms,
+                     "terms": extract_en_terms(raw), "gloss": {}})
+    if not jobs:
+        return
+    glossary = glossary or {}
+    all_terms = set()
+    for j in jobs:
+        all_terms |= j["terms"]
+    slice_all = slice_glossary(glossary, all_terms)
+    for j in jobs:
+        j["gloss"] = {t: slice_all[t] for t in j["terms"] if t in slice_all}
+    gloss_pairs = sorted(f"{t} → {e['zh']}" for t, e in slice_all.items() if e.get("zh"))
+    items = [{"id": i + 1, "masked": j["masked"]} for i, j in enumerate(jobs)]
+    got = None
+    try:
+        reply = llm_chat(cfg, _attr_prompt(items, gloss_pairs),
+                         max_output_tokens=max(600, 300 * len(items)), temperature=0)
+        got = parse_batch_reply(reply)
+    except Exception as e:
+        sys.stderr.write(f"[出处行采证] 批量请求失败（回退单条）：{e}\n")
+    for it, j in zip(items, jobs):
+        u = j["u"]
+        zh_masked = None
+        saw = False
+        via = "batch"
+        if got is not None and str(it["id"]) in got:
+            saw = True
+            zh_masked = _attr_valid(got.get(str(it["id"]), ""), j)
+        if not zh_masked:
+            via = "single"
+            try:
+                one = parse_batch_reply(llm_chat(
+                    cfg, _attr_prompt([it], gloss_pairs),
+                    max_output_tokens=300, temperature=0))
+                if one and str(it["id"]) in one:
+                    saw = True
+                    zh_masked = _attr_valid(one.get(str(it["id"]), ""), j)
+            except Exception:
+                zh_masked = None
+        if zh_masked:
+            u["attr_zh"] = unmask_attr_atoms(zh_masked, j["atoms"])
+            u["attr_reason"] = "ok"
+            u["attr_via"] = via
         else:
-            rebuilt.append(ln)
-        out.append({"line": s, "title": title, "ref": ref,
-                    "found": bool(zh), "proposed_cn": zh or None, "reason": reason})
-    rebuilt_text = "\n".join(rebuilt) if any_found else None
-    return out, rebuilt_text
+            u["attr_reason"] = "verify-fail" if saw else "llm-fail"
 
 
-def resolve_blocks(registry, body: str, cfg, auto: bool, ctx: int = 160):
-    """对 registry 各受保护块按书证采证中文。
+# ---------------------------- 重建与编排 ---------------------------- #
+def rebuild_quote_block(source, zh_text=None, zh_attr=None) -> str:
+    """按采证结果重建原文块（保模板名/参数结构：side/size/width/multiline/命名参数均不动）。
 
-    返回 (new_body, quote_resolutions)。
-    - resolve_resolutions：每块 {token, type, en_preview, book, chapter, proposed_cn, found, reason,
-      resolved_lines?(columns)}
-    - auto=True：找到的替换为中文（英文不留），未找到保留英文。
-    - auto=False（半自动）：不替换，只产出 proposed_cn 供 review。
+    - zh_text（仅自动档默认给；--no-auto-quote-cn 半自动时不给）→ 替换正文参数；正文参数里罕见的引用模板
+      （如 {{book ref}}）保留在译文后，参数尾随换行保留（多行排版）。
+    - zh_attr（半自动/全自动都给）→ 替换首个出处参数，其余出处参数置空（其中的 ref 经
+      占位还原不丢，渲染位置不变）。
+    """
+    p = split_quote_block(source)
+    if not p:
+        return source
+    tpl = p["tpl"]
+    if zh_text is not None and p["text_i"] is not None:
+        val = zh_text
+        refs = []
+        for m in re.finditer(r"\{\{([^|{}]+)(\|[^{}]*)?\}\}", p["text_val"]):
+            if re.search(r"(?i)(?:\bref\b|\bdate\b)", m.group(1)):
+                refs.append(m.group(0))
+        if refs:
+            val += "".join(refs)
+        val += re.search(r"\s*$", p["text_val"]).group(0)
+        tpl.params[p["text_i"]].value = val
+    if zh_attr is not None and p["attrs_i"]:
+        first = p["attrs_i"][0]
+        trail = re.search(r"\s*$", p["attr_vals"][0]).group(0)
+        tpl.params[first].value = zh_attr + trail
+        for i in p["attrs_i"][1:]:
+            tpl.params[i].value = ""
+    return str(tpl)
+
+
+def resolve_blocks(registry, body: str, cfg, auto: bool, ctx: int = 160, glossary=None):
+    """对 registry 各受保护块按书证采证中文（同章批量 + 逐条校验 + 单条回退 + 出处行批量翻译）。
+
+    返回 (new_body, quote_resolutions)：
+    - quote/sidequote：{token, type, en_preview, book, chapter, found, proposed_cn, reason,
+      via?, en_file?, fallback?, attr_en, attr_zh, attr_reason, attr_via?}
+    - columns：另加 resolved_lines/total_lines/lines[]（行级走同一套批量机制）
+    - auto=True：found 的正文替换为中文；半自动不替换正文。出处行两档都替换。
     """
     resolutions = []
     new_body = body
-    for blk in registry:
-        zh = None
-        evidence = {"found": False, "reason": "no-ref"}
+    if not registry:
+        return new_body, resolutions
+    reverse = _reverse_glossary(glossary) if glossary else {}
+    units, blk_units = [], {}
+    for bi, blk in enumerate(registry):
+        src = blk["source"]
         if blk["type"] in ("quote", "sidequote"):
-            en = quote_inner_text(blk["source"])
-            ref = extract_book_ref(blk["source"])
-            zh, evidence = resolve_unit(en, ref, cfg, ctx)
+            u = {"blk": bi, "kind": "quote", "src": src, "type": blk["type"]}
+            u["parsed"] = split_quote_block(src)
+            u["en"] = quote_inner_text(src, reverse)
+            u["ref"] = extract_book_ref(src)
+            u["has_ref"] = has_ref_any(src)
         elif blk["type"] == "columns":
-            col_lines, rebuilt = resolve_columns(blk, cfg, ctx)
-            found_n = sum(1 for c in col_lines if c["found"])
-            evidence = {"found": found_n > 0, "reason": "columns",
-                        "resolved_n": found_n, "total_n": len(col_lines)}
-            if rebuilt:
-                zh = rebuilt  # 全自动时用重建的 columns 文本
-        entry = {
-            "token": blk["token"], "type": blk["type"],
-            "en_preview": quote_inner_text(blk["source"])[:80],
-            "book": evidence.get("book"), "chapter": evidence.get("chapter"),
-            "found": evidence.get("found", False),
-            "proposed_cn": zh or None,
-            "reason": evidence.get("reason"),
-        }
+            for li, ln in enumerate(src.splitlines()):
+                s = ln.strip()
+                if not s.startswith("*"):
+                    continue
+                title = re.sub(r"\{\{.*?\}\}", "", s).strip().lstrip("*").strip()
+                title = re.sub(r"^\[\[(.*?)\]\]$", r"\1", title).strip()
+                u = {"blk": bi, "kind": "column", "line_i": li, "line": ln, "src": src,
+                     "type": "columns", "title": title,
+                     "en": _clean_locate_text(title, reverse),
+                     "ref": extract_book_ref(s), "has_ref": has_ref_any(s)}
+        else:
+            continue
+        units.append(u)
+        blk_units.setdefault(bi, []).append(u)
+    _locate_units(units, ctx)               # 1) 确定性定位（无 LLM）
+    _resolve_text_units(units, cfg, ctx)    # 2) 同章批量采证 + 单条回退（LLM）
+    _resolve_attributions(units, cfg, glossary)  # 3) 出处行页面级批量翻译（LLM）
+
+    for bi, blk in enumerate(registry):
+        us = blk_units.get(bi, [])
+        src = blk["source"]
         if blk["type"] == "columns":
-            entry["resolved_lines"] = evidence.get("resolved_n", 0)
-            entry["total_lines"] = evidence.get("total_n", 0)
+            rebuilt = list(src.splitlines())
+            found_n = 0
+            line_entries = []
+            for u in us:
+                line_entries.append({"line": (u.get("line") or "").strip(),
+                                     "title": u.get("title"), "ref": u.get("ref"),
+                                     "found": bool(u.get("found")),
+                                     "proposed_cn": u.get("zh"),
+                                     "reason": u.get("reason")})
+                if u.get("found"):
+                    found_n += 1
+                    rebuilt[u["line_i"]] = "*" + u["zh"]
+            rebuilt_text = "\n".join(rebuilt) if found_n else None
+            refu = next((u for u in us if u.get("ref")), None)
+            entry = {
+                "token": blk["token"], "type": "columns",
+                "en_preview": (us[0].get("title", "") if us else "")[:80],
+                "book": refu["ref"][0] if refu else None,
+                "chapter": refu["ref"][1] if refu else None,
+                "found": found_n > 0,
+                "proposed_cn": rebuilt_text,
+                "reason": "columns",
+                "resolved_lines": found_n, "total_lines": len(us),
+                "lines": line_entries,
+            }
+            if auto and rebuilt_text and src in new_body:
+                new_body = new_body.replace(src, rebuilt_text)
+        else:
+            u = us[0] if us else {"type": blk["type"], "reason": "no-ref"}
+            attr_zh = u.get("attr_zh")
+            text_zh = u.get("zh") if auto else None
+            if (text_zh or attr_zh) and src in new_body:
+                new_body = new_body.replace(
+                    src, rebuild_quote_block(src, zh_text=text_zh, zh_attr=attr_zh))
+            entry = {
+                "token": blk["token"], "type": blk["type"],
+                "en_preview": (u.get("en") or "")[:80],
+                "book": u.get("book"), "chapter": u.get("chapter"),
+                "found": bool(u.get("found")),
+                "proposed_cn": u.get("zh"),
+                "reason": u.get("reason") or ("ok" if u.get("found") else "no-ref"),
+                "attr_en": u.get("attr_en"),
+                "attr_zh": u.get("attr_zh"),
+                "attr_reason": u.get("attr_reason"),
+            }
+            for k in ("via", "attr_via"):
+                if u.get(k):
+                    entry[k] = u[k]
+            loc = u.get("loc") or {}
+            if loc.get("en_file"):
+                entry["en_file"] = loc["en_file"]
+            if loc.get("fallback"):
+                entry["fallback"] = loc["fallback"]
         resolutions.append(entry)
-        if auto and zh:
-            # 全自动：把该块的英文填回结果替换为中文
-            src = blk["source"]
-            if src in new_body:
-                new_body = new_body.replace(src, quote_cn_template(zh, blk))
     return new_body, resolutions
 
 
@@ -2332,9 +2897,10 @@ def main():
     ap.add_argument("--max-output-tokens", type=int, default=8000, help="单块 LLM 最大输出 token（长块可调大）")
     ap.add_argument("--target-wiki", default=DEFAULT_WIKI)
     ap.add_argument("--no-resolve-quotes", action="store_true",
-                    help="关闭原文块书证采证（默认开启：对 {{Quote}}/{{columns}} 按 book ref 采证中文，半自动产出 proposed_cn 供 review）")
-    ap.add_argument("--auto-quote-cn", action="store_true",
-                    help="全自动：book ref 采证到的原文块直接替换为中文（英文不留）；找不到仍保留英文")
+                    help="关闭原文块书证采证（默认开启：对 {{Quote}}/{{columns}} 按 book ref 采证中文）")
+    ap.add_argument("--auto-quote-cn", action=argparse.BooleanOptionalAction, default=True,
+                    help="quote/columns 书证采证到官方中译即直接替换为中文（2026-10-21 用户裁定默认开启；"
+                         "--no-auto-quote-cn 退回半自动：仅产出 proposed_cn 供 review 不替换）")
     ap.add_argument("--quote-ctx", type=int, default=160, help="原文块采证的中英对照区窗口字符数")
     args = ap.parse_args()
 
@@ -2505,19 +3071,30 @@ def main():
                         refs=refs, orig_title=_orig_title, linklist_reg=_linklist_reg)
 
     # 决议#13 增强：原文块按中译本书证采证中文（quote/columns）。
-    # - 半自动（默认）：产出 quote_resolutions（proposed_cn 供 review），不替换，英文保留。
-    # - 全自动（--auto-quote-cn）：采证到的直接替换为中文（英文不留）；找不到保留英文。
+    # - 半自动（--no-auto-quote-cn）：产出 quote_resolutions（proposed_cn 供 review），不替换，英文保留。
+    # - 自动（默认，2026-10-21 用户裁定）：采证到的直接替换为中文（英文不留）；找不到保留英文。
     if registry and not args.no_resolve_quotes:
-        sys.stderr.write("[原文块采证] 按 book ref 用中译本书证解析 {{Quote}}/{{columns}} …\n")
+        sys.stderr.write("[原文块采证] 按书证（book/epigraph/tes ref）用中译本书证解析 "
+                         "{{Quote}}/{{columns}}，同章合并批量采证 …\n")
         cfg = load_llm_config(args)
         new_body, resolutions = resolve_blocks(registry, contract["translation"], cfg,
-                                               auto=args.auto_quote_cn, ctx=args.quote_ctx)
+                                               auto=args.auto_quote_cn, ctx=args.quote_ctx,
+                                               glossary=glossary)
         contract["translation"] = new_body
         contract["quote_resolutions"] = resolutions
         n_found = sum(1 for r in resolutions if r["found"])
-        n_auto = sum(1 for r in resolutions if r["found"] and args.auto_quote_cn)
-        sys.stderr.write(f"[原文块采证] 采证到 {n_found}/{len(resolutions)} 个"
-                         f"（全自动替换 {n_auto}，其余保留英文/列 review）。\n")
+        n_batch = sum(1 for r in resolutions if r.get("via") == "batch")
+        reasons = {}
+        for r in resolutions:
+            k = r.get("reason")
+            reasons[k] = reasons.get(k, 0) + 1
+        n_attr = sum(1 for r in resolutions if r.get("attr_reason") == "ok")
+        n_attr_tot = sum(1 for r in resolutions if r.get("attr_reason"))
+        mode_desc = "已自动替换为中文" if args.auto_quote_cn else "半自动产出 proposed_cn 供 review"
+        sys.stderr.write(
+            f"[原文块采证] 正文 {n_found}/{len(resolutions)} 采到官方中译（同章批量 {n_batch}，{mode_desc}）；"
+            f"出处行译出 {n_attr}/{n_attr_tot}；"
+            f"reason={reasons}\n")
         # 全自动已替换的块，从「需查中译本」清单里移除（保留未找到的）
         if args.auto_quote_cn and "untranslated_terms" in contract:
             resolved_tokens = {r["token"] for r in resolutions if r["found"]}

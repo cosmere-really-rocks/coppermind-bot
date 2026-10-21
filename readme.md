@@ -377,7 +377,7 @@ coppermind/
   4b. **决议#13 增强·原文块书证采证**：按 `{{book ref|书码|章}}` 调 `glossary_assist` 到中译本书证采证这些原文块的中文——
       - **台词 quote**：用书证采证官方中译；不逐字匹配原书（意译）或无 book ref 的 quote **保留英文**（诚实不硬翻）
       - **称号/称呼列表 columns**（如 `Great Metallic One`）：逐行采证替换为中文，非逐字的保留英文
-      - 两档：**半自动（默认）**——产出 `quote_resolutions`（`proposed_cn` 供 review）不替换；**全自动 `--auto-quote-cn`**——采证到的直接替换为中文（英文不留）
+      - 两档：**自动（默认，2026-10-21 用户裁定）**——采证到的直接替换为中文（英文不留），`quote_resolutions` 留档；**半自动 `--no-auto-quote-cn`**——不替换，产出 `proposed_cn` 供 review
   5. **术语裁切**（决议#9）：仅把本文命中的译名子集送 LLM，省 token
   6. 组装页面级包装 `{{CmPermission}}`（顶）+ `{{en}}`（首行，由 LLM 在块0安放）+ `{{ensync}}`（尾，revid 取快照 meta）——决议 10-12
   7. 输出契约 `translation.json`：`{meta, translation, untranslated_terms}`，另落 `translation.txt`
@@ -390,8 +390,8 @@ coppermind/
   .venv/bin/python scripts/translate.py --title <标题> --dry-run        # 只预演分块+提示词，不调 LLM
   .venv/bin/python scripts/translate.py --title <标题> --max-chars 6000 # 调小分块预算（更细粒度，块更多）
   .venv/bin/python scripts/translate.py --title <标题> --concurrency 2  # 并发翻译块
-  .venv/bin/python scripts/translate.py --title <标题>                       # 默认半自动：原文块书证采证产出 quote_resolutions（review，不替换）
-  .venv/bin/python scripts/translate.py --title <标题> --auto-quote-cn       # 全自动：采证到的 quote/称号直接替换为中文
+  .venv/bin/python scripts/translate.py --title <标题>                       # 默认自动：采证到的 quote/称号直接替换为中文（quote_resolutions 留档）
+  .venv/bin/python scripts/translate.py --title <标题> --no-auto-quote-cn    # 半自动：quote 正文不动，proposed_cn 供 review
   .venv/bin/python scripts/translate.py --title <标题> --no-resolve-quotes   # 关闭原文块采证（回到纯英文占位符）
   ```
   依赖：stdlib（`urllib`/`json`/`re`/`dataclasses`）+ `mwparserfromhell`；不需要额外 LLM 客户端库。
