@@ -522,6 +522,49 @@ def slice_glossary(glossary, en_terms):
 # Infobox 值确定性翻译（决议 #4 落地）：Infobox「字段 = 值」的专名按译名表统一替换。
 # 结构化短字段交给确定性替换更可靠，不依赖 LLM 是否记得把值也翻成中文。
 # --------------------------------------------------------------------------- #
+# 引用族模板名（精确 date/裸 ref，或「* ref」结尾，大小写不敏感；17s ref 等数字开头亦有）。
+# 刻意不含「Rosharan date」等复合 date 名——门禁 REF_PATS 只查 \{\{\s*date\s*\|，
+# 保护面外扩=不必要的行为变更。
+_REF_NAME_RE = re.compile(r"^(?:date|ref|.+\sref)$", re.I)
+_REF_PFX = "%%REFSPAN_"
+
+
+def _mask_ref_spans(value: str) -> tuple:
+    """把 value 内的引用族模板整段挖成占位符，返回 (掩码文本, 原模板列表)。
+
+    引用模板的参数是标识符（书码 `{{book ref|Elantris|62}}`、文件名 `{{map ref|…}}`、
+    wob 编号、URL/时期），即使与词条同名也绝不可被译名替换——translate_infobox_values
+    在 mask_ref_templates 之前运行，确定性替换一旦改掉书码，掩码/解码会原样带过，
+    门禁 extract_refs 按字面比对引用序列必判不一致（实测 Dilaf/Hrathen/Shaor 三页
+    `book ref|Elantris|62`→`book ref|伊岚翠|62`；map/file ref 文件名同理会被译烂）。
+    按花括号平衡扫描：引用模板整段保护（内层嵌套一并）；非引用模板（{{tag|…}} 等）
+    不整体保护，只继续深入找它内部的引用。占位符 `%%REFSPAN_i%%` 两侧均为非字母，
+    词边界与 in_phrase 判定和原 `{{`/`}}` 语境等价 → 引用之外的替换行为零变化。
+    """
+    spans: list = []
+    out: list = []
+    pos = 0
+    i = 0
+    n = len(value)
+    while i < n:
+        if value.startswith("{{", i):
+            end = _find_infobox_block(value, i)
+            if end > 0:
+                name = value[i + 2:end - 2].split("|", 1)[0].strip()
+                if _REF_NAME_RE.match(name):
+                    out.append(value[pos:i])
+                    out.append(_REF_PFX + str(len(spans)) + "%%")
+                    spans.append(value[i:end])
+                    pos = end
+                    i = end
+                    continue
+            i += 2  # 非引用模板或未闭合 '{{'：越过/深入，继续找其内部的引用
+            continue
+        i += 1
+    out.append(value[pos:])
+    return "".join(out), spans
+
+
 def _sub_glossary_in_string(value: str, gloss: dict) -> str:
     """对单值做译名替换；返回替换后的字符串。
 
@@ -530,9 +573,22 @@ def _sub_glossary_in_string(value: str, gloss: dict) -> str:
     - 图片文件名（含扩展名/File:）不替换。
     - review 方案2 延伸：整值匹配增加**归一化**兜底——正文/字段写成小写（kandra）、缺冠词（Set）
       或屈折形式时也能命中规范词条（Kandra/组织）；对全小写值套 GENERIC_EN_STOPLIST 防通用英文误翻。
+    - 引用族模板整段保护（④）：先 _mask_ref_spans 挖占位符、替换后原样填回——书码/文件名等
+      标识符参数即使与词条同名也绝不可译；无引用的值掩码是恒等变换，行为与旧版逐字节一致。
     """
     if re.search(r"(?i)(File:|Image:)|\.(png|jpe?g|gif|webp|svg)(\||$)", value):
         return value
+    masked, ref_spans = _mask_ref_spans(value)
+    if not ref_spans:
+        return _sub_glossary_core(masked, gloss)
+    out = _sub_glossary_core(masked, gloss)
+    # 单趟还原：每个占位符只替换一次，填回的原文不会被再次扫描/替换。
+    return re.sub(re.escape(_REF_PFX) + r"(\d+)%%",
+                  lambda m: ref_spans[int(m.group(1))], out)
+
+
+def _sub_glossary_core(value: str, gloss: dict) -> str:
+    """（内部）对已挖去引用模板的文本做整值/归一化/片段替换；引用挖填见 _sub_glossary_in_string。"""
     # 整值匹配：去掉 [[ ]] 包裹后整体查表（如 [[Mistborn: The Final Empire]]）
     bare = re.sub(r"^\[\[(.*?)\]\]$", r"\1", value.strip())
     if bare in gloss and gloss[bare].get("zh"):
