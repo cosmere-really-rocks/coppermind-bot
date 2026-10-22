@@ -16,6 +16,8 @@
 阶段：fetch（缺快照才抓）/convert+translate（translate.py）/write（write.py）。
   --stage 默认 "translate,write"；fetch 默认仅在快照缺失时补抓（除非 --fetch 强制）。
 选项透传：--max-chars/--concurrency/--skip-if-same/--summary 会转发给对应脚本。
+门禁单次重跑（2026-10-23 起为默认）：质量门禁 verify 未过时，自动同参数重跑一次
+  translate（换一次 LLM 采样）再复验，仍不过才拒写并记 verify:FAIL；--gate-retry 0 关闭。
 
 退出码：0 全部成功；1 有失败（部分成功也报 1，末尾打印汇总表）。
 依赖：无额外库；调用 .venv/bin/python 运行本项目脚本。
@@ -100,6 +102,26 @@ def has_infobox(title: str) -> bool:
     return any("{{" + t.lower() in txt for t in INFOBOX_TYPES)
 
 
+def build_translate_cmd(args, title: str) -> list[str]:
+    """构造 translate.py 子进程命令（首跑与门禁单次重跑共用一份，避免两处漂移）。"""
+    translate_cmd = [str(PY), str(HERE / "translate.py"), "--title", title]
+    if args.max_chars:
+        translate_cmd += ["--max-chars", str(args.max_chars)]
+    if args.dry_run:
+        translate_cmd += ["--dry-run"]
+    if args.no_wrap:
+        translate_cmd += ["--no-wrap"]
+    if args.api_key:
+        translate_cmd += ["--api-key", args.api_key]
+    if args.max_output_tokens:
+        translate_cmd += ["--max-output-tokens", str(args.max_output_tokens)]
+    # quote 自动替换默认开启（2026-10-21）：显式透传两态，避免依赖子进程默认值
+    translate_cmd += ["--auto-quote-cn" if args.auto_quote_cn else "--no-auto-quote-cn"]
+    if args.no_resolve_quotes:
+        translate_cmd += ["--no-resolve-quotes"]
+    return translate_cmd
+
+
 def run_stage(args, title: str) -> list[str]:
     """执行一个标题的全部阶段；返回该页的 [阶段...] 状态串。"""
     status = []
@@ -127,21 +149,7 @@ def run_stage(args, title: str) -> list[str]:
             status.append("translate:no-input")
             return status
     else:
-        translate_cmd = [str(PY), str(HERE / "translate.py"), "--title", title]
-        if args.max_chars:
-            translate_cmd += ["--max-chars", str(args.max_chars)]
-        if args.dry_run:
-            translate_cmd += ["--dry-run"]
-        if args.no_wrap:
-            translate_cmd += ["--no-wrap"]
-        if args.api_key:
-            translate_cmd += ["--api-key", args.api_key]
-        if args.max_output_tokens:
-            translate_cmd += ["--max-output-tokens", str(args.max_output_tokens)]
-        # quote 自动替换默认开启（2026-10-21）：显式透传两态，避免依赖子进程默认值
-        translate_cmd += ["--auto-quote-cn" if args.auto_quote_cn else "--no-auto-quote-cn"]
-        if args.no_resolve_quotes:
-            translate_cmd += ["--no-resolve-quotes"]
+        translate_cmd = build_translate_cmd(args, title)
         tr = subprocess.run(translate_cmd, capture_output=True, text=True)
         # 子进程 stderr 记录进度，只保留足够诊断
         if tr.returncode != 0:
@@ -153,15 +161,31 @@ def run_stage(args, title: str) -> list[str]:
     # ---- 自动质量门禁（零 review 机制保证：写回前自动核对，不过则拒绝写回）----
     # 覆盖：引用编号与英文源一致（防 LLM 幻觉）、占位符无残留、导语无英文残留、
     # 无裸词/半译残留、{{en}} 不错位。全部通过才允许 write；失败记 verify:FAIL 并跳过写回。
+    # 门禁单次重跑（2026-10-23 用户定为默认）：门禁本身是确定性的，重跑的对象是
+    # translate——换一次 LLM 采样后复验，仍不过才拒写。仅本批含 translate/convert 阶段时
+    # 生效（尊重 --stage write "不白花 LLM"的契约）；--gate-retry N 可调，0 关闭。
     if "write" in args.stage and not args.dry_run:
         gate_cmd = [str(PY), str(HERE / "verify_translation.py"), "--title", title]
-        gc = subprocess.run(gate_cmd, capture_output=True, text=True)
-        if gc.returncode != 0:
-            status.append("verify:FAIL")
-            sys.stderr.write(f"[{title}] 质量门禁未通过（拒绝写回）：\n{(gc.stdout or '')[-1200:]}"
-                             f"{(gc.stderr or '')[-1200:]}\n")
-            return status
-        status.append("verify:ok")
+        can_retry = ("translate" in args.stage or "convert" in args.stage)
+        attempts_left = max(0, args.gate_retry) if can_retry else 0
+        while True:
+            gc = subprocess.run(gate_cmd, capture_output=True, text=True)
+            if gc.returncode == 0:
+                status.append("verify:ok")
+                break
+            if attempts_left <= 0:
+                status.append("verify:FAIL")
+                sys.stderr.write(f"[{title}] 质量门禁未通过（拒绝写回）：\n{(gc.stdout or '')[-1200:]}"
+                                 f"{(gc.stderr or '')[-1200:]}\n")
+                return status
+            attempts_left -= 1
+            sys.stderr.write(f"[{title}] 质量门禁未过，自动单次重跑 translate 后复验…\n")
+            tr2 = subprocess.run(build_translate_cmd(args, title), capture_output=True, text=True)
+            if tr2.returncode != 0:
+                status.append("translate:retry:FAIL")
+                sys.stderr.write(f"[{title}] 重跑 translate 失败：{(tr2.stderr or '')[-600:]}\n")
+                return status
+            status.append("translate:retry:ok")
 
     # ---- write ----
     if "write" in args.stage:
@@ -222,6 +246,10 @@ def main():
                     help="透传 translate 关闭原文块书证采证（回到纯英文占位符）")
     ap.add_argument("--write-target-prefix", default=None, help="写站目标页前缀（如 'BOT测试:'，用于非破坏性验证）")
     ap.add_argument("--dry-run", action="store_true", help="全程预演（translate/write 均 dry-run，不真正调 LLM/写站）")
+    ap.add_argument("--gate-retry", type=int, default=1,
+                    help="质量门禁未过时自动同参数重跑 translate 并复验的次数"
+                         "（默认 1=单次重跑，2026-10-23 起为默认值；0=关闭）。"
+                         "仅本批含 translate/convert 阶段时生效")
     args = ap.parse_args()
 
     # 收集标题
