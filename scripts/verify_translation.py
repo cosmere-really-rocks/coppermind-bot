@@ -100,6 +100,96 @@ def _inside_wikilink_target(text: str, pos: int) -> bool:
     return False
 
 
+# 5) 半译：同一字段内「中文与英文夹杂在同一短语 / 英文普通词残留」才算漏译。
+#    两个互补信号：
+#    A) 行内含中文 + 剥模板/链接后仍有「小写**内容词**」英文（noble houses/several/post…）
+#       —— 普通英文没译全（保留英文专名不受影响，专名首字母大写）。
+#    B) 英文片段与中文字符紧邻（空格/连字符分隔，同一称号内夹杂）且含任何小写词
+#       —— 如「幸存者 of the Flames」（Survivor 被拆译成幸存者、of the Flames 残留）
+#       或「Lord 迷雾之子」。逗号分隔的独立项（「Survivor of the Flames, 迷雾之子领主」、
+#       「杰戴, Lestibournes」）不算——保留英文专名/称号是铁律。
+FUNC_WORDS = {"of", "the", "a", "an", "in", "on", "for", "to", "and", "or", "at",
+              "by", "with", "from", "is", "was", "be", "that", "this", "it",
+              # ③（2026-10-23）外语虚词不作「英文残留」证据：德/法语 des（…des Zorns/
+              # …des Radieux）实测 4 处误伤 Words of Radiance。只豁免该词本身，
+              # 其余小写内容词照判（contes/several 等仍拦）。
+              "des"}
+
+
+def _field_half_problems(body: str, quote_spans) -> list:
+    """第 5 节半译（| 字段行中英夹杂）判定（2026-10-23 ③自 check_one 原位抽出，
+    供误伤回归单测直调；抽出前后判定语义逐字一致，除③三处修正）：
+    - 斜体 `''…''` 标题整体剔除（与 mask_nonprose/3c 同口径：斜体书名按规则保留英文；
+      粗体先占位保护不豁免——粗体可承载译文）→ 修 Words of Radiance 4 处外语书名
+      非ASCII断词碎片误伤（Stürme→rme、Câmpiile→mpiile、Jurâmântului→ntului）；
+    - 模板剔除上限 150→512 → 修 Wind and Truth 长 {{tor ref|…}}（186 字符，全语料
+      |行内最长 449）残留「tor ref」误伤；
+    - FUNC_WORDS 增 des。
+    判不出新问题类型：只减少误报，绝不新增拦截（对照回归 tests_gate_fp.py + 全量A/B）。"""
+    problems = []
+    keep_en_terms = set(tr.load_keep_en())
+    for ln in body.split("\n"):
+        if not ln.startswith("|"):
+            continue
+        if re.search(r"\{\{tag|\{\{en\||原名", ln):
+            continue
+        # 原文块（Quote/sidequote/columns）内的行：含署名行（|Spook to Sazed...），
+        # 按决议#13 保留英文，不属于「LLM 半译漏译」
+        ln_pos = body.find(ln)
+        if any(a <= ln_pos < b and a >= 0 for a, b in quote_spans):
+            continue
+        if re.search(r"[\u4e00-\u9fff]", ln) and re.search(r"[A-Za-z]{4,}", ln):
+            # 字段行只判值（2026-10-20 修）：|world= / |prereq= 的 key 是模板/表格结构位，
+            # 按设计英文——剔除 key 后只在 value 上做残留/夹杂信号；值全中文则整行跳过。
+            _k = re.match(r"^(\s*\|\s*[A-Za-z][\w \-]{0,40})=(.*)$", ln)
+            src_ln = ("|" + _k.group(2)) if _k else ln
+            if not re.search(r"[A-Za-z]{4,}", src_ln):
+                continue
+            stripped = re.sub(r"\{\{[^{}]{0,512}\}\}", " ", src_ln)  # ③ 上限 150→512
+            stripped = re.sub(r"\[\[[^\]]*\]\]", " ", stripped)
+            stripped = re.sub(r"<[^>]+>", " ", stripped)
+            # ③ 斜体 ''…'' 剔除（镜像 mask_nonprose 第3步：粗体先占位保护）
+            _bolds: list = []
+
+            def _save_bold(m, _b=_bolds):
+                _b.append(m.group(0))
+                return "\x00%d\x00" % (len(_b) - 1)
+
+            stripped = re.sub(r"'''.+?'''", _save_bold, stripped, flags=re.S)
+            stripped = re.sub(r"''[^'\n]+''", " ", stripped)
+            stripped = re.sub(r"\x00(\d+)\x00", lambda m: _bolds[int(m.group(1))],
+                              stripped)
+            for m in re.finditer(r"[A-Za-z][A-Za-z'\- ]{3,}", stripped):
+                frag = m.group(0).strip()
+                left = stripped[max(0, m.start() - 2):m.start()]
+                right = stripped[m.end():m.end() + 2]
+                words = re.findall(r"[A-Za-z][A-Za-z'\-]*", frag)
+                # 大写词（首字母大写，如 Survivor/Flames/Mistborn）计为专名词
+                cap_words = [w for w in words if w[:1].isupper()]
+                lower_any = any(w != w.upper() and not w[:1].isupper() for w in words)
+                lower_content = [
+                    w for w in words
+                    if not w[:1].isupper()
+                    and w.lower().strip("'") not in FUNC_WORDS
+                    and w.lower().strip("'") not in keep_en_terms
+                ]
+                adjacent_zh = (
+                    re.search(r"[\u4e00-\u9fff]", left.replace(" ", "").replace("-", ""))
+                    or re.search(r"[\u4e00-\u9fff]", right.replace(" ", "").replace("-", ""))
+                )
+                # 信号A：小写内容词残留（noble houses / several post-…），行内有中文 → 漏译
+                if lower_content and len(words) >= 2:
+                    problems.append(f"[半译] {ln.strip()[:88]}… ← 残留: {frag[:50]}")
+                    break
+                # 信号B：英文片段紧邻中文、且不是「多专名词的完整称号」
+                # （of the Flames 紧邻幸存者 → 报；Survivor of the Flames 作为完整
+                #  称号与中文并列 → 不报；Lord 紧邻迷雾之子 → 报）
+                if adjacent_zh and lower_any and len(cap_words) <= 1:
+                    problems.append(f"[半译] {ln.strip()[:88]}… ← 夹杂残留: {frag[:50]}")
+                    break
+    return problems
+
+
 def check_one(title_en: str, wiki: str) -> list[str]:
     problems = []
     snap = Path("en_snapshot") / title_en
@@ -294,65 +384,10 @@ def check_one(title_en: str, wiki: str) -> list[str]:
             reported_bare.append((m.start(), m.end()))
             bare_cnt += 1
 
-    # 5) 半译：同一字段内「中文与英文夹杂在同一短语 / 英文普通词残留」才算漏译。
-    #    两个互补信号：
-    #    A) 行内含中文 + 剥模板/链接后仍有「小写**内容词**」英文（noble houses/several/post…）
-    #       —— 普通英文没译全（保留英文专名不受影响，专名首字母大写）。
-    #    B) 英文片段与中文字符紧邻（空格/连字符分隔，同一称号内夹杂）且含任何小写词
-    #       —— 如「幸存者 of the Flames」（Survivor 被拆译成幸存者、of the Flames 残留）
-    #       或「Lord 迷雾之子」。逗号分隔的独立项（「Survivor of the Flames, 迷雾之子领主」、
-    #       「杰戴, Lestibournes」）不算——保留英文专名/称号是铁律。
-    FUNC_WORDS = {"of", "the", "a", "an", "in", "on", "for", "to", "and", "or", "at",
-                  "by", "with", "from", "is", "was", "be", "that", "this", "it"}
-    keep_en_terms = set(tr.load_keep_en())
-    for ln in body.split("\n"):
-        if not ln.startswith("|"):
-            continue
-        if re.search(r"\{\{tag|\{\{en\||原名", ln):
-            continue
-        # 原文块（Quote/sidequote/columns）内的行：含署名行（|Spook to Sazed...），
-        # 按决议#13 保留英文，不属于「LLM 半译漏译」
-        ln_pos = body.find(ln)
-        if any(a <= ln_pos < b and a >= 0 for a, b in quote_spans):
-            continue
-        if re.search(r"[\u4e00-\u9fff]", ln) and re.search(r"[A-Za-z]{4,}", ln):
-            # 字段行只判值（2026-10-20 修）：|world= / |prereq= 的 key 是模板/表格结构位，
-            # 按设计英文——剔除 key 后只在 value 上做残留/夹杂信号；值全中文则整行跳过。
-            _k = re.match(r"^(\s*\|\s*[A-Za-z][\w \-]{0,40})=(.*)$", ln)
-            src_ln = ("|" + _k.group(2)) if _k else ln
-            if not re.search(r"[A-Za-z]{4,}", src_ln):
-                continue
-            stripped = re.sub(r"\{\{[^{}]{0,150}\}\}", " ", src_ln)
-            stripped = re.sub(r"\[\[[^\]]*\]\]", " ", stripped)
-            stripped = re.sub(r"<[^>]+>", " ", stripped)
-            for m in re.finditer(r"[A-Za-z][A-Za-z'\- ]{3,}", stripped):
-                frag = m.group(0).strip()
-                left = stripped[max(0, m.start() - 2):m.start()]
-                right = stripped[m.end():m.end() + 2]
-                words = re.findall(r"[A-Za-z][A-Za-z'\-]*", frag)
-                # 大写词（首字母大写，如 Survivor/Flames/Mistborn）计为专名词
-                cap_words = [w for w in words if w[:1].isupper()]
-                lower_any = any(w != w.upper() and not w[:1].isupper() for w in words)
-                lower_content = [
-                    w for w in words
-                    if not w[:1].isupper()
-                    and w.lower().strip("'") not in FUNC_WORDS
-                    and w.lower().strip("'") not in keep_en_terms
-                ]
-                adjacent_zh = (
-                    re.search(r"[\u4e00-\u9fff]", left.replace(" ", "").replace("-", ""))
-                    or re.search(r"[\u4e00-\u9fff]", right.replace(" ", "").replace("-", ""))
-                )
-                # 信号A：小写内容词残留（noble houses / several post-…），行内有中文 → 漏译
-                if lower_content and len(words) >= 2:
-                    problems.append(f"[半译] {ln.strip()[:88]}… ← 残留: {frag[:50]}")
-                    break
-                # 信号B：英文片段紧邻中文、且不是「多专名词的完整称号」
-                # （of the Flames 紧邻幸存者 → 报；Survivor of the Flames 作为完整
-                #  称号与中文并列 → 不报；Lord 紧邻迷雾之子 → 报）
-                if adjacent_zh and lower_any and len(cap_words) <= 1:
-                    problems.append(f"[半译] {ln.strip()[:88]}… ← 夹杂残留: {frag[:50]}")
-                    break
+    # 5) 半译（同字段夹杂）：判定抽出为 _field_half_problems（2026-10-23 ③自此处原位
+    #    移出，含③三处误伤修正——斜体''…''剔除/模板剔除上限512/FUNC_WORDS+des；
+    #    对照回归 tests_gate_fp.py + 全量门禁A/B）。
+    problems.extend(_field_half_problems(body, quote_spans))
 
     return problems
 
