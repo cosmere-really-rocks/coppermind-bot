@@ -7,7 +7,7 @@
       {
         "meta": { "title_en", "revision_id", "target_wiki", "format":"mediawiki",
                   "chunks": N, "note": ... },
-        "translation": "<含全部页面级包装({{CmPermission}}/{{en}}/{{ensync}})的完整中文 wikitext>",
+        "translation": "<含全部页面级包装({{AITranslation}}/{{CmPermission}}/{{en}}/{{ensync}})的完整中文 wikitext>",
         "untranslated_terms": [ { "en":..., "reason":... }, ... ]
       }
   （同步落 translation.txt —— 与 Allik 样板一致的纯 wikitext 视图）
@@ -31,7 +31,7 @@
   --max-chars      每块最大字符数（默认 7000；超长词条按此切块）
   --concurrency    并发翻译块数（默认 1，避免触发限速/超时）
   --dry-run        只做分块与提示词预演，不调用 LLM（输出分块清单到 stderr，不写文件）
-  --no-wrap        不插入页面级包装（CmPermission/en/ensync），仅输出纯正文翻译
+  --no-wrap        不插入页面级包装（{{AITranslation}}/CmPermission/en/ensync），仅输出纯正文翻译
   --llm-base-url   覆盖 baseURL（默认同 DSH：https://token.glint-mvt.com/v1）
   --llm-model      覆盖模型（默认 deepseek-v4-flash-0731）
   --api-key        覆盖 API key（默认读环境变量 DEEPGLINT2_API_KEY）
@@ -1814,6 +1814,21 @@ def body_english_feedback(translation: str):
         return None
 
 
+def ensure_aitranslation(body: str) -> str:
+    """页首 {{AITranslation}} 标记（2026-10-23 用户指示：每个词条最顶部）。
+
+    样例 Bot测试(豆包Seed):陆沙德 —— 第 1 行裸 {{AITranslation}}（无参），
+    压在 {{CmPermission}} 之上。幂等：已含则原样返回。
+    调用序（assemble 包装分支）：CmPermission → ensure_en_tag → ensure_lead_title
+    → ensync → 本函数——必须后置，因为前两者依赖 body 以 CmPermission 起头的
+    置顶假设。write.py 有同语义独立实现（其仅依赖 stdlib，不 import translate），
+    tests_aitranslation.py 逐输入对等断言防两处漂移。
+    """
+    if "{{AITranslation}}" in body:
+        return body
+    return "{{AITranslation}}\n" + body
+
+
 def ensure_en_tag(body: str, title_en: str) -> str:
     """决议#10 兜底：确保 {{en|title}} 恰好一处、且位于导语首行粗体标题之后。
 
@@ -2195,7 +2210,10 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
             sys.stderr.write(f"[导语标题兜底] 首行粗体标题已纠正为译名表官方译名（{title_en}）\n")
         if "{{ensync|" not in body:
             body = body.rstrip("\n") + "\n{{ensync|" + str(revid) + "}}\n"
-        meta_note = "已加页面级包装 {{CmPermission}}（顶）/{{en}}（首行自动兜底）/{{ensync}}（尾，revid=" + str(revid) + "）"
+        # 页首 AI翻译标记（2026-10-23 用户指示：每词条最顶部，样例 Bot测试(豆包Seed):陆沙德）。
+        # 置于 ensure_en_tag/ensure_lead_title 之后（二者依赖 CmPermission 置顶假设）。
+        body = ensure_aitranslation(body)
+        meta_note = "已加页面级包装 {{AITranslation}}（首行）/{{CmPermission}}（顶）/{{en}}（首行自动兜底）/{{ensync}}（尾，revid=" + str(revid) + "）"
     if n_finish:
         meta_note += f"；确定性译名收尾替换 {n_finish} 处（LLM 后按译名表兜底）"
 

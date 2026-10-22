@@ -179,6 +179,19 @@ def extract_ensync_revid(wikitext: str | None):
     return m.group(1).strip() if m else None
 
 
+def ensure_aitranslation(text: str) -> str:
+    """页首 {{AITranslation}} 标记（2026-10-23 用户指示：每个词条最顶部）。
+
+    与 translate.ensure_aitranslation 同语义（write.py 仅依赖 stdlib，故两处各自
+    实现，tests_aitranslation.py 逐输入对等断言防漂移）。写站侧前置的独立价值：
+    存量 translation.json（标记落地前的旧产物）走 --stage write 直写也带上标记，
+    且不会把站点上人工补的标记行冲掉。幂等：已含则原样返回。
+    """
+    if "{{AITranslation}}" in text:
+        return text
+    return "{{AITranslation}}\n" + text
+
+
 def main():
     ap = argparse.ArgumentParser(description="把 translation.json 写回中文站（红铜智库）")
     ap.add_argument("--title", required=True, help="快照标题（读取 en_snapshot/<标题>/translation.json）")
@@ -201,6 +214,7 @@ def main():
     text = contract.get("translation", "")
     if not text:
         raise SystemExit(f"{tj} 的 translation 为空，拒绝写入。")
+    text = ensure_aitranslation(text)  # 页首标记：存量 translation.json 直写也带上（幂等）
     target = args.target or title_en
     summary = args.summary or f"{DEFAULT_SUMMARY}（{title_en}，ensync {revid}）"
 

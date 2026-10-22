@@ -246,7 +246,12 @@ def check_one(title_en: str, wiki: str) -> list[str]:
         problems.append(f"[干扰标记] %...% 残留 {len(pct_bad)} 个（LLM 改编占位符的噪音）: {pct_bad[:5]}")
 
     # 2b) 导语残留英文（复用 translate.py 的 lead 判定：标题译了但导语正文留英文）
-    if body.startswith("{{CmPermission") or "{{Infobox" in body[:200]:
+    # 2026-10-23：页首 {{AITranslation}} 先剥离再判，保持「CmPermission 置顶 or
+    # 头部 Infobox」原口径不变——否则无 Infobox 词条的导语检查会被静默跳过（漏报）。
+    _b2 = body
+    if _b2.startswith("{{AITranslation}}"):
+        _b2 = _b2.split("\n", 1)[1] if "\n" in _b2 else ""
+    if _b2.startswith("{{CmPermission") or "{{Infobox" in _b2[:200]:
         try:
             if tr.untranslated_lead_english(src, body):
                 problems.append("[导语] 导语正文仍残留英文句子（只译标题未译正文）——"
