@@ -914,6 +914,32 @@ _SECTION_HEADING_MAP = {
     "footnotes": "脚注",
     "statistical analysis": "统计分析",
     "the village": "村庄",
+    # 2026-10-22 长尾②批次补：豆包 100 页评测 25 处 [章节] 漏译标题中 19 处有语料源。
+    # 口径：17 处取 DeepSeek 基线同页产物（同页同位置对齐，DS 该批全通过）；radiant
+    # 取词表 Radiant(s)→光辉骑士（同页兄弟标题 Scholar and Radiant→学者与光辉骑士 同源）；
+    # village 承 520ad8f「the village→村庄」同页同指称（豆包把预译标题改回英文，见 assemble
+    # 再断言）。另 5 处全语料无源——Zeenid-daughter-Beth、Molli 状态 wait_book（待 sa5 中译本），
+    # The Child、Formless、Vaporspren 各模型正文均按专名保留英文——宁保英文不录，留门禁重跑
+    # 或用户裁定（勿凭字面造译名）。
+    "village": "村庄",
+    "vessel": "容器",
+    "the roost": "栖木",
+    "main assembly": "全体议会",
+    "type i": "一类",
+    "universal stamps": "通用印",
+    "soulstamps": "魂印",
+    "soulforging": "塑魂术",
+    "resealing": "封印修复",
+    "remembering": "忆塑",
+    "the breakaway": "裂口市场",
+    "kata": "剑式",
+    "canton of orthodoxy": "正统教区",
+    "contest of champions": "冠军对决",
+    "contest of champions (1175)": "冠军对决 (1175)",
+    "gray remnant": "灰色残部",
+    "lifelight": "生命之光",
+    "champion": "冠军",
+    "radiant": "光辉骑士",
 }
 
 # ============ 全字典表驱动的章节标题兜底（2026-10-20 用户裁定：所有字典表全量进）============
@@ -954,8 +980,10 @@ def _heading_dict_map() -> dict:
     return out
 
 
+# 标题内允许的字符与门禁 3a 的 fullmatch 类对齐（含 &；2026-10-22 长尾②补——
+# 否则 `Arts & Games` 类标题查表阶段永不匹配，门禁却会拦，两头不一致）。
 _SECTION_HEAD_RE = re.compile(
-    r"^(={2,6})[ \t]*([A-Za-z][A-Za-z0-9 ,:'\-()]*?)[ \t]*(={2,6})[ \t]*$", re.M)
+    r"^(={2,6})[ \t]*([A-Za-z][A-Za-z0-9 ,:'&\-()]*?)[ \t]*(={2,6})[ \t]*$", re.M)
 
 
 def _heading_plural_candidates(raw: str) -> list:
@@ -2109,6 +2137,14 @@ def assemble(title_en: str, revid, chunk_results, no_wrap: bool, target_wiki: st
     except Exception as _fin_err:
         n_finish = 0
         sys.stderr.write(f"[提醒] 译名收尾替换失败（不影响主流程）: {_fin_err}\n")
+    # 章节标题再断言（LLM 后，2026-10-22 长尾②）：LLM 可能把预译标题改回英文
+    # （豆包实测 The Village：预译村庄→输出 Village，且其正文也把该词当专名保留），
+    # 也可能漏译表内长尾标题。与 LLM 前同一查表：仅动纯 ASCII 标题，表内已知→译中文，
+    # 表内未知→原样留待门禁 3a 拦截重跑；中文标题/非标题行不匹配正则，零接触。
+    body, head_stats2 = translate_section_headings(body)
+    if head_stats2:
+        sys.stderr.write(f"[章节再断言] LLM 后修复标题 {len(head_stats2)} 处：" +
+                         "、".join(head_stats2[:6]) + ("…" if len(head_stats2) > 6 else "") + "\n")
     untranslated = []
     seen = set()
     # 决议#13：原文引用块（{{Quote}}/{{columns}}）确定性填回英文原文，也确定性列入
@@ -3033,8 +3069,9 @@ def main():
 
     # 常见章节标题确定性预翻译（LLM 前）：qwen3.8-27b 实测把 `== Notes ==` 等
     # 高频标题原样留英（全批 5 处）。映射表由本批 20 页「EN→实际 ZH」数据归纳
-    # （Notes→注释 16x、History→历史 10x…），保证跨页一致；长尾标题交给 LLM，
-    # 漏译由 verify 3a「ASCII 标题」门禁拦截重跑。
+    # （Notes→注释 16x、History→历史 10x…），保证跨页一致；长尾标题由 2026-10-22
+    # 批次补入表 + assemble 内 LLM 后再断言兜底，仍漏的由 verify 3a「ASCII 标题」
+    # 门禁拦截重跑。
     wikitext, head_stats = translate_section_headings(wikitext)
     if head_stats:
         sys.stderr.write(f"[章节标题预翻译] {len(head_stats)} 处（常见标题，LLM 前确定性）:\n")
