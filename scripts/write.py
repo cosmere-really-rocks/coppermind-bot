@@ -187,7 +187,9 @@ def ensure_aitranslation(text: str) -> str:
     存量 translation.json（标记落地前的旧产物）走 --stage write 直写也带上标记，
     且不会把站点上人工补的标记行冲掉。幂等：已含则原样返回。
     """
-    if "{{AITranslation}}" in text:
+    # 前缀匹配：识别带参变体 {{AITranslation|转人工}}，防双标记横幅
+    # （2026-10-23 实测：钢铁教廷等三页曾被补出第二条裸标记）
+    if "{{AITranslation" in text:
         return text
     return "{{AITranslation}}\n" + text
 

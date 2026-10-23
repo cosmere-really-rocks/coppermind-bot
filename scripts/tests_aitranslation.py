@@ -100,6 +100,18 @@ CASES = [
     ("par|空", lambda b: wm.ensure_aitranslation(b), "", tr.ensure_aitranslation("")),
 ]
 
+# --- 带参变体（2026-10-23 转人工标记）：识别即幂等，绝不补出双标记横幅 ---
+AITP = "{{AITranslation|转人工}}\n"
+CASES += [
+    ("tr|带参标记幂等", tr.ensure_aitranslation, AITP + BODY, AITP + BODY),
+    ("par|带参标记幂等", lambda b: wm.ensure_aitranslation(b),
+     AITP + BODY, tr.ensure_aitranslation(AITP + BODY)),
+    ("tr|带参不再补裸标", lambda b: tr.ensure_aitranslation(b).count("{{AITranslation"),
+     AITP + BODY, 1),
+    ("par|带参不再补裸标", lambda b: wm.ensure_aitranslation(b).count("{{AITranslation"),
+     AITP + BODY, 1),
+]
+
 # --- assemble 接线：调用存在、位于三个前置步骤与 ensync 之后、缩进 8 = 包装分支内 ---
 _asm_src = inspect.getsource(tr.assemble)
 _call_lines = [l for l in _asm_src.splitlines() if "body = ensure_aitranslation(body)" in l]

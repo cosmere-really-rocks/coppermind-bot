@@ -1699,14 +1699,23 @@ def untranslated_lead_english(src_text: str, translation: str) -> bool:
     def lead_region(text: str) -> str:
         # 截到首个章节/分节/分号标题
         seg = re.split(r"\n==|\n;", text)[0]
-        # 去掉 Infobox 及头部 CmPermission：定位到最后一个 }}\n\n 之后
+        # 去掉 Infobox 及头部 CmPermission：锚=最后一个单独 }} 行（2026-10-23 实测
+        # WoA infobox 收尾无空行、紧贴 {{for}} 行，旧锚 "}}\n\n" 失效会把英文
+        # Infobox 整段当导语误报；无单独 }} 行时回退旧锚，行为不变）
+        lines = seg.split("\n")
+        anchor = -1
+        for idx, ln in enumerate(lines):
+            if ln.rstrip() == "}}":
+                anchor = idx
+        if anchor >= 0:
+            return "\n".join(lines[anchor + 1:])
         i = seg.rfind("}}\n\n")
-        lead = seg[i + 4:] if i >= 0 else seg
-        return lead
+        return seg[i + 4:] if i >= 0 else seg
 
     def strip_noise(text: str) -> str:
         s = re.sub(r"%%ORIGINAL_BLOCK_\d+%%", " ", text)
         s = re.sub(r"</?ref[^>]*>", " ", s)             # <ref> 标签
+        s = re.sub(r"</?[A-Za-z][^>]*>", " ", s)        # 其余 HTML 标签（<div style=...> 属性词不计）
         s = re.sub(r"<references\b[^>]*>", " ", s, flags=re.I)
         s = re.sub(r"\[\[wob:\d+\|wob:\d+\]\]", " ", s)  # wob 引用标记（非叙述性英文）
         s = re.sub(r"\{\{[^{}]*\}\}", " ", s)          # 模板
@@ -1747,11 +1756,19 @@ def lead_english_feedback(src_text: str, translation: str) -> str:
     """
     def lead_region(text: str) -> str:
         seg = re.split(r"\n==|\n;", text)[0]
+        lines = seg.split("\n")
+        anchor = max((i for i, ln in enumerate(lines) if ln.rstrip() == "}}"),
+                     default=-1)
+        if anchor >= 0:
+            return "\n".join(lines[anchor + 1:])
         i = seg.rfind("}}\n\n")
         return seg[i + 4:] if i >= 0 else seg
 
     en_lead = lead_region(src_text)
     tr_lead = lead_region(translation)
+    # HTML 标签不参与片段提取（<div style=...> 属性词曾凑满 ≥3 阈值致误反馈）
+    en_lead = re.sub(r"</?[A-Za-z][^>]*>", " ", en_lead)
+    tr_lead = re.sub(r"</?[A-Za-z][^>]*>", " ", tr_lead)
     fragments = []
     for m in re.finditer(r"([A-Za-z][A-Za-z'\- ]{8,})", tr_lead):
         frag = m.group(1).strip()
@@ -1871,7 +1888,8 @@ def ensure_aitranslation(body: str) -> str:
     置顶假设。write.py 有同语义独立实现（其仅依赖 stdlib，不 import translate），
     tests_aitranslation.py 逐输入对等断言防两处漂移。
     """
-    if "{{AITranslation}}" in body:
+    # 前缀匹配：识别带参变体 {{AITranslation|转人工}}，防写站补出双标记横幅
+    if "{{AITranslation" in body:
         return body
     return "{{AITranslation}}\n" + body
 

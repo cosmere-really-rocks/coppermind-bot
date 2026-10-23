@@ -25,6 +25,11 @@ Words of Radiance 4/4 全 FP + Wind and Truth 1/1 FP，两页零真缺陷（+2 �
   样式词恰 6 词等 4 页 9 行误伤）/ 字段半译 untranslated_terms 已记录保留词豁免
   （Tor books，人审 PASS）/ 引用同集合仅顺序不同=合理重排不拦（丢失/改号仍拦）。
   全部只减少误报：真缺陷对照用例不回吞。
+- ⑤（2026-10-23 深夜·导语检查误伤，WoA/Spren 实录两页 4 连败实为假阳性）：
+  lead_region 锚从 "}}\n\n" 换为「最后一个单独 }} 行」（WoA infobox 收尾无空行、
+  紧贴 {{for}} 行，旧锚失效把英文 Infobox 整段当导语）+ 剥噪剔 HTML 标签
+ （Spren <div style=clear:right/> 属性词 div/style/clear/right 正好 4 词凑满阈值，
+  且源侧同行贡献「源 ≥4」，div 自己和自己对上）。真英文导语对照用例仍拦。
 
 用法：.venv/bin/python scripts/tests_gate_fp.py
 """
@@ -193,6 +198,35 @@ def main():
     check("ut|占位符条目不构成豁免", len(vr._field_half_problems(
         "| lore = 中文 quote 台词若干 words remain here",
         [], [{"en": "Quote 台词（占位符 %%ORIGINAL_BLOCK_1%%）", "reason": "决议#13"}])), 1)
+
+    # --- ⑤ 导语检查误伤（2026-10-23 实录：WoA infobox 收尾无空行锚失效 / Spren div 属性词）---
+    woa_src = ("{{Infobox book\n| 原名 = The Well of Ascension\n"
+               "| 发行日期 = August 21, 2007{{ref|x}}\n}}\n\n"
+               "'''The Well of Ascension''' is the second volume of the Mistborn trilogy. "
+               "Three armies besiege the city while an ancient legend offers hope of finding the well.\n\n"
+               "== Summary ==\nAll text.\n")
+    woa_dst = ("{{AITranslation}}\n{{CmPermission|The Well of Ascension}}\n"
+               "'''升华之井'''{{en|The Well of Ascension}}\n"
+               "{{Infobox book\n| 原名    = The Well of Ascension\n"
+               "| 出版社    = Tor Books publishing house\n"
+               "| 发行日期    = August 21, 2007{{ref|x}}\n}}\n"
+               "{{for|升华之井|[[存留]]的垂贯点}}\n"
+               "'''''升华之井'''''是布兰登·桑德森创作的第二卷。三支军队兵临城下，古老传说带来一线希望。\n\n"
+               "== 简介 ==\n中文。\n")
+    check("lead|infobox紧贴for旧锚失效不报",
+          tr.untranslated_lead_english(woa_src, woa_dst), False)
+    div_src = ("{{Infobox lifeform\n| 原名 = Spren\n}}\n\n"
+               "Spren are fragments of the almighty that gain sentience on Roshar. "
+               "They range widely in form and intellect across the highstorms.\n"
+               "<div style=clear:right/>\n\n== Traits ==\n")
+    div_dst = ("{{AITranslation}}\n{{CmPermission|Spren}}\n"
+               "{{Infobox lifeform\n| 原名    = Spren\n}}\n\n"
+               "灵体是创世之力的碎片，在柔刹智慧生物影响下获得自我意识。它们的外形与智力千差万别。\n"
+               "<div style=clear:right/>\n\n== 特征 ==\n")
+    check("lead|div属性词不计不报", tr.untranslated_lead_english(div_src, div_dst), False)
+    real_dst = ("{{AITranslation}}\n{{Infobox x\n| a = b\n}}\n\n"
+                "Spren are tiny pieces of the almighty that talk to humans all the time.\n")
+    check("lead|真英文导语仍拦", tr.untranslated_lead_english(div_src, real_dst), True)
 
     total = passed + failed
     print("%d/%d passed" % (passed, total))
