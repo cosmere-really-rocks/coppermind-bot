@@ -136,10 +136,42 @@ def _prose_half_problems(body: str) -> list:
     return problems
 
 
-def _ref_mismatch_problems(src_refs: list, out_refs: list) -> list:
+def _locate_ref_line(body, label):
+    """引用标签（"name:args"，extract_refs 形态）→ 产物行号（2026-10-23 分块重试定位）。
+    精确形态直查 → 去空格形态 → 容忍空白正则；找不到返回 None。"""
+    if not body or not label or ":" not in label:
+        return None
+    name, arg = label.split(":", 1)
+    for cand in (f"{{{{{name}|{arg}}}}}", f"{{{{{name}|{arg.replace(' ', '')}}}}}"):
+        pos = body.find(cand)
+        if pos >= 0:
+            return body[:pos].count("\n") + 1
+    parts = [re.escape(a) for a in arg.split("|")]
+    pat = r"\{\{\s*" + re.escape(name) + r"\s*\|\s*" + r"\s*\|\s*".join(parts) + r"\s*\}\}"
+    m = re.search(pat, body)
+    return body[:m.start()].count("\n") + 1 if m else None
+
+
+def _bracket_culprit_hint(body, op, cl, zh):
+    """3b 括号不配对候选行提示（2026-10-23 分块重试定位用）：候选=行内开闭不等且与
+    全文净差同号的行。真实缺陷实测（Arelon/Roshar/Shardplate 各恰 1 行、Steel
+    Ministry 2 行）；候选 >5 视为多行模板噪音不提示（回退整页重跑）。"""
+    final = body.count(op) - body.count(cl)
+    if final == 0:
+        return ""
+    sign = 1 if final > 0 else -1
+    cands = [i for i, ln in enumerate(body.split("\n"), 1)
+             if (ln.count(op) - ln.count(cl)) * sign > 0]
+    if not 1 <= len(cands) <= 5:
+        return ""
+    return f"；{zh}候选行（行内开闭不等同号）: " + "、".join(f"第{c}行" for c in cands)
+
+
+def _ref_mismatch_problems(src_refs: list, out_refs: list, body=None) -> list:
     """1) 引用比对（2026-10-23 口径修正）：集合相同、仅顺序不同 = 引用跟随其修饰的
     分句移动（人审 Shardblade 实证两处 ref 均在、总数 435=435）→ 合理重排不拦；
-    丢失/改号/换号改变多重集 → 照拦并列逐位差异（Luthadel 丢 mb2|42 等真缺陷不回吞）。"""
+    丢失/改号/换号改变多重集 → 照拦并列逐位差异（Luthadel 丢 mb2|42 等真缺陷不回吞）。
+    body 给定时补「产物第N行」（2026-10-23 分块重试定位）。"""
     if src_refs == out_refs:
         return []
     if Counter(src_refs) == Counter(out_refs):
@@ -153,10 +185,22 @@ def _ref_mismatch_problems(src_refs: list, out_refs: list) -> list:
             break
     if first_diff is None:
         first_diff = n if n < max(len(src_refs), len(out_refs)) else -1
+    line_hint = ""
+    if body and first_diff >= 0:
+        # 逐个尝试：本位产物 → 本位源 → 前邻源（丢引用本身不在产物里，用前一个
+        # 已知存在的 ref 定位到同一段落/块，映射到重试块足够准）。
+        for _lbl in ([out_refs[first_diff] if first_diff < len(out_refs) else None,
+                      src_refs[first_diff] if first_diff < len(src_refs) else None]
+                     + ([src_refs[first_diff - 1]] if first_diff > 0 else [])):
+            _ln = _locate_ref_line(body, _lbl)
+            if _ln:
+                line_hint = f"；产物第{_ln}行"
+                break
     problems.append(
         f"[引用] 序列不一致：英文 {len(src_refs)} 处 vs 产物 {len(out_refs)} 处"
         + (f"；首个差异 @{first_diff}: 英文={src_refs[first_diff] if first_diff < len(src_refs) else '—'}"
            f" 产物={out_refs[first_diff] if first_diff < len(out_refs) else '—'}" if first_diff >= 0 else "")
+        + line_hint
     )
     # 列出产物中所有与英文不同的项（去重前 10）
     diffs = []
@@ -339,14 +383,16 @@ def check_one(title_en: str, wiki: str) -> list[str]:
     src_refs = extract_refs(conv)
     out_refs = extract_refs(body)
     # 1) 引用比对（判定抽出为 _ref_mismatch_problems：同集合仅顺序不同=合理重排不拦）
-    problems.extend(_ref_mismatch_problems(src_refs, out_refs))
+    problems.extend(_ref_mismatch_problems(src_refs, out_refs, body))
 
     # 2) 占位符残留
     for pat, name in [(r"%%ORIGINAL_BLOCK_\d+%%", "原文块"), (r"%%REF_\d+%%", "引用"),
                   (r"%%LINKLIST_\d+%%", "infobox内链列表"), (r"%%ORIGINAL_NAME%%", "原名")]:
         left = re.findall(pat, body)
         if left:
-            problems.append(f"[占位符] {name}占位符残留 {len(left)} 个: {left[:5]}")
+            _lp = body.find(left[0])
+            _lh = f"（第{body[:_lp].count(chr(10)) + 1}行）" if _lp >= 0 else ""
+            problems.append(f"[占位符] {name}占位符残留 {len(left)} 个{_lh}: {left[:5]}")
 
     # 2a) LLM 干扰标记残留（判定抽出为 _interference_problems：扫描前剔裸 URL，
     #     2026-10-23 口径修正修 Order 两页 quiz 链接 percent-encoding 8 处误伤）
@@ -380,10 +426,12 @@ def check_one(title_en: str, wiki: str) -> list[str]:
     # 3b) 括号配对：[[ ]] 与 {{ }} 全文计数必须自平衡（断链/断模板 = 渲染坏）
     wk_o, wk_c = body.count("[["), body.count("]]")
     if wk_o != wk_c:
-        problems.append(f"[结构] 内链括号不配对：[[ ×{wk_o} vs ]] ×{wk_c}")
+        problems.append(f"[结构] 内链括号不配对：[[ ×{wk_o} vs ]] ×{wk_c}"
+                        + _bracket_culprit_hint(body, "[[", "]]", "内链"))
     tp_o, tp_c = body.count("{{"), body.count("}}")
     if tp_o != tp_c:
-        problems.append(f"[结构] 模板括号不配对：{{ ×{tp_o} vs }} ×{tp_c}")
+        problems.append(f"[结构] 模板括号不配对：{{ ×{tp_o} vs }} ×{tp_c}"
+                        + _bracket_culprit_hint(body, "{{", "}}", "模板"))
 
     # 3c) 正文半译：导语之外的散文行残留成句英文（qwen3.8-27b 实测 8 段
     #     「英文句架+中文专名」逃过全部旧门禁）。mask_nonprose 全文等长掩码
@@ -457,7 +505,8 @@ def check_one(title_en: str, wiki: str) -> list[str]:
             if _inside_wikilink_target(body, m.start()):
                 continue
             ctx = body[max(0, m.start() - 30):m.end() + 20].replace("\n", "\\n")
-            problems.append(f"[裸词] {m.group(0)}（应译 {_zh}）: ...{ctx}...")
+            _bl = body[:m.start()].count("\n") + 1
+            problems.append(f"[裸词] {m.group(0)}（应译 {_zh}）: ...{ctx}...（第{_bl}行）")
             reported_bare.append((m.start(), m.end()))
             bare_cnt += 1
 

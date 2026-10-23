@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-tests_batch_retry.py —— batch.py 门禁单次重跑（--gate-retry，默认 1，2026-10-23 用户定为默认值）。
+tests_batch_retry.py —— batch.py 门禁重试（--gate-retry，默认 3；2026-10-23 分块化：
+按门禁行号只重采样失败块 translate --redo-chunks，数据不足回退整页重跑）。
 
 覆盖语义（全部经 mock subprocess 断言，不碰 LLM/写站/磁盘翻译产物）：
   1. 门禁首败 → 自动重跑 translate → 复验过 → write:ok（重跑兑现为成功）
@@ -10,6 +11,9 @@ tests_batch_retry.py —— batch.py 门禁单次重跑（--gate-retry，默认 
   5. 重跑 translate 自身失败 → translate:retry:FAIL，不再复验
   6. 首跑即过 → 状态与无此特性时代完全一致（回归保护）
   7. build_translate_cmd：首跑/重跑共用一份构造；两态 quote 与 dry-run 透传正确
+  8. 有分块数据 + 门禁行号 → 重跑命令带 --redo-chunks 且块号=行号映射结果
+  9. 旧产物（缺 chunk_results/chunk_line_starts）→ 回退整页重跑（无 --redo-chunks）
+  10. DEFAULT_GATE_RETRY == 3（分块化后默认值）
 
 用法：.venv/bin/python scripts/tests_batch_retry.py → "N/N passed"，sys.exit(main())
 """
@@ -17,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import json
 import shutil
 import sys
 import tempfile
@@ -62,22 +67,33 @@ def _cp(rc: int, out: str = "", err: str = ""):
 
 
 class FakeSub:
-    """按脚本种类弹队列的 subprocess.run 替身；记录全部调用。"""
+    """按脚本种类弹队列的 subprocess.run 替身；记录全部调用（kind 与完整 cmd）。"""
 
-    def __init__(self, verify_rcs, translate_rcs, write_rcs=(0,)):
+    def __init__(self, verify_rcs, translate_rcs, write_rcs=(0,), verify_outs=None):
         self.queues = {"verify": list(verify_rcs), "translate": list(translate_rcs),
                        "write": list(write_rcs)}
+        self.verify_outs = list(verify_outs or [])   # verify stdout 队列（门禁行号解析用）
         self.calls = []
+        self.cmds = []
 
     def run(self, cmd, capture_output=True, text=True):
         k = _kind(cmd)
         self.calls.append(k)
+        self.cmds.append([str(c) for c in cmd])
         q = self.queues[k]
         rc = q.pop(0) if q else 0
-        return _cp(rc, out="" if k != "write" else "[完成] 已写入\n")
+        out = ""
+        if k == "verify":
+            out = self.verify_outs.pop(0) if self.verify_outs else ""
+        elif k == "write":
+            out = "[完成] 已写入\n"
+        return _cp(rc, out=out)
 
     def count(self, k: str) -> int:
         return self.calls.count(k)
+
+    def translate_cmds(self) -> list:
+        return [c for c in self.cmds if _kind(c) == "translate"]
 
 
 def _fixture(tmp: str) -> Path:
@@ -183,6 +199,61 @@ def t7_命令构造两态():
     assert src.count("build_translate_cmd(") == 2, "首跑与重跑必须同源构造"
 
 
+def _chunk_fixture(tmp: str, starts) -> Path:
+    snap = Path(tmp) / "en_snapshot" / "TestPage"
+    snap.mkdir(parents=True)
+    (snap / "wikitext.txt").write_text("== Section ==\ntext\n", encoding="utf-8")
+    (snap / "translation.json").write_text(json.dumps({
+        "translation": "== 甲 ==\nbody",
+        "chunk_results": [["== 甲 ==\nbody", []]] * (len(starts) - 1),
+        "chunk_line_starts": starts,
+    }, ensure_ascii=False), encoding="utf-8")
+    return Path(tmp) / "en_snapshot"
+
+
+def t8_分块重试带redo参数():
+    tmp = tempfile.mkdtemp(prefix="bt_")
+    try:
+        orig_sn = BM.EN_SNAPSHOT
+        BM.EN_SNAPSHOT = _chunk_fixture(tmp, [1, 4, 10])   # 2 块：行1-3 / 行4-9
+        fake = FakeSub(verify_rcs=[1, 0], translate_rcs=[0, 0],
+                       verify_outs=["[半译] 正文行残留成句英文（第6行）: xx…", ""])
+        orig_sub = BM.subprocess
+        BM.subprocess = fake
+        try:
+            st = BM.run_stage(make_args(gate_retry=1), "TestPage")
+        finally:
+            BM.subprocess, BM.EN_SNAPSHOT = orig_sub, orig_sn
+        assert st == ["translate:ok", "translate:retry:ok", "verify:ok", "write:ok"], st
+        tcmds = fake.translate_cmds()
+        assert len(tcmds) == 2, fake.calls
+        assert "--redo-chunks" in tcmds[1], tcmds[1]
+        assert tcmds[1][tcmds[1].index("--redo-chunks") + 1] == "1", \
+            f"第6行应映射到 chunk1：{tcmds[1]}"
+        # 首跑命令不带 --redo-chunks（全量）
+        assert "--redo-chunks" not in tcmds[0], tcmds[0]
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def t9_旧产物回退整页重跑():
+    tmp = tempfile.mkdtemp(prefix="bt_")
+    try:
+        fake = FakeSub(verify_rcs=[1, 0], translate_rcs=[0, 0],
+                       verify_outs=["[半译] 正文行残留成句英文（第6行）: xx…", ""])
+        st = _run(fake, tmp, make_args(gate_retry=1))
+        assert st == ["translate:ok", "translate:retry:ok", "verify:ok", "write:ok"], st
+        tcmds = fake.translate_cmds()
+        assert len(tcmds) == 2 and "--redo-chunks" not in tcmds[1], \
+            f"旧产物（_fixture 无分块字段）必须整页重跑：{tcmds[1]}"
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def t10_默认重试次数为3():
+    assert BM.DEFAULT_GATE_RETRY == 3, BM.DEFAULT_GATE_RETRY
+
+
 CASES = [
     ("门禁首败→自动重跑→复验过→write:ok", t1_首败重跑复验过写站),
     ("复验仍败→verify:FAIL且不写", t2_复验仍败拒写),
@@ -191,6 +262,9 @@ CASES = [
     ("重跑translate失败→translate:retry:FAIL", t5_重跑translate失败),
     ("首跑即过→状态回归一致", t6_首跑即过回归),
     ("build_translate_cmd 两态与共用契约", t7_命令构造两态),
+    ("有分块数据→重跑带 --redo-chunks 且块号=行映射", t8_分块重试带redo参数),
+    ("旧产物缺分块字段→回退整页重跑", t9_旧产物回退整页重跑),
+    ("DEFAULT_GATE_RETRY == 3", t10_默认重试次数为3),
 ]
 
 

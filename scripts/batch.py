@@ -16,8 +16,10 @@
 阶段：fetch（缺快照才抓）/convert+translate（translate.py）/write（write.py）。
   --stage 默认 "translate,write"；fetch 默认仅在快照缺失时补抓（除非 --fetch 强制）。
 选项透传：--max-chars/--concurrency/--skip-if-same/--summary 会转发给对应脚本。
-门禁单次重跑（2026-10-23 起为默认）：质量门禁 verify 未过时，自动同参数重跑一次
-  translate（换一次 LLM 采样）再复验，仍不过才拒写并记 verify:FAIL；--gate-retry 0 关闭。
+门禁重试（2026-10-23 起默认 3 次；同日分块化）：质量门禁 verify 未过时，按「门禁行号→
+  失败块」映射只重采样失败块（translate --redo-chunks，其余块复用现有 chunk_results——
+  长文档"第二次做对"的正确粒度）；产物缺分块数据/问题无法定位行号时回退整页重跑；
+  复验过才写，仍不过记 verify:FAIL；--gate-retry 0 关闭。
 
 退出码：0 全部成功；1 有失败（部分成功也报 1，末尾打印汇总表）。
 依赖：无额外库；调用 .venv/bin/python 运行本项目脚本。
@@ -25,9 +27,11 @@
 from __future__ import annotations
 
 import argparse
+import bisect
 import concurrent.futures
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -36,6 +40,9 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 EN_SNAPSHOT = ROOT / "en_snapshot"
 PY = ROOT / ".venv" / "bin" / "python"
+# 门禁重试默认次数（2026-10-23 分块化后由 1 调大）：重试粒度=失败块（约整页 1/N 成本），
+# 长文档多给几次采样机会不心疼；0=关闭。
+DEFAULT_GATE_RETRY = 3
 INFOBOX_TYPES = ("business", "book", "character", "culture", "disease", "food", "geography",
                  "group", "item", "lifeform", "literature", "location", "magic", "metal",
                  "nation", "noble house", "settlement", "vehicle", "architecture")
@@ -122,6 +129,49 @@ def build_translate_cmd(args, title: str) -> list[str]:
     return translate_cmd
 
 
+_GATE_LINE_RE = re.compile(r"第(\d+)行")
+
+
+def parse_gate_failed_lines(verify_stdout: str) -> set | None:
+    """从门禁 verify 输出提取失败行号集合（产物终文行号）；无从定位→None→整页重跑。
+    「第N行」通用捕获（章节/半译/结构候选行/占位符/裸词/干扰提示）；[导语] 问题不带
+    行号 → 按 chunk0=第1行归位（导语恒在 chunk0，分块契约）。"""
+    if not verify_stdout:
+        return None
+    lines = {int(x) for x in _GATE_LINE_RE.findall(verify_stdout)}
+    if "[导语]" in verify_stdout:
+        lines.add(1)
+    return lines or None
+
+
+def map_lines_to_chunks(chunk_line_starts: list, lines: set) -> set:
+    """门禁失败行 → 块号集合（0基）。chunk_line_starts=[块0起始行,…,总行数+1] 含末哨兵
+    （translate.compute_chunk_line_starts 同源），二分定位。"""
+    n = len(chunk_line_starts) - 1
+    out = set()
+    for ln in lines:
+        k = bisect.bisect_right(chunk_line_starts, ln) - 1
+        if 0 <= k < n:
+            out.add(k)
+    return out
+
+
+def select_gate_retry_chunks(snapshot_dir: Path, verify_stdout: str) -> list | None:
+    """本轮重试应重采样哪些块（0基升序列表）；None=回退整页重跑（旧产物无
+    chunk_results/chunk_line_starts、结构漂移缺行表、或问题无法定位行号）。"""
+    try:
+        data = json.loads((snapshot_dir / "translation.json").read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    if not data.get("chunk_line_starts") or not data.get("chunk_results"):
+        return None
+    lines = parse_gate_failed_lines(verify_stdout)
+    if not lines:
+        return None
+    chunks = map_lines_to_chunks(data["chunk_line_starts"], lines)
+    return sorted(chunks) or None
+
+
 def run_stage(args, title: str) -> list[str]:
     """执行一个标题的全部阶段；返回该页的 [阶段...] 状态串。"""
     status = []
@@ -179,8 +229,16 @@ def run_stage(args, title: str) -> list[str]:
                                  f"{(gc.stderr or '')[-1200:]}\n")
                 return status
             attempts_left -= 1
-            sys.stderr.write(f"[{title}] 质量门禁未过，自动单次重跑 translate 后复验…\n")
-            tr2 = subprocess.run(build_translate_cmd(args, title), capture_output=True, text=True)
+            # 分块重试（2026-10-23）：门禁行号→失败块→只重采样那些块（其余复用
+            # 现有 chunk_results）；数据不足/行号无法定位 → 回退整页重跑。
+            redo = select_gate_retry_chunks(snapshot_dir, gc.stdout or "")
+            cmd2 = build_translate_cmd(args, title)
+            if redo is not None:
+                cmd2 = cmd2 + ["--redo-chunks", ",".join(str(i) for i in redo)]
+                sys.stderr.write(f"[{title}] 质量门禁未过，分块重采样 {redo} 后复验…\n")
+            else:
+                sys.stderr.write(f"[{title}] 质量门禁未过，整页重跑 translate 后复验…\n")
+            tr2 = subprocess.run(cmd2, capture_output=True, text=True)
             if tr2.returncode != 0:
                 status.append("translate:retry:FAIL")
                 sys.stderr.write(f"[{title}] 重跑 translate 失败：{(tr2.stderr or '')[-600:]}\n")
@@ -246,9 +304,10 @@ def main():
                     help="透传 translate 关闭原文块书证采证（回到纯英文占位符）")
     ap.add_argument("--write-target-prefix", default=None, help="写站目标页前缀（如 'BOT测试:'，用于非破坏性验证）")
     ap.add_argument("--dry-run", action="store_true", help="全程预演（translate/write 均 dry-run，不真正调 LLM/写站）")
-    ap.add_argument("--gate-retry", type=int, default=1,
-                    help="质量门禁未过时自动同参数重跑 translate 并复验的次数"
-                         "（默认 1=单次重跑，2026-10-23 起为默认值；0=关闭）。"
+    ap.add_argument("--gate-retry", type=int, default=DEFAULT_GATE_RETRY,
+                    help=f"质量门禁未过时自动重跑 translate 并复验的次数"
+                         f"（默认 {DEFAULT_GATE_RETRY}，2026-10-23 分块重试后由 1 调大；0=关闭）。"
+                         "有分块数据时按门禁行号只重采样失败块，否则整页重跑；"
                          "仅本批含 translate/convert 阶段时生效")
     args = ap.parse_args()
 

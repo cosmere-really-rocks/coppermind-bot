@@ -1337,6 +1337,8 @@ class Chunk:
     text: str
     title: str = ""          # 该块的首个标题（纯文本，用于提示词定位）
     char_count: int = 0
+    seg_start: int = -1      # 对应 split_sections 段区间 [seg_start, seg_end)（2026-10-23 分块重试定位）
+    seg_end: int = -1
 
 
 _HEADING_RE = re.compile(r"^(={2,4})\s*(.*?)\s*\1[ \t]*$")
@@ -1394,14 +1396,17 @@ def chunk_wikitext(wikitext: str, max_chars: int):
     cur_parts: list[str] = []
     cur_chars = 0
     cur_title = ""
+    cur_seg_start = -1
+    seg_idx = 0
     warning_oversized: list[str] = []
 
     def flush():
-        nonlocal cur_parts, cur_chars, cur_title
+        nonlocal cur_parts, cur_chars, cur_title, cur_seg_start
         if cur_parts:
             text = "\n".join(cur_parts)
-            chunks.append(Chunk(index=len(chunks), text=text, title=cur_title, char_count=cur_chars))
-            cur_parts, cur_chars, cur_title = [], 0, ""
+            chunks.append(Chunk(index=len(chunks), text=text, title=cur_title, char_count=cur_chars,
+                                seg_start=cur_seg_start, seg_end=seg_idx))
+            cur_parts, cur_chars, cur_title, cur_seg_start = [], 0, "", -1
 
     first = True
     for head_line, level, text, body in segments:
@@ -1410,22 +1415,56 @@ def chunk_wikitext(wikitext: str, max_chars: int):
         seg_chars = len(seg_text)
         if first:
             # 头部固定 chunk0 且独立成块（导语专注翻译，见 docstring）
-            chunks.append(Chunk(index=0, text=seg_text, title=text, char_count=seg_chars))
+            chunks.append(Chunk(index=0, text=seg_text, title=text, char_count=seg_chars,
+                                seg_start=seg_idx, seg_end=seg_idx + 1))
             first = False
+            seg_idx += 1
             continue
         if seg_chars > max_chars:
             flush()
-            chunks.append(Chunk(index=len(chunks), text=seg_text, title=text, char_count=seg_chars))
+            chunks.append(Chunk(index=len(chunks), text=seg_text, title=text, char_count=seg_chars,
+                                seg_start=seg_idx, seg_end=seg_idx + 1))
             warning_oversized.append(text or "（无标题超长段）")
+            seg_idx += 1
             continue
         if cur_chars + seg_chars > max_chars:
             flush()
+        if not cur_parts:
+            cur_seg_start = seg_idx
         cur_parts.append(seg_text)
         cur_chars += seg_chars
         cur_title = text
+        seg_idx += 1
     flush()
 
     return chunks, warning_oversized
+
+
+def compute_chunk_line_starts(final_body: str, chunks: list, segments=None) -> list | None:
+    """产物终文按块求起始行号（2026-10-23 分块门禁重试定位用）。
+
+    - 块边界必在章节边界（chunk_wikitext 契约）→ 终文标题行序列须与源「有标题段」
+      一一对应（结构保持）；对不上（LLM 增删标题=结构漂移）返回 None，调用方回退整页重跑。
+    - 返回 [chunk0起始行, chunk1起始行, …, 总行数+1]（1-based，末哨兵，供二分映射）。"""
+    if segments is None:
+        return None
+    lines = final_body.split("\n")
+    head_lines = [i + 1 for i, ln in enumerate(lines) if _HEADING_RE.match(ln)]
+    exp = [i for i, s in enumerate(segments) if s[0] is not None]  # 源有标题段号
+    if len(head_lines) != len(exp):
+        return None
+    seg_lines = {si: head_lines[k] for k, si in enumerate(exp)}
+    seg_lines.setdefault(0, 1)   # 头部段（无标题）从第 1 行起
+    starts = []
+    for c in chunks:
+        if c.seg_start < 0 or c.seg_start not in seg_lines:
+            return None
+        starts.append(seg_lines[c.seg_start])
+    starts.append(len(lines) + 1)
+    for a, b in zip(starts, starts[1:]):
+        if a >= b:
+            return None
+    return starts
 
 
 # --------------------------------------------------------------------------- #
@@ -3012,6 +3051,10 @@ def main():
     ap.add_argument("--title", required=True, help="快照标题（读取 en_snapshot/<标题>/wikitext.txt，内存里转成转换后形态）")
     ap.add_argument("--glossary", default=str(DEFAULT_GLOSSARY))
     ap.add_argument("--max-chars", type=int, default=7000, help="每块最大字符数（超长词条按此切块）")
+    ap.add_argument("--redo-chunks", default=None,
+                    help="逗号分隔块号（0基）：只对这些块重新 LLM 采样，其余块复用现有 "
+                         "translation.json 的 chunk_results（分块门禁重试，2026-10-23）。"
+                         "要求产物含 chunk_results 且块数一致，否则报错（调用方回退整页重跑）")
     ap.add_argument("--concurrency", type=int, default=1, help="并发翻译块数（默认 1）")
     ap.add_argument("--dry-run", action="store_true", help="只做分块+提示词预演，不调用 LLM")
     ap.add_argument("--no-wrap", action="store_true", help="不插入页面级包装，只输出纯正文")
@@ -3162,29 +3205,60 @@ def main():
 
     cfg = load_llm_config(args)
 
-    # 逐块翻译（支持并发，默认串行）
-    chunk_results = []
+    # 分块门禁重试（2026-10-23）：--redo-chunks 只重采样失败块，其余复用现有产物。
+    redo_set: set | None = None
+    prev_results = None
+    if args.redo_chunks:
+        redo_set = {int(x) for x in str(args.redo_chunks).split(",") if x.strip()}
+        _tj = d / "translation.json"
+        if not _tj.exists():
+            raise SystemExit("[分块重试] 现有 translation.json 不存在，无法复用——请整页重跑")
+        _prev = json.loads(_tj.read_text(encoding="utf-8"))
+        prev_results = _prev.get("chunk_results")
+        if not prev_results:
+            raise SystemExit("[分块重试] 产物缺 chunk_results（旧产物），无法复用——请整页重跑")
+        if len(prev_results) != len(chunks):
+            raise SystemExit(f"[分块重试] 块数不一致（产物 {len(prev_results)} vs 当前 "
+                             f"{len(chunks)}）——请整页重跑")
+        if not redo_set or not redo_set <= set(range(len(chunks))):
+            raise SystemExit(f"[分块重试] --redo-chunks 无效: {args.redo_chunks!r}（共 {len(chunks)} 块）")
+        sys.stderr.write(f"[分块重试] 重采样块 {sorted(redo_set)}，"
+                         f"复用 {len(chunks) - len(redo_set)} 块现有译文\n")
+
+    # 逐块翻译（支持并发，默认串行）。分块重试：不在 redo_set 的块直接复用
+    # 现有产物的 chunk_results——fresh sampling 只发生在门禁失败块。
+    chunk_results = [None] * len(chunks)
     errs = []
+    todo = chunks
+    if redo_set is not None:
+        for c in chunks:
+            if c.index in redo_set:
+                continue
+            _t, _u = prev_results[c.index]
+            chunk_results[c.index] = (_t, _u)
+            sys.stderr.write(f"[复用] chunk{c.index}（沿用现有产物，不重采样）\n")
+        todo = [c for c in chunks if c.index in redo_set]
     if args.concurrency > 1:
         from concurrent.futures import ThreadPoolExecutor
         with ThreadPoolExecutor(max_workers=args.concurrency) as ex:
             futs = {
                 ex.submit(translate_chunk_with_retry, cfg, c, gloss_slice, args.title, c.index == 0,
                           glossary, args.max_output_tokens): c.index
-                for c in chunks
+                for c in todo
             }
             ordered = sorted(futs, key=lambda f: futs[f])
             for f in ordered:
                 try:
-                    chunk_results.append(f.result())
+                    chunk_results[futs[f]] = f.result()
                 except Exception as e:
                     errs.append((futs[f], str(e)))
     else:
-        for c in chunks:
+        for c in todo:
             sys.stderr.write(f"[翻译] chunk{c.index}/{len(chunks)-1}（{c.title or '头部'}）…\n")
             try:
-                chunk_results.append(translate_chunk_with_retry(cfg, c, gloss_slice, args.title,
-                                                                c.index == 0, glossary, args.max_output_tokens))
+                chunk_results[c.index] = translate_chunk_with_retry(cfg, c, gloss_slice, args.title,
+                                                                    c.index == 0, glossary,
+                                                                    args.max_output_tokens)
             except Exception as e:
                 errs.append((c.index, str(e)))
 
@@ -3233,6 +3307,17 @@ def main():
 
     out_json = d / "translation.json"
     out_txt = d / "translation.txt"
+    # 分块门禁重试所需字段（2026-10-23）：chunk_results=逐块译文（复用源，先于 assemble）；
+    # chunk_line_starts=终文各块起始行（门禁失败行→块映射；结构漂移时缺省=回退整页重跑）。
+    contract["chunk_results"] = [[t, u] for (t, u) in chunk_results]
+    _starts = compute_chunk_line_starts(contract["translation"], chunks, split_sections(wikitext))
+    if _starts:
+        contract["chunk_line_starts"] = _starts
+    if redo_set:
+        _m = contract.get("meta") or {}
+        _m["redo_count"] = int(_m.get("redo_count", 0)) + 1
+        _m["last_redo_chunks"] = sorted(redo_set)
+        contract["meta"] = _m
     out_json.write_text(json.dumps(contract, ensure_ascii=False, indent=2), encoding="utf-8")
     out_txt.write_text(contract["translation"], encoding="utf-8")
 
