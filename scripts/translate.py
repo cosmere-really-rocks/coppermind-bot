@@ -3315,7 +3315,8 @@ def main():
         contract["chunk_line_starts"] = _starts
     if redo_set:
         _m = contract.get("meta") or {}
-        _m["redo_count"] = int(_m.get("redo_count", 0)) + 1
+        # contract.meta 每轮由 assemble 重建，须从上一版产品 meta 接续计数（否则恒为 1）
+        _m["redo_count"] = int(((_prev or {}).get("meta") or {}).get("redo_count", 0)) + 1
         _m["last_redo_chunks"] = sorted(redo_set)
         contract["meta"] = _m
     out_json.write_text(json.dumps(contract, ensure_ascii=False, indent=2), encoding="utf-8")
