@@ -14,7 +14,7 @@ radiant 取词表 Radiant(s)，village 承 520ad8f 同指称）；②assemble �
 与门禁两侧同口径。
 
 覆盖：
-- 19 条批次逐条命中 + 大小写/层级变体 + 既有条目（Notes）零回归
+- 19 条批次逐条命中（2026-10-23 表修复 +4 → 23 条）+ 大小写/层级变体 + 既有条目（Notes）零回归
 - 再断言语义：ASCII 表内标题 → 中文；表外 ASCII 原样（留门禁）；中文标题零接触；
   正文行非标题零接触；幂等；闭合等号不等时内容照译、等号原样（结构另由门禁管）
 - 门禁 3a 对齐探针：门禁会拦 ⇒ 查表正则必匹配（含 & 字符类一致）
@@ -50,6 +50,8 @@ def head(s):
 
 
 # ② 批次 19 条（口径见 _SECTION_HEADING_MAP 注释）：EN 形态 → 期望中文
+# 2026-10-23 表修复 +4（Vessels/Primeval Spren/Enlightened/The Contest，同页基线
+# 取证，见 map 注释）——变量名沿用 BATCH19，现共 23 条。
 BATCH19 = [
     ("Village", "村庄"),
     ("Vessel", "容器"),
@@ -70,6 +72,11 @@ BATCH19 = [
     ("Lifelight", "生命之光"),
     ("Champion", "冠军"),
     ("Radiant", "光辉骑士"),
+    # --- 2026-10-23 表修复 +4 ---
+    ("Vessels", "容器"),
+    ("Primeval Spren", "原始灵"),
+    ("Enlightened", "启蒙"),
+    ("The Contest", "较量"),
 ]
 
 # 无源 5 条：刻意不录，必须仍留英文（宁保英文 + 门禁拦截的既定分工）

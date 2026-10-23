@@ -940,6 +940,14 @@ _SECTION_HEADING_MAP = {
     "lifelight": "生命之光",
     "champion": "冠军",
     "radiant": "光辉骑士",
+    # 2026-10-23 表修复增补 4 条（方向1 后仍败页的未映射 ASCII 标题；全部取同页基线产物）：
+    # vessels→容器（DS Odium「== 容器 ==」）；primeval spren→原始灵（DS Spren「==== 原始灵 ====」）；
+    # enlightened→启蒙（DS Order of Lightweavers「=== 启蒙 ===」子项位对位）；
+    # the contest→较量（旧豆包 Shallan 同父级第 8 子项「较量」）。
+    "vessels": "容器",
+    "primeval spren": "原始灵",
+    "enlightened": "启蒙",
+    "the contest": "较量",
 }
 
 # ============ 全字典表驱动的章节标题兜底（2026-10-20 用户裁定：所有字典表全量进）============
