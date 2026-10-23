@@ -9,14 +9,17 @@ radiant 取词表 Radiant(s)，village 承 520ad8f 同指称）；②assemble �
 一遍 translate_section_headings（LLM 后再断言，修机制 B 与晚到漏译）；③_SECTION_HEAD_RE
 补 `&` 与门禁 3a 字符类对齐（否则 Arts & Games 两头不一致）。
 5 个无源标题（Zeenid-daughter-Beth/Molli 待 sa5 中译本；The Child/Formless/Vaporspren
-各模型均按专名保留英文）刻意不录——宁保英文，留门禁拦截。
+各模型均按专名保留英文）刻意不录——宁保英文；2026-10-23 起门禁 3a 同步豁免
+（verify_translation.UNSCOURCED_HEADS，用户裁定「修门禁口径」方向1），translate
+与门禁两侧同口径。
 
 覆盖：
 - 19 条批次逐条命中 + 大小写/层级变体 + 既有条目（Notes）零回归
 - 再断言语义：ASCII 表内标题 → 中文；表外 ASCII 原样（留门禁）；中文标题零接触；
   正文行非标题零接触；幂等；闭合等号不等时内容照译、等号原样（结构另由门禁管）
 - 门禁 3a 对齐探针：门禁会拦 ⇒ 查表正则必匹配（含 & 字符类一致）
-- 门禁视角回放：19 条英文形态经再断言后不再被 3a 拦；无源 5 条仍被拦（预期留门禁）
+- 门禁视角回放：19 条英文形态经再断言后不再被 3a 拦；无源 5 条 translate 侧仍留英文、
+  门禁 3a 侧同豁免（2026-10-23 口径对齐，两侧一致不拦）
 - assemble 确实接线了再断言
 
 用法：.venv/bin/python scripts/tests_section_headings.py
@@ -80,14 +83,16 @@ UNSOURCED = [
 
 
 def gate_flags(txt):
-    """门禁 3a「标题未译」判定（与 verify_translation.py 3a 同构：ASCII + 3 连字母；
+    """门禁 3a「标题未译」判定（与 verify_translation._heading_problems 同构：ASCII +
+    3 连字母 + keep_en 之外；无源 5 条 UNSOURCED 设计豁免 2026-10-23 起对齐；
     闭合等号不等属 [结构] 另一类，此处不判）。"""
     for hm in re.finditer(r"^(={2,6})[ \t]*(.*?)[ \t]*(={2,6})[ \t]*$", txt, re.M):
         op, htxt, cl = hm.group(1), hm.group(2).strip(), hm.group(3)
         if len(op) != len(cl):
             continue
         if (re.fullmatch(r"[A-Za-z][A-Za-z0-9 ,:'&\-()]*", htxt or "")
-                and re.search(r"[A-Za-z]{3}", htxt)):
+                and re.search(r"[A-Za-z]{3}", htxt)
+                and htxt not in UNSOURCED):
             return True
     return False
 
@@ -160,11 +165,11 @@ def main():
         check("gate|拦后再断言放行(%s)" % en, gate_flags(out), False)
         check("gate|译文即口径(%s)" % en, "=== %s ===" % zh in out, True)
 
-    # --- 无源 5 条：再断言后仍被门禁拦（留门禁重跑/裁定的分工不破） ---
+    # --- 无源 5 条：translate 侧仍留英文；门禁 3a 侧自 2026-10-23 口径对齐后同豁免 ---
     for en in UNSOURCED:
         out = head("=== %s ===" % en)
-        check("gate|无源仍留门禁(%s)" % en, (out, gate_flags(out)),
-              ("=== %s ===" % en, True))
+        check("gate|无源留英文且门禁放行(%s)" % en, (out, gate_flags(out)),
+              ("=== %s ===" % en, False))
 
     # --- stats 形态：供 assemble 日志 ---
     out, stats = tr.translate_section_headings("=== Village ===")

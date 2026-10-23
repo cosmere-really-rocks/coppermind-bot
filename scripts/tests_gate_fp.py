@@ -19,6 +19,12 @@ Words of Radiance 4/4 全 FP + Wind and Truth 1/1 FP，两页零真缺陷（+2 �
   长模板+引号外残留 / 粗体英文 / 外语虚词之外的小写词 → 一律仍拦
 - 结构边界：值全中文、非 | 行、{{tag}}/{{en}}/原名行、决议#13原文块内行 → 不判
 - FUNC_WORDS 模块级形态：含 des、不含内容词 several
+- ④（2026-10-23 口径修正·方向1，用户裁定「先修门禁」不烧 LLM）：
+  无源 5 标题 3a 豁免（UNSCOURCED_HEADS）/ 干扰扫描剔裸 URL（Order 两页 quiz
+  链接 %XX 配对 8 处误伤）/ 散文半译词数前剔行内 HTML 注释·标签·裸 URL（span
+  样式词恰 6 词等 4 页 9 行误伤）/ 字段半译 untranslated_terms 已记录保留词豁免
+  （Tor books，人审 PASS）/ 引用同集合仅顺序不同=合理重排不拦（丢失/改号仍拦）。
+  全部只减少误报：真缺陷对照用例不回吞。
 
 用法：.venv/bin/python scripts/tests_gate_fp.py
 """
@@ -54,6 +60,22 @@ WAT = ("| 发行日期    = December 6th, 2024{{tor ref|"
 # 造一个 >150 且 <512 的长模板（模拟长 tor ref 变体）
 LONG_TOR = "{{tor ref|" + "x" * 300 + "|some title}}"
 
+# --- ④ 口径修正（2026-10-23 方向1）实录样本行 ---
+# Order of Windrunners/Lightweavers 干扰误伤原貌（percent-encoding 链接 + 100%）
+QUIZ = ("* 100%风行骑士团得分，需要选择一套特定答案，详情见"
+        "[https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it"
+        "%2Fhow-the-knights-radiant-quiz-works-v0-zxess4lhspnc1.png"
+        "%3Fwidth%3D400%26format%3Dpng%26s%3Dabc]")
+# Sylphrena/Dalinar/Cultivation/Odium span 样式行原貌（style 属性恰 6 个英文词）
+SPAN = "* 茜芙蕊娜是少数以<span style='font-variant: small-caps'>小型大写字母</span>格式说话的角色之一。"
+# Szeth:471 行内说明注释原貌
+INLINE_CMT = ("* 在''[[王者之路(初版)]]''中，无真奴 of Shinavar"
+              "<!--This is the correct spelling per 王者之路 大帝, do not update-->"
+              "，简称Jek，后来就不再适用了。")
+# Roshar:57 裸链行原貌
+BARE_URL = "https://www.reddit.com/r/飓光_Archive/comments/7ph9ap/no_spoilers_roshar_physics/"
+
+
 # ③ 只动 | 字段行 → 问题数即判定
 def nprob(body, spans=None):
     return len(vr._field_half_problems(body, [] if spans is None else spans))
@@ -86,6 +108,31 @@ CASES = [
     ("edge|en标注行跳过", nprob, "| {{en|Foo}} 中文 several houses", 0),
     ("edge|原名行跳过", nprob, "| 原名 = 中文 several houses", 0),
     ("edge|引号未成对不断词", nprob, "| x = 中文 it's several houses", 1),
+    # --- ④ 口径修正（2026-10-23）helpers 直调：只少误报 ---
+    ("④|无源标题Zeenid放行", lambda s: len(vr._heading_problems(s)),
+     "=== Zeenid-daughter-Beth ===", 0),
+    ("④|无源标题TheChild放行", lambda s: len(vr._heading_problems(s)),
+     "=== The Child ===", 0),
+    ("④|未译真标题仍拦", lambda s: len(vr._heading_problems(s)),
+     "=== Vessels ===", 1),
+    ("④|已译中文标题放行", lambda s: len(vr._heading_problems(s)),
+     "=== 容器 ===", 0),
+    ("④|等号不配对仍拦", lambda s: len(vr._heading_problems(s)),
+     "=== Kata ==", 1),
+    ("④|quiz链接噪声不报", lambda s: len(vr._interference_problems(s)), QUIZ, 0),
+    ("④|真干扰占位符仍报", lambda s: len(vr._interference_problems(s)),
+     "早期在%{{date|1021|fe}}%处", 1),
+    # Wind and Truth 桥接回归：两个 % 被 90+ 字符的无 % 长 URL 隔开 → 间距不变不配对
+    ("④|长URL两侧百分号不桥接", lambda s: len(vr._interference_problems(s)),
+     "%。[ 第二次进度更新]见[https://www.reddit.com/r/x/comments/abcdefghijklmnop/"
+     "abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789ab] 约33%",
+     0),
+    ("④|span样式行不报", lambda s: len(vr._prose_half_problems(s)), SPAN, 0),
+    ("④|行内注释行不报", lambda s: len(vr._prose_half_problems(s)), INLINE_CMT, 0),
+    ("④|裸URL行不报", lambda s: len(vr._prose_half_problems(s)), BARE_URL, 0),
+    ("④|真半译正句仍拦", lambda s: len(vr._prose_half_problems(s)),
+     "It is also possible to snap from false emotions caused by soothing and rioting indeed.",
+     1),
 ]
 
 
@@ -124,6 +171,28 @@ def main():
           "\\x00" in str(vr._field_half_problems("| x = 中文 '''bold''' test", []))
           or "\x00" in str(vr._field_half_problems("| x = 中文 '''bold''' test", [])),
           False)
+
+    # --- ④ 引用比对：同集合仅顺序不同=合理重排不拦；丢失/改号仍拦 ---
+    check("ref|仅顺序重排不报",
+          vr._ref_mismatch_problems(["mb1|1", "mb1|2"], ["mb1|2", "mb1|1"]), [])
+    check("ref|丢失仍报",
+          len(vr._ref_mismatch_problems(["mb1|1", "mb1|2"], ["mb1|1"])) >= 1, True)
+    check("ref|改号仍报",
+          len(vr._ref_mismatch_problems(["mb1|1"], ["mb1|9"])) >= 1, True)
+    check("ref|重复项换位不报",
+          vr._ref_mismatch_problems(["x", "x", "y"], ["y", "x", "x"]), [])
+
+    # --- ④ 字段半译 ut 豁免：记录保留词放行、未记录内容词照拦 ---
+    ut_tor = [{"en": "Tor books", "reason": "译名表未收录，无官方中文译名"}]
+    check("ut|Tor books记录放行",
+          len(vr._field_half_problems("| 出版社 = Tor books", [], ut_tor)), 0)
+    check("ut|无记录仍拦",
+          len(vr._field_half_problems("| 出版社 = Tor books", [], [])), 1)
+    check("ut|未记录内容词不放行", len(vr._field_half_problems(
+        "| lore = 这是设定说明，several noble houses remain", [], ut_tor)), 1)
+    check("ut|占位符条目不构成豁免", len(vr._field_half_problems(
+        "| lore = 中文 quote 台词若干 words remain here",
+        [], [{"en": "Quote 台词（占位符 %%ORIGINAL_BLOCK_1%%）", "reason": "决议#13"}])), 1)
 
     total = passed + failed
     print("%d/%d passed" % (passed, total))

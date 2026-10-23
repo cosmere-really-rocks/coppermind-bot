@@ -21,6 +21,7 @@ import argparse
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -54,6 +55,117 @@ REF_PATS = [
     (r"\{\{\s*wob ref\s*\|([^}]+)\}\}", "wob ref"),
     (r"\{\{\s*date\s*\|([^}]+)\}\}", "date"),
 ]
+
+# 无源章节标题 5 条（2026-10-23 口径修正·方向1）：全语料无源/待中译本，translate
+# 侧按「宁保英文不录」刻意保留英文（tests_section_headings.py UNSOURCED 既定分工），
+# 人审侧早已按设计豁免——门禁 3a 此处对齐同一口径，不再拦截。
+UNSCOURCED_HEADS = {"Zeenid-daughter-Beth", "Molli", "The Child", "Formless", "Vaporspren"}
+
+
+def _heading_problems(body: str, keep_heads=None) -> list:
+    """3a 标题结构（2026-10-23 抽出直调）：a) 纯 ASCII 标题=漏翻（keep_en 豁免 +
+    无源 5 条设计豁免） b) 开闭等号数不匹配。"""
+    if keep_heads is None:
+        keep_heads = {t.lower() for t in tr.load_keep_en()}
+    problems = []
+    n_head_bad = 0
+    for hm in re.finditer(r"^(={2,6})[ \t]*(.*?)[ \t]*(={2,6})[ \t]*$", body, re.M):
+        op, htxt, cl = hm.group(1), hm.group(2).strip(), hm.group(3)
+        hline = body[:hm.start()].count("\n") + 1
+        if len(op) != len(cl):
+            problems.append(f"[结构] 标题闭合等号不匹配（第{hline}行）: {hm.group(0).strip()!r}")
+            n_head_bad += 1
+        elif (re.fullmatch(r"[A-Za-z][A-Za-z0-9 ,:'&\-()]*", htxt or "")
+              and re.search(r"[A-Za-z]{3}", htxt)
+              and htxt.lower() not in keep_heads
+              and htxt not in UNSCOURCED_HEADS):
+            problems.append(f"[章节] 标题未译（第{hline}行）: {htxt!r}")
+            n_head_bad += 1
+        if n_head_bad >= 8:
+            break
+    return problems
+
+
+def _interference_problems(body: str) -> list:
+    """2a LLM 干扰标记（单 % 包裹噪音）。2026-10-23 口径修正：URL 内部按等长空格
+    掩码（杀掉 percent-encoding 的 %3A%2F…%3D 配对噪声——Order 两页 8 处误伤；
+    等长保证 URL 两侧的 % 不因删字桥接到一起——Wind and Truth 实测 33% 桥接误伤）；
+    真噪音 %{{date|…}}% 无 URL 参与、不受影响。"""
+    nourl = re.sub(r"https?://\S+", lambda m: " " * len(m.group(0)), body)
+    pct = re.findall(r"%(?!%)(?!ORIGINAL)(?!REF)[^%\n]{1,80}%", nourl)
+    # 只报包裹模板/英文的（100% 等裸百分数不成对）
+    pct_bad = [p for p in pct if ("{{" in p or re.search(r"[A-Za-z]{3,}", p)) and len(p) > 2]
+    if pct_bad:
+        return [f"[干扰标记] %...% 残留 {len(pct_bad)} 个（LLM 改编占位符的噪音）: {pct_bad[:5]}"]
+    return []
+
+
+def _prose_half_problems(body: str) -> list:
+    """3c 正文半译（导语外散文行残留成句英文，≥6 个叙述性英文词）。
+    2026-10-23 口径修正：词数前剔除行内 HTML 注释 <!-- … -->、HTML 标签
+    <span style=…>/<sup>… 与裸 URL——span 样式词（span style font variant small
+    caps 恰 6 词）、行内说明注释、reddit 裸链实测 4 页 9 行误伤；正句英文照拦。"""
+    problems = []
+    _stops = getattr(tr, "_UNTRANSLATED_STOPWORDS", set())
+    n_half = 0
+    _masked_body = tr.mask_nonprose(body)
+    for lidx, (orig_ln, mask_ln) in enumerate(zip(body.split("\n"),
+                                                  _masked_body.split("\n")), 1):
+        # ! 行=表格属性行（class/colspan/style 本为英文结构位）、<!-- -->=源注释
+        # （读者不可见、按设计保留英文）——均不属正文半译（2026-10-20 修，level2 实测误伤）。
+        if (not orig_ln or orig_ln[0] in "|={!" or orig_ln.startswith("[[category")
+                or orig_ln.lstrip().startswith("<!--")):
+            continue
+        l = re.sub(r"<ref[^>]*>.*?</ref>", " ", mask_ln)
+        l = re.sub(r"</?ref[^>]*>", " ", l)
+        # 整链剔除（含显示文本）：链接属结构位——显示要么已按表译中、
+        # 要么表外按「宁保英文」保留，都不算散文半译（gemheart/spores 类）
+        l = re.sub(r"\[\[[^\[\]]*\]\]", " ", l)
+        l = re.sub(r"<!--.*?-->", " ", l)
+        l = re.sub(r"<[^>]+>", " ", l)
+        l = re.sub(r"https?://\S+", " ", l)
+        words = re.findall(r"[A-Za-z]+", l)
+        prose = [w for w in words
+                 if w.lower() in _stops or w == w.lower()]
+        if len(prose) >= 6:
+            n_half += 1
+            problems.append(f"[半译] 正文行残留成句英文（第{lidx}行）: {orig_ln.strip()[:76]}…")
+            if n_half >= 8:
+                problems.append("[半译] …（更多半译行已截断）")
+                break
+    return problems
+
+
+def _ref_mismatch_problems(src_refs: list, out_refs: list) -> list:
+    """1) 引用比对（2026-10-23 口径修正）：集合相同、仅顺序不同 = 引用跟随其修饰的
+    分句移动（人审 Shardblade 实证两处 ref 均在、总数 435=435）→ 合理重排不拦；
+    丢失/改号/换号改变多重集 → 照拦并列逐位差异（Luthadel 丢 mb2|42 等真缺陷不回吞）。"""
+    if src_refs == out_refs:
+        return []
+    if Counter(src_refs) == Counter(out_refs):
+        return []
+    problems = []
+    n = min(len(src_refs), len(out_refs))
+    first_diff = None
+    for i in range(n):
+        if src_refs[i] != out_refs[i]:
+            first_diff = i
+            break
+    if first_diff is None:
+        first_diff = n if n < max(len(src_refs), len(out_refs)) else -1
+    problems.append(
+        f"[引用] 序列不一致：英文 {len(src_refs)} 处 vs 产物 {len(out_refs)} 处"
+        + (f"；首个差异 @{first_diff}: 英文={src_refs[first_diff] if first_diff < len(src_refs) else '—'}"
+           f" 产物={out_refs[first_diff] if first_diff < len(out_refs) else '—'}" if first_diff >= 0 else "")
+    )
+    # 列出产物中所有与英文不同的项（去重前 10）
+    diffs = []
+    for i, (a, b) in enumerate(zip(src_refs, out_refs)):
+        if a != b and len(diffs) < 10:
+            diffs.append(f"  @{i} 英文={a} 产物={b}")
+    for d in diffs:
+        problems.append(d)
+    return problems
 
 
 def extract_refs(text: str) -> list[str]:
@@ -116,18 +228,30 @@ FUNC_WORDS = {"of", "the", "a", "an", "in", "on", "for", "to", "and", "or", "at"
               "des"}
 
 
-def _field_half_problems(body: str, quote_spans) -> list:
+def _field_half_problems(body: str, quote_spans, ut_terms=None) -> list:
     """第 5 节半译（| 字段行中英夹杂）判定（2026-10-23 ③自 check_one 原位抽出，
-    供误伤回归单测直调；抽出前后判定语义逐字一致，除③三处修正）：
+    供误伤回归单测直调；抽出前后判定语义逐字一致，除③三处修正 + ut 豁免）：
     - 斜体 `''…''` 标题整体剔除（与 mask_nonprose/3c 同口径：斜体书名按规则保留英文；
       粗体先占位保护不豁免——粗体可承载译文）→ 修 Words of Radiance 4 处外语书名
       非ASCII断词碎片误伤（Stürme→rme、Câmpiile→mpiile、Jurâmântului→ntului）；
     - 模板剔除上限 150→512 → 修 Wind and Truth 长 {{tor ref|…}}（186 字符，全语料
       |行内最长 449）残留「tor ref」误伤；
-    - FUNC_WORDS 增 des。
+    - FUNC_WORDS 增 des；
+    - ut 豁免（2026-10-23 口径修正·方向1）：translation.json 的 untranslated_terms
+      已记录的保留词（如 TFE/HoA 出版社=Tor books，词表未收录按设计留英文——人审
+      PASS）属设计，字段半译不再拦；未记录的小写内容词（noble houses 等）照拦。
     判不出新问题类型：只减少误报，绝不新增拦截（对照回归 tests_gate_fp.py + 全量A/B）。"""
     problems = []
     keep_en_terms = set(tr.load_keep_en())
+    # ut 记录 → 短语集 + 词集（小写；占位符类条目非真实保留词，跳过）
+    ut_phrases: set = set()
+    ut_words: set = set()
+    for it in ut_terms or []:
+        en = ((it.get("en") if isinstance(it, dict) else str(it)) or "").strip().lower()
+        if not en or "占位符" in en or "%" in en:
+            continue
+        ut_phrases.add(en)
+        ut_words.update(re.findall(r"[a-z][a-z'\-]*", en))
     for ln in body.split("\n"):
         if not ln.startswith("|"):
             continue
@@ -172,6 +296,7 @@ def _field_half_problems(body: str, quote_spans) -> list:
                     if not w[:1].isupper()
                     and w.lower().strip("'") not in FUNC_WORDS
                     and w.lower().strip("'") not in keep_en_terms
+                    and w.lower() not in ut_words
                 ]
                 adjacent_zh = (
                     re.search(r"[\u4e00-\u9fff]", left.replace(" ", "").replace("-", ""))
@@ -183,8 +308,13 @@ def _field_half_problems(body: str, quote_spans) -> list:
                     break
                 # 信号B：英文片段紧邻中文、且不是「多专名词的完整称号」
                 # （of the Flames 紧邻幸存者 → 报；Survivor of the Flames 作为完整
-                #  称号与中文并列 → 不报；Lord 紧邻迷雾之子 → 报）
-                if adjacent_zh and lower_any and len(cap_words) <= 1:
+                #  称号与中文并列 → 不报；Lord 紧邻迷雾之子 → 报）；ut 已记录的
+                #  整段保留词（Tor books）或全由 ut 词构成的片段 = 设计不报。
+                _frag_low = frag.lower()
+                _frag_lowers = {w.lower() for w in words if not w[:1].isupper()}
+                if (adjacent_zh and lower_any and len(cap_words) <= 1
+                        and _frag_low not in ut_phrases
+                        and not (_frag_lowers and _frag_lowers <= ut_words)):
                     problems.append(f"[半译] {ln.strip()[:88]}… ← 夹杂残留: {frag[:50]}")
                     break
     return problems
@@ -208,27 +338,8 @@ def check_one(title_en: str, wiki: str) -> list[str]:
         return problems
     src_refs = extract_refs(conv)
     out_refs = extract_refs(body)
-    if src_refs != out_refs:
-        n = min(len(src_refs), len(out_refs))
-        first_diff = None
-        for i in range(n):
-            if src_refs[i] != out_refs[i]:
-                first_diff = i
-                break
-        if first_diff is None:
-            first_diff = n if n < max(len(src_refs), len(out_refs)) else -1
-        problems.append(
-            f"[引用] 序列不一致：英文 {len(src_refs)} 处 vs 产物 {len(out_refs)} 处"
-            + (f"；首个差异 @{first_diff}: 英文={src_refs[first_diff] if first_diff < len(src_refs) else '—'}"
-               f" 产物={out_refs[first_diff] if first_diff < len(out_refs) else '—'}" if first_diff >= 0 else "")
-        )
-        # 列出产物中所有与英文不同的项（去重前 10）
-        diffs = []
-        for i, (a, b) in enumerate(zip(src_refs, out_refs)):
-            if a != b and len(diffs) < 10:
-                diffs.append(f"  @{i} 英文={a} 产物={b}")
-        for d in diffs:
-            problems.append(d)
+    # 1) 引用比对（判定抽出为 _ref_mismatch_problems：同集合仅顺序不同=合理重排不拦）
+    problems.extend(_ref_mismatch_problems(src_refs, out_refs))
 
     # 2) 占位符残留
     for pat, name in [(r"%%ORIGINAL_BLOCK_\d+%%", "原文块"), (r"%%REF_\d+%%", "引用"),
@@ -237,13 +348,9 @@ def check_one(title_en: str, wiki: str) -> list[str]:
         if left:
             problems.append(f"[占位符] {name}占位符残留 {len(left)} 个: {left[:5]}")
 
-    # 2a) LLM 干扰标记残留：单 % 包裹（%{{date|...}}% / %%%x%% 等）——旧版单 % 占位符
-    #     被 LLM 改编的产物会留下这种噪音（实测 rerun6 出现 在%{{date|1021|fe}}%早期）。
-    pct = re.findall(r"%(?!%)(?!ORIGINAL)(?!REF)[^%\n]{1,80}%", body)
-    # 过滤掉正常文本中的百分号对（如 “100%” 出现两次的情况几乎不可能且长度短）；只报包裹模板/英文的
-    pct_bad = [p for p in pct if ("{{" in p or re.search(r"[A-Za-z]{3,}", p)) and len(p) > 2]
-    if pct_bad:
-        problems.append(f"[干扰标记] %...% 残留 {len(pct_bad)} 个（LLM 改编占位符的噪音）: {pct_bad[:5]}")
+    # 2a) LLM 干扰标记残留（判定抽出为 _interference_problems：扫描前剔裸 URL，
+    #     2026-10-23 口径修正修 Order 两页 quiz 链接 percent-encoding 8 处误伤）
+    problems.extend(_interference_problems(body))
 
     # 2b) 导语残留英文（复用 translate.py 的 lead 判定：标题译了但导语正文留英文）
     # 2026-10-23：页首 {{AITranslation}} 先剥离再判，保持「CmPermission 置顶 or
@@ -267,22 +374,8 @@ def check_one(title_en: str, wiki: str) -> list[str]:
     if en_cnt > 1:
         problems.append(f"[模板] {{{{en}}}} 出现 {en_cnt} 次（应 1 次或 0 次）")
 
-    # 3a) 标题结构：a) 纯 ASCII 标题=漏翻（keep_en 豁免） b) 开闭等号数不匹配
-    keep_heads = {t.lower() for t in tr.load_keep_en()}
-    n_head_bad = 0
-    for hm in re.finditer(r"^(={2,6})[ \t]*(.*?)[ \t]*(={2,6})[ \t]*$", body, re.M):
-        op, htxt, cl = hm.group(1), hm.group(2).strip(), hm.group(3)
-        hline = body[:hm.start()].count("\n") + 1
-        if len(op) != len(cl):
-            problems.append(f"[结构] 标题闭合等号不匹配（第{hline}行）: {hm.group(0).strip()!r}")
-            n_head_bad += 1
-        elif (re.fullmatch(r"[A-Za-z][A-Za-z0-9 ,:'&\-()]*", htxt or "")
-              and re.search(r"[A-Za-z]{3}", htxt)
-              and htxt.lower() not in keep_heads):
-            problems.append(f"[章节] 标题未译（第{hline}行）: {htxt!r}")
-            n_head_bad += 1
-        if n_head_bad >= 8:
-            break
+    # 3a) 标题结构（判定抽出为 _heading_problems：keep_en 豁免 + 无源 5 条设计豁免）
+    problems.extend(_heading_problems(body))
 
     # 3b) 括号配对：[[ ]] 与 {{ }} 全文计数必须自平衡（断链/断模板 = 渲染坏）
     wk_o, wk_c = body.count("[["), body.count("]]")
@@ -297,30 +390,9 @@ def check_one(title_en: str, wiki: str) -> list[str]:
     #     （模板/链接/斜体/引文/keep_en/ref-name 均不计），只数叙述性英文词
     #     （全小写或停用词；首字母大写专名不计）。信息框行（| 开头）交给第 5 节。
     try:
-        _masked_body = tr.mask_nonprose(body)
-        _stops = getattr(tr, "_UNTRANSLATED_STOPWORDS", set())
-        n_half = 0
-        for lidx, (orig_ln, mask_ln) in enumerate(zip(body.split("\n"),
-                                                     _masked_body.split("\n")), 1):
-            # ! 行=表格属性行（class/colspan/style 本为英文结构位）、<!-- -->=源注释
-            # （读者不可见、按设计保留英文）——均不属正文半译（2026-10-20 修，level2 实测误伤）。
-            if (not orig_ln or orig_ln[0] in "|={!" or orig_ln.startswith("[[category")
-                    or orig_ln.lstrip().startswith("<!--")):
-                continue
-            l = re.sub(r"<ref[^>]*>.*?</ref>", " ", mask_ln)
-            l = re.sub(r"</?ref[^>]*>", " ", l)
-            # 整链剔除（含显示文本）：链接属结构位——显示要么已按表译中、
-            # 要么表外按「宁保英文」保留，都不算散文半译（gemheart/spores 类）
-            l = re.sub(r"\[\[[^\[\]]*\]\]", " ", l)
-            words = re.findall(r"[A-Za-z]+", l)
-            prose = [w for w in words
-                     if w.lower() in _stops or w == w.lower()]
-            if len(prose) >= 6:
-                n_half += 1
-                problems.append(f"[半译] 正文行残留成句英文（第{lidx}行）: {orig_ln.strip()[:76]}…")
-                if n_half >= 8:
-                    problems.append("[半译] …（更多半译行已截断）")
-                    break
+        # 判定抽出为 _prose_half_problems（2026-10-23 口径修正：词数前剔除行内
+        # HTML 注释/标签/裸 URL——span 样式词、行内说明注释、裸链 4 页 9 行误伤）
+        problems.extend(_prose_half_problems(body))
     except Exception:
         pass
 
@@ -389,10 +461,11 @@ def check_one(title_en: str, wiki: str) -> list[str]:
             reported_bare.append((m.start(), m.end()))
             bare_cnt += 1
 
-    # 5) 半译（同字段夹杂）：判定抽出为 _field_half_problems（2026-10-23 ③自此处原位
-    #    移出，含③三处误伤修正——斜体''…''剔除/模板剔除上限512/FUNC_WORDS+des；
-    #    对照回归 tests_gate_fp.py + 全量门禁A/B）。
-    problems.extend(_field_half_problems(body, quote_spans))
+    # 5) 半译（同字段夹杂）：判定抽出为 _field_half_problems（2026-10-23 ③三处误伤
+    #    修正 + ut 豁免：untranslated_terms 已记录的保留词（Tor books 等）属设计，
+    #    字段半译不再拦；未记录的小写内容词照拦）。
+    ut_terms = data.get("untranslated_terms") or []
+    problems.extend(_field_half_problems(body, quote_spans, ut_terms))
 
     return problems
 
