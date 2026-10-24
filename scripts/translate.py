@@ -1719,6 +1719,8 @@ def untranslated_lead_english(src_text: str, translation: str) -> bool:
         s = re.sub(r"<references\b[^>]*>", " ", s, flags=re.I)
         # 撇号专名连体：Kali'kalin'da 被切成 kalin×3+da 恰满 4 词曾误报
         s = re.sub(r"(?<=[A-Za-z])'(?=[A-Za-z])", "", s)
+        # 连字符专名连体：yoki-hijo ×2 切成4个小写词恰满阈值曾误报（Samjae）
+        s = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", "", s)
         s = re.sub(r"\[\[wob:\d+\|wob:\d+\]\]", " ", s)  # wob 引用标记（非叙述性英文）
         # 模板配平剔除：{{Quote|英文原文|中文{{book ref}}}} 这类嵌套模板，单趟正则
         # 在内层处失配、外层留活，原文块英文 18 词曾误报——改用配平区间整剥

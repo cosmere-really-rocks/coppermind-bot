@@ -249,6 +249,14 @@ def main():
                  "教义的一部分。<ref>[[wob:4157|wob:4157]]</ref>\n\n"
                  "他虽为成年人，举止却像个孩子。{{book ref|sa1|37}}\n\n== 历史 ==\n")
     check("lead|嵌套模板原文块不报", tr.untranslated_lead_english(quote_src, quote_dst), False)
+    check("lead|连字符专名不报", tr.untranslated_lead_english(
+        "{{Infobox person\n| 原名 = Samjae\n}}\n\nSamjae is a Torish yoki-hijo who "
+        "befriended Yumi while both were still in training under Liyun's watch.\n\n== Notes ==\n",
+        "{{AITranslation}}\n{{Infobox person\n| 原名    = Samjae\n}}\n\n"
+        "'''Samjae'''{{en|Samjae}}是一名[[Torish]]籍的[[yoki-hijo]]，"
+        "在两人尚且年幼时便与[[Yumi]]成为了朋友。{{book ref|yumi|32}}\n\n"
+        "尽管遭到[[Liyun]]的禁止，Samjae仍会偷偷给Yumi讲述yoki-hijo相恋并私奔的故事。"
+        "{{book ref|yumi|13}}\n\n== 注记 ==\n"), False)
     check("lead|真英文导语仍拦②", tr.untranslated_lead_english(
         quote_src, "{{AITranslation}}\n\nCabine felt like one of the ten fools "
         "though he was an adult within the Vorin church doctrine.\n\n== 历史 ==\n"), True)
