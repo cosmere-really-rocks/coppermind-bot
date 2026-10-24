@@ -228,6 +228,31 @@ def main():
                 "Spren are tiny pieces of the almighty that talk to humans all the time.\n")
     check("lead|真英文导语仍拦", tr.untranslated_lead_english(div_src, real_dst), True)
 
+    # --- ⑥ 导语检查误伤二连（2026-10-24 首个马拉松块实录 Kali'kalin / Cabine）---
+    apos_src = ("{{Infobox person\n| 原名 = Kali'kalin\n}}\n\n"
+                "Kali'kalin is a spirit name invoked by the Iriali to curse at misfortune "
+                "in their daily speech across the highstorms of Roshar.\n\n== Notes ==\n")
+    apos_dst = ("{{AITranslation}}\n{{Infobox person\n| 原名    = Kali'kalin\n}}\n\n"
+                "'''Kali'kalin'''是[[柔刹]]的一名人物。吃角族相信他留有鬼魂，"
+                "有时会以这只鬼魂的名字咒骂，仅称其为Kali'kalin之鬼。这可能与类似表达"
+                "Kali'kalin'da有关。\n\n== 注记 ==\n")
+    check("lead|撇号专名分词不报", tr.untranslated_lead_english(apos_src, apos_dst), False)
+    quote_src = ("{{Quote|one of the ten fools|中文。}}\n\n"
+                 "Cabine was one of the ten fools who acted like a child though he was "
+                 "an adult. He remained a figure of doctrine within the Vorin church.\n\n"
+                 "== History ==\n")
+    quote_dst = ("{{AITranslation}}\n"
+                 "{{Quote|[[卡拉丁|Kal]] felt like one of the ten fools&mdash;specifically "
+                 "Cabine, who acted like a child though he was adult.|[[卡拉丁]]将他的行为相提并论。"
+                 "{{book ref|sa1|37}}}}\n\n"
+                 "'''卡宾'''{{en|Cabine}}是[[十蠢]]之一{{book ref|sa1|37}}，十蠢是[[沃林教]]"
+                 "教义的一部分。<ref>[[wob:4157|wob:4157]]</ref>\n\n"
+                 "他虽为成年人，举止却像个孩子。{{book ref|sa1|37}}\n\n== 历史 ==\n")
+    check("lead|嵌套模板原文块不报", tr.untranslated_lead_english(quote_src, quote_dst), False)
+    check("lead|真英文导语仍拦②", tr.untranslated_lead_english(
+        quote_src, "{{AITranslation}}\n\nCabine felt like one of the ten fools "
+        "though he was an adult within the Vorin church doctrine.\n\n== 历史 ==\n"), True)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0

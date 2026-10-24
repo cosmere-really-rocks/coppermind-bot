@@ -1717,8 +1717,13 @@ def untranslated_lead_english(src_text: str, translation: str) -> bool:
         s = re.sub(r"</?ref[^>]*>", " ", s)             # <ref> 标签
         s = re.sub(r"</?[A-Za-z][^>]*>", " ", s)        # 其余 HTML 标签（<div style=...> 属性词不计）
         s = re.sub(r"<references\b[^>]*>", " ", s, flags=re.I)
+        # 撇号专名连体：Kali'kalin'da 被切成 kalin×3+da 恰满 4 词曾误报
+        s = re.sub(r"(?<=[A-Za-z])'(?=[A-Za-z])", "", s)
         s = re.sub(r"\[\[wob:\d+\|wob:\d+\]\]", " ", s)  # wob 引用标记（非叙述性英文）
-        s = re.sub(r"\{\{[^{}]*\}\}", " ", s)          # 模板
+        # 模板配平剔除：{{Quote|英文原文|中文{{book ref}}}} 这类嵌套模板，单趟正则
+        # 在内层处失配、外层留活，原文块英文 18 词曾误报——改用配平区间整剥
+        for _sm, _em in reversed(_template_spans(s)):
+            s = s[:_sm] + " " + s[_em:]
         s = re.sub(r"\[\[[^\]|]*\|([^\]]*)\]\]", r"\1 ", s)  # 内链取显示文本
         s = re.sub(r"\[\[[^\]]*\]\]", " ", s)
         s = re.sub(r"https?://\S+", " ", s)            # URL
