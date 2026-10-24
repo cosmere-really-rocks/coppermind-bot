@@ -261,6 +261,23 @@ def main():
         quote_src, "{{AITranslation}}\n\nCabine felt like one of the ten fools "
         "though he was an adult within the Vorin church doctrine.\n\n== 历史 ==\n"), True)
 
+    # --- ⑦ 导语 ut 豁免（2026-10-24 Stone of Ten Dawns 实录：记录保留词不计）---
+    utsrc = ("{{Infobox item\n| 名称 = Stone of Ten Dawns\n}}\n\n"
+             "The '''Stone of Ten Dawns''' is a legendary [[perfect gemstone]] on "
+             "[[Roshar]]. According to legend it was perfect and could hold light.\n\n"
+             "== Notes ==\n")
+    utdst = ("{{AITranslation}}\n{{Infobox item\n| 名称    = Stone of Ten Dawns\n}}\n\n"
+             "'''十晓之石'''{{en|Stone of Ten Dawns}}是[[柔刹]]上一颗传说级的"
+             "[[perfect gemstone]]。根据传说它完美无瑕，能够储存光芒。他们寻找perfect gemstones"
+             "来囚禁光芒，并将这些perfect gems的传说记入史册。{{book ref|sa3|99}}\n\n== 注记 ==\n")
+    check("lead|记录保留词豁免", tr.untranslated_lead_english(
+        utsrc, utdst, keep_terms=["perfect gemstone"]), False)
+    check("lead|未记录保留词仍拦", tr.untranslated_lead_english(utsrc, utdst), True)
+    check("lead|豁免不吞真英文", tr.untranslated_lead_english(
+        utsrc, "{{AITranslation}}\n\nThe stone of ten dawns is a legendary perfect "
+        "gemstone that sits upon the roshar continent of legend.\n\n== 注记 ==\n",
+        keep_terms=["perfect gemstone"]), True)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0

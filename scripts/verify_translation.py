@@ -406,7 +406,11 @@ def check_one(title_en: str, wiki: str) -> list[str]:
         _b2 = _b2.split("\n", 1)[1] if "\n" in _b2 else ""
     if _b2.startswith("{{CmPermission") or "{{Infobox" in _b2[:200]:
         try:
-            if tr.untranslated_lead_english(src, body):
+            # ut 豁免：untranslated_terms 已记录保留英文的术语不计入导语残留
+            _lead_keep = [x.get("en") for x in (data.get("untranslated_terms") or [])
+                          if isinstance(x, dict) and x.get("en")
+                          and x.get("reason") and "%%" not in str(x.get("reason"))]
+            if tr.untranslated_lead_english(src, body, keep_terms=_lead_keep):
                 problems.append("[导语] 导语正文仍残留英文句子（只译标题未译正文）——"
                                 "按机制应带反馈重试后仍失败：写回前必须处理（重跑或人工补译）")
         except Exception:

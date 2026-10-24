@@ -1684,7 +1684,8 @@ _UNTRANSLATED_STOPWORDS = {
 }
 
 
-def untranslated_lead_english(src_text: str, translation: str) -> bool:
+def untranslated_lead_english(src_text: str, translation: str,
+                               keep_terms=None) -> bool:
     """检测 chunk0 译文中，导语（Infobox 后、首个章节/分节标题前的正文）是否残留英文句子。
 
     背景：实测偶发 LLM「只把标题译成中文 + 加 {{en}}，却把导语正文原样保留英文」。
@@ -1744,6 +1745,17 @@ def untranslated_lead_english(src_text: str, translation: str) -> bool:
 
     src_lead = lead_region(src_text)
     tr_lead = lead_region(translation)
+    # ut 豁免（2026-10-24 Stone of Ten Dawns 实录）：untranslated_terms 已记录
+    # 「保留英文」的术语不计入残留（与字段检查 ut 豁免同语义），只对记录词生效
+    if keep_terms:
+        # 长词先剥（Stone 会以子串吃掉 gemstones 里的 stones，反让长术语剥不到）
+        # + 复数变体 s?（perfect gemstones 的复数形不留词尾 s 残渣）
+        for _kt in sorted((k for k in keep_terms if isinstance(k, str) and k.strip()),
+                          key=len, reverse=True):
+            _kt = _kt.strip()
+            _pat = re.escape(_kt) + (r"s?" if not _kt.lower().endswith("s") else "")
+            src_lead = re.sub(_pat, " ", src_lead, flags=re.I)
+            tr_lead = re.sub(_pat, " ", tr_lead, flags=re.I)
     if not src_lead.strip() or not tr_lead.strip():
         return False
     src_prose = prose_word_count(src_lead)
