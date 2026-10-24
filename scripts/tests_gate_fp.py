@@ -278,6 +278,23 @@ def main():
         "gemstone that sits upon the roshar continent of legend.\n\n== 注记 ==\n",
         keep_terms=["perfect gemstone"]), True)
 
+    # --- ⑧ 图库文件名不计（2026-10-24 Inkima 实录）---
+    gsrc = ("{{Infobox person\n| 名称 = Inkima\n}}\n\n"
+            "Inkima is a woman living on the shattered plain. She attended the wine "
+            "tasting with Adolin and other lighteyes.\n\n"
+            "<gallery caption=\"images of Inkima\">\n"
+            "Yakamav and inkima.jpg | Inkima with Yakamav, art by Sheep\n"
+            "</gallery>\n\n== Notes ==\n")
+    gdst = ("{{AITranslation}}\n{{Infobox person\n| 名称 = Inkima\n}}\n\n"
+            "英姬玛是居住在破碎平原的一名女性，曾与阿多林等光眼种一同参加品酒会。{{book ref|sa1|58}}\n\n"
+            "<gallery caption=\"英姬玛的相关图片\">\n"
+            "雅卡马夫 and inkima.jpg | 英姬玛与雅卡马夫，绘者[[User: Sheep]]\n"
+            "</gallery>\n\n== 注记 ==\n")
+    check("lead|图库文件名不报", tr.untranslated_lead_english(gsrc, gdst), False)
+    check("lead|真英文仍拦(含图库)", tr.untranslated_lead_english(
+        gsrc, gdst.replace("英姬玛是居住在破碎平原的一名女性，曾与阿多林等光眼种一同参加品酒会。",
+                           "Inkima is a woman living on the plain with the others.")), True)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0

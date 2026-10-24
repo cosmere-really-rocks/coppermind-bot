@@ -1715,6 +1715,9 @@ def untranslated_lead_english(src_text: str, translation: str,
 
     def strip_noise(text: str) -> str:
         s = re.sub(r"%%ORIGINAL_BLOCK_\d+%%", " ", text)
+        # 图库整块剔除：文件名须与站上 File 页逐字一致不可译（Inkima: 英姬玛.jpg/
+        # 雅卡马夫 and inkima.jpg → jpg×2+and+inkima 恰满4词曾误报；标题行同剥）
+        s = re.sub(r"<gallery\b[^>]*>.*?</gallery>", " ", s, flags=re.I | re.S)
         s = re.sub(r"</?ref[^>]*>", " ", s)             # <ref> 标签
         s = re.sub(r"</?[A-Za-z][^>]*>", " ", s)        # 其余 HTML 标签（<div style=...> 属性词不计）
         s = re.sub(r"<references\b[^>]*>", " ", s, flags=re.I)
@@ -1785,6 +1788,10 @@ def lead_english_feedback(src_text: str, translation: str) -> str:
 
     en_lead = lead_region(src_text)
     tr_lead = lead_region(translation)
+    # 图库块先剥（需在 HTML 标签剥除前，否则开标签被吃掉后整块正则永不匹配；
+    # 文件名/绘者行不可译，不进反馈片段，与 strip_noise 同口径）
+    en_lead = re.sub(r"<gallery\b[^>]*>.*?</gallery>", " ", en_lead, flags=re.I | re.S)
+    tr_lead = re.sub(r"<gallery\b[^>]*>.*?</gallery>", " ", tr_lead, flags=re.I | re.S)
     # HTML 标签不参与片段提取（<div style=...> 属性词曾凑满 ≥3 阈值致误反馈）
     en_lead = re.sub(r"</?[A-Za-z][^>]*>", " ", en_lead)
     tr_lead = re.sub(r"</?[A-Za-z][^>]*>", " ", tr_lead)
