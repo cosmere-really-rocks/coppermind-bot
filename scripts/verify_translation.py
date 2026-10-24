@@ -62,6 +62,15 @@ REF_PATS = [
 UNSCOURCED_HEADS = {"Zeenid-daughter-Beth", "Molli", "The Child", "Formless", "Vaporspren"}
 
 
+def _page_keep_heads(data) -> set:
+    """本页 untranslated_terms 记录（带理由、非占位符条目）→ 小写词条集，
+    与字段/导语 ut 豁免同语义（2026-10-24 Tyche 'Ylt' / Evanotype 'evanoscope'
+    实录：全局 keep_en 未收的页内保留词，章节 3a 同样应认页内记录）。"""
+    return {str(x.get("en")).lower() for x in (data.get("untranslated_terms") or [])
+            if isinstance(x, dict) and x.get("en") and x.get("reason")
+            and "%%" not in str(x.get("reason"))}
+
+
 def _heading_problems(body: str, keep_heads=None) -> list:
     """3a 标题结构（2026-10-23 抽出直调）：a) 纯 ASCII 标题=漏翻（keep_en 豁免 +
     无源 5 条设计豁免） b) 开闭等号数不匹配。"""
@@ -424,8 +433,9 @@ def check_one(title_en: str, wiki: str) -> list[str]:
     if en_cnt > 1:
         problems.append(f"[模板] {{{{en}}}} 出现 {en_cnt} 次（应 1 次或 0 次）")
 
-    # 3a) 标题结构（判定抽出为 _heading_problems：keep_en 豁免 + 无源 5 条设计豁免）
-    problems.extend(_heading_problems(body))
+    # 3a) 标题结构（keep_en 豁免 + 无源 5 条设计豁免 + 本页 untranslated_terms 记录并集）
+    problems.extend(_heading_problems(
+        body, keep_heads={t.lower() for t in tr.load_keep_en()} | _page_keep_heads(data)))
 
     # 3b) 括号配对：[[ ]] 与 {{ }} 全文计数必须自平衡（断链/断模板 = 渲染坏）
     wk_o, wk_c = body.count("[["), body.count("]]")

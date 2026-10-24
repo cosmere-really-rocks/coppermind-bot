@@ -309,6 +309,19 @@ def main():
         csrc, cdst.replace("玛莎依据泽斯与卡拉丁的证词记述了这趟旅程的始末。",
                            "Masha wrote the book about the journey and the order.")), True)
 
+    # --- ⑩ 章节 3a 认本页 untranslated_terms 记录（2026-10-24 Tyche/Evanotype 实录）---
+    pk = vr._page_keep_heads({"untranslated_terms": [
+        {"en": "Ylt", "reason": "保留英文"}, {"en": "evanoscope", "reason": "保留英文"},
+        {"en": "NoReason"}, {"en": "%%ORIG%%", "reason": "%%ORIGINAL_BLOCK_1%%"}]})
+    check("章节|页内记录并集", pk, {"ylt", "evanoscope"})
+    base_heads = {t.lower() for t in tr.load_keep_en()}
+    check("章节|记录词标题放行", len(vr._heading_problems(
+        "== Ylt ==\n正文段落\n", keep_heads=base_heads | pk)), 0)
+    check("章节|未记录真标题仍拦", len(vr._heading_problems(
+        "== History ==\n正文段落\n", keep_heads=base_heads | pk)), 1)
+    check("章节|缺理由记录不豁免", vr._page_keep_heads(
+        {"untranslated_terms": [{"en": "Ghost"}]}), set())
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0
