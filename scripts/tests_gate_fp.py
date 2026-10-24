@@ -295,6 +295,20 @@ def main():
         gsrc, gdst.replace("英姬玛是居住在破碎平原的一名女性，曾与阿多林等光眼种一同参加品酒会。",
                            "Inkima is a woman living on the plain with the others.")), True)
 
+    # --- ⑨ HTML 编辑批注不计（2026-10-24 Masha-daughter-Shaliv 实录）---
+    csrc = ("{{Infobox person\n| 名称 = Masha-daughter-Shaliv\n}}\n\n"
+            "Masha wrote the book about the journey and the order of these events "
+            "as told by Szeth and Kaladin's testimony.\n\n"
+            "<!--Please don't add speculation about what order this is-->\n\n"
+            "== History ==\n")
+    cdst = ("{{AITranslation}}\n{{Infobox person\n| 名称 = Masha-daughter-Shaliv\n}}\n\n"
+            "玛莎依据泽斯与卡拉丁的证词记述了这趟旅程的始末。{{epigraph ref|sa5|133}}"
+            "<!--Please don't add speculation about what order this is-->\n\n== 历史 ==\n")
+    check("lead|HTML批注不报", tr.untranslated_lead_english(csrc, cdst), False)
+    check("lead|真英文仍拦(含批注)", tr.untranslated_lead_english(
+        csrc, cdst.replace("玛莎依据泽斯与卡拉丁的证词记述了这趟旅程的始末。",
+                           "Masha wrote the book about the journey and the order.")), True)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0
