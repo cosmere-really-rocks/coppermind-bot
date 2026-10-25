@@ -85,6 +85,22 @@ def _page_keep_heads(data) -> set:
     return keep
 
 
+def _htxt_kept(htxt: str, _kh) -> bool:
+    """标题豁免：全文 / 消歧后缀基名 / 去年份尾 任一命中即属保留（2026-10-24 实录：
+    Masaka 'Nikaro (Painter)'←记录 Nikaro；Navani 'Jeseses 1174'←记录 Jeseses
+    （柔刹历法月份按页内记录保留英文），精确成员制漏豁免两型）。"""
+    _h = (htxt or "").strip().lower()
+    if not _h:
+        return False
+    if _h in _kh:
+        return True
+    if _h.split("(")[0].strip() in _kh:          # 消歧后缀基名
+        return True
+    if re.sub(r"[ \t]+\d{3,4}$", "", _h).strip() in _kh:  # 年份尾
+        return True
+    return False
+
+
 def _heading_problems(body: str, keep_heads=None) -> list:
     """3a 标题结构（2026-10-23 抽出直调）：a) 纯 ASCII 标题=漏翻（keep_en 豁免 +
     无源 5 条设计豁免） b) 开闭等号数不匹配。"""
@@ -103,7 +119,7 @@ def _heading_problems(body: str, keep_heads=None) -> list:
             n_head_bad += 1
         elif (re.fullmatch(r"[A-Za-z][A-Za-z0-9 ,:'&\-()]*", htxt or "")
               and re.search(r"[A-Za-z]{3}", htxt)
-              and htxt.lower() not in _kh
+              and not _htxt_kept(htxt, _kh)
               and htxt not in UNSCOURCED_HEADS):
             problems.append(f"[章节] 标题未译（第{hline}行）: {htxt!r}")
             n_head_bad += 1
@@ -343,7 +359,9 @@ def _field_half_problems(body: str, quote_spans, ut_terms=None) -> list:
         if re.search(r"[\u4e00-\u9fff]", ln) and re.search(r"[A-Za-z]{4,}", ln):
             # 字段行只判值（2026-10-20 修）：|world= / |prereq= 的 key 是模板/表格结构位，
             # 按设计英文——剔除 key 后只在 value 上做残留/夹杂信号；值全中文则整行跳过。
-            _k = re.match(r"^(\s*\|\s*[A-Za-z][\w \-]{0,40})=(.*)$", ln)
+            _k = re.match(r"^(\s*\|\s*['\"]?[A-Za-z][\w \-]{0,40})=(.*)$", ln)
+            # 撇号/引号前置键（|'world= 源站惯例，2026-10-24 Iriali 实录）同样属
+            # 结构位——原正则要求首字符为字母致键未剥、把 key 名 world 当值判残留
             src_ln = ("|" + _k.group(2)) if _k else ln
             if not re.search(r"[A-Za-z]{4,}", src_ln):
                 continue

@@ -366,6 +366,29 @@ def main():
     check("章节|控制组未记录不豁免",
           len(vr._heading_problems("\n== Odiums ==\n", keep_heads={"cinderheart"})), 1)
 
+    # --- ⑭ 章节标题消歧后缀/年份尾豁免（2026-10-24 Masaka/Navani 实录）---
+    check("章节|消歧后缀认基名记录",
+          len(vr._heading_problems("\n=== Nikaro (Painter) ===\n",
+                                   keep_heads={"nikaro", "painter"})), 0)
+    check("章节|年份尾认月份记录",
+          len(vr._heading_problems("\n=== Jeseses 1174 ===\n",
+                                   keep_heads={"jeseses"})), 0)
+    check("章节|消歧不吞未记录基名",
+          len(vr._heading_problems("\n=== Random (Stuff) ===\n",
+                                   keep_heads={"nikaro", "painter"})), 1)
+    check("章节|年份不吞未记录基名",
+          len(vr._heading_problems("\n=== Kaladin 1174 ===\n",
+                                   keep_heads={"jeseses"})), 1)
+    # --- ⑮ 撇号前置键剥除（2026-10-24 Iriali |'world= 实录）---
+    check("字段|撇号前置键当结构位",
+          len(vr._field_half_problems("\n|'world=未知\n", [])), 0)
+    # 字段半译仅判中英夹杂行（纯英文行按设计跳过）——控制组取真实杂夹形态
+    check("字段|撇号键值仍照拦",
+          len(vr._field_half_problems("\n|'world=未知 lands beyond here\n", [])), 1)
+    check("字段|普通键控制组",
+          len(vr._field_half_problems(
+              "|next=战争的结束<br />Beginning of the [[终极灭世]]\n", [])), 1)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0
