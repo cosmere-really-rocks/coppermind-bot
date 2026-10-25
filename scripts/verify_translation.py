@@ -123,14 +123,20 @@ def _interference_problems(body: str) -> list:
     return []
 
 
-def _prose_half_problems(body: str) -> list:
+def _prose_half_problems(body: str, ut_terms=None) -> list:
     """3c 正文半译（导语外散文行残留成句英文，≥6 个叙述性英文词）。
     2026-10-23 口径修正：词数前剔除行内 HTML 注释 <!-- … -->、HTML 标签
     <span style=…>/<sup>… 与裸 URL——span 样式词（span style font variant small
-    caps 恰 6 词）、行内说明注释、reddit 裸链实测 4 页 9 行误伤；正句英文照拦。"""
+    caps 恰 6 词）、行内说明注释、reddit 裸链实测 4 页 9 行误伤；正句英文照拦。
+    2026-10-24：ut_terms（_page_keep_heads）已记录保留词不计入（Dakwara's island
+    实录 dakwara×8 恰满 6 词阈值；与字段/导语/章节同口径），词边界同 translate 侧。"""
     problems = []
     _stops = getattr(tr, "_UNTRANSLATED_STOPWORDS", set())
     n_half = 0
+    _keep_pats = []
+    for _kt in sorted((str(k) for k in (ut_terms or set()) if k), key=len, reverse=True):
+        _pat = re.escape(_kt) + (r"s?" if not _kt.lower().endswith("s") else "")
+        _keep_pats.append(r"(?<![A-Za-z0-9])" + _pat + r"(?![A-Za-z0-9])")
     _masked_body = tr.mask_nonprose(body)
     for lidx, (orig_ln, mask_ln) in enumerate(zip(body.split("\n"),
                                                   _masked_body.split("\n")), 1):
@@ -147,6 +153,8 @@ def _prose_half_problems(body: str) -> list:
         l = re.sub(r"<!--.*?-->", " ", l)
         l = re.sub(r"<[^>]+>", " ", l)
         l = re.sub(r"https?://\S+", " ", l)
+        for _kp in _keep_pats:  # ut 记录保留词（词边界，dakwara 类原生名不计）
+            l = re.sub(_kp, " ", l, flags=re.I)
         words = re.findall(r"[A-Za-z]+", l)
         prose = [w for w in words
                  if w.lower() in _stops or w == w.lower()]
@@ -467,7 +475,7 @@ def check_one(title_en: str, wiki: str) -> list[str]:
     try:
         # 判定抽出为 _prose_half_problems（2026-10-23 口径修正：词数前剔除行内
         # HTML 注释/标签/裸 URL——span 样式词、行内说明注释、裸链 4 页 9 行误伤）
-        problems.extend(_prose_half_problems(body))
+        problems.extend(_prose_half_problems(body, ut_terms=_page_keep_heads(data)))
     except Exception:
         pass
 

@@ -343,6 +343,20 @@ def main():
     check("章节|碎片记录不入豁免", vr._page_keep_heads(
         {"untranslated_terms": [{"en": "{{b", "reason": "保留英文"}]}), set())
 
+    # --- ⑫ 正文半译认 ut 记录（2026-10-24 Dakwara's island 实录）---
+    hln = ("数千年后的太空时代，玛尔维什人看到洞穴和dakwara，认为这里就是垂贯点的所在地。"
+           "不久之后他们试图同时突破dakwara和所谓的死亡之洞，却以失败告终。"
+           "dakwara甚至摧毁了一架MW-232，他们随后又用dakwara诱饵设下陷阱，"
+           "但dakwara识破了计划，dakwara的巢穴最终也被发现。{{book ref|iote|39}}")
+    hbody = "\n\n" + hln + "\n\n== 注记 ==\n"
+    keep_dak = {"dakwara", "mw-232"}
+    check("半译|ut记录行不报", len(vr._prose_half_problems(hbody, ut_terms=keep_dak)), 0)
+    check("半译|无记录仍拦", len(vr._prose_half_problems(hbody)), 1)
+    check("半译|记录不吞真英文", len(vr._prose_half_problems(
+        "\n\nThey sailed across the western ocean searching for the lost city of "
+        "dakwara ruins in the age of the deep and found nothing at all.\n",
+        ut_terms=keep_dak)), 1)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0
