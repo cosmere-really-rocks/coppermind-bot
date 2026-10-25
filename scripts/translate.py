@@ -3018,6 +3018,10 @@ def resolve_blocks(registry, body: str, cfg, auto: bool, ctx: int = 160, glossar
             u["en"] = quote_inner_text(src, reverse)
             u["ref"] = extract_book_ref(src)
             u["has_ref"] = has_ref_any(src)
+            # 逐块入册（2026-10-24 Arts and Majesty 修：原先统一在循环尾入册，
+            #  空 columns 块会把上一块遗留的 quote unit 串入本块 → 找不到 line_i 崩溃）
+            units.append(u)
+            blk_units.setdefault(bi, []).append(u)
         elif blk["type"] == "columns":
             for li, ln in enumerate(src.splitlines()):
                 s = ln.strip()
@@ -3029,10 +3033,12 @@ def resolve_blocks(registry, body: str, cfg, auto: bool, ctx: int = 160, glossar
                      "type": "columns", "title": title,
                      "en": _clean_locate_text(title, reverse),
                      "ref": extract_book_ref(s), "has_ref": has_ref_any(s)}
+                # 每行都入册（原先只入最后一行：多行 columns 前几行被静默丢译，
+                #  原文块为模板被 mask 挡在门外禁看不见，实为静默质量损失）
+                units.append(u)
+                blk_units.setdefault(bi, []).append(u)
         else:
             continue
-        units.append(u)
-        blk_units.setdefault(bi, []).append(u)
     _locate_units(units, ctx)               # 1) 确定性定位（无 LLM）
     _resolve_text_units(units, cfg, ctx)    # 2) 同章批量采证 + 单条回退（LLM）
     _resolve_attributions(units, cfg, glossary)  # 3) 出处行页面级批量翻译（LLM）
@@ -3052,7 +3058,8 @@ def resolve_blocks(registry, body: str, cfg, auto: bool, ctx: int = 160, glossar
                                      "reason": u.get("reason")})
                 if u.get("found"):
                     found_n += 1
-                    rebuilt[u["line_i"]] = "*" + u["zh"]
+                    if u.get("line_i") is not None:  # 防御：非行级 unit 混入不崩
+                        rebuilt[u["line_i"]] = "*" + u["zh"]
             rebuilt_text = "\n".join(rebuilt) if found_n else None
             refu = next((u for u in us if u.get("ref")), None)
             entry = {
