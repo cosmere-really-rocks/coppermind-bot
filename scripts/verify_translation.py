@@ -65,10 +65,24 @@ UNSCOURCED_HEADS = {"Zeenid-daughter-Beth", "Molli", "The Child", "Formless", "V
 def _page_keep_heads(data) -> set:
     """本页 untranslated_terms 记录（带理由、非占位符条目）→ 小写词条集，
     与字段/导语 ut 豁免同语义（2026-10-24 Tyche 'Ylt' / Evanotype 'evanoscope'
-    实录：全局 keep_en 未收的页内保留词，章节 3a 同样应认页内记录）。"""
-    return {str(x.get("en")).lower() for x in (data.get("untranslated_terms") or [])
-            if isinstance(x, dict) and x.get("en") and x.get("reason")
-            and "%%" not in str(x.get("reason"))}
+    实录：全局 keep_en 未收的页内保留词，章节 3a 同样应认页内记录）。
+    - 模板碎片记录（'{{b'、含 '|'、'%' 开头）不是术语，禁入豁免；
+    - 消歧后缀基名：'lodestar_(technology)' 同时给基名 'lodestar'
+      （Aditil 实录：裸标题 Lodestar 与记录失配）。"""
+    keep = set()
+    for x in (data.get("untranslated_terms") or []):
+        if not (isinstance(x, dict) and x.get("en") and x.get("reason")
+                and "%%" not in str(x.get("reason"))):
+            continue
+        e = str(x.get("en")).lower().strip()
+        if e.startswith("{{") or e.startswith("%") or "|" in e:
+            continue
+        keep.add(e)
+        if "_(" in e:
+            keep.add(e.split("_(", 1)[0])
+        elif " (" in e:
+            keep.add(e.split(" (", 1)[0])
+    return keep
 
 
 def _heading_problems(body: str, keep_heads=None) -> list:
@@ -416,9 +430,8 @@ def check_one(title_en: str, wiki: str) -> list[str]:
     if _b2.startswith("{{CmPermission") or "{{Infobox" in _b2[:200]:
         try:
             # ut 豁免：untranslated_terms 已记录保留英文的术语不计入导语残留
-            _lead_keep = [x.get("en") for x in (data.get("untranslated_terms") or [])
-                          if isinstance(x, dict) and x.get("en")
-                          and x.get("reason") and "%%" not in str(x.get("reason"))]
+            # （复用 _page_keep_heads：含模板碎片过滤 + 消歧基名）
+            _lead_keep = _page_keep_heads(data)
             if tr.untranslated_lead_english(src, body, keep_terms=_lead_keep):
                 problems.append("[导语] 导语正文仍残留英文句子（只译标题未译正文）——"
                                 "按机制应带反馈重试后仍失败：写回前必须处理（重跑或人工补译）")

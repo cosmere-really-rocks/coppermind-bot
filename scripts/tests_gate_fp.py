@@ -322,6 +322,27 @@ def main():
     check("章节|缺理由记录不豁免", vr._page_keep_heads(
         {"untranslated_terms": [{"en": "Ghost"}]}), set())
 
+    # --- ⑪ ut 剥除词边界/碎片过滤 + 消歧基名（2026-10-24 Shob/Aditil 实录）---
+    bsrc = ("{{Infobox person\n| 名称 = Shob\n}}\n\n"
+            "Shob was a former soldier and deserter who served under Vstim. He was "
+            "known for talking too much about his imagined illnesses.\n\n== Appearance ==\n")
+    bdst = ("{{AITranslation}}\n{{Infobox person\n| 名称 = Shob\n}}\n\n"
+            "肖布是柔刹的一名前士兵兼逃兵，他因臆想疾病而话很多。{{book ref|sa3|27}}"
+            "{{book ref|sa3|40}}\n\n== 外貌 ==\n")
+    check("导语|碎片记录不咬模板", tr.untranslated_lead_english(
+        bsrc, bdst, keep_terms=["{{b", "ends"]), False)
+    check("导语|碎片记录不吞真英文", tr.untranslated_lead_english(
+        bsrc, "{{AITranslation}}\n\nShob was a soldier deserter who talked too much "
+             "about his imagined illnesses all day long.\n\n== 外貌 ==\n",
+        keep_terms=["{{b", "ends"]), True)
+    pk2 = vr._page_keep_heads({"untranslated_terms": [
+        {"en": "Lodestar_(technology)", "reason": "保留英文"}]})
+    check("章节|消歧基名并入", "lodestar" in pk2, True)
+    check("章节|消歧标题放行", len(vr._heading_problems(
+        "==== Lodestar ====\n正文\n", keep_heads=base_heads | pk2)), 0)
+    check("章节|碎片记录不入豁免", vr._page_keep_heads(
+        {"untranslated_terms": [{"en": "{{b", "reason": "保留英文"}]}), set())
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0

@@ -1756,10 +1756,15 @@ def untranslated_lead_english(src_text: str, translation: str,
     if keep_terms:
         # 长词先剥（Stone 会以子串吃掉 gemstones 里的 stones，反让长术语剥不到）
         # + 复数变体 s?（perfect gemstones 的复数形不留词尾 s 残渣）
+        # + 词边界（Shob 实录：垃圾记录 '{{b' 无边界会把 {{book ref 前缀咬断，
+        #   制造假残留；'gemstones' 类子串互噬也由边界根治）
         for _kt in sorted((k for k in keep_terms if isinstance(k, str) and k.strip()),
                           key=len, reverse=True):
             _kt = _kt.strip()
+            if _kt.startswith("{{") or _kt.startswith("%") or "|" in _kt:
+                continue  # 模板碎片/占位符记录不是术语，禁剥
             _pat = re.escape(_kt) + (r"s?" if not _kt.lower().endswith("s") else "")
+            _pat = r"(?<![A-Za-z0-9])" + _pat + r"(?![A-Za-z0-9])"
             src_lead = re.sub(_pat, " ", src_lead, flags=re.I)
             tr_lead = re.sub(_pat, " ", tr_lead, flags=re.I)
     if not src_lead.strip() or not tr_lead.strip():
