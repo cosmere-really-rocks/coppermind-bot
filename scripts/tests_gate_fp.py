@@ -389,6 +389,12 @@ def main():
           len(vr._field_half_problems(
               "|next=战争的结束<br />Beginning of the [[终极灭世]]\n", [])), 1)
 
+    # --- ⑯ 同行多字段内嵌键剔除（2026-10-24 Order×3 |surge-=X|surge+=Y 实录）---
+    check("字段|同行内嵌键当结构位",
+          len(vr._field_half_problems("\n|surge-=摩动|surge+=续延\n", [])), 0)
+    check("字段|同行内嵌键值仍照拦",
+          len(vr._field_half_problems("\n|surge-=摩动|surge+=Progression here\n", [])), 1)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0

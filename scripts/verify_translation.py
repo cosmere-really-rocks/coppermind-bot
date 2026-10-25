@@ -359,10 +359,13 @@ def _field_half_problems(body: str, quote_spans, ut_terms=None) -> list:
         if re.search(r"[\u4e00-\u9fff]", ln) and re.search(r"[A-Za-z]{4,}", ln):
             # 字段行只判值（2026-10-20 修）：|world= / |prereq= 的 key 是模板/表格结构位，
             # 按设计英文——剔除 key 后只在 value 上做残留/夹杂信号；值全中文则整行跳过。
-            _k = re.match(r"^(\s*\|\s*['\"]?[A-Za-z][\w \-]{0,40})=(.*)$", ln)
+            _k = re.match(r"^(\s*\|\s*['\"]?[A-Za-z][\w \-+]{0,40})=(.*)$", ln)
             # 撇号/引号前置键（|'world= 源站惯例，2026-10-24 Iriali 实录）同样属
-            # 结构位——原正则要求首字符为字母致键未剥、把 key 名 world 当值判残留
+            # 结构位——原正则要求首字符为字母致键未剥、把 key 名 world 当值判残留；
+            # 键字符类含 +/-（|surge-=X|surge+=Y，2026-10-24 Order 三页实录）
             src_ln = ("|" + _k.group(2)) if _k else ln
+            # 同行多字段：值段内嵌的 |key= 同属结构位键，一并剔除后再判残留（真值内 EN 照拦）
+            src_ln = re.sub(r"\|[A-Za-z][\w \-+]{0,40}=", "|", src_ln)
             if not re.search(r"[A-Za-z]{4,}", src_ln):
                 continue
             stripped = re.sub(r"\{\{[^{}]{0,512}\}\}", " ", src_ln)  # ③ 上限 150→512
