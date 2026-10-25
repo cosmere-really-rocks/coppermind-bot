@@ -90,6 +90,9 @@ def _heading_problems(body: str, keep_heads=None) -> list:
     无源 5 条设计豁免） b) 开闭等号数不匹配。"""
     if keep_heads is None:
         keep_heads = {t.lower() for t in tr.load_keep_en()}
+    # 标题单复数容差（2026-10-24 Sunheart：标题 == Cinderhearts == ← 页内记录
+    # Cinderheart；导语/正文 ut 剥除本有 s? 规则，此处原为精确成员漏豁免）
+    _kh = set(keep_heads) | {k + "s" for k in keep_heads}
     problems = []
     n_head_bad = 0
     for hm in re.finditer(r"^(={2,6})[ \t]*(.*?)[ \t]*(={2,6})[ \t]*$", body, re.M):
@@ -100,7 +103,7 @@ def _heading_problems(body: str, keep_heads=None) -> list:
             n_head_bad += 1
         elif (re.fullmatch(r"[A-Za-z][A-Za-z0-9 ,:'&\-()]*", htxt or "")
               and re.search(r"[A-Za-z]{3}", htxt)
-              and htxt.lower() not in keep_heads
+              and htxt.lower() not in _kh
               and htxt not in UNSCOURCED_HEADS):
             problems.append(f"[章节] 标题未译（第{hline}行）: {htxt!r}")
             n_head_bad += 1

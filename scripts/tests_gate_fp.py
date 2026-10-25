@@ -357,6 +357,15 @@ def main():
         "dakwara ruins in the age of the deep and found nothing at all.\n",
         ut_terms=keep_dak)), 1)
 
+    # --- ⑬ 章节标题单复数容差（2026-10-24 Sunheart 实录）---
+    sb_body = "\n== Cinderhearts ==\n正文。\n\n== Odiums ==\n正文。\n"
+    check("章节|标题复数认记录单数",
+          len(vr._heading_problems(sb_body, keep_heads={"cinderheart"})), 1)  # 只剩 Odiums
+    check("章节|无记录复数标题仍拦",
+          len(vr._heading_problems(sb_body, keep_heads=set())), 2)
+    check("章节|控制组未记录不豁免",
+          len(vr._heading_problems("\n== Odiums ==\n", keep_heads={"cinderheart"})), 1)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0
