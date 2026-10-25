@@ -395,6 +395,24 @@ def main():
     check("字段|同行内嵌键值仍照拦",
           len(vr._field_half_problems("\n|surge-=摩动|surge+=Progression here\n", [])), 1)
 
+    # --- ⑰ 导语 ut 豁免不得截断 URL（2026-10-24 The Sunlit Man 实录：keep 剥除
+    #     置于 strip_noise 前会把 www.kickstarter.com 空格切断，路径词露出凑满4词）---
+    url_src = ("'''Title''' is a long book about the release of the surprise four secret "
+               "novels by brandon sanderson on kickstarter, and the fiftieth book of the "
+               "author written in the cosmere. The campaign ran for months.")
+    url_dst = ("'''''标题'''''是布兰登·桑德森在 Kickstarter 众筹发布的四部秘密项目作品之一，"
+               "也是作者的第五十部作品，发生在三界宙。[https://www.kickstarter.com/projects/"
+               "dragonsteel/surprise-four-secret-novels-by-brandon-sanderson Kickstarter众筹活动]")
+    check("导语|URL路径词不因keep剥断URL",
+          tr.untranslated_lead_english(url_src, url_dst,
+                                       keep_terms={"kickstarter", "brandon"}), False)
+    check("导语|真英文句照拦",
+          tr.untranslated_lead_english(
+              url_src,
+              "布兰登的书一直如此，nevertheless he kept writing the rest of the english "
+              "sentence right here in the lead paragraph of this page about his book.",
+              keep_terms={"kickstarter", "brandon"}), True)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0

@@ -1739,9 +1739,34 @@ def untranslated_lead_english(src_text: str, translation: str,
         s = re.sub(r"[^\w\s.a-zA-Z\u4e00-\u9fff]", " ", s)
         return s
 
+    def _keep_patterns(keeps):
+        # ut 豁免（2026-10-24 Stone of Ten Dawns 实录）：untranslated_terms 已记录
+        # 「保留英文」的术语不计入残留（与字段检查 ut 豁免同语义），只对记录词生效。
+        # 长词先剥（Stone 会以子串吃掉 gemstones 里的 stones）+ 复数变体 s?（不留 s 残渣）
+        # + 词边界（Shob 实录：垃圾记录 '{{b' 无边界会把 {{book ref 前缀咬断，造假残留）；
+        # 模板碎片/占位符记录不是术语，禁剥。
+        # 2026-10-24 The Sunlit Man 实录：本剥除必须在 strip_noise **之后**——放 raw
+        # lead 上会把 URL 里的 kickstarter/brandon 换成空格，https?://\S+ 只吃空格前缀，
+        # 露出 com/projects/dragonsteel/sanderson 等路径词凑满 4 词阈值误报（裸判 0 词、
+        # 带 keep 反 9 词）。改为先噪剥、后 ut 剥，Stone/Shob 语义不变（剥的都在正文）。
+        pats = []
+        for _kt in sorted((k for k in (keeps or ()) if isinstance(k, str) and k.strip()),
+                          key=len, reverse=True):
+            _kt = _kt.strip()
+            if _kt.startswith("{{") or _kt.startswith("%") or "|" in _kt:
+                continue
+            _pat = re.escape(_kt) + (r"s?" if not _kt.lower().endswith("s") else "")
+            pats.append(r"(?<![A-Za-z0-9])" + _pat + r"(?![A-Za-z0-9])")
+        return pats
+
+    _keep_pats = _keep_patterns(keep_terms)
+
     def prose_word_count(text: str) -> int:
         """统计叙述性英文词数：全小写或命中停用词表的词（需译为中文的句子成分）。"""
-        tokens = re.findall(r"[A-Za-z]+", strip_noise(text))
+        _s = strip_noise(text)          # 1) 先剥噪音（URL/模板/标签/图库/批注…）
+        for _p in _keep_pats:           # 2) 再剥 ut 记录词（噪音已去，不再截断 URL）
+            _s = re.sub(_p, " ", _s, flags=re.I)
+        tokens = re.findall(r"[A-Za-z]+", _s)
         n = 0
         for tok in tokens:
             low = tok.lower()
@@ -1751,22 +1776,6 @@ def untranslated_lead_english(src_text: str, translation: str,
 
     src_lead = lead_region(src_text)
     tr_lead = lead_region(translation)
-    # ut 豁免（2026-10-24 Stone of Ten Dawns 实录）：untranslated_terms 已记录
-    # 「保留英文」的术语不计入残留（与字段检查 ut 豁免同语义），只对记录词生效
-    if keep_terms:
-        # 长词先剥（Stone 会以子串吃掉 gemstones 里的 stones，反让长术语剥不到）
-        # + 复数变体 s?（perfect gemstones 的复数形不留词尾 s 残渣）
-        # + 词边界（Shob 实录：垃圾记录 '{{b' 无边界会把 {{book ref 前缀咬断，
-        #   制造假残留；'gemstones' 类子串互噬也由边界根治）
-        for _kt in sorted((k for k in keep_terms if isinstance(k, str) and k.strip()),
-                          key=len, reverse=True):
-            _kt = _kt.strip()
-            if _kt.startswith("{{") or _kt.startswith("%") or "|" in _kt:
-                continue  # 模板碎片/占位符记录不是术语，禁剥
-            _pat = re.escape(_kt) + (r"s?" if not _kt.lower().endswith("s") else "")
-            _pat = r"(?<![A-Za-z0-9])" + _pat + r"(?![A-Za-z0-9])"
-            src_lead = re.sub(_pat, " ", src_lead, flags=re.I)
-            tr_lead = re.sub(_pat, " ", tr_lead, flags=re.I)
     if not src_lead.strip() or not tr_lead.strip():
         return False
     src_prose = prose_word_count(src_lead)
