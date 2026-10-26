@@ -1698,8 +1698,10 @@ def untranslated_lead_english(src_text: str, translation: str,
     3. 源里确有叙述性英文（≥4 词）且译文里仍残留相当叙述性英文（≥4 词）→ 判为「该翻的英文没翻成中文」。
     """
     def lead_region(text: str) -> str:
-        # 截到首个章节/分节/分号标题
-        seg = re.split(r"\n==|\n;", text)[0]
+        # 截到首个章节/分节/分号标题；无标题的表页（Allomancy/table 等实录）
+        # 旧口径会把整张表吞进导语，width/class/style/align 等表格属性字串
+        # （9 词）恒满 4 词阈值误报——首个表格行 \n{| 处同样截止（导语=散文区）
+        seg = re.split(r"\n==|\n;|\n\{\|", text)[0]
         # 去掉 Infobox 及头部 CmPermission：锚=最后一个单独 }} 行（2026-10-23 实测
         # WoA infobox 收尾无空行、紧贴 {{for}} 行，旧锚 "}}\n\n" 失效会把英文
         # Infobox 整段当导语误报；无单独 }} 行时回退旧锚，行为不变）
