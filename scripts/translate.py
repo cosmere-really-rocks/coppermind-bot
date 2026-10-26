@@ -1470,7 +1470,7 @@ def compute_chunk_line_starts(final_body: str, chunks: list, segments=None) -> l
 # --------------------------------------------------------------------------- #
 # OpenAI 兼容 chat completions（与 DSH 的 openai-completions 一致）
 # --------------------------------------------------------------------------- #
-def llm_chat(cfg: LLMConfig, messages, max_output_tokens=8000, temperature=0.2):
+def llm_chat(cfg: LLMConfig, messages, max_output_tokens=16000, temperature=0.2):
     """调用 OpenAI 兼容 /chat/completions。失败按指数退避重试。
 
     25-10-18 修复：默认发送 thinking={"type":"disabled"}，绕开 deepseek-v4-flash-0731
@@ -1598,7 +1598,7 @@ def parse_chunk_reply(content: str):
 
 
 def translate_chunk(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title: str, is_first: bool,
-                    gloss: dict | None = None, max_output_tokens: int = 8000,
+                    gloss: dict | None = None, max_output_tokens: int = 16000,
                     feedback: str | None = None):
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
@@ -1621,7 +1621,7 @@ def translate_chunk(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title
 
 def translate_chunk_with_retry(cfg: LLMConfig, chunk: Chunk, glossary_slice: dict, en_title: str,
                                is_first: bool, gloss: dict | None = None,
-                               max_output_tokens: int = 8000, max_retries: int = 2):
+                               max_output_tokens: int = 16000, max_retries: int = 2):
     """翻译一块；对 chunk0（导语）做「导语英文残留」校验，命中则带反馈重试。
 
     实测偶发 LLM 只翻标题+加 {{en}}、却把导语正文保留英文（Spook 重跑连续 3 次
@@ -1769,6 +1769,8 @@ def untranslated_lead_english(src_text: str, translation: str,
         tokens = re.findall(r"[A-Za-z]+", _s)
         n = 0
         for tok in tokens:
+            if len(tok) < 2:  # 单字母=数学乘号/单位（16x4096 的 x），非句子成分
+                continue
             low = tok.lower()
             if low in _UNTRANSLATED_STOPWORDS or tok == low:
                 n += 1
@@ -3135,7 +3137,7 @@ def main():
     ap.add_argument("--timeout", type=int, default=None,
                     help="单次 LLM 请求超时秒（默认读 LLM_TIMEOUT，否则 300）")
     ap.add_argument("--max-retries", type=int, default=3)
-    ap.add_argument("--max-output-tokens", type=int, default=8000, help="单块 LLM 最大输出 token（长块可调大）")
+    ap.add_argument("--max-output-tokens", type=int, default=16000, help="单块 LLM 最大输出 token（长块可调大）")
     ap.add_argument("--target-wiki", default=DEFAULT_WIKI)
     ap.add_argument("--no-resolve-quotes", action="store_true",
                     help="关闭原文块书证采证（默认开启：对 {{Quote}}/{{columns}} 按 book ref 采证中文）")

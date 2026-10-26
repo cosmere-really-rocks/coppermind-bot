@@ -413,6 +413,22 @@ def main():
               "sentence right here in the lead paragraph of this page about his book.",
               keep_terms={"kickstarter", "brandon"}), True)
 
+
+    # --- ⑱ 单字母/跨行注释/引号ut（2026-10-26 qwen 批 3 修）---
+    check("正文|数学乘号x不计词",
+          len(vr._prose_half_problems(
+              "目前最大数是 16x4096-1，即 15x4096 + 15x256 + 15x16 + 15x4096-1，"
+              "要表示更大的数我们并不知道。\n")), 0)
+    check("正文|跨行HTML注释不计词",
+          len(vr._prose_half_problems(
+              "<references /><!-- I'm pretty sure this is complete through sa3 and "
+              "sa3.5, something else here\nmore comment words continue here -->\n")), 0)
+    check("字段|引号ut词不误拦(信号B strip)",
+          len(vr._field_half_problems(
+              "\n| example = 仅当发 'chair' 音时使用，chaos 同理。\n", [],
+              ut_terms=[{"en": "chair", "reason": "示例"},
+                        {"en": "chaos", "reason": "示例"}])), 0)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0

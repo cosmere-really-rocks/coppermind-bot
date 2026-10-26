@@ -157,8 +157,12 @@ def _prose_half_problems(body: str, ut_terms=None) -> list:
         _pat = re.escape(_kt) + (r"s?" if not _kt.lower().endswith("s") else "")
         _keep_pats.append(r"(?<![A-Za-z0-9])" + _pat + r"(?![A-Za-z0-9])")
     _masked_body = tr.mask_nonprose(body)
-    for lidx, (orig_ln, mask_ln) in enumerate(zip(body.split("\n"),
-                                                  _masked_body.split("\n")), 1):
+    # 跨行 HTML 注释（Lopen 实录：<references /><!-- I'm pretty sure…\\n… --> 注释体
+    # 不在同一行、行内 <!--.*?--> 剥不到，正文裸露被计词）——先整体挖除注释再逐行判
+    _body_nc = re.sub(r"<!--.*?-->", " ", body, flags=re.S)
+    _masked_nc = tr.mask_nonprose(_body_nc)
+    for lidx, (orig_ln, mask_ln) in enumerate(zip(_body_nc.split("\n"),
+                                                  _masked_nc.split("\n")), 1):
         # ! 行=表格属性行（class/colspan/style 本为英文结构位）、<!-- -->=源注释
         # （读者不可见、按设计保留英文）——均不属正文半译（2026-10-20 修，level2 实测误伤）。
         if (not orig_ln or orig_ln[0] in "|={!" or orig_ln.startswith("[[category")
@@ -175,8 +179,10 @@ def _prose_half_problems(body: str, ut_terms=None) -> list:
         for _kp in _keep_pats:  # ut 记录保留词（词边界，dakwara 类原生名不计）
             l = re.sub(_kp, " ", l, flags=re.I)
         words = re.findall(r"[A-Za-z]+", l)
+        # len>=2：单字母是数学乘号/单位（16x4096-1 的 x×8 恰满阈值，Steel alphabet
+        # 实录误伤），不属「句子成分」；停用词同舍（阈值 6 无关紧要）
         prose = [w for w in words
-                 if w.lower() in _stops or w == w.lower()]
+                 if len(w) >= 2 and (w.lower() in _stops or w == w.lower())]
         if len(prose) >= 6:
             n_half += 1
             problems.append(f"[半译] 正文行残留成句英文（第{lidx}行）: {orig_ln.strip()[:76]}…")
@@ -410,7 +416,9 @@ def _field_half_problems(body: str, quote_spans, ut_terms=None) -> list:
                 #  称号与中文并列 → 不报；Lord 紧邻迷雾之子 → 报）；ut 已记录的
                 #  整段保留词（Tor books）或全由 ut 词构成的片段 = 设计不报。
                 _frag_low = frag.lower()
-                _frag_lowers = {w.lower() for w in words if not w[:1].isupper()}
+                # strip('")：'chair' 中 word=findall 会带尾引号（chair' ≠ ut 词
+                # chair，Steel alphabet 实录信号B 误拦）——与信号A 的 strip 同口径
+                _frag_lowers = {w.lower().strip("'") for w in words if not w[:1].isupper()}
                 if (adjacent_zh and lower_any and len(cap_words) <= 1
                         and _frag_low not in ut_phrases
                         and not (_frag_lowers and _frag_lowers <= ut_words)):
