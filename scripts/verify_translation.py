@@ -429,7 +429,11 @@ def _field_half_problems(body: str, quote_spans, ut_terms=None) -> list:
 
 def check_one(title_en: str, wiki: str) -> list[str]:
     problems = []
-    snap = Path("en_snapshot") / title_en
+    # 快照/产物目录恒为 `_`-清洗形态（title.replace("/","_")：translate/batch/write/
+    # fetch_en 同约定）；slash 页查原始嵌套路径必报"缺 translation.json"→ tail46 批
+    # 实录整页重跑×3 拒写死循环。_ 目录优先，旧裸路径兜底。
+    _san = Path("en_snapshot") / title_en.replace("/", "_")
+    snap = _san if _san.exists() else Path("en_snapshot") / title_en
     tl = snap / "translation.json"
     if not tl.exists():
         return [f"缺 translation.json: {title_en}"]
