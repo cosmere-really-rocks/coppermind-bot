@@ -224,6 +224,9 @@ GENERIC_EN_STOPLIST = {
     "origins", "sequence", "resolution", "sentry", "consortium", "governor",
     "governors", "senate", "citizen", "citizens", "butler", "crack", "rioting",
     "set", "sets",
+    # 2026-10-27：撞拆名人名 Crews Geffenry（crew 去尾复数归一命中 Crews=克鲁斯，
+    # 图片说明「With the crew of...」被译成「克鲁斯们」）。只拦小写形态，大写 Crews 照常命中。
+    "crew",
     "mark", "marks", "side", "back", "front", "top", "bottom", "left", "right", "old",
     "new", "good", "bad", "big", "small", "hard", "soft", "high", "low", "far",
     "near", "long", "short", "full", "empty", "open", "closed", "light", "dark",
@@ -1523,6 +1526,7 @@ SYSTEM_PROMPT = """你是一名精通「迷雾之子」(Mistborn) 系列英文�
 2.3【notice 模板参数要译】页首的提示框 `{{notice|style=...|b=引言|正文}}` 是**需翻译的自然语言**：`b=` 值（页面引言，多为 Brandon 语录）与无名字位置参数（剧透警告正文）都要整句译成简体中文，**不得残留整段英文**；`style=` 参数与模板名 `notice`、参数顺序原样保留。内链目标按译名表（如 [[Rosharan]]→[[柔刹]]、[[cosmere]]→[[三界宙]]）。若 notice 与其它模板嵌套（如 Hoid 页 `{{notice}}` 后紧跟 `{{theory}}`），各自独立处理。
 2.4【脚注说明要译】`<references>` 与 `<ref name="X">说明文字</ref>` 里的**脚注说明文字**属于需翻译的正文（引文/书证说明），要译成简体中文；但 `<ref>/<references>` 标签本身、`name=` 属性、`<ref name="X"/>` 自闭合用法一律原样保留（自闭合占位引用不展开、不译）。
 2.5【Infobox 值中普通英文要译】{{Infobox}} 的 `字段 = 值` 里，除模板 {{...}}、链接 [[...]]、引用、数字、图片文件名之外的自然语言——包括**普通英文短语**（如 `Several post-[[Catacendre]] noble houses` 里的 Several/noble houses 应译为 数个/贵族家族）——都必须译成简体中文，不得残留整段或半段英文。只有「译名表未收录的疑似专名」才保留英文并列入 untranslated_terms。
+2.6【图片说明要译】`{{Image|文件名|…|说明文字}}`（模板名大小写不敏感，也可能写成 `{{image}}`）里的**说明文字**——描述照片/画作内容的自然语言，位置可能紧跟文件名、也可能在 `side=`/`width=` 等设置参数之后——**必须整句译成简体中文，不得残留整段或半段英文**（如 `Plans of [[Kholinar Palace]], with the Oathgate on the left` 里 Plans/of/with/the/left 都要译掉）。保留：文件名与 `side=`/`width=`/`link=` 等设置参数原样；说明内的 `[[...]]` 内链、`{{book ref}}`、`''斜体''`、`<center>` 标签原样，且不要改动链接目标与显示文本（多为已译好的中文）。说明内专名同第 2 条：译名表有就用，未收录的保留英文。本条是规则 1 的例外——其余模板参数仍按第 1 条原样保留。
 3. 【原文引用不译】(决议#13)：文中可能出现形如 %%ORIGINAL_BLOCK_1%% 的占位符，它们是**小说原著引文**（台词/称号列表）的替身。**必须原样保留、不翻译、不增删、不改动**（管道自会填回英文原文）。除此之外，正常叙述正文照常翻译。
 3b.【引用占位符保留】文中可能出现形如 %%REF_0%% / %%REF_12%% / %%LINKLIST_0%% 的占位符，它们是**引用模板**（{{book ref|...}}/{{msh ref|...}}/{{Rpg ref|...}}/{{date|...}}）与 **infobox 纯内链字段**（children/relatives 等的 `[[A|B]], [[C|D]]` 链接列表）的替身（编号由管道自动填回，你接触不到原编号，也不要臆测内容）。**必须原样保留、不翻译、不增删、不改写**——包括 %%ORIGINAL_NAME%%（infobox 原名占位符）也一样原样保留。
 4. 【章节标题】== 章节 == / === 小节 === 标题翻译成简体中文；标题行顶格的等号数目与格式必须原样保留。

@@ -16,6 +16,7 @@
            Spook/Elendel/Catacendre 等（排除结构位置：原名/CmPermission/File:/Image 文件名/en 参数/quote 占位）。
   [半译]   infobox「字段 = 值」行内中英夹杂（如 `幸存者 of the Flames`、
            `Several ... noble houses`）——LLM 半译残留。
+  [图片说明] {{Image|...}} 的说明文字未译/半译（与英文源逐对对照；提示词规则 2.6）。
 """
 import argparse
 import json
@@ -282,7 +283,7 @@ STRUCT = [
     r"\| 原名\s*=",          # infobox 原名
     r"\{\{CmPermission\|",   # 页权模板
     r"\[\[File:",            # 文件
-    r"\{\{Image\|",          # 图像模板文件名/参数区（整体跳过，单独看 caption）
+    r"\{\{Image\|",          # 图像模板文件名/设置参数区豁免（说明文字由 _image_caption_problems 专查）
     r"\{\{en\|",             # 英文名标注
     r"\{\{ensync\|",
 ]
@@ -326,6 +327,114 @@ FUNC_WORDS = {"of", "the", "a", "an", "in", "on", "for", "to", "and", "or", "at"
               # …des Radieux）实测 4 处误伤 Words of Radiance。只豁免该词本身，
               # 其余小写内容词照判（contes/several 等仍拦）。
               "des"}
+
+
+# ---- 3d) 图片说明（{{Image|...}} caption，2026-10-27 补）-----------------------------
+# 说明文字属正文（提示词规则 2.6 要求整句译中文）；STRUCT 只豁免文件名与设置参数。
+# 与英文源（convert 后）的说明逐对对照：剥掉链接/模板/标签后文本相同 = 一个字没译
+#（短说明也能抓到）；不同但残留叙述性英文词 = 半译。说明内保留英文专名不算。
+_IMG_TPL_RE = re.compile(r"\{\{\s*Image\s*\|", re.I)
+_IMG_BARE_OPT_RE = re.compile(
+    r"^\s*(?:\d+px|left|right|center|thumb|frame|frameless|border|none|upright(?:=\d+(?:\.\d+)?)?|page\d*)\s*$",
+    re.I)
+_IMG_NAMED_RE = re.compile(r"^\s*[A-Za-z_][\w-]*\s*=")
+_IMG_FILELIKE_RE = re.compile(
+    r".*\.(jpe?g|png|gif|webp|svg|tif|bmp)$", re.I)  # 以图片扩展名结尾=文件名
+# （2026-10-27：前缀 `.*` 必须有——调用点用 .match() 行首锚，裸 `\.(...)$` 永不匹配。）
+
+
+def _extract_image_captions(text: str) -> list[str]:
+    """按出现顺序取每个 {{Image|...}} 的说明位置参数（跳过文件名/裸设置项/命名参数）。"""
+    caps = []
+    for m in _IMG_TPL_RE.finditer(text):
+        # depth 初值=1：m 已吞外层 `{{`（2026-10-27：初值 0 会把嵌套 {{book ref}} 的
+        # `}}` 当外层闭合，说明截断在 `{{book ref|sa2|16` → 全中文说明误判"待译/残留"）
+        depth, i, end = 1, m.end(), -1
+        while i < len(text):                      # 括号平衡取模板全文（caption 可嵌 {{book ref}}）
+            if text.startswith("{{", i):
+                depth += 1; i += 2
+            elif text.startswith("}}", i):
+                depth -= 1; i += 2
+                if depth <= 0:
+                    end = i; break
+            else:
+                i += 1
+        if end < 0:
+            end = len(text)
+        inner = text[m.end():end - 2] if end > 0 else text[m.end():]
+        # 顶层 | 切分（嵌套模板内的 | 不切；2026-10-27 补 [[]] 深度——链接竖线如
+        # [[Trell (Trellism)|Trell]] 不得当参数分隔切开说明）
+        args, cur, d, ld = [], [], 0, 0
+        j = 0
+        while j < len(inner):
+            if inner.startswith("{{", j):
+                d += 1
+            elif inner.startswith("}}", j):
+                d -= 1
+            elif inner.startswith("[[", j):
+                ld += 1
+            elif inner.startswith("]]", j):
+                ld -= 1
+            if inner[j] == "|" and d == 0 and ld <= 0:
+                args.append("".join(cur)); cur = []
+            else:
+                cur.append(inner[j])
+            j += 1
+        args.append("".join(cur))
+        # MW 语义：`|side=right` 是**命名参数不占位次**，未命名位置参数才是 {{1}}{{2}}…
+        # （2026-10-27：`|side=|width=|文件名|说明` 形态下旧逻辑跳 args[0] 把文件名当
+        # 说明，天颂/奇里奇里 2 例误译文件名已回滚）。先过滤未命名参数，pos[0]=文件名。
+        pos = [a for a in args if not _IMG_NAMED_RE.match(a)]
+        for a in pos[1:]:                         # pos[0] = 文件名（模板契约 {{1}}）
+            if _IMG_BARE_OPT_RE.match(a) or _IMG_FILELIKE_RE.match(a.strip()):
+                continue                          # 裸宽度设置 / 文件名形态都不是说明
+            caps.append(a.strip())
+    return caps
+
+
+def _cap_norm(s: str) -> str:
+    """说明纯文本归一：剥链接/模板/标签/斜体记号，压空白——中英只比叙述性文字。"""
+    s = _WIKILINK_RE.sub("", s)
+    s = re.sub(r"\{\{[^{}]*\}\}", "", s)
+    s = re.sub(r"\{\{.*?\}\}", "", s, flags=re.S)
+    s = re.sub(r"<[^>]+>", "", s)
+    s = s.replace("''", "").replace("'''", "")
+    return re.sub(r"\s+", " ", s).strip(" ,.，。")
+
+
+def _cap_en_words(s: str, keep_set: set) -> int:
+    """说明里残留的叙述性英文词：虚词（of/the…）或全小写内容词；保留专名（keep_en/已记录
+    保留词）不算。首字母大写的专名不计——译名表外留英文是设计。"""
+    n = 0
+    for w in re.findall(r"[A-Za-z']+", s):
+        lw = w.lower()
+        if lw in keep_set:
+            continue
+        if lw in FUNC_WORDS or (w.islower() and len(w) >= 3):
+            n += 1
+    return n
+
+
+def _image_caption_problems(conv: str, body: str, keep_set=None) -> list:
+    """图片说明未译/半译（与英文源 convert 后逐对对照）。"""
+    src_caps = _extract_image_captions(conv)
+    if not src_caps:
+        return []
+    out_caps = _extract_image_captions(body)
+    problems = []
+    if len(out_caps) != len(src_caps):
+        problems.append(f"[图片说明] Image 模板说明数不一致：英文源 {len(src_caps)} vs 产物 {len(out_caps)}")
+    keep = keep_set or set()
+    for idx, (sc, oc) in enumerate(zip(src_caps, out_caps)):
+        sn, on = _cap_norm(sc), _cap_norm(oc)
+        if not on:
+            continue
+        en_words_total = len(re.findall(r"[A-Za-z']+", on))
+        if sn == on and en_words_total >= 2:
+            problems.append(f"[图片说明] 未译（第{idx + 1}张图）: {on[:88]!r}")
+        elif sn != on and _cap_en_words(on, keep) >= 2:
+            problems.append(f"[图片说明] 半译（第{idx + 1}张图）← 残留: {on[:80]!r}")
+    return problems
 
 
 def _field_half_problems(body: str, quote_spans, ut_terms=None) -> list:
@@ -512,6 +621,16 @@ def check_one(title_en: str, wiki: str) -> list[str]:
         # 判定抽出为 _prose_half_problems（2026-10-23 口径修正：词数前剔除行内
         # HTML 注释/标签/裸 URL——span 样式词、行内说明注释、裸链 4 页 9 行误伤）
         problems.extend(_prose_half_problems(body, ut_terms=_page_keep_heads(data)))
+    except Exception:
+        pass
+
+    # 3d) 图片说明未译/半译（{{Image|...}} 说明属正文，提示词规则 2.6；STRUCT 只豁免
+    #     文件名与设置参数）。与英文源（convert 后）说明逐对对照：同文本=未译、
+    #     残留叙述性英文词=半译；保留专名按 keep_en/本页 untranslated_terms 豁免。
+    try:
+        problems.extend(_image_caption_problems(
+            conv, body,
+            keep_set={t.lower() for t in tr.load_keep_en()} | _page_keep_heads(data)))
     except Exception:
         pass
 

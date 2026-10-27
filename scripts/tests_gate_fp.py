@@ -429,6 +429,55 @@ def main():
               ut_terms=[{"en": "chair", "reason": "示例"},
                         {"en": "chaos", "reason": "示例"}])), 0)
 
+    # --- ⑲ 图片说明 [图片说明]（2026-10-27 图注中文化：提示词规则 2.6 配套门禁）---
+    cap_conv = ("{{Image|Kholinar palace plans.png|side=right|width=350px|"
+                "Plans of [[Kholinar Palace]], with the Oathgate on the left}}\n")
+    cap_out_en = ("{{Image|Kholinar palace plans.png|side=right|width=350px|"
+                  "Plans of [[塔冠城王宫]], with the Oathgate on the left}}\n")
+    check("图注|链接译了正文未译照拦", len(vr._image_caption_problems(cap_conv, cap_out_en)), 1)
+    cap_out_zh = ("{{Image|Kholinar palace plans.png|side=right|width=350px|"
+                  "[[塔冠城王宫]]的平面图，左侧为[[誓约之门]]}}\n")
+    check("图注|全译放行", len(vr._image_caption_problems(cap_conv, cap_out_zh)), 0)
+    # 中文语序重排链接 = 合法翻译（多重集比对，不得误拦）
+    check("图注|语序移位链接不误拦", len(vr._image_caption_problems(
+        "{{Image|x.png|A depiction of [[阿多拿西]] with the [[神瑛]]s}}\n",
+        "{{Image|x.png|[[神瑛]]与[[阿多拿西]]的描绘}}\n")), 0)
+    # 链接竖线 [[Trell (Trellism)|Trell]] 不得把说明当参数切开（2026-10-27 实录 bug）
+    check("图注|链接竖线不截断",
+          vr._extract_image_captions(
+              "{{Image|x.png|[[Trell (Trellism)|Trell]]'s power on [[司卡德瑞尔]]}}")[0],
+          "[[Trell (Trellism)|Trell]]'s power on [[司卡德瑞尔]]")
+    # keep_en 保留词不计残留（与门禁其它节同口径豁免）
+    check("图注|保留词不误拦", len(vr._image_caption_problems(
+        "{{Image|x.png|Prasanva in armor}}\n", "{{Image|x.png|身着盔甲的 Prasanva}}\n",
+        keep_set={"prasanva"})), 0)
+    # ⑳ named 参数在前不占位次（2026-10-27 天颂/奇里奇里实录：旧逻辑把文件名当时说明）
+    check("图注|named在前取对说明",
+          vr._extract_image_captions(
+              "{{Image|side=right|width=300px|Ambush by Ernanda Souza.jpg|"
+              "The dark side of Canticle, depicting Canticlite Flora}}"),
+          ["The dark side of Canticle, depicting Canticlite Flora"])
+    check("图注|纯文件名行无说明",
+          vr._extract_image_captions(
+              "{{Image|side=left|width=200px|Aboard the Wandersail.jpg}}"), [])
+    check("图注|文件名不当未译拦", len(vr._image_caption_problems(
+        "{{Image|side=right|width=300px|Ambush by Ernanda Souza.jpg|"
+        "The dark side of Canticle}}\n",
+        "{{Image|side=right|width=300px|Ambush by Ernanda Souza.jpg|"
+        "坎提克利的暗面，描绘其动植物与天环}}\n")), 0)
+    # ㉑ 嵌套模板不得触发外层早闭（2026-10-27 depth=0 实录 bug：说明被截断在
+    #     `{{book ref|sa2|16` → 全中文说明因露词被误判"待译/残留英文"）
+    check("图注|嵌套book ref不截断",
+          vr._extract_image_captions(
+              "{{Image|Practice Grounds.jpg|side=right|width=300px|"
+              "一名光眼种碎瑛武士在阿勒斯卡的练习场上{{book ref|sa2|16}}}}"),
+          ["一名光眼种碎瑛武士在阿勒斯卡的练习场上{{book ref|sa2|16}}"])
+    check("图注|嵌套ref中文说明不误拦", len(vr._image_caption_problems(
+        "{{Image|Practice Grounds.jpg|side=right|width=300px|"
+        "一名光眼种碎瑛武士在阿勒斯卡的练习场上{{book ref|sa2|16}}}}\n",
+        "{{Image|Practice Grounds.jpg|side=right|width=300px|"
+        "一名光眼种碎瑛武士在阿勒斯卡的练习场上{{book ref|sa2|16}}}}\n")), 0)
+
     total = passed + failed
     print("%d/%d passed" % (passed, total))
     return 1 if failed else 0
