@@ -443,9 +443,9 @@ coppermind/
 6. **`艾欧符文` 页 39 处 `''Examples:''` 英文残留**：属未翻译导语残留，按决议 #13/#9 处理（可译部分中文化）。
 7. **`艾欧符文` 1 处畸形 `{{Quote|Fire, Warmth |Ars Arcanum{{book ref…`**：括号不闭合（pre-existing），需修复。
 8. **书封 200→300px 推送**（2026-10-2x 会话）：4 个原生模板 17 个书封进 `图像` 槽并 300px（convert 侧已提交 `ea295ac`），**页面/模板侧推送待用户批准**。
-9. **`模板:Event` name-bar 推送**：name-bar 指令（ZH+EN 进 `image`）已定；模板页复核**已无保护**（2026-10-27），待推送。
-10. **`Template:Character` en-version 标记复用**（决议 #3 注，⬜ 待讨论如何落地）。
-11. **低频待定模板**：`dialogue`（对话横幅）建否待定；风暴光低频 pending 见 `rules/template_probe_resolution.md`。
+9. **`Template:Character` en-version 标记复用**（决议 #3 注，⬜ 待讨论如何落地）。
+10. **低频待定模板**：`dialogue`（对话横幅）建否待定；风暴光低频 pending 见 `rules/template_probe_resolution.md`。
+11. **事件框既知不扩项（2026-10-27 推送轮记录）**：`Quote`/`sidequote` 站原生（2016/2017，无引擎出处、护栏禁改）在 伪灭世/迦维拉尔·寇林遇刺事件 两页正文漏出 `width`/`{{{4}}}` 残渣（占领页同族在样式属性内不可见）；book ref 引脚 `id` 内 `{{{2}}}` 字面（两侧一致锚点仍可跳转）；`date=Vev 1175`/`c.`/`Doxil,` 与 EN 逐字 parity 保留；Komashi/Nagadan/Kilahito/Futinoro 与 dominance 行 EN 值 = 站内无 ZH 目标页（红链按既有地名标签惯例）；`陆沙德围城`（老页，无信息框）与 map 目标 `陆沙德围城战` 同指 EN Siege of Luthadel —— 重复页待合并/重定向裁定。
 
 ## ✅ 已完成摘要（详见过往小节 / git log / `state/` 档案）
 
@@ -455,4 +455,5 @@ coppermind/
 - **`艾欧符文` gallery 图名修复**：53 节对齐 EN，站上 32 + 新搬 21 = **53/53 实存**、渲染全出图、0 文件红链（账目 `state/aon_relink_plan.json`/`aon_existence.json`/`aon_fetch_result.json`）；本页 gallery 衬底已用页级 CSS 去除（`MediaWiki:Common.css`：皮肤 `var(--modal)=#222` 压黑线稿不可读）。
 - **`{{glossary ref}}` 本地化**：子页 `glossary`→`名词`、脚注改中文，132 处模板级生效（旧红链 0，`#O` 锚可解析）。
 - **图片说明中文化（2026-10-27）**：528 页 /1227 个 `{{Image}}` 英文说明**复扫 0 未译**——三件套：A 提示词规则 2.6（后续翻译页图注必译）+ crew 停用词；B 门禁新增 `3d [图片说明]` 专查（回归 98/98）；C 回填 `scripts/fix_image_captions.py`（**掩码不变量**只动说明 + 写前 parse 冒烟 + 逐条旧→新账本 `state/image_caption_fix_status.jsonl` 可逐条回滚；累计 878 对（875 脚本 +1 手工 +2 例文件名误译回滚 revid 30731/30732）。6 个提取/校验真 bug 的处置详见报告档 §10.5。
+- **`模板:Event` 信息框化推送（2026-10-27，用户报障「占领乌有斯麓 event 渲染不对」根修）**：根因 = 站上 模板:Event 仍是 2015 导航条（吞掉全部信息框参数 → 框从不渲染）。推送链 5 件：`模板:Event`（30091→**30752**，EN 对等：SMW `#show` 原名名条 + 照片 300px + 属于/日期/参与者/影响/城市…宇宙 19 行、空行自隐、`demonym` 缺件剔除）+ `模板:Toponym link`（→**30751**，`{{ucfirst}}` 剥壳残余 `}}` 泄漏根修）+ `模板:Toponym`（→**30753**，剥 `</includeonly>` 后尾随 `\n`——它让 `{{toponym}}` 输出带换行进 `[[ ]]` 目标位被链接解析拒绝 → 信息框世界行漏字面 `[[Roshar |Roshar ]]`，place tag 走 `{{tag}}` 路径本就不受影响，改此 1 件零外溢）+ `模板:Peoples`（→**30773**，LBL 补口标签中译）。引擎侧（`state/build_zh_templates.py`，本地档不入库）：LBL 新增 日期/参与者/影响/地点/国家/公国/`Part of the `→属于（全库词频审计仅命中 Event/Peoples/Vehicle，无 `{{{大写参}}}` 破参数风险）+ `demonym` 表达式剔除（实测旧源会把字面 `[[分类:红链模板:Demonym]]` 漏正文）。页面侧：3 个纯导航用点 `{{event|title|prev|next}}`→`{{history}}` 1:1 迁移（复仇誓约/最终升华/陆沙德围城，终审视觉不变）+ **19 页** EN 残留清（`world=[[X]]` 套娃 3、`world=Roshar/Scadrial`→柔刹/司卡德瑞尔 11、city Kholinar/T'Telir/Torio City→塔冠城/特特利尔/Torio城、region Makabak→马卡巴克、participants `[[Nightmare]]s`→[[梦魇]]、占领页 `title=The` 剔除 + `Anti-lights`→[[光能#反光|反光]]）。验收：**60/60** 反链页新框全出、0 demonym 残、0 字面 `[[]]`、0 EN 世界值；date 值与 EN 逐字同（parity 不动）；模板三重护栏与回滚档 `state/rollback_20261027/` 全程在案。
 - **复核注记**：`#var_final:en` 站点级复核**正常**（`{{en}}` 必定义 + `ensure_en_tag` 兜底；仅「同 parse 无定义」才泄 UNIQ，源码层 UNIQ/QINU 残留=0）——历史「35 UNIQ 页」问题不复现。
