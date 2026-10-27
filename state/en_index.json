@@ -86380,5 +86380,2516 @@
       "files": [],
       "categories": []
     }
+  },
+  "(novella)/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Analysis": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Edgedancer": {
+    "revid": 182707,
+    "ts": "2023-07-22T03:07:50Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Edgedancer",
+    "assets": {
+      "templates": [
+        "disambig"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Elantris": {
+    "revid": 146943,
+    "ts": "2021-03-06T19:01:30Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Elantris",
+    "assets": {
+      "templates": [
+        "disambig"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "(book)/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Mistborn/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Oathbringer/Chapter": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Index": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Oathbringer/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Of": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "War/Chapter": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "War/Epigraphs": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "War/Headings": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "War/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Shadows": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Self/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "The": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Alloy": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Law/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Bands": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Mourning/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Emperor's": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Soul/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Hero": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Ages/Epigraphs": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Ages/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Hope": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Elantris/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Lost": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Metal/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Archive/Back": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Cover": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Text": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Archive/Keteks": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Archive/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Way": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Kings/Chapter": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Kings/Epigraphs": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Kings/Headings": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Kings/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Well": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Ascension/Epigraphs": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Ascension/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Warbreaker/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "And": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Truth/Epigraphs": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Truth/Headings": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Truth/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Words": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Radiance/Chapter": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Radiance/Epigraphs": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Radiance/Headings": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Radiance/Statistical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Elantris": {
+    "revid": 170023,
+    "ts": "2022-11-21T00:18:09Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Elantris",
+    "assets": {
+      "templates": [
+        "PAGENAME",
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Warbreaker": {
+    "revid": 170043,
+    "ts": "2022-11-21T00:31:05Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Warbreaker",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:White Sand": {
+    "revid": 185040,
+    "ts": "2023-09-26T21:58:14Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:White Sand",
+    "assets": {
+      "templates": [
+        "PAGENAME",
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Cosmere": {
+    "revid": 222795,
+    "ts": "2026-07-06T01:12:21Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Cosmere",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Emberdark": {
+    "revid": 215277,
+    "ts": "2025-07-07T15:59:41Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Emberdark",
+    "assets": {
+      "templates": [
+        "PAGENAME",
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Mistborn Era 2": {
+    "revid": 171006,
+    "ts": "2022-12-03T05:36:26Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Mistborn Era 2",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Fires of December": {
+    "revid": 226665,
+    "ts": "2026-09-25T13:29:19Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Fires of December",
+    "assets": {
+      "templates": [
+        "PAGENAME",
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Sunlit Man": {
+    "revid": 190550,
+    "ts": "2024-03-12T22:26:35Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Sunlit Man",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Shadows for Silence": {
+    "revid": 170033,
+    "ts": "2022-11-21T00:24:29Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Shadows for Silence",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Shardworld": {
+    "revid": 193790,
+    "ts": "2024-04-23T21:00:37Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Shardworld",
+    "assets": {
+      "templates": [
+        "!",
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "for",
+        "infobox",
+        "row/image+artist",
+        "row/kv",
+        "{{{gravity",
+        "{{{map",
+        "{{{map-artist",
+        "{{{perpendicularity",
+        "{{{radius",
+        "{{{system",
+        "{{{toc"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Mistborn Era 1": {
+    "revid": 170149,
+    "ts": "2022-11-21T00:52:53Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Mistborn Era 1",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Radiant": {
+    "revid": 207282,
+    "ts": "2025-01-02T01:15:38Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Radiant",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "for",
+        "infobox",
+        "radiant/surge row",
+        "row/image",
+        "row/kv",
+        "symbol",
+        "{{{order",
+        "{{{spren"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Perpendicularity": {
+    "revid": 190798,
+    "ts": "2024-03-15T18:44:11Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Perpendicularity",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "for",
+        "infobox",
+        "row/image+artist",
+        "row/kv",
+        "tag",
+        "{{{city",
+        "{{{country",
+        "{{{era",
+        "{{{image",
+        "{{{image-artist",
+        "{{{region",
+        "{{{world"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Yumi": {
+    "revid": 182867,
+    "ts": "2023-07-23T16:24:26Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Yumi",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:T'Telir": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Glossary ref": {
+    "revid": 164752,
+    "ts": "2022-05-22T05:42:02Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Glossary ref",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "b",
+        "for",
+        "ref",
+        "ref/uses-post",
+        "ref/uses-pre",
+        "t",
+        "{{{post",
+        "{{{pre"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Rosharan numeric date": {
+    "revid": 119856,
+    "ts": "2020-04-19T08:54:12Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Rosharan numeric date",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "number",
+        "t",
+        "{{{2",
+        "{{{3",
+        "{{{4",
+        "{{{day",
+        "{{{month",
+        "{{{week",
+        "{{{year"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Peoples": {
+    "revid": 226015,
+    "ts": "2026-09-13T19:29:19Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Peoples",
+    "assets": {
+      "templates": [
+        "<!--\n  -->{{{earth",
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "docs",
+        "docs/image",
+        "docs/row/optional",
+        "docs/universe",
+        "docs/world",
+        "earth tag",
+        "for",
+        "infobox",
+        "infobox/no-world",
+        "place tag",
+        "raw/city",
+        "raw/nation",
+        "raw/region",
+        "raw/state",
+        "raw/world",
+        "row/image+artist",
+        "row/kv",
+        "t",
+        "tag",
+        "{{{'city",
+        "{{{'nation",
+        "{{{'region",
+        "{{{'state",
+        "{{{'world",
+        "{{{city",
+        "{{{dominance",
+        "{{{earth",
+        "{{{image",
+        "{{{image-artist",
+        "{{{location",
+        "{{{nation",
+        "{{{princedom",
+        "{{{region",
+        "{{{species",
+        "{{{state",
+        "{{{universe",
+        "{{{world"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Adaptations": {
+    "revid": 227203,
+    "ts": "2026-10-06T00:08:18Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Adaptations",
+    "assets": {
+      "templates": [
+        "navbox",
+        "row/kv"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Stormlight Headers Row": {
+    "revid": 220178,
+    "ts": "2026-02-10T23:07:59Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Stormlight Headers Row",
+    "assets": {
+      "templates": [
+        "!",
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "book link",
+        "for",
+        "icon",
+        "t",
+        "{{{5}}}",
+        "{{{6",
+        "{{{7",
+        "{{{8",
+        "{{{chaptertype}}}",
+        "{{{no-heralds"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:!": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:/row": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:/num-row": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:/table": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Metallic arts": {
+    "revid": 210695,
+    "ts": "2025-01-31T01:42:34Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Metallic arts",
+    "assets": {
+      "templates": [
+        "cat ns",
+        "navbox",
+        "row/kv",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Interlang": {
+    "revid": 165082,
+    "ts": "2022-05-24T01:51:42Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Interlang",
+    "assets": {
+      "templates": [
+        "{{{1}}}"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:History": {
+    "revid": 169931,
+    "ts": "2022-11-20T22:28:59Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:History",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "for",
+        "missing/required",
+        "row/header",
+        "{{{next",
+        "{{{prev"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Planetary system": {
+    "revid": 190799,
+    "ts": "2024-03-15T18:44:54Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Planetary system",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "for",
+        "infobox",
+        "row/image+artist",
+        "row/kv",
+        "{{{image",
+        "{{{image-artist"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Place tag": {
+    "revid": 218376,
+    "ts": "2025-10-05T01:56:14Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Place tag",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t",
+        "tag",
+        "toponym",
+        "{{toponym"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Vehicle": {
+    "revid": 190804,
+    "ts": "2024-03-15T18:49:07Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Vehicle",
+    "assets": {
+      "templates": [
+        "<!-- -->{{{earth",
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "for",
+        "info/^ref",
+        "info/creator",
+        "info/creators",
+        "info/earth",
+        "info/owner",
+        "info/owners",
+        "info/type",
+        "info/universe",
+        "info/world",
+        "infobox",
+        "missing/world",
+        "raw/world",
+        "row/image+artist",
+        "row/kv",
+        "t",
+        "toponym link",
+        "{{{'world",
+        "{{{^world",
+        "{{{captain",
+        "{{{creator",
+        "{{{creators",
+        "{{{earth",
+        "{{{image",
+        "{{{owner",
+        "{{{owners",
+        "{{{type",
+        "{{{universe",
+        "{{{world"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Media": {
+    "revid": 169963,
+    "ts": "2022-11-20T22:53:30Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Media",
+    "assets": {
+      "templates": [
+        "!",
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "docs",
+        "docs/image",
+        "docs/row/optional",
+        "for",
+        "infobox",
+        "raw/publisher",
+        "row/image+artist",
+        "row/kv",
+        "t",
+        "{{{'publisher",
+        "{{{annotation",
+        "{{{annotations",
+        "{{{image",
+        "{{{image-artist",
+        "{{{prequel",
+        "{{{publisher",
+        "{{{publisher-raw",
+        "{{{released",
+        "{{{sequel",
+        "{{{series",
+        "{{{setting"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Deleted": {
+    "revid": 120173,
+    "ts": "2020-04-19T20:23:14Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Deleted",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "notice"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Missing/world": {
+    "revid": 125505,
+    "ts": "2020-06-25T18:14:48Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Missing_world",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Attention": {
+    "revid": 120166,
+    "ts": "2020-04-19T20:21:09Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Attention",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "notice"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Spoilers": {
+    "revid": 215678,
+    "ts": "2025-07-13T06:13:52Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Spoilers",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "b",
+        "for",
+        "notice",
+        "t",
+        "{{{1",
+        "{{{2",
+        "{{{3",
+        "{{{4",
+        "{{{5",
+        "{{{6",
+        "{{{7",
+        "{{{text"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Merge": {
+    "revid": 120179,
+    "ts": "2020-04-19T20:24:30Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Merge",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "notice",
+        "{{{1"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Unpublished": {
+    "revid": 182540,
+    "ts": "2023-07-20T15:14:23Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Unpublished",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "notice"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Disputed": {
+    "revid": 120174,
+    "ts": "2020-04-19T20:23:25Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Disputed",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Move": {
+    "revid": 120181,
+    "ts": "2020-04-19T20:25:16Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Move",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "notice"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Row": {
+    "revid": 120203,
+    "ts": "2020-04-19T20:35:07Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Row",
+    "assets": {
+      "templates": [
+        "!",
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "{{{1",
+        "{{{2",
+        "{{{3",
+        "{{{4",
+        "{{{5",
+        "{{{6",
+        "{{{7",
+        "{{{8",
+        "{{{9"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Navbox": {
+    "revid": 120199,
+    "ts": "2020-04-19T20:30:20Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Navbox",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "{{{id"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Ten Essences/row": {
+    "revid": 116332,
+    "ts": "2020-02-21T17:25:39Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Ten Essences_row",
+    "assets": {
+      "templates": [
+        "!",
+        "icon",
+        "navbox",
+        "row"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Steel alphabet/row": {
+    "revid": 141138,
+    "ts": "2020-12-31T02:28:25Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Steel alphabet_row",
+    "assets": {
+      "templates": [
+        "!",
+        "row"
+      ],
+      "files": [
+        "{{{1}}} (Alloy of Law).svg",
+        "{{{1}}} (Book 3).svg",
+        "{{{1}}} (Feruchemy).svg",
+        "{{{1}}} (book 2).svg",
+        "{{{1}}}.svg"
+      ],
+      "categories": []
+    }
+  },
+  "Steel alphabet/num-row": {
+    "revid": 219971,
+    "ts": "2026-01-21T18:40:31Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Steel alphabet_num-row",
+    "assets": {
+      "templates": [
+        "!",
+        "row"
+      ],
+      "files": [
+        "Allomancy {{{1}}} (Alloy of Law).svg",
+        "Allomancy {{{1}}} (Final Empire).svg",
+        "Allomancy {{{1}}} (Hero of Ages).svg",
+        "Allomancy {{{1}}} (book 2).svg"
+      ],
+      "categories": []
+    }
+  },
+  "Template:Cat ns": {
+    "revid": 169912,
+    "ts": "2022-11-20T21:55:42Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Cat ns",
+    "assets": {
+      "templates": [
+        "!",
+        "FULLPAGENAME",
+        "NAMESPACE",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t",
+        "{{NAMESPACE}}<!--\n   -->",
+        "{{ns:{{{only}}}}}",
+        "{{{allow-user",
+        "{{{key",
+        "{{{only",
+        "{{{only}}}"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Ref/uses-pre": {
+    "revid": 120681,
+    "ts": "2020-04-24T02:35:23Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Ref_uses-pre",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Ref/uses-post": {
+    "revid": 120669,
+    "ts": "2020-04-24T00:49:15Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Ref_uses-post",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Number": {
+    "revid": 119844,
+    "ts": "2020-04-19T08:43:34Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Number",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t",
+        "{{lc:{{{1",
+        "{{{1"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Row/header": {
+    "revid": 45159,
+    "ts": "2015-03-13T11:14:46Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Row_header",
+    "assets": {
+      "templates": [
+        "!",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Row/image": {
+    "revid": 68144,
+    "ts": "2017-02-10T09:53:14Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Row_image",
+    "assets": {
+      "templates": [
+        "missing artist",
+        "t",
+        "{{{artist",
+        "{{{no-artist"
+      ],
+      "files": [
+        "{{{1}}}"
+      ],
+      "categories": []
+    }
+  },
+  "Template:Row/image+artist": {
+    "revid": 221301,
+    "ts": "2026-04-28T19:24:52Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Row_image+artist",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "missing artist",
+        "t",
+        "{{{no-artist"
+      ],
+      "files": [
+        "{{{1}}}"
+      ],
+      "categories": []
+    }
+  },
+  "Template:Missing/required": {
+    "revid": 197569,
+    "ts": "2024-06-11T00:34:55Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Missing_required",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Toponym": {
+    "revid": 226617,
+    "ts": "2026-09-22T03:14:49Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Toponym",
+    "assets": {
+      "templates": [
+        "t",
+        "toponym/missing",
+        "{{lc:{{{1}}}}}<!--\n\nNalthis (Warbreaker)\n-->",
+        "{{{1}}}",
+        "{{{cat",
+        "{{{link"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Toponym link": {
+    "revid": 190301,
+    "ts": "2024-03-08T22:11:54Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Toponym link",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "for",
+        "t",
+        "toponym",
+        "{{toponym"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Ucfirst": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Earth tag": {
+    "revid": 170190,
+    "ts": "2022-11-21T02:01:27Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Earth tag",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Raw/world": {
+    "revid": 119888,
+    "ts": "2020-04-19T09:04:10Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Raw_world",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Raw/city": {
+    "revid": 119881,
+    "ts": "2020-04-19T09:03:26Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Raw_city",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Raw/nation": {
+    "revid": 119883,
+    "ts": "2020-04-19T09:03:43Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Raw_nation",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Raw/region": {
+    "revid": 119884,
+    "ts": "2020-04-19T09:03:49Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Raw_region",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Raw/state": {
+    "revid": 119887,
+    "ts": "2020-04-19T09:04:05Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Raw_state",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Raw/publisher": {
+    "revid": 125964,
+    "ts": "2020-07-04T20:08:32Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Raw_publisher",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Raw/film": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Raw/tv": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Docs": {
+    "revid": 220926,
+    "ts": "2026-03-26T20:02:57Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Docs",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "docs",
+        "docs/image",
+        "for"
+      ],
+      "files": [
+        "Test Image.svg"
+      ],
+      "categories": []
+    }
+  },
+  "Template:Docs/image": {
+    "revid": 120157,
+    "ts": "2020-04-19T20:16:16Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Docs_image",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "docs",
+        "docs/row/optional",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Docs/row/optional": {
+    "revid": 120163,
+    "ts": "2020-04-19T20:19:34Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Docs_row_optional",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "docs",
+        "for",
+        "{{{param"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Docs/universe": {
+    "revid": 122921,
+    "ts": "2020-05-15T03:57:16Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Docs_universe",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "PAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "docs",
+        "docs/row/required",
+        "for",
+        "{{PAGENAME}}",
+        "{{{'desc"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Docs/world": {
+    "revid": 120161,
+    "ts": "2020-04-19T20:18:59Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Docs_world",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "PAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "docs",
+        "docs/row/required",
+        "for",
+        "{{PAGENAME}}",
+        "{{{'desc"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/^ref": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Info/creator": {
+    "revid": 120241,
+    "ts": "2020-04-20T18:59:09Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_creator",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/creators": {
+    "revid": 120243,
+    "ts": "2020-04-20T18:59:41Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_creators",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/earth": {
+    "revid": 120244,
+    "ts": "2020-04-20T18:59:44Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_earth",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/owner": {
+    "revid": 120245,
+    "ts": "2020-04-20T18:59:47Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_owner",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/owners": {
+    "revid": 120303,
+    "ts": "2020-04-20T21:50:42Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_owners",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/type": {
+    "revid": 120242,
+    "ts": "2020-04-20T18:59:14Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_type",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/universe": {
+    "revid": 120239,
+    "ts": "2020-04-20T18:58:53Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_universe",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Info/world": {
+    "revid": 120240,
+    "ts": "2020-04-20T18:59:02Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Info_world",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "SUBPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Infobox/no-world": {
+    "revid": 120270,
+    "ts": "2020-04-20T20:32:19Z",
+    "has_wikitext": true,
+    "is_redirect": true,
+    "target": "Template:Missing/world",
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Infobox_no-world",
+    "assets": {
+      "templates": [],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Radiant/surge row": {
+    "revid": 53460,
+    "ts": "2015-10-01T08:09:42Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Radiant_surge row",
+    "assets": {
+      "templates": [
+        "symbol",
+        "t"
+      ],
+      "files": [
+        "{{symbol"
+      ],
+      "categories": []
+    }
+  },
+  "Template:Canonical": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Metallic Arts/row": {
+    "revid": 81467,
+    "ts": "2018-06-21T20:08:26Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Metallic Arts_row",
+    "assets": {
+      "templates": [
+        "!",
+        "navbox",
+        "row<!--\n-->"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Surgebinding/row": {
+    "revid": 120329,
+    "ts": "2020-04-21T04:56:31Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Surgebinding_row",
+    "assets": {
+      "templates": [
+        "icon"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Metallic Arts/table": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Surgebinding/table": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Ref/broken": {
+    "revid": 119890,
+    "ts": "2020-04-19T09:04:22Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Ref_broken",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "{{{1",
+        "{{{1}}}"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:B": {
+    "revid": 226867,
+    "ts": "2026-10-01T19:02:14Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:B",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "b/dragonsteel'",
+        "b/ib",
+        "b/mag",
+        "b/missing",
+        "b/msh",
+        "b/mythwalker",
+        "b/rpg",
+        "b/series",
+        "b/sotd",
+        "b/tes",
+        "b/twok'",
+        "b/wot",
+        "for",
+        "t",
+        "{{lc:{{{1}}}}}<!--\n\nseries\n-->",
+        "{{{1}}}",
+        "{{{suppress-log",
+        "{{{text"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:B/series": {
+    "revid": 226606,
+    "ts": "2026-09-22T03:05:08Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:B_series",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Book ref/part": {
+    "revid": 119863,
+    "ts": "2020-04-19T08:54:54Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Book ref_part",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Wob ref": {
+    "revid": 199864,
+    "ts": "2024-08-23T06:20:17Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Wob ref",
+    "assets": {
+      "templates": [
+        "Arcanum-{{{1}}}",
+        "Cite: Arcanum-{{{1}}}<!--\n\nCITE: PAGE EXISTS\n-->",
+        "FULLPAGENAME",
+        "NAMESPACE",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "ref-once",
+        "ref-once<!--\n   -->",
+        "t",
+        "tracking link",
+        "{{NAMESPACE}}"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Ref/date": {
+    "revid": 119891,
+    "ts": "2020-04-19T09:04:26Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Ref_date",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:ensync": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Book ref": {
+    "revid": 226761,
+    "ts": "2026-09-28T18:41:32Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Book ref",
+    "assets": {
+      "templates": [
+        "Dark One lookup",
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "b",
+        "b/au",
+        "b/chapterless",
+        "b/msh",
+        "b/tes",
+        "for",
+        "ref/broken",
+        "ref/uses-part",
+        "ref/uses-post",
+        "ref/uses-pre",
+        "ref<!--\n\nTEXT\n-->",
+        "t",
+        "tracking link",
+        "{{#pos:{{{1",
+        "{{Dark One lookup",
+        "{{b",
+        "{{lc:{{{2}}}",
+        "{{lc:{{{part",
+        "{{lc:{{{part}}}",
+        "{{{1",
+        "{{{2",
+        "{{{2}}}",
+        "{{{3",
+        "{{{part",
+        "{{{part}}}",
+        "{{{post",
+        "{{{pre",
+        "{{{review"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Event": {
+    "revid": 226017,
+    "ts": "2026-09-13T19:30:46Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Event",
+    "assets": {
+      "templates": [
+        "!",
+        "<!--\n  -->{{{earth",
+        "FULLPAGENAME",
+        "PAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "demonym",
+        "docs",
+        "docs/image",
+        "docs/row/optional",
+        "docs/universe",
+        "docs/world",
+        "earth tag",
+        "for",
+        "infobox",
+        "infobox/no-world",
+        "place tag",
+        "raw/city",
+        "raw/nation",
+        "raw/region",
+        "raw/state",
+        "raw/world",
+        "row/image+artist",
+        "row/kv",
+        "t",
+        "tag",
+        "toponym link",
+        "{{{'city",
+        "{{{'nation",
+        "{{{'region",
+        "{{{'state",
+        "{{{'world",
+        "{{{city",
+        "{{{date",
+        "{{{dominance",
+        "{{{earth",
+        "{{{effects",
+        "{{{era",
+        "{{{image",
+        "{{{image-artist",
+        "{{{location",
+        "{{{nation",
+        "{{{participants",
+        "{{{partof",
+        "{{{princedom",
+        "{{{region",
+        "{{{state",
+        "{{{universe",
+        "{{{world"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Infobox": {
+    "revid": 126186,
+    "ts": "2020-07-08T22:09:42Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Infobox",
+    "assets": {
+      "templates": [
+        "!",
+        "FULLPAGENAME",
+        "NAMESPACE",
+        "NAMESPACENUMBER",
+        "PrefixIndex/{{FULLPAGENAME}}/",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "docs",
+        "docs/row/optional",
+        "docs/row/required",
+        "for",
+        "infobox/missing-id",
+        "t",
+        "{{NAMESPACENUMBER}} == 10",
+        "{{NAMESPACE}}<!--\n   -->",
+        "{{{id",
+        "{{{subpages}}}"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Module:Infobox": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Module:Navbox": {
+    "revid": null,
+    "ts": null,
+    "has_wikitext": false,
+    "is_redirect": false,
+    "target": null,
+    "missing": true
+  },
+  "Template:Row/kv": {
+    "revid": 220928,
+    "ts": "2026-03-26T20:12:37Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Row_kv",
+    "assets": {
+      "templates": [
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Infobox/missing-id": {
+    "revid": 120251,
+    "ts": "2020-04-20T19:47:23Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Infobox_missing-id",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Toponym/missing": {
+    "revid": 226523,
+    "ts": "2026-09-21T15:29:59Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Toponym_missing",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}"
+      ],
+      "files": [],
+      "categories": []
+    }
+  },
+  "Template:Tag": {
+    "revid": 182022,
+    "ts": "2023-07-11T00:02:41Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Tag",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "cat ns",
+        "docs",
+        "docs/row/optional",
+        "docs/row/required",
+        "for",
+        "t"
+      ],
+      "files": [],
+      "categories": []
+    }
   }
 }
