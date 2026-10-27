@@ -1,4 +1,5 @@
 # 模板差异盘点（EN wikitext → CN 中文站）——修正版 2025-10-16
+> ⚠️ **历史盘点（2025-10-16），仅作背景参考**；模板映射现状以 `rules/template_map.json`（25 条，2026-10-27 复核）与 `rules/template_probe_resolution.md` 为准。
 
 > 目的：回答「英→中还差什么」。逐条比对了 en_snapshot 的「英文词条用到的模板」与「中文站（红铜智库）实际存在哪些模板」。
 >
@@ -35,19 +36,19 @@
 | 英文 `{{…}}` | 中文目标模板 | 存在性(pageid) |
 |---|---|---|
 | `{{character}}` | `Infobox character` | ✅(4) 映射表+转换器已做好 |
-| `{{business}}` | `Infobox business` | ✅(1326) ⬜待映射 |
-| `{{group}}` | `Infobox group` | ✅(371) ⬜ |
-| `{{location}}` | `Infobox location` | ✅(5) ⬜ |
-| `{{culture}}` | `Infobox culture` | ✅(510) ⬜ |
-| `{{item}}` | `Infobox item` | ✅(2193) ⬜ |
-| `{{literature}}` | `Infobox literature` | ✅(345) ⬜ |
-| `{{noble house}}` | `Infobox noble house` | ✅(440) ⬜ |
-| `{{book}}` | `Infobox book` | ✅(2) ⬜ |
-| `{{lifeform}}` | `Infobox lifeform` | ✅(395) ⬜ |
-| `{{food}}` | `Infobox food` | ✅(210) ⬜ |
-| `{{metal}}` | `Infobox metal` | ✅(133) ⬜ |
-| `{{magic}}` | `Infobox magic` | ✅(1341) ⬜ |
-| `{{disease}}` | `Infobox disease` | ✅(2244) ⬜ |
+| `{{business}}` | `Infobox business` | ✅(1326) ✅ 已接入 |
+| `{{group}}` | `Infobox group` | ✅(371) ✅ 已接入 |
+| `{{location}}` | `Infobox location` | ✅(5) ✅ 已接入 |
+| `{{culture}}` | `Infobox culture` | ✅(510) ✅ 已接入 |
+| `{{item}}` | `Infobox item` | ✅(2193) ✅ 已接入 |
+| `{{literature}}` | `Infobox literature` | ✅(345) ✅ 已接入 |
+| `{{noble house}}` | `Infobox noble house` | ✅(440) ✅ 已接入 |
+| `{{book}}` | `Infobox book` | ✅(2) ✅ 已接入 |
+| `{{lifeform}}` | `Infobox lifeform` | ✅(395) ✅ 已接入 |
+| `{{food}}` | `Infobox food` | ✅(210) ✅ 已接入 |
+| `{{metal}}` | `Infobox metal` | ✅(133) ✅ 已接入（commit `518613b`） |
+| `{{magic}}` | `Infobox magic` | ✅(1341) ✅ 已接入 |
+| `{{disease}}` | `Infobox disease` | ✅(2244) ✅ 已接入 |
 
 > 中文站另有风暴光系 `Infobox fabrial/radiant/shard/war/magical entities/series/system/religion` 等（Mistborn 用不到，跳过）。
 
@@ -61,7 +62,7 @@
 | `{{nation}}` | 2 | ✅ 已建 | 已建 `Template:Infobox nation`（pageid3493） |
 | `{{vehicle}}` | 7 | ✅ 已建 | 已建 `Template:Infobox vehicle`（pageid3494） |
 
-> 这是最需要**决策**的一类：这些是高频类型（settlement+architecture 合计 68 条），但中文站没有对应模板，强行搬运会红链。建议先与用户定：建模板还是统一用现有的 `Infobox location` 承接。
+> ✅ 已解决：settlement/architecture/geography/nation/vehicle **五个模板均已建**（见上表 pageid）并接入映射，无需用 `Infobox location` 承接。
 
 ## 四、中文站不存在、需「创建模板」或「替换/删除」
 
@@ -82,9 +83,9 @@
 
 ## 六、建议下一步（供定夺）
 
-1. **先解决 §三 的决策**：settlement/architecture/geography/nation/vehicle 是建模板还是用 `Infobox location` 承接（需用户拍板，影响最大）。
+1. ✅ §三 已解决：五个模板均已建并接入映射（见上）。
 2. ✅ 已解决 §四 高频项：已建 `Template:Image`（承接 `{{image}}`）和 `Template:Rpg ref`+`Rpg book`（承接 `{{rpg ref}}`），转换器已接入；两者真实渲染验证通过。
-3. 按使用量把 §二 的 13 个 infobox 依次接入 `convert_templates.py`（先 settlement/business/architecture——一并解决 §三）。每个先读中文站模板 wikitext，产出 character 同款字段对照。
-4. §四 维护类在转换器中列为 `drop`（删除不搬运）。
+3. ✅ §二 13 个 infobox 已全部接入 `convert_templates.py`（`template_map.json` 驱动，含 metal/magic system）。
+4. ✅ §四 维护类已在转换器 `drop`（`_apply_drop`，568 页验证 0 残留）。
 
 > 附录：英文侧模板使用量前 20：book ref 6296、Mistborn 534、complete 473、wob ref 438、date 400、file ref 366、character 311、icon 292、quote 281、image 246、rpg ref 194、columns 192、sidequote 155、map ref 123、for 100、row 87、cat tag 84、partial 74、tag 65、tes ref 53。

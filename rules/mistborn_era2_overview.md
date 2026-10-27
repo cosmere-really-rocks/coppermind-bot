@@ -69,11 +69,11 @@
 | `magic`（魔法/能力） | `Infobox magic` | ❌ | 存在 |
 | `shard info`（神格） | `Infobox shard` | ❌ | 存在并在用（和谐/灭绝/存留） |
 | `disease`（疾病） | `Infobox disease` | ❌ | 存在 |
-| `vehicle`（交通工具） | **无对应模板** ❌ | — | 中文站无 `Infobox vehicle`，需新建或归入 location |
-| `nation`（国家/民族） | **无对应模板** ❌ | — | 中文站无 `Infobox nation`，需新建或归入 location |
+| `vehicle`（交通工具） | `Infobox vehicle` ✅ | 已建（pageid3494）并接入 `template_map.json` |
+| `nation`（国家/民族） | `Infobox nation` ✅ | 已建（pageid3493）并接入 `template_map.json` |
 
 ✅ 已有字段映射经验：`character`→`Infobox character`（33 直接映射/32 丢弃/54 CN-only，见 `rules/template_map.json`）。
-⚠️ 待办：其余 `Infobox *` 均需逐模板**字段级映射**（不能只换模板名）；`vehicle`/`nation` 需中文站建模板或并类，属阻塞项，需用户裁决。
+✅ 大部分已解决（2026-10-27 复核）：25 条映射见 `rules/template_map.json`（settlement/architecture/geography/nation/vehicle 模板均已建）；剩余＝逐字段映射残项复核（以 character 为样板，见 `rules/template_diff_audit.md` §五）。
 🔗 关联：`quote`→`Quote`、`en`/`CmPermission`/`ensync` 三个页面包装模板中文站均已存在、直接复用。
 
 ## 5. 下一步推荐翻译重点（每种类型挑几篇典型，规模适中、结构标准）

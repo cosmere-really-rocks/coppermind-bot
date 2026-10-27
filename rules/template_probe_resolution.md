@@ -38,7 +38,7 @@
 | 英文 `{{…}}` | 用量 | 中站对应 | pageid | 处置 |
 |---|---|---|---|---|
 | `noble house` | 7 | `Template:Infobox noble house` | 440 | ✅ **已接入** conversion map（name→家族名/world→世界/books→涉及书目；home/era/universe 无对应字段，未映射） |
-| `metal` | 2 | `Template:Infobox metal` | 133 | ⬜ **待决策**：EN `{{metal}}` 是「神金/金属学」语义（hemalurgy/type/properties/books，如 Trellium），中站 `Infobox metal` 是「镕金金属技艺」语义（推拉/内外/分类/对应金属/镕金术师）。**字段语义不对应，强行映射会成为错法 infobox**，建议单独定承载方式（见 readme §6 待办）后人工处理，不要自动映射。 |
+| `metal` | 2 | `Template:Infobox metal` | 133 | ✅ **已接入**（commit `518613b`）：中站模板已按 EN 语义重写（revid 16719：删 推拉/内外/分类，增 类型/属性/涉及书目 + type-a/f/h 直通），字段映射见 `template_map.json`。剩余＝旧金属词条改造 + type 值口径（readme 待办 #2/#3）。 |
 
 ### B. 中站有对应 Navbox / 横幅 → 翻译时改挂中站 Navbox 或删
 | 英文 `{{…}}` | 用量 | 中站对应 | 处置 |
@@ -97,7 +97,7 @@
 - ✅ 探测工具 `scripts/probe_template.py` 全流程可跑（修过排序 bug）。
 - ✅ **非 meta 模板已迁移到中文站**：`scripts/migrate_templates.py --all` 建了 11 个模板（Rosharan date/Date/sa/Notice/Cite note/Rpg-canon/Small caps/CoverToC/Sots ref/Wp ref/Books/Tress），revid 16708–16718；`Date/sa`→redirect→`Rosharan date`，实测 `{{date/sa|1174|2}}` 正常展开。
 - ✅ `shard info`→`Infobox shard` 已接入转换映射（实测 `Harmony`）。
-- ⬜ `metal` 等候单独承载决策（见 readme §6 / template_diff_audit §二）。
+- ✅ `metal` 已接入映射（commit `518613b`）；旧词条改造与 type 值口径转入 readme 待办总览 #2/#3。
 - ✅ meta 级模板（update/expand/demoted/nosnippet/meta:* /edit note/user:...）的 drop 逻辑**已落地**在 `convert_templates.py`（递归 `_apply_drop`，`translate.py` 在内存重转自动继承）。**2025-10-17**：用户决议 `complete`/`partial`/`stub` **保留**（中文站同名 Complete/Partial/Stub 语义等价，473/74/2 处原样保留），`update`/`expand`/`meta:*/demoted/nosnippet/dialogue/edit note/user:*` **drop**（约 79 节点，全量 568 词条节点级验证为 0 残留）；`nosnippet` 为内容包装、drop 时 unwrap 保留内文。见 readme 待办 13。
 
 ## 五、给后续 AI 的提示（易踩坑）

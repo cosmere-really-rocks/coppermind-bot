@@ -90,65 +90,28 @@
 - 实例：`Dorise Chevalle`（旧影森森 ch10 内的 Elendel Daily 段被中译省略）；`Corbeau`（旧影森森 ch5 的「水坝」报道段中译无对应）。
 - **处理规划**：对「仅出现在报章插页」的词条，中英章节对齐常无证可采 → 标 `found:false, reason: broadsheet-omitted`，归入待补（与 tlm 类不同：书已译，但该段未被译）。
 
-### 已落地书证译名（第二轮 pilot，2025-10-16）
-| key | zh | note | 书证章 |
-|---|---|---|---|
-| Allik Neverfar | 亚历克·奈弗法 | 全名 | 悲悼护腕 ch21 |
-| Allik | 亚历克（别名 阿里克） | 官方书证 | 多书 |
-| Red | 雷德 | 依蓝德运河船夫 | 旧影森森 ch5 |
-| Irongate River | 铁门河 | 依蓝德盆地主河 | 旧影森森 ch18 / 悲悼护腕 ch4 |
-| Carlo’s Bend | 卡罗湾 | 依蓝德盆地（已有，书证核验） | 执法镕金 ch15 |
-| Trell | 特雷 | 神（独盟化身）；宗教=特雷教 | 执法镕金 ch11/尾声、最后帝国 ch9 |
-| Trellism | 特雷教 | 时代二宗教 | 执法镕金 ch11 |
-| Trelagism | 特雷教 | 时代一旧宗教（与 Trellism 中译同） | 最后帝国 ch9 |
-| Nelazan | 奈拉禅 | 崇拜特雷的北方民族 | 最后帝国 ch9 |
+### 已落地批次（摘要；明细在 `dict/mistborn.json`，勿在此重录）
 
-**地理/地点批（subagent）：**
-| key | zh | note | 书证章 |
-|---|---|---|---|
-| Seran Range | 赛朗山脉 | Seran 全系列统一=赛朗 | 悲悼护腕 ch22 |
-| Seran River | 赛朗河 | | 悲悼护腕 ch7 |
-| Glimmering Point | 光点 | 光点码头 | 悲悼护腕 ch4 |
-| Stansel Belt | 斯坦瑟尔环路 | 词条快照误引执法镕金，实证在悲悼护腕 ch4 | 悲悼护腕 ch4 |
-| Sea of Yomend | —（未得） | mb1 地图-only（灾后名），正文无；另「尤门」实为 Yomen 家族 | — |
+| 轮次 | 日期 | 结果 |
+|---|---|---|
+| pilot（§2 样例）+ 地理批 + 人物/非人物批 A-G（subagent） | 2025-10-16 | era2 可采证词条基本并入；全表 819（232 条带书证 note）；不可采证者按 Finding D/E/G 归 pending |
+| 批 H 全系列 caizheng 采证 | 2026-10-18 | `Category:Mistborn` 1116 页 → 327 候选 → **168 ok 并入**（796→961）、159 pending 归档 `state/glossary_caizheng/pending_archive.md`（勿重跑） |
+| 20 页 review + 采证补强 | 2026-10-18 | 961→970；keep_en 升级为机制（动态判定 + zhwiki ref，见 readme「当前实现状态」） |
+| 译者 6 份 xlsx 并入 + 拆名 208 | 2026-10-19 | 3932→**4140**（= 三界宙全系列）；冲突 36 / 勘误 10 / 拆名冲突 12 → `state/glossary_xlsx_import/conflicts.md` 空列待填 |
+| 三分类缺译名排查（伊岚翠/皇帝魂/飓光志） | 2026-10-19 | 2554 页中缺译 559：**80 行官方中译待裁定入表**、缺中译本 171 等 → `state/missing_translation_report.md` |
 
-**批量人物/定居点批（subagent，2025-10-16）：** 详见 `dict/mistborn.json`。
-- 人物批 A（Dashir boys…Eriola，19 条）：18 条已录（旧影森森/悲悼护腕），1 条未得（Dorise Chevalle，报章插页被中译省略，Finding G）。
-- 人物批 B（Evenstrom Tekiel…Hughes Entrone，15 条）：15 条全录；兼证 House Tekiel=太齐尔、Captain Demoux=德穆队长。
-- 人物批 C（Idashwy…Jendel，8 条）：7 条全录；1 条未得（Inis Julien，New Ascendancy 报章插页被中译省略，Finding G）。
-- 定居点（subagent 前段 + 剩余批 + 复核）：Elmsdel=埃尔姆斯德尔、Rashekin=拉舍金、Wiestlow=威斯特洛、Doriel (city)=多瑞尔、New Seran=新赛朗、Dulsing=道廷镇、Ironstand=铁岗镇、Thermoli=瑟莫利、Tathingdwel=塔辛德维尔 已录；Corbeau、Tarier 未得（报章插页/地图-only）；The Village 无固定专名（随上下文=村/村寨）。
-- 地理/地点：见上表。
-
-**批量人物批 D（Alernath…Chapaou，subagent，2025-10-16，继续 A/B/C 之后）：** 详见 `dict/mistborn.json`。
-- 全录（执法镕金/旧影森森/悲悼护腕）：Alernath=亚勒纳斯、Allri Innate=亚莉·因内特、Allriandre Durkel=亚莉安德、Ape Manton=亚佩·曼顿、Aramine=亚拉敏（亚拉敏教授）、Arintol=亚林托尔、Augustin Tekiel=奥古斯丁·太齐尔、Aunt Gin=金姨、Aving Cett=亚凡·塞特、Bilmy=比尔米、Blome=布洛米、Boris Junior=小鲍里斯、Boris the Third=鲍里斯家的老三、Burlow=布罗、Caberel=卡贝雷尔、Chapaou=查波欧。
-- 1 条部分采证：Bastien Severington——姓 Severington=瑟维灵顿（悲悼护腕 ch14/15，正文有证）；名 Bastien 仅见于第六章报章插页被中译省略 → **pending 待人工补全名**。
-
-**批量人物批 E→F（Chip…Winsting，subagent + 直接书证，2025-10-16 续完）：** 覆盖上一批之后剩余的全部 era2 可采证人物，详见 `dict/mistborn.json`。
-- 已录代表（执法镕金/旧影森森/悲悼护腕，均为官方书证）：Chip(奇普)、Claude Aradel=克劳德·亚拉戴尔、Daius=戴尤斯、Darriance=达李恩斯、Jordis=约蒂丝、Joshin Yomen=约辛·尤门、Kelesina Shores=克雷西娜、Lady ZoBell=佐贝尔夫人、Lord Barrington=巴灵顿大人、Lord Stenet=史提内特领主、Marasi Colms=玛拉茜·科尔姆斯、Marksman=神射手、Brettin=布雷廷、Murnbru=蒙布鲁、Paclo=帕克罗（尘染者）、Peret the Black=黑手佩瑞特、Rian=利恩、Rick Stranger=里克·斯特朗格、Replar Innate=雷普拉·因内特、Slink=斯灵克、Sophi Tarcsel=索菲·塔瑟尔、Spook=鬼影、Steris Harms=史特芮丝·哈姆斯、Tarson=塔森、Telsin Ladrian=苔尔辛、Tindwyl Ladrian=廷朵·拉德利安、Vwafendal=瓦范达尔、Waxillium Ladrian=瓦克斯利姆·拉德利安、Winsting Innate=温斯汀、Petrine=佩崔恩 等（共约 90 条）。
-- 本轮新增 pending（found=false，无法采证）：Durkel、Maxillium Ladrian、Ulaam（仅 tlm 无中译）；Pull、Push（正文匿名代号，中译无固定名）；Terri（仅「警帽」道具引用，中译未具名）；Thomton Delacour（韦恩现场编造的假名）；+ 前批 Bastien Severington、Dorise Chevalle、Inis Julien。
-
-**批量非人物批 G（企业/团体/事件/文化/家族/物品等，2025-10-16，把译名表从「仅人物」扩到所有 E2+E1 可采证类型）：** 详见 `dict/mistborn.json`。
-- 企业/商业：Ashweather Carriage and Coach=灰侯车马场、Gavil's Carriages=加维马车行、Findley's=芬得利餐厅、Citizen Magistrates=市民公仆牌(雪茄)、Syles=塞尔斯白兰地、Immerling Arms=艾莫林(手枪)、Terringul 27=泰林格尔27型、Sterrion 36=史特里昂36型、Granger 28=格兰杰28型、Ambersair=安博萨、Rioting=莱廷枪(枪械，非煽动)、Invarian steel=因伐利安钢、Emotional Allomancy parlors=安抚之厅/煽动之厅、The Weeping Bull=牛泣酒馆、Tingmar=廷格玛雪茄、The Elendel Daily=依蓝戴日报、Barrington carriage=巴灵顿(型马车)。
-- 团体：Originators=创始者、Preservers=存留者、Hidden Guard=秘卫、Nightstreet Gang=夜匪帮、Surefires=神火帮、Cobblers=光脚帮、Deniers of Masks=面具驳阻者、Men of gold and red=金红之人。
-- 事件/节日/文化：Yomen-Ostlin wedding dinner=尤门·欧斯特林婚宴、Lady ZoBell's party=佐贝尔夫人的派对、Kelesina Shores's party=克雷西娜·肖尔斯的派对、Winsting Innate's auction=拍卖会、Allomantic Agreement of '94=镕金术94号公约、The Path=道(宗教，信徒=道徒)、Mareweather=迈尔、Evanotype=照片、Southern Scadrian=南方人、Jaggenmire=轧亘米尔。
-- 家族（House X=族，按书证）：House Innate=因内特家族、House Ladrian=拉德利安家族、House Harms=哈姆斯家族、House Yomen=尤门家族、House Lekal=雷卡家、House Hammondess=哈姆德家族。
-- 其他：Elendel Basin=依蓝戴盆地、Excisor=切除器、Chillfever=寒热病、Wilg=柳影号、Brunstell=布伦斯特尔号、Destroyer=毁灭者、Docksithium=多克森之书、The Last Breath=《最后的气息》。Elendel=依蓝戴（书证146处一致，修源表伊兰黛尔市）。
-- 本轮新增 pending（found=false）：仅 tlm 无中译——Tarcsel Electric、Community、Malwish Consortium、Plank Boys、Admiral Daal's warship、Hemalurgic chimera、Human (River)、Sea of Yomend、Corbeau、Tarier；报章插页被省略——Survivor's Treasure、Linville & Lyons（House Record）；中译意译未成专名——Soonie pup、Roseweather、Wax's earring（仅作「耳环」）、Seran New District Cemetery（新赛朗墓地）、Truefast；正文无书证——Canton of Cartography、House Demoux。
-
-**批量书证批次 H（全系列补扫，2026-10-18，`state/glossary_caizheng/`）：** 从 `Category:Mistborn` 1116 页快照提取 327 条候选词条，按 `state/mistborn_glossary_terms.json` 逐批 `batch_*.json`/`miss_*.json`（复用 `glossary_assist.py` 中英章节对齐）书证采证，汇总 `consolidated.json` = **168 ok + 159 pending**；168 条已并入 `dict/mistborn.json`（脚本 `scripts/glossary_caizheng_merge.py`，全表 796→961）。
-- 已录类别代表：人物（Kelsier=卡西尔、Dockson=多克森、Redd=雷德、Kale Tekiel=凯尔·太齐尔、Straff Venture=史特拉夫·泛图尔、Zane Venture=詹·泛图尔、Themos Tresting=赛摩斯·特雷斯廷、Jess=洁丝 等）；家族（House Venture=泛图尔、House Geffenry=詹芬利家族、House Hasting=海斯丁家族、House Cett=塞特家族 等，均与既有同名家族一致）；地理/统御区（Central/Eastern/Northern/Southern/Western Dominance=各统御区、Terris Dominance=泰瑞司统御区、Luth-Davn Canal=陆沙德运河）；机构/事件（Canton of Inquisition=审判廷、Luthadel Garrison=陆沙德警备队、Battle of Luthadel=陆沙德之战、Siege of Luthadel=陆沙德围城战）；物品/文化（Mistcloak=迷雾斗篷、Spikeway=金属大道、Pek=佩币、Streetspice=迷幻药、Shakewelts=颤抖症）；金属/祝福（Aluminum=铝、Gold=金、Silver=银、Blessing of Awareness/Presence/Stability=各祝福）。
-- 本轮新增 pending 159 条（found=false，勿重跑，待中译出版/新书证）：仅 tlm/密史无中译（Aledin、Audil Lekal、Kallib、Leonore、Ever-Slaying Sword、Iyatil、Axindweth、Moash、Vasher、Kabsal 等）；维基子页/元信息（各 `/Statistical analysis`、`/Epigraphs`、`Summary:...`、铁血/地盘的表格页签 etc）；正文无书证的地名/人物（Lake Luthadel、Tresting plantation、Cameron's safe house、House Penrod、Midge 等）；中译意译未成专名（Charred=焦黑形容词、Fets=「下棋」）；报章/扩展内容（Alloy of Law: Masks of the Past、Mistborn Adventure Game 等桌游）。完整清单 `state/glossary_caizheng/pending_archive.md`。
-
+- 代表书证样例：Allik Neverfar=亚历克·奈弗法、Red=雷德、Irongate River=铁门河、Trell/Trellism/Trelagism=特雷教、Elendel=依蓝戴（146 处一致）等。
+- **不可采证者勿重跑**（仅 tlm/密史无中译、报章插页被中译省略、意译未成专名、正文无书证）：总清单 `state/glossary_caizheng/pending_archive.md` + 文末复核注记。
 ## 4. 与既有规则的关系 / 需更正的旧决定
 - `rules/allik_terms.md` 旧「用户裁决」称 **Allik Neverfar 专名不翻译、保留英文**——**本轮用户改向**：
   - 现在**以官方中译本为准**，Allik Neverfar=**亚历克·奈弗法**（不是中文站「阿利克·纳法尔」、也不是旧表「阿里克」）。`rules/allik_terms.md` 需按此更正。
   - 「原文引用不翻译」决议（#4/#13）**仍有效**：`{{quote}}` 台词/称号列表等仍不硬翻；但「名+敬称」这类**正文叙述短语**（非台词quote，是 prose）可用于书证。
 
-## 5. 下一步（建议，待用户确认方向）
-1. 把 `glossary_alignment.md` 定为批量补全的作业规范；先小批量（人物/地理/歧义各若干）跑通后铺开，勿一次性全量。
-2. 定夺数据模型扩展：`renderings`（长语块替换）+ `variants`（同名多义）是否落地。
-3. 对「仅 tlm 出现」的词条单独列清单，供失落金属中译出版后补。
+## 5. 下一步（原建议，已全部完成）
 
+1. ✅ 本文件即批量补全作业规范，已按此铺开（批次见 §3 摘要）。
+2. ✅ 数据模型扩展已定稿（见下「数据模型（定稿）」），由 `scripts/glossary_migrate.py` 落地。
+3. ✅ 「仅 tlm 出现」清单已单列（§7）。
 ### 数据模型（定稿，2025-10-16）
 现状：`terms[en] = {zh, aliases?, note?}`。
 新增三个**可选**字段（向后兼容，不影响既有条目）：
@@ -180,12 +143,16 @@
 **迁移策略**：既有条目不动；仅对需要多义/长语块/变译的词条补上述字段。已录入的 55 条书证译名保留 `zh`+`note`，无需重跑。
 
 ## 6. 待办（与 readme「下一步/译名表补全」同步）
-- ⬜ 定夺数据模型扩展：`renderings` + `variants`。
-- ⬜ 批量补全：人物（全名搜全/拆姓分名）→ 地理/地点 → 歧义词条，各挑几篇跑通后铺开。
-- ⬜ 整理「仅 tlm 出现」词条清单（如 Demoux (city)、The Two Seasons）。
-- ⬜ 补全后回填 `rules/*.md` 并提交译名表。
+- ✅ 定夺数据模型扩展：`renderings` + `variants`（已定稿并落地，见 §5；迁移脚本 `scripts/glossary_migrate.py`）。
+- ✅ 批量补全：人物 → 地理/地点/建筑 → 企业/团体/事件/文化/家族/物品/刊物/交通工具/疾病 → 歧义词条，E2 可采证条目已完成；不可采证者归 pending。
+- ✅ 整理「仅 tlm 出现」词条清单（94 条 + mixed 58，见 §7）。
+- ✅ 补全后回填 `rules/*.md` 并提交译名表（本轮已提交）。
+- ✅ **2026-10-27 译者三项裁定**（后续 AI 勿回退，字典 note 已固化）：
+  - `Shu-Dereth/Shu-Korath/Shu-Keseg` = **德雷西道宗/珂拉西道宗/珂西格道宗**（shu- = path of）。**10-26 的书证裁决「德雷西教宗」已被译者意见取代**；书内旧译「xxx教宗」作废，勿再用。人名 `Dereth (Derethi)` = 德雷西 不变，Derethi 派生词（德雷西祭司/信徒等）不动，教会**职衔**义「教宗」（如 现任教宗=信纳兰）照旧。
+  - Aon 重名拆分：`Dao`（稳定、保障）= **多奥**、`Dio`（坚贞、稳固）= **戴奥**；同名侍灵 Seon Dao 同改 **多奥**（Seon Dio 维持戴奥）。人物 Daora/Daorn = 朵奥拉/戴奥恩 **未获裁定，不动**。
+  - `Lyndel` = **林德尔**、`Ledder` = **莱德尔**（中文名不再相同 → 词条去 `(士兵)`/`(亚马兰士兵)` 消歧义）。
 
-> 已落地书证译名（滚动更新）：见上文「### 已落地书证译名（第二轮 pilot）」表。
+> 已落地书证译名（滚动更新）：见上文 §3「已落地批次（摘要）」与 §2 样例表；全量在 `dict/mistborn.json`。
 
 ## 7. 「仅出现于失落金属（tlm，无官方中译）」待补清单（Finding D）
 > 这些词条所有 `{{book ref}}` 都指向 mb7/tlm，中英章节对齐暂无法采证；待《失落金属》官方中译后再补。部分可依据「同名已译书术语」推断但须标「推断未经书证」（如 Demoux 城 ← 人物 Demoux=德穆；Hammondar Bay 可能=哈蒙德湾）。

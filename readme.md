@@ -84,14 +84,9 @@
 
 ## 关键结论（截至现在）
 
-- **读取英文站 wikitext**：已跑通。例：`Allik_Neverfar` 用
-  `GET /w/api.php?action=query&prop=revisions&rvprop=content&titles=<标题>` 拿到 7830 字符完整 wikitext（含 `{{character}}`/`{{quote}}`/`{{date}}`/`{{book ref}}`/`[[内链]]`）。
-- **读取中文站**：已跑通，需 `X-authkey` 头走 `api.php`（否则 Cloudflare 403）。
-- **中文站写入（edit/创建）**：✅ **已打通**（2025-10-16 首次写入 `Allik Neverfar` 成功，newrevid 16679）。
-  - 写操作需要**已登录 bot 账号的有效 CSRF token**（`action=edit` 前先 `meta=tokens&type=csrf`）。
-  - 关键门槛：即使登录拿到的 CSRF 有效，**账号还必须属于「认证用户」(`verified`) 或「职员」(`staff`) 群组**才拥有 `edit` 权，否则 `action=edit` 会报 `permissiondenied`（仅限认证用户/职员）。`水蛭一号` 认证手机号后进入 `verified` 群组，才获得 `edit` 权。
-  - 判断是否认证：登录会话（`userinfo&uiprop=groups`）里 `groups` 含 `verified` 即有编辑权；匿名/未登录 `allusers` 列表不显示该平台级群组。
-- Cloudflare：英文站用 cloudscraper（TLS 指纹伪装）可过；中文站**必须**带 `X-authkey`，否则 API 层也被 403 拦。
+- **读英文站**：标准 MW API + cloudscraper（TLS 指纹绕 Cloudflare）已跑通；**写中文站**：`X-authkey` + bot 登录 CSRF + `action=edit` 已跑通（账号 `水蛭一号` 须属 `verified` 群组才有 edit 权——灰机平台级要求）。
+- 英文站 Cloudflare 用 cloudscraper 可过；中文站 API 必须带 `X-authkey` 头否则 403。
+- 各环节能力/用法见「当前实现状态」；未决项见文末「待办状态总览」。
 
 ## 技术方案
 
@@ -100,77 +95,31 @@
 
 ## 下一步（待办）
 
-1. ✅ 英→中读取链路已通
-2. ✅ 中文站 bot 账号（水蛭一号，`verified`）→ 登录 → 有效 CSRF token → `action=edit` 写入（2025-10-16 已跑通）
-3. ✅ 翻译 `Allik_Neverfar` 词条并贴回中文站（测试写入成功，页面 [Allik Neverfar](https://coppermind.huijiwiki.com/wiki/Allik_Neverfar)）
+- 读取/转换/翻译/写站/图片/模板**全链路已跑通**（见「当前实现状态」）。
+- **未决项集中见文末「待办状态总览」（更新 2026-10-27）。**
 
 ### 译名表补全（glossary alignment，方法见 `rules/glossary_alignment.md`）
-待办按优先级：
-- ✅ 数据模型扩展已定稿并落地：`renderings`（长语块替换，如 "Allik Neverfar, Tall One"↔"高个子亚历克·奈弗法"，见 `Allik`）+ `variants`（同名多义义项，如 Demoux=人物/城市）+ `zh_variable`（无固定专名，如 The Village），迁移脚本 `scripts/glossary_migrate.py`（已跑）。
-- ✅ 批量补全：人物 → 地理/地点/建筑 → **企业/团体/事件/文化/家族/物品/刊物/交通工具/疾病** → 歧义词条 已铺开并完成 E2 可采证条目（本论 769→819 条，全表共 819 条，232 条带书证 note，见 `rules/glossary_alignment.md` §2 批 G）。不可采证的（仅 tlm 无中译、报章插页被省略、正文意译未成专名、正文无书证）已归入 pending。
-- ✅ 整理「仅出现于失落金属(tlm)」词条清单（94 条 + mixed 58，见 `rules/glossary_alignment.md` §7），待 tlm 中译出版后补。
-- ✅ 补全后回填 `rules/*.md` 并提交译名表（本轮已提交）。
+- ✅ 数据模型已定稿落地：`renderings`（长语块整句替换）+ `variants`（同名多义）+ `zh_variable`（无固定专名），迁移脚本 `scripts/glossary_migrate.py`。
+- ✅ 批量补全已铺开：era2 可采证条目完成（961→969）；2026-10-19 译者 6 份 xlsx 并入 + 拆名 → **全表 4140 条，实质为三界宙全系列译名表**（meta.name 已改、按书拆分不做——用户定方向）。不可采证者归 pending 归档（勿重跑）。
+- ✅ tlm-only 清单（94 + mixed 58）见 `rules/glossary_alignment.md` §7，待《失落金属》中译出版后补。
+- ✅ **2026-10-27 译者三项裁定**（字典 note 已固化，后续 AI 勿回退；完整版见 `rules/glossary_alignment.md` §6）：
+  1. `Shu-Dereth/Shu-Korath/Shu-Keseg` = 德雷西/珂拉西/珂西格**道宗**（**shu- = path of**；书内旧译「xxx教宗」作废；人名 `Dereth`、Derethi 派生词、职衔义「教宗」均不动）。
+  2. Aon `Dao`（稳定、保障）= **多奥**、`Dio`（坚贞、稳固）= **戴奥**；侍灵 Seon Dao 同改多奥；**人物朵奥拉/戴奥恩未获裁定不动**。
+  3. `Lyndel` = **林德尔**、`Ledder` = **莱德尔**（去括号消歧）。
+  - 维基侧落地与核验：36 页 102 处词面 + 3 标题移动 + 60 处裸 `[[德雷西]]` 补全 + `Dao/Dio` 两页移动 + `==译名变更==` 段×7；旧词全站 0、裸 `[[德雷西]]` 仅人名 7 处、`[[戴奥]]` 仅 Dio 侧 5 处。备份 `dict/mistborn.json.bak.who3rulings-*`、`dict/zhwiki_*.bak-rulings-*`。
 
-### 已落地书证译名（`dict/mistborn.json`，2025-10-16，全表 819 条，含 232 条带书证 note）
-- Allik Neverfar = 亚历克·奈弗法；Allik = 亚历克（别名 阿里克）
-- Red（依蓝德运河船夫）= 雷德
-- Irongate River = 铁门河
-- Carlo’s Bend = 卡罗湾（已有，书证核验）
-- Trell（神）= 特雷；Trellism / Trelagism（宗教，官方中译合并）= 特雷教；Nelazan = 奈拉禅
-- Spook=鬼影、Waxillium Ladrian=瓦克斯利姆·拉德利安、Steris Harms=史特芮丝·哈姆斯、Telsin Ladrian=苔尔辛、Marasi Colms=玛拉茜·科尔姆斯、Elendel=依蓝戴（书证146处一致，修正源表伊兰黛尔市） 等，完整批记录见 `rules/glossary_alignment.md` §2。
-- ⚠️ 2026-10-17 台版清理：源文件 `dict/raw/迷雾之子第二纪元名词表.xls` 为**台版**译名（如 斯卡德利亚/寰宇/和谐之主），与大陆源 `《迷雾之子》名词表(1).xls`（司卡德瑞尔/三界宙/和谐）冲突。已比对二者（`.\`/`．`全角点→间隔号`·`判定为同词非差异）：**11 条改为大陆译名**（Scadrial→司卡德瑞尔、Harmony→和谐、Bleeder→放血者、Basin→盆地区、Jak→杰克、Saze→萨兹、Octant→8分区、Rust and Ruin→铁锈灭绝、Hammondar Bay→哈姆德海湾、God Beyond→彼界之神、Allriandre→亚莉安德；各条 src 记 `大陆(名词表(1))#台版清理:<旧台版>`），**27 条**仅台版源、无大陆对应 → 删除。全表 821→794 条。备份 `dict/mistborn.json.bak.twpurge-*`。
-- 🔧 2026-10-17 Ghostblood 词条修复：`Ghostbloods`（组织=鬼血会）此前缺词条，LLM 把 `Mistborn (series)` 页第三纪元三部曲名 `Mistborn: Ghostbloods` 误译为「血影」。已新增 `Ghostbloods`→`鬼血会`；并按用户确认把单数 `Ghostblood` 也统一为`鬼血会`（二者同译）。`extract_en_terms`+切片已验证能给出 gloss。全表 795 条。
-- ✅ 2026-10-17 译名表 vs 红铜智库维基核对收尾（`state/glossary_wiki_audit.txt` 54 条不一致逐条核对完毕，文件已删）：
-  - 以维基为准改译名表：**Krent 科兰特→克伦特**（维基既有页，ch9 拉德利安家车夫）
-  - 维基 move 到译名表名：**Mi'chelle Yomen 拆两条**——`Mi'chelle Yomen`=米歇尔·尤门（旧姓欧斯特林，婚后夫姓）、新增 `Mi'chelle Ostlin`=米歇尔·欧斯特林（旧姓），维基核心正文移动至 `米歇尔·尤门`，其余 redirect；**Yomen-Ostlin wedding dinner**=尤门-欧斯特林的婚礼晚宴（欧斯特林·斯），维基旧页 `尤门·/尤门- 尤门-欧思特林…` redirect 至连字符版正文
-  - 其余不一致均在更早批次已解决或为「用户口径保留差异」（Origin/Pinnacle/Shadesmar/Valette Renoux/Wax/Mistborn 等）。全表 796 条。
-- ✅ 2026-10-18 爬取 `Category:Mistborn` 全量（递归展开 **1116 页**；其中 Era_2 等 564 页已抓/跳过，本次新抓 **550 页**，0 错误）。复用 `fetch_en.fetch_one` + cloudscraper（与 Era_2 同法），慢速限速 `2.0s/页`（决议#14，防反爬，全程未触发封禁）。脚本 `scripts/fetch_mistborn_crawl.py`（按 `state/mistborn_need_fetch.json` 清单断点续跑、每 25 页存索引）；范围清单 `state/mistborn_category_list.json`。验证：1116/1116 全快照、0 缺失。
-- ✅ 2026-10-18 译名表补全轮·caizheng 采证并入（`state/glossary_caizheng/` 工作目录）：对 `state/mistborn_glossary_terms.json` 的 **327 条**候选词条按批次书证采证（批次文件 `batch_*.json`/`miss_*.json` 逐条给出 zh+书证+置信），汇总 `consolidated.json`：**168 条 ok**（含人物/地理/地点/机构/物品/金属/祝福等），已并入 `dict/mistborn.json`（全表 796→**961** 条；脚本 `scripts/glossary_caizheng_merge.py`）；**159 条不可采证**（仅 tlm/密史无中译、维基子页/元信息、正文无书证、意译未成专名）已归档 `state/glossary_caizheng/pending_archive.md`（勿重跑）。并入门类一致：Venture 家族=泛图尔、Tekiel=太齐尔、Cett=塞特、Kelsier=卡西尔、硝镪病等。备份 `dict/mistborn.json.bak.caizheng-*`。
-- ✅ 2026-10-18 **20 词条翻译 review 轮·方案1+2 落地**（用户定按 1+2 继续，不写站）：review 发现 Wayne/Elendel 两页缺 `{{en}}`、extract_en_terms 屈折/大小写误判致使大量「伪未收录」+英文残留。
-  - **方案1**：给 `translate.py` 加 `ensure_en_tag` 确定性兜底（块0 LLM 漏安放 `{{en|title}}` 时，在首个 `'''加粗标题'''` 后自动补上；无标题页紧跟 `{{CmPermission}}` 后补）——决议#10 落地更稳，`CmPermission`/`ensync` 依赖的 `#var:en` 必被定义。已单测 + 小页实测。
-  - **方案2a**：`extract_en_terms` 增捕**小写词**（kandra/metalmind/harmonium 等，原只捕大写首字母词故漏配）；`slice_glossary` 改用归一化索引（`_norm_glossary_key`：去冠词/去属格/去复数/小写），使 `Set`→`The Set`、`metalminds`→`metalmind`、`kandra's`→`Kandra` 命中规范词条；对**全小写正文词**套 `GENERIC_EN_STOPLIST` 防通用英文误翻（如小写 `red`→专名 雷德）。Effect：Elendel 命中 110→168 条，英文残留/伪未收录显著下降。
-  - **方案2b**：`glossary_assist` 采证高价值真缺口并入 `dict/mistborn.json`（961→**969** 条）：`Sovereign=君主`（悲悼护腕 mb6 ch21-23，非「主权」）、`Ashmount=灰山`（永世英雄 mb3 ch34）、`Edwarn=埃德温`（全名 埃德温·拉德利安 已有）、`Mr. Suit/西装先生`、`Winsting=温斯汀`、`Breeze=微风`、`Allrianne=奥瑞安妮`（全名 奥瑞安妮·拉德利安）。无书证术语（Steinel/Mycondwel/Icy Ben Oldson/West's Haven/Channeral Range/Faleast Range/Sycamore Street Gang/Getruda/Dumad/Clubs）全书 0 命中 → 追加归档 `pending_archive.md` 勿强译。
-  - **重跑验证**（`scripts/batch.py --stage translate` 全 20 页）：✅ 全 20 页均已含 `{{en|...}}`（Wayne/Elendel 补齐）；✅ Set/kandra/metalminds/skaa/harmonium/Edwarn/Sovereign/Breeze/Winsting/Ashmount 等不再「伪未收录」，正文统一 组织/坎得拉/金属意识/...；✅ stoplist 防误翻生效（小写 red/well/dug/rioting 等不再误命中专名；Set→组织 与 Cett→塞特 不撞）。剩余可接受点：MeLaan infobox `| 种族 = kandra`（未走确定性替换）、Elendel 正文「Allrianne 女士」（LLM 未用 奥瑞安妮，改自译 阿莉安）；untranslated_terms 数量因 LLM 详略不同有波动（Waxillium 本次多报到普通词，正文均已译对，属上报口径差异非质量回归）。
-  - 备份 `dict/mistborn.json.bak.review-*`。
-- ✅ 2026-10-18 **残点2 + Mistborn(series) 三项翻译修复**：
-  - **残点2收尾**（重跑 Wayne/MeLaan/Elendel 验证）：`_sub_glossary_in_string` 加**归一化整值兜底**（infobox `| 种族 = kandra`→坎得拉、`Set`→组织、`metalminds`→金属意识，全小写套 stoplist 防误翻）；`extract_en_terms` 增捕**大写短语内单个大写词**（"Lady Allrianne Ladrian"分离出 Allrianne、"Mr. Suit"分离出 Suit）；SYSTEM_PROMPT rule 2 强化「切片给出 zh 必须原样使用、禁自造音译」。`dict/mistborn.json` 新增 `Suit=西装先生`（Mr. Suit 简写变体）969→**970**。验证：Mr. Suit→西装先生、Allrianne→奥瑞安妮、`| 种族 = 坎得拉`；`review_verify` 伪未收录清零。
-  - **① `{{for}}` 模板参数翻译**：新增 `translate_for_template`（convert 后确定性替换参数 1/2/3/pre 的可译专名）+ SYSTEM_PROMPT rule 2.2（{{for}} 的 pre=/目标/描述属需翻译导语文案）。`{{for|Allomancy|the kind of Allomancer|pre=This article is about [[Brandon Sanderson]]'s series}}` → `{{for|镕金术|the kind of 熔金术师|pre=本文介绍的是[[布兰登·桑德森]]的系列作品}}`（参数1/pre 全译；参数2 虚词结构 LLM 偶留英文为已知小瑕疵）。
-  - **② `<references>/<ref>` 脚注翻译**：SYSTEM_PROMPT rule 2.3（脚注说明属需翻译正文，标签/name/自闭合保留）。实测两块 7 条脚注全部译中。
-  - **③ 子页链接 [[X/Statistical analysis|数字]]→[[永世英雄/数据分析|数字]]**：新增 `translate_wikilink_targets`（父+后缀均有译名才重写、display 保留）+ `load_merged_glossary`（主表 mistborn.json + 辅表 common.json 合并，次表补主表缺失）。新增 **`dict/common.json`**（跨站通用词：`Statistical analysis=数据分析`，**不塞入 mistborn.json**）。
-  - **重跑验证**：`Mistborn (series)` 三项全达标，写回 `bot测试:Mistborn (series)`（newrevid 17178）；全 8 处 `/Statistical analysis` 统一译《xxx/数据分析》。提交 `ccff85c`。
-  - **补强（2026-10-18 晚）**：SYSTEM_PROMPT rule 2.2 强化「描述/`pre=` 参数须**整句**译成中文，不得残留整段英文虚词」。重跑并重写（newrevid 17179）：`{{for|镕金术|熔金术师这一类|pre=本文介绍的是[[布兰登·桑德森]]的系列作品}}`——参数 2 由 `the kind of 熔金术师` 整句化 `熔金术师这一类`。提交见 `git log`。
-- ✅ 2026-10-18 **Mistborn(series) 书目表格布局 + LLM 无限推理修复**：
-  - **布局修复**：`Mistborn (series)` 页 7 个书目表格（`{| class='infobox bib mistborn cosmere' width=100%`）英文站占满宽度、中文站却窄/乱——根因：**huijiwiki 平台全局把 `.infobox` 定义为信息框样式**（窄/右浮/固定宽），`width=100%` HTML 属性优先级压不过 CSS，表格被当信息框渲染。修复：`convert_templates.py` 新增 `_strip_bib_infobox_class`，对 class 含 `bib` 的表格顶行剥离 `infobox` 词（保留其余 class 与 width=100%），非 bib 表不动。重跑写回（newrevid 17180），网页端 7/7 表格 `class='bib mistborn cosmere' width=100%`，`infobox` 残留 0。
-  - **LLM 无限推理修复**：重跑时 3 块全失败「无法解析 JSON」——排查发现 `deepseek-v4-flash-0731` 对长 wikitext 翻译块**病态无限推理**（`finish_reason=length`，reasoning_tokens 吃光 max_tokens（8000~20000 均如此），**content 为空**）。对照实验：「短任务正常」「`thinking:{"type":"disabled"}` 稳定产出（reasoning=0、finish=stop）」「`budget_tokens` 参数无效」。修复：`translate.py::llm_chat` 默认发送 `thinking={"type":"disabled"}`（`LLMConfig.thinking` 字段，`LLM_THINKING=enabled` 可恢复推理）。提交 `c8862f9`。
-- ✅ 2026-10-18 **「无译名专名不翻译」规则落地（keep_en 名单）**：用户指出 `Mistborn (series)` 页把译名表/书证均无的作品名自译（`长路漫漫`/`迷雾之子：传承`/`迷雾之子：出生权`），违反规则 2「译名表没有的疑似专名保留英文」。处理：
-  - **机制**：新增 **`dict/keep_en.json`**（译名表无 + 中文书证 0 + 无官方译名的书名/作品名名单）；`translate.py::build_user_prompt` 读名单，本块出现即提示 LLM「保留英文、禁自译、列 untranslated_terms」。`load_keep_en()` 加载。
-  - **查证入译名表 2 词**（中文站已有页面=社区通行译名）：`Mistborn: Secret History = 迷雾之子：秘史`（pageid 1585）、`Arcanum Unbounded = 无界秘典`（pageid 2872，台译 无垠秘典）；其余 23 词经中文站页面探测无对应译名页 → 留 keep_en。
-  - **重跑验证**：三个点名词保留英文并入 untranslated；秘史/无界秘典 用官方译名；章节标题 `Original Trilogy`→`原始三部曲` 属标题翻译（规则 4）不算违规。写回 `bot测试:Mistborn (series)`（newrevid 17181）。提交 `9bc6fd4`。
-- ✅ 2026-10-18 **Mistborn(series) 页面渲染错误修复**（用户报告「脚本错误：函数{{{1}}}不存在」「name=aa 使用不同内容定义了多次」「alloy 未在先前文字中使用」）：
-  - **根因 1**：正文 `{{ref|name=aa}}`/`{{ref|name=alloy}}`（无 group、无 text 的纯占位引用）没被归一，中文站 `Template:Ref` 走 `#invoke:Ref` 用空卷码查表 → 「函数{{{1}}}不存在」；占位引用与 `<references>` 内 `{{url ref|name=aa}}`/`{{bws ref|name=alloy}}` 定义错配 → aa 重复定义 + alloy 未使用。
-  - **修复**：`convert_templates.py::_scan_refs` 增加「无 group + name + 无 text → `<ref name=X/>`」兜底；LLM 偶发把 `<ref name=X/>` 变回 `{{ref name="X"}}`（无管道/带引号）也能归一——`translate.py::assemble` 对最终译文幂等重跑 `_scan_refs`。
-  - **方案 A'（保留 group="fn"）**：此前把 `<references group=fn>` 剥成无 group，使 fn 脚注混入默认组、页面出现多个默认组 `<references>` 结算点，跨块占位引用（alloy 位于第二个 fn references 之前）被提前结算为「未定义」（最小页实验 4/5/6 复现并验证）。保留 group 后 fn 脚注独立成组，默认组只剩主 `<references>`。
-  - **附加**：`Template:Wob ref` 链接文本 `{{{text|{{{2}}}|}}}`（嵌套 `{{{2}}}` 缺默认值管道）让单参数 `{{wob ref|9171}}` 渲染出 46 处 `{{{2}}}` 字面量——`_expand_wob_refs` 把单参数 wob ref 展开为 `<ref>[[wob:N|wob:N]]</ref>`（绕开模板缺陷、不依赖缺失的 `Template:Ref/broken`）。
-  - **验证**：重跑写回 `bot测试:Mistborn (series)`（newrevid 17190），渲染 error 0、`{{{2}}}`/`{{{1}}}` 0、cite_note-aa/alloy/TLWI 等全部正常；keep_en/官方译名/数据分析 修复不回归。提交 `ea79bfb`。
-- ✅ 2026-10-18 **keep_en 从人工名单升级为自动机制**（用户质疑「其他页面咋整，不能靠逐个 review」）：
-  - **痛点**：keep_en.json 靠 review 一个页面补一批，1123 个快照页无法人工逐页维护。
-  - **三层自动判定**（`translate.py::detect_keep_en_terms` / `detect_zhwiki_refs`）：
-    1. **动态 keep_en**：每块自动识别「斜体书名 + [[链接目标]] + 不在译名表 + 不可贪心拆译」的专名提示保留英文（如 The Long Way In / Mistborn: Birthright）；`Mistborn: The Final Empire` 因可拆译（迷雾之子+最后帝国）自动排除，`'''粗体'''` 不会被误当斜体。
-    2. **zhwiki ref**：中文站已有对应页面的专名提示采用中文站标题（如 Brandon Sanderson → 布兰登·桑德森、Kaladin → 卡拉丁），不再保留英文。
-    3. **静态 keep_en.json** 保留为人工确认词的落库，与动态结果合并提示。
-  - **数据来源**：`scripts/scan_zhwiki_titles.py` 全站扫描中文站 → `dict/zhwiki_titles.json`（847 页：CmPermission/{{en}}/Infobox 原名 提取）+ `dict/zhwiki_aliases.json`（723 条：英文标题重定向页 Elend→依蓝德·泛图尔 等）。
-  - **附带修复**：`untranslated_lead_english` 误判——`<ref>`/`[[wob:N|wob:N]]` 被当叙述性英文（Atium 页导语校验 3 次重试失败），现在剥离这两类再计数。
-  - **验证**：Mistborn(series) 重跑 10 项回归全过（官方译名/keep_en/无自译）；Atium（从未 review 过的页面）真实翻译正确：天金/灭绝/存留/亚提/谐金 等译名表词全部译对，`[[神瑛]]`/`[[纹]]` 用 zhwiki ref，wob ref 修复后导语校验不再误报。提交 `（待提交）`。
-- ✅ 2026-10-19 **译者译名表 6 份 xlsx 并入**（`dict/raw/` 新增：三界宙翻译勘误表/伊岚翠/无界秘典/破战者/迷雾之子/飓光志；脚本 `scripts/glossary_xlsx_import.py`，43 个 sheet 按格式分派解析）：
-  - 全表 978→**3932 条**（新增 2954、与现表一致确认 253、冲突 36 未覆盖、新表互斥 54 按优先级择一记入 note）；覆盖扩展至三界宙其他书系（飓光志/伊岚翠/破战者/无界秘典）。备份 `dict/mistborn.json.bak.xlsximport-*`。
-  - 冲突/勘误/pending 报告：`state/glossary_xlsx_import/conflicts.md`（勘误表为句子级 10 条未并入）；pending 241 条需书证补译（迷雾之子相关可采现有中文 epub，伊岚翠/破战者/飓光志待电子书）。
-  - keep_en 清理 4 条（已有官方译名入表：Allomancer Jak…/Mistborn Adventure Game/Birthright/House War）；章节标题/章节题词/Sheet17 三个 sheet 不入译名表。
-  - ⚠️ `dict/mistborn.json` 实质已是**全系列（三界宙）译名表**（meta.name 已改，文件名暂不改）；**按书拆分不做**（用户确认方向：跨世界串门频繁 + 切片机制已省 token，异义用 variants/note 治理）。
-  - ✅ 2026-10-19 拆名专项（`scripts/glossary_split_names.py`，用户口径）：人名形全名拆出裸名 **208 条**（Shallan=沙兰/Davar=达瓦 等；名/姓各自入典），拆名冲突 12 条未并入；全表 3932→**4140** 条。`conflicts.md` 各决策表已加「处理方法」空列待人工填写（填写后勿再重跑 report）。
-  - ✅ 2026-10-19 **A类36条已裁定落地**：26条改以新表（src 记 `A类裁定2026-10-19:<旧值>` 可回滚）；Felt/Red/Vet 加作品 variants（迷雾之子/飓光志 同词异人或异译）；Hoid/Arcanum Unbounded 按用户 note；Allomantic Agreement/Book of the False Dawn 维持现值；Pinnacle 维持已有 variants；Sixteen 删除（通用数词）；Misra 待定。规则入库：**作品内的作品在译名表中不加书名号**。后续用户复核：Arcanum Unbounded note=真实世界的书（2016 中短篇合集）；Shum=束姆(迷雾人名)/黍麻(飓光志作物)、The Path=道(迷雾宗教)/白沙=宗师之路(不同宗教，非同一宗教) 均改为作品 variants（zh 取迷雾义）。✅ 书名号全表清理：作品内的作品 45 条去书名号（回滚档 booktitle_strip.json）。
-  - ✅ 2026-10-19 **英文维基 6 分类递归爬取完成**（`fetch_category.py --list` 展开 + `fetch_mistborn_crawl.py` 抓取，决议#14 慢速 delay=2.0s）：Category:General Cosmere / Cosmere celestial bodies / Elantris / The Emperor's Soul / Warbreaker / Stormlight_Archive；子分类 267、页面并集 **3073**（新抓 **2765**、已有快照 308），115.9 min，**0 错误 0 缺失 0 站方不存在**，快照全落 `en_snapshot/`。清单 `state/cosmere_lists/*.json`、需抓清单 `state/cosmere_need_fetch.json`、日志 `state/cosmere_crawl.log`。
-  - ✅ 2026-10-19 **三分类缺译名排查 + 电子书采证**（Elantris / The Emperor's Soul / Stormlight_Archive）：词条页 2554 中已有译名 1995（`translate` 归一化匹配复查，消 166 条大小写/屈折误报），缺 559；按规则分流——可用书 ref 采证出 **80 行官方中译（待裁定入表，含书证）**、定位未取到 3、就绪书正文无命中 73、缺中译本 171（sa4/5·中篇·mb7）、仅 map ref 10 与无 ref 222 跳过。工具：`glossary_scout.py`（批量定位）、`glossary_round2.py`（句对齐加强卡）、`glossary_report.py`（终报）+ 扩展版 `glossary_assist.py`（新增 sa1-3/伊岚翠/皇帝魂 书码、飓光志文件名体例、按文件序号中英对齐）。报告 `state/missing_translation_report.md`；判定底稿 state/round1_batches.json、round2_batches.json。
-  - ✅ 2026-10-19 **B类 54 条中 25 条已按用户裁定落地**（改值7、维持6、补note3、variants8、删 battle=战役）；余 29 条留 B 表待定。裁定记录见 meta.notes；改值可按 src 中 `B类裁定2026-10-19:<旧值>` 回滚。复核完毕：Edgedancer 加 variants（缘舞骑士/短篇名缘舞）、Lightweaver 主用织光骑士+尤伦（Yolish）语境织光师、Deo 的迪奥币=货币（非人名）。
+### 译名表定案要点（`dict/mistborn.json`，现 4140 条 = 三界宙全系列）
+
+**长期口径**
+- **书证优先级**：官方中译本书证 > 红铜智库维基既有译 > 源表；消歧词并入基础名 key，义项用 `variants`/`note`；名+敬称整句用 `renderings`（如 "Allik Neverfar, Tall One"=高个子亚历克·奈弗法）。
+- **台版源清理（2026-10-17）**：台版 xls 与大陆源冲突时**大陆优先**（11 条改译、27 条仅台版删除；src 留 `大陆(名词表(1))#台版清理:<旧值>` 可回滚）。
+- **作品内的作品不加书名号**（A 类裁定 2026-10-19；全表清理 45 条，回滚档 `booktitle_strip.json`）。官方中译合并的义项多 key 同 zh + note（Trellism/Trelagism=特雷教）。
+- **无官方译名的书名/作品名保留英文**：机制在 `translate.py`（动态 keep_en + zhwiki ref + 静态 `dict/keep_en.json`），见「当前实现状态」。
+- 与维基不一致的个别词按用户口径，记录在 meta.notes / 条目 src。
+
+**规模演进**：819（2025-10-16）→ 969（era2 书证轮 2026-10-18）→ 3932（译者 6 份 xlsx 2026-10-19）→ **4140**（拆名 +208）。
+
+**明细/档案**：`rules/glossary_alignment.md` §2-§3（批次摘要与样例）、`state/glossary_caizheng/pending_archive.md`（159 条勿重跑）、`state/glossary_xlsx_import/conflicts.md`、`state/missing_translation_report.md`、`dict/mistborn.json.bak.*`、git log。
 
 ## 凭据
 
@@ -214,7 +163,7 @@ API key 在 `.env`（已 gitignore，勿提交）。账号类凭据后续也放 
 - 已知两侧模板**不完全一致**（如英文 `{{character}}` ↔ 中文 `{{Infobox character}}`，参数名/字段集都不同）。
 - 逐步积累「格式转换的 tool 或 skill」来解决模板差异。已接入 `rules/template_map.json`（大小写不敏感、一行一参数）：
   - ✅ 已接入：`character`（完整）、及「通用映射批」`group`/`location`/`culture`/`item`/`literature`/`lifeform`/`food`/`magic`/`disease`、`business`/`book`（含多源碰撞归一，如 owner&founder→业主）、`noble house`、`shard info`（→Infobox shard）、以及已建中文站模板的 `settlement`/`architecture`/`geography`/`nation`/`vehicle`/`quote`/`image`/`rpg ref`。
-  - ⬜ 待接入/待决策：`metal`（中文 `Infobox metal` 是「镕金金属技艺」语义，EN `{{metal}}` 是「神金/金属学」语义，字段不对应，**需单独定承载方式**，见 `rules/template_probe_resolution.md` §三 A）。
+  - ✅ `metal` 已接入（commit `518613b`）：中站 `Infobox metal` 已按 EN 语义重写（revid 16719，删 推拉/内外/分类，新增 类型/属性/涉及书目 + type-a/f/h），字段映射见 `rules/template_map.json`。剩余 = 旧金属词条改造 + type 值口径（见文末待办）。
   - 模板差异盘点见 `rules/template_diff_audit.md`；全量存在性探测（101 模板）与缺失项逐条处置见 `rules/template_probe_resolution.md` + `probe_report.json`；字段映射确认见 `rules/infobox_mapping.md`。
 
 ## 7. 每篇处理后：校验用到的 template 与 image 是否存在
@@ -331,7 +280,7 @@ coppermind/
 - **现状**：该 skill 是 Node/ESM，封装中文站 MediaWiki API（`x-authkey` + bot 登录/编辑/上传/同步）。
 - **评估**：主栈定为 Python。写站逻辑本就简单（`action=login` → `csrftoken` → `action=edit`），Python 几十行即可复刻，**不必依赖一个 Node 脚本**。
 - **结论**：不急着翻译成 Python。先让 Python 主栈自实现读/写 API；Node skill 可留作参考（其 `api.md`/同步策略有借鉴价值）。若日后需要批量 `sync` 目录上传（大图/模板批量），可再考虑移植。
-- ⬜ 待定：Python 侧写站模块实现后，与 Node skill 的行为对齐（CSRF 会话、重试、`sync` 语义）。
+- ✅ 已按此结论执行：`scripts/write.py`（HuijiClient：登录/CSRF/编辑/移动/删除/上传）为现役写站实现，全项目写站均用它；Node skill 仅作参考，无需再对齐。
 
 ---
 
@@ -356,9 +305,8 @@ coppermind/
   1. 按 `rules/template_map.json` 的 `src_template` 驱动，把匹配的英文 infobox 转换为 `{{Infobox X}}`，字段名按 `field_map` 映射（**大小写不敏感**；一行一参数中文站风格；空值参数自动丢弃）
      - 已支持：`character` + `group`/`location`/`culture`/`item`/`literature`/`lifeform`/`food`/`magic`/`disease`
   2. `{{quote}}` → `{{Quote}}` 重命名
-  2. `{{quote}}` → `{{Quote}}`
   3. 其余模板（`book ref`/`date`/`image`/`for`/`columns`/`partial`/`Mistborn`…）**中文站同名且参数兼容，直接复用不动**
-  3b. **脚注 group 归一（方案 A，2026-10-17）**：英文站 `{{ref|...|group=fn}}` + `<references group=fn>` 是英文站 `Template:Ref` 扩展脚注体系；中文站 `Template:Ref` 是书目引用模板、**不支持 group** → 原样透传会让 `<references group=fn>` 找不到前置 group 标记而报「引用了未在前文中出现的组 fn」。`convert_templates.py` 在解析前用 `_convert_footnote_groups` 转成中文站可渲染的标准 `<ref>/<references>`：正文内联 `{{ref|group=fn|text=X}}`→`<ref>X</ref>`、内联具名→`<ref name="N"/>`、定义块 `{{ref|group=fn|text=X|name=N}}`→`<ref name="N">X</ref>`（`<references group=fn>`→`<references>`）、自闭合→`<references/>`；英文脚注 text 成为普通正文由 LLM 翻译。涉及 Wayne/Waxillium/Elendel Basin/Mistborn (series) 等 4/20 页（下轮重跑生效）。
+  3b. **脚注 group 归一（方案 A）**：英文站 `{{ref|group=fn}}` + `<references group=fn>` 中文站不支持（透传会报「引用了未在前文中出现的组 fn」）→ 解析前 `_convert_footnote_groups` 转标准 `<ref>/<references>`（英文脚注 text 作正文交 LLM 翻译；涉及 4/20 页）。
   4. `--wrap`：组装页面级包装 `{{CmPermission|英文名}}`（顶）+ `{{en|英文名}}`（首部占位，翻译阶段移位）+ `{{ensync|revid}}`（结尾，revid 取自快照）——决议 10-12
   5. 报告 mapped/unmapped/collisions/wrapped
 
@@ -374,10 +322,7 @@ coppermind/
   2. **超长词条分块**：按 `== 章节 ==`/`=== 小节 ===` 边界切块，每块 ≤ `--max-chars`（默认 7000），Infobox+导语固定 chunk0，**绝不在一节/一模板内部硬切**（单节超限独成一块并告警）。已验证 23KB 的 `Spook` 切 5 块、197KB 的 `Kaladin` 切 35 块均无损（章节结构完全保留）
   3. **Infobox「字段 = 值」确定性翻译**（决议#4）：结构化短字段按译名表整值/最长匹配替换，不依赖 LLM 是否记得翻值
   4. **决议#13 确定性保护**：`{{Quote}}`/`{{columns}}`/`{{sidequote}}` 等原文引用块在送 LLM 前用唯一占位符替换，模型原样保留，翻译后填回英文原文，并自动列入 `untranslated_terms`（「需查中译本」）——不让 LLM 选择翻不翻
-  4b. **决议#13 增强·原文块书证采证**：按 `{{book ref|书码|章}}` 调 `glossary_assist` 到中译本书证采证这些原文块的中文——
-      - **台词 quote**：用书证采证官方中译；不逐字匹配原书（意译）或无 book ref 的 quote **保留英文**（诚实不硬翻）
-      - **称号/称呼列表 columns**（如 `Great Metallic One`）：逐行采证替换为中文，非逐字的保留英文
-      - 两档：**自动（默认，2026-10-21 用户裁定）**——采证到的直接替换为中文（英文不留），`quote_resolutions` 留档；**半自动 `--no-auto-quote-cn`**——不替换，产出 `proposed_cn` 供 review
+  4b. **决议#13 原文块书证采证**：按 `{{book ref|书码|章}}` 调 `glossary_assist` 采证 `{{Quote}}`/称号列表的官方中译并替换（无证/意译不硬翻、保英文）；两档：自动（默认，2026-10-21 裁定）/ `--no-auto-quote-cn`（出 `proposed_cn` 供 review）。
   5. **术语裁切**（决议#9）：仅把本文命中的译名子集送 LLM，省 token
   6. 组装页面级包装 `{{CmPermission}}`（顶）+ `{{en}}`（首行，由 LLM 在块0安放）+ `{{ensync}}`（尾，revid 取快照 meta）——决议 10-12
   7. 输出契约 `translation.json`：`{meta, translation, untranslated_terms}`，另落 `translation.txt`
@@ -449,12 +394,11 @@ coppermind/
 
 - **`scripts/migrate_images.py`**（Python，已跑通）：**图片迁移**（画师授权后放行，覆盖决议 #15 旧限制）→ 把英文站的**图片本体文件 + File: 页内容**搬到中文站 →
   1. **发现**：扫描英文 wikitext，用**正则**匹配图片引用（`[[File:x.jpg]]` / `[[Image:x.jpg]]` / `[[file:x.jpg|width=...]]` / 模板命名参数值，可选裸写 `x.jpg`），并**合并**各快照 `meta.json["files"]`（fetch_en.py 用 mwparserfromhell 确定性提取 `{{image}}` 首位置参 / 文件感参数，最稳妥）。两来源去重（含下划线≡空格归一）、过滤外链误报。
-  2. **下载**：英文站 `revisions` 取 **File: 页 wikitext（内容，含 {{art}} 授权/来源模板）**；`imageinfo` 取图片 bytes。**关键坑**：英文站 CDN 做内容协商，cloudscraper 的 Chrome Accept 会拿到 webp 转码版而非原始格式——脚本显式带原始格式 `Accept` 取回与扩展名一致的原始字节。
-  3. **上传**：中文站 `action=upload`（bytes + `text=原始 File 内容`），图片本体与 File: 页**一次到位**。**幂等以「中文站 File 页已存在」为准**（不用 sha1 判等——实测英文站内容协商取回的字节对部分文件 ≠ 规范哈希；本脚本是唯一上传者，存在即视为已迁移）。`--force` 才对已存在文件尝试覆盖。
-  4. **安全/限速**：`--include-bare` 的裸命名仅「列出待人工复核」（已实证：文件名含空格会把 `...Laurys L.jpg` 切出 `L.jpg`，且英文站恰有无关 `File:L.jpg`），需 `--confirm-bare` 才自动迁移。英文站读请求统一经 `RateLimiter` 限速 `--en-delay`（默认 1.0s，防反爬，决议 #14）；中文站写/下载间 `--delay`；失败退避重试（最多 5 次）——永久错误（`fileexists-forbidden`/`filetype-banned` 等）不重试。
-  5. **中文站扩展名白名单**：原来灰机只允许 `png/jpg/jpeg/gif/webp`，`.svg` 报 `filetype-banned`；**2025-10-17 用户联系管理员开放了 `.svg` 上传**，`ZH_ALLOWED_EXT` 已加入 `.svg`（实测 3 个 svg 上传成功）。仍被拒的有 `.tif/.tiff`（需要可再找管理员开）。
-  6. **上传大小上限 10 MB**：中文站 `maxuploadsize=10485760`（10 MB），服务器对超限请求回 `HTTP 413`。全 301 张实测仅 **2 张接近/超过**：`Dalinar Ambush LGD.png`（EN 规范 12MB，但 CDN 实取 9MB，未超限，已传成功）× `Harmony and Discord by Ashley Coad.png`（实取 13.5MB，超限，**无法经此路径上传**，需站长提高 `maxuploadsize` 或人工处理）。
-  6. **覆盖已存在文件（`--force`）**：MediaWiki 对无 `reupload` 权限的账号，即使 `ignorewarnings=1` 也报 `fileexists-forbidden`（权限门）。`水蛭一号` 现已加入 `sysop` 组（具备 `reupload`/`delete`），`--force` 可覆盖。**注意**：`action=upload` 覆盖已存在 File 页时**只更新图片本体、不更新 File 页描述**——脚本会在成功覆盖后自动 `edit` 补写 File: 内容为英文站原样。`fileexists-no-change`（内容已一致）视为 `ok` 而非失败。
+  2. **下载**：File: 页 wikitext（revisions）+ 图片 bytes（imageinfo）；显式带原始格式 `Accept`（英文站 CDN 内容协商会吐 webp 转码版，与扩展名不符）。
+  3. **上传**：`action=upload`（bytes + `text=` 原始 File 内容）本体与 File 页一次到位；幂等以「中文站 File 页已存在」为准（sha1 不可靠：CDN 取回字节对部分文件 ≠ 规范哈希）。
+  4. **安全/限速**：裸命名默认仅列清单待人工复核（`--confirm-bare` 才自动，防 `...Laurys L.jpg` 切出 `L.jpg` 类误匹配）；英文站 `--en-delay` 默认 1.0s（决议#14），失败退避重试，永久错误（banned/forbidden）不重试。
+  5. **扩展名**：白名单已含 `.svg`（2025-10-17 管理员开放）；`.tif/.tiff` 仍禁。
+  6. **大小与覆盖**：上限 10 MB（超限仅 1 张 `Harmony and Discord by Ashley Coad.png` 13.5MB，待站长调 `maxuploadsize`）；`--force` 覆盖需 reupload 权（水蛭一号已入 sysop），覆盖只更新本体 → 脚本自动补写 File 页描述。
   ```bash
   .venv/bin/python scripts/migrate_images.py --scan --all                          # 只发现图片清单（离线）
   .venv/bin/python scripts/migrate_images.py --title "Allik Neverfar" --report     # 看正则明细
@@ -467,7 +411,7 @@ coppermind/
   ```
   **长任务/断线续看**：用 `--status-file <路径>` 会把每个文件的 `ok/skip/exists/fail` 逐条追加为 JSONL，并写最终 `summary`。会话断开后，后续 AI 只需读该文件即可查看进度/失败清单，无需联网。整批跑用 `state/image_migration_status.jsonl` 作为规范状态文件。
   依赖：cloudscraper + write.py 的 HuijiClient（复用登录/CSRF）；不含额外库。
-  实测：**真实上传已验证**（2025-10-17）：`Allik Neverfar` 4 张 + `Dao/Ghostbloods/Harmonium/Set` 的 `webp/jpg/jpeg` + `.svg`（`Aon Dao`/`Ettmetal (Alloy of Law)`/`Ghostblood`）+ `New Ascendancy` 2 张共 **13 张均落到中文站 `File:` 命名空间成功**，File 页含 `{{art}}` 授权/来源，读回 sha1/size 一致；重跑幂等 skip。**`.svg` 已由管理员开放**上传。**`Zinc (Alloy of Law).svg` 覆盖完成**（`水蛭一号` 入 `sysop` 组后 `--force` 覆盖为英文版，图片本体 + File 页 `{{art}}` 内容均已修正）。全部 13 张 + Zinc 共 14 张文件读回均 `art=True`、`missing=False`。
+  实测：全批 301 张跑通（`.svg` 含在内）；进度/失败清单落 `state/image_migration_status.jsonl`（断点续看）。
 
 ---
 
@@ -485,18 +429,29 @@ coppermind/
 
 ---
 
-# 待办状态总览（更新）
+# 待办状态总览（更新 2026-10-27）
 
-1. ✅ 英→中读取链路已通
-2. ✅ 中文站 bot 账号（水蛭一号，`verified` 认证用户）→ 登录 → 有效 CSRF token → `action=edit` 写入（2025-10-16 首次写入 `Allik Neverfar` 成功）
-3. ✅ 译名表 `dict/mistborn.json`（819→821 条，书证采证中）；✅ 补全工具 `glossary_assist.py` 已可用（中英章节对齐定位，见 `rules/glossary_alignment.md` §1.1/1.2）→ 缺失专名可据此采证补入
-4. ✅ 版本号记录方案已定（`state/en_index.json` + 快照）→ ✅ 已实现（`fetch_en.py`）
-5. ✅ 开发语言已定 Python；✅ 快照/索引方案已定 → ✅ 抓取落盘已实现（`fetch_en.py`）
-6. ✅ 样板词条 `Allik_Neverfar`：转换 + 译名表 + 映射表 + 翻译（`translate.py`）均已跑通并写入（2025-10-16 首次写入；2025-10-17 起 translate.py 自动产出，附 CmPermission/en/ensync 包装）
-7. ⬜ 落地并实现：白名单/黑名单/redirect 批量/模板图片校验 等规则（Template 命名空间暂不搬运；图片引用文本照搬）。✅ 图片本体迁移已随授权放行（`scripts/migrate_images.py`，见当前实现状态）；正式批量前仍需定画像/范围治理
-8. ⬜ 批量写站前的**治理/人工 review**：图片黑名单、模板图片校验、redirect 搬运（`batch.py` 已能批量串联 fetch→translate→write，但正式批量跑某个分类/清单前需先定上述规则与范围，避免覆盖真实内容）
-9. ⬜ **译名表补全铺开**：用 `glossary_assist.py` 对缺失专名批量采证（优先可书证的正文词：地理/地点/宗教/货币等）；地图-only 或仅 tlm 无中译的词条标 pending 待补。本轮已示范 `Survivor→幸存者`、`Survivorism→幸存者教义`（悲悼护腕 mb6 ch12）
-10. ✅ **模板存在性探测 + 中站对应决议**：`scripts/probe_template.py --audit` 全量核对 en_snapshot 全部模板（101 个 / 11531 处，同名 50、已映射 22、缺失 29），缺失项逐条给出处置，见 `rules/template_probe_resolution.md` + `probe_report.json`；并按决议**接入 `noble house→Infobox noble house`、`shard info→Infobox shard` 映射**（实测 `House Demoux`/`Harmony` 正常转换）。`metal` 因中英语义不对应，标待决策不自动映射。
-11. ✅ **非 meta 模板已迁移到中文站**（决议 #16 例外，用户定「只要不是 meta 级 Template 都搬」）：`scripts/migrate_templates.py --all` 建了 11 个模板（Rosharan date/Date/sa/Notice/Cite note/Rpg-canon/Small caps/CoverToC/Sots ref/Wp ref/Books/Tress，revid 16708–16718），`Date/sa`→redirect→`Rosharan date` 并保留中文 年/月/周/天 输出。meta 级（update/expand/demoted/nosnippet/meta:* 等）不搬、drop。
-12. ⬜ **更新 `Category:金属` 全部词条到新 Infobox metal**：用户 2025-10-17 决议 `metal`↔中文 `Infobox metal` 对应，模板已改（revid 16719）——删 `推拉/内外/分类`、新增 `类型/属性/涉及书目` 与 `type-a/type-f/type-h` 表位（照英文原文）；已接入 `template_map.json` 的 `metal` 映射。但因删除旧字段，**现有约 20 个金属词条（白镴/锡/电金/铁/天金/钢…）的 infobox 需逐个改为新字段**（type-a/f/h 取英文站同金属词条原文），见 `rules/metal_mapping_plan.md`。
-13. ✅ **meta/维护模板已在 convert 中 drop**（2025-10-17 批量扫描 568 词条发现 → 已修复）：用户决议 `complete`/`partial`/`stub` **保留**（中文站同名 Complete/Partial/Stub 语义等价，473/74/2 处原样保留）；`update`/`expand`/`meta:*/demoted/nosnippet/dialogue/edit note/user:*` **drop**（纯英文站编辑/维护标记，~79 节点，全量节点级验证为 0 残留）。`nosnippet` 为内容包装、drop 时 **unwrap 保留内文**。`scripts/convert_templates.py` 新增递归 `_apply_drop`（可处理嵌套在 infobox 参数值/Tag 内容里的模板），`translate.py` 在内存重转时自动继承。
+> 过程性明细已归档（`state/final_report_20261023.md`、git log、`state/` 各账目文件）；本节只留**未决项**与**已完成摘要**。
+
+## ⬜ 未决（按优先级）
+
+1. **批量写站治理**（原 #7/#8）：白名单/黑名单规则落地、redirect 批量搬运、模板与图片校验、图片黑名单；`batch.py` 已能串联 fetch→translate→write，但正式批量（样本推算约 450 页需新建）**前**必须先定范围与人工 review，避免覆盖真实内容。
+2. **`Category:金属` ~20 词条改新字段**（原 #12）：新 `Infobox metal` 已上线并接入映射（commit `518613b`，旧参数已删）→ 逐词条改 `类型/属性/涉及书目` + `type-a/f/h`（取英文站同金属原文），见 `rules/metal_mapping_plan.md` §3。
+3. **金属 type 值口径**：现按英文原文直填（原 #12 口径）；`rules/metal_type_translation.md` 中译研究稿（Spiritual/Cognitive/Mental·Enhancement 等）待用户决定是否采用——影响 Harmonium/Trellium 2 篇与上条呈现。
+4. **译名表未决批次**：B 类余 29 条 + `Misra` 待裁定；三分类采证 **80 行官方中译待裁定入表**（`state/missing_translation_report.md`）；xlsx 冲突 36 / 勘误 10 / 拆名冲突 12 —— `conflicts.md` 处理空列待填（填后勿重跑 report）；tlm 94 + 批 H pending 159 等中译出版（`pending_archive.md`，勿重跑）。
+5. **`三界宙系列` navbox 红链 115 处**（2026-10-27 `action=parse` 复核）：补目标页或裁剪导航条目。
+6. **`艾欧符文` 页 39 处 `''Examples:''` 英文残留**：属未翻译导语残留，按决议 #13/#9 处理（可译部分中文化）。
+7. **`艾欧符文` 1 处畸形 `{{Quote|Fire, Warmth |Ars Arcanum{{book ref…`**：括号不闭合（pre-existing），需修复。
+8. **书封 200→300px 推送**（2026-10-2x 会话）：4 个原生模板 17 个书封进 `图像` 槽并 300px（convert 侧已提交 `ea295ac`），**页面/模板侧推送待用户批准**。
+9. **`模板:Event` name-bar 推送**：name-bar 指令（ZH+EN 进 `image`）已定；模板页复核**已无保护**（2026-10-27），待推送。
+10. **`Template:Character` en-version 标记复用**（决议 #3 注，⬜ 待讨论如何落地）。
+11. **低频待定模板**：`dialogue`（对话横幅）建否待定；风暴光低频 pending 见 `rules/template_probe_resolution.md`。
+
+## ✅ 已完成摘要（详见过往小节 / git log / `state/` 档案）
+
+- **管线**（2025-10-16 起）：读取→转换→翻译→写站→批量 全通；写站/移动/删除/上传均经 `scripts/write.py` HuijiClient 实战验证。
+- **图片**：301 张迁移跑通（svg 白名单已开、10MB 上限 1 张例外）；**模板**：非 meta 11 个已建、meta 级 drop（568 页节点级验证 0 残留）、存在性探测+处置决议（`rules/template_probe_resolution.md`）、映射表 25 条（含 magic system/metal）。
+- **译名表**：4140 条（三界宙全系列）+ pending 归档体系；**2026-10-27 译者三裁定**落地（见「译名表补全」）。
+- **`艾欧符文` gallery 图名修复**：53 节对齐 EN，站上 32 + 新搬 21 = **53/53 实存**、渲染全出图、0 文件红链（账目 `state/aon_relink_plan.json`/`aon_existence.json`/`aon_fetch_result.json`）；本页 gallery 衬底已用页级 CSS 去除（`MediaWiki:Common.css`：皮肤 `var(--modal)=#222` 压黑线稿不可读）。
+- **`{{glossary ref}}` 本地化**：子页 `glossary`→`名词`、脚注改中文，132 处模板级生效（旧红链 0，`#O` 锚可解析）。
+- **复核注记**：`#var_final:en` 站点级复核**正常**（`{{en}}` 必定义 + `ensure_en_tag` 兜底；仅「同 parse 无定义」才泄 UNIQ，源码层 UNIQ/QINU 残留=0）——历史「35 UNIQ 页」问题不复现。
