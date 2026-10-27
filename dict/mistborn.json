@@ -5,9 +5,9 @@
     "source": "迷雾之子第二纪元名词表.xls + 《迷雾之子》名词表(1).xls + 迷雾名词对照表.docx + 2026-10-19 译者表6份(xlsx: 三界宙翻译勘误表/伊岚翠/无界秘典/破战者/迷雾之子/飓光志)",
     "source_sheet": "Glossary",
     "entry_count": 4245,
-    "updated": "2026-10-20",
+    "updated": "2026-10-27",
     "en_fixes": [],
-    "notes": "['英文 key 保留原始大小写/拼写。', '中文人名分隔符已统一为间隔号 ·。', '源表英文 key 中误用的汉字「依蓝德」已统一修正为 Elend（源 xls 已同步修正，此规则兼作兜底）。', '内容为草稿，仍需逐条核对。', '覆盖为全系列（Era1+Era2）译名表；更名 mistborn_era2.json -> mistborn.json。', '用户口径覆盖：Marsh=沼泽（不同译者作品翻译不一，统一为沼泽）；Cosmere=三界宙。', '时代二四部曲中文书名（用户提供）：执法镕金/旧影森森/悲悼护腕/失落金属。', 'Survivor/Survivorism 由 glossary_assist.py 定位并书证采证（悲悼护腕 mb6 ch12）。', '2026-10-17 台版清理：删除dict/raw/迷雾之子第二纪元名词表.xls（台版）来源的 27 个无大陆对应词条；11 个改为大陆译名（见 src 标记）', '2026-10-17 新增 Ghostbloods=鬼血会（此前缺复数词条，导致 LLM 把第三纪元三部曲名 Mistborn: Ghostbloods 误译为“血影”）', '2026-10-17 Ghostblood / Ghostbloods 统一为 鬼血会（用户确认单复数同译）', '2026-10-17 Hoid=须空（原台版“霍伊得”，源自第二纪元名词表；此前涉台版清理被漏，因大陆表该行格式异常未入 38 冲突）', '2026-10-17 第二批·以维基为准（用户口径）：Autonomy=自主、Odium=仇恨、Metallic Arts=金属技艺、Aramine=亚拉敏、Modicarm=摩迪卡、Sliver=残瑛（原表独盟/奥迪厄姆/金属艺术/碎裂等按红铜智库维基改正；Trell 注同步改「自主之化身」）', '2026-10-17 Sliver/Sliverism 辨析（用户口径 + 书中校对）：两者都保留。Sliver=残瑛（Cosmere 通用词：曾持 Shard 之力后失去的「载体」；书中独立用此义极少，正文多为其宗教短语 Sliver of Infinity）；Sliverism=碎裂教（宗教名）。两词条各加 note 供 LLM 区分。', '2026-10-17 Metalborn 书证核验（用户问询）：时代二「金属能力者」统称，书中标准译名为「金属之子」（旧影森森 9、悲悼护腕 18 处一致）；执法镕金(era2 首本) ch6 有一处松散译为「迷雾人」，以「金属之子」为准（词条 note 已注明）。', '2026-10-17 第三批·以译名表为准：Vindication=清辩（枪支名，维基 问证 已移动至 清辩 并保留重定向+重定向修正）；Wax=瓦克斯（补 note：Waxillium 的昵称，维基不动）；Valette Renoux=法蕾特·雷弩（补 note：纹/Vin 的化名，维基不动）。', '2026-10-17 第四批·大人/爵爷（纯姓氏化，用户口径）：Alernath=亚勒纳斯、Lord Stanton=斯坦顿（书证执法镕金ch1，维基史坦敦有误）、Peterus=佩特鲁斯、Shewrman=修尔曼——均为贵族姓氏、书中未提及名字（各加 note）；Jackstom Harms / Lord Harms 全名=杰克斯托姆·哈姆斯（旧影森森ch12『杰克斯托姆阁下』+哈姆斯），译名表改并维基已移到全名。维基已按纯姓氏/全名移动+重定向。', '2026-10-17 Pinnacle（用户口径）：两译名都对、都收入——Mistborn 藏金术师(Feruchemist)=巅峰；飓光志阿勒斯卡人破碎平原宫殿 The Pinnacle=巅宫。加 note+variants 区分，维基不动。', '2026-10-17 Rose Empire（用户口径）：维持维基「玫瑰帝国」，译名表蔷薇帝国→玫瑰帝国。核实：该词出自 Sel《皇帝的灵魂》，迷雾之子仅 tlm ch54 一次彩蛋提及（Moonlight=Shai 口述），无中译书证；另补 note 供 LLM 识别为三界宇宙跨作品词条。', '2026-10-17 Shadesmar（用户口径）：译名表取「裂影界」，维基不动。据英文维基补 note：裂影界=知界域（认知界 Cognitive Realm）的口语俗称（『Cognitive Realm, known colloquially as Shadesmar』），源自罗沙区称呼、后成三界宇宙标准；迷雾之子仅无中译的 SH/tlm 提及，译名分歧源自飓光志。', '2026-10-17 Rashek 全书检索（用户问询）：主流译法为「拉刹克」（时代一三本共百余处）；悲悼护腕 ch3 仅2处传统字形「拉剎克」。译名表拉剎克→拉刹克，与维基一致。', '2026-10-17 Origin（用户口径）：译名表收两义、维基不动——迷雾之子依蓝黛盆地开端的时代用「起源」（执法镕金 ch3/ch14 书证）；飓光志 Roshar 的起源用「飓源」。note 注明按作品/上下文取义，variants 区分。', '2026-10-18 译名表补全轮·caizheng 采证并入：新增 165、更新 3 条（源 state/glossary_caizheng/consolidated.json，168 条 ok；159 条不可采证已存 pending，见该文件）', '2026-10-19 译者译名表 6 份并入（scripts/glossary_xlsx_import.py）：新增 2954、补空 0、一致确认 253、与现表冲突 36（未覆盖，见 state/glossary_xlsx_import/conflicts.md）、新表互斥 54（已按优先级择一记入 note）；覆盖扩展至三界宙其他书系（飓光志/伊岚翠/破战者/无界秘典），pending 241 条待书证。', '2026-10-19 拆名专项：全名条目拆出裸名 208 条（名/姓各自入典，用户口径；提案与冲突见 state/glossary_xlsx_import/split_names.json）', '2026-10-19 口径：文件名仍为 mistborn.json（多脚本引用，暂不改）；表内容为全系列，按书拆分不做（跨世界串门频繁，切片已省 token，异义用 variants/note 治理）', \"2026-10-19 A类裁定（conflicts.md 表A 共36条）：默认 26 条改以新表为准（src 记 A类裁定2026-10-19:<旧值>，可回滚）；Felt/Red/Vet 加作品 variants（迷雾之子/飓光志 同词异人或异译，按作品取）；Hoid/Arcanum Unbounded 按用户 note 改写；Allomantic Agreement of '94/Book of the False Dawn 维持现值（=新表去书名号）；Pinnacle 维持已有 variants；Sixteen 删除（通用数词不作词条）；Misra 待定。规则：所有「作品内的作品」在译名表 zh 中不加书名号。\", '2026-10-19 A类后续修正（用户复核）：Arcanum Unbounded note 改为「真实世界的书」；Shum=束姆(迷雾人名)/黍麻(飓光志作物) 与 The Path=道(迷雾宗教)/宗师之路(白沙，不同宗教) 均改为作品 variants（zh 默认取迷雾之子义）。', '2026-10-19 书名号清理：作品内的作品 zh 去书名号 45 条（全表扫描 45/45 均为作品内作品、无真实书籍；回滚档 state/glossary_xlsx_import/booktitle_strip.json）。规则：作品内的作品在译名表中不加书名号。', '2026-10-19 B类裁定（用户25/54条）：改值 God Metal=神金、Spiritual Realm=灵界域、Shattering=破碎、Knights Radiant=光辉骑士、Singer=歌者、Lightweaver=织光骑士、Edgedancer=缘舞骑士（src 记 B类裁定2026-10-19:<旧值>）；维持 Ars Arcanum=秘典、Braize=庇雷、Dustmother=尘埃之母、Words of Radiance=光辉真言、Song=歌谣、Stormwall=飓幕；Aon/Unkalaki/gancho 补 note；Ati/Ire/Rira/toa/chasm/Dahad/Deo/Ene 八条改作品或语义 variants；battle 从表删除；余29条留 B 表待定。待复核：Edgedancer 中篇集名（原裁定 缘舞）与 Lightweaver 的 Yolish 织光师义。', '2026-10-19 B类复核修正：Deo 的「迪奥币」为货币（kind=currency，非人名）；Edgedancer 加 variants（阶职=缘舞骑士/短篇小说名=缘舞）；Lightweaver 主用织光骑士、尤伦（Yolish）语境用织光师。', '2026-10-19 Edgedancer 复核修正2：去 variants，内链默认译「缘舞骑士」，短篇名「缘舞」仅记 note。']\n2026-10-20 三分类（Elantris/TES/SA）采证100行裁定：97行采用（Svordish university 裁定用「斯沃旦大学」；Ana/Da 加「仅飓光志」note）；Highprince Sadeas (hog) 裁定不入表。新增 74 键，来源报告 state/missing_translation_report.md §1/§6。\n2026-10-20 Warbreaker 类排查裁定：§1/§6 共 33 行全部采信入表（新增 33 键），来源报告 state/missing_translation_report.md（合并版·第二部分）。"
+    "notes": "['英文 key 保留原始大小写/拼写。', '中文人名分隔符已统一为间隔号 ·。', '源表英文 key 中误用的汉字「依蓝德」已统一修正为 Elend（源 xls 已同步修正，此规则兼作兜底）。', '内容为草稿，仍需逐条核对。', '覆盖为全系列（Era1+Era2）译名表；更名 mistborn_era2.json -> mistborn.json。', '用户口径覆盖：Marsh=沼泽（不同译者作品翻译不一，统一为沼泽）；Cosmere=三界宙。', '时代二四部曲中文书名（用户提供）：执法镕金/旧影森森/悲悼护腕/失落金属。', 'Survivor/Survivorism 由 glossary_assist.py 定位并书证采证（悲悼护腕 mb6 ch12）。', '2026-10-17 台版清理：删除dict/raw/迷雾之子第二纪元名词表.xls（台版）来源的 27 个无大陆对应词条；11 个改为大陆译名（见 src 标记）', '2026-10-17 新增 Ghostbloods=鬼血会（此前缺复数词条，导致 LLM 把第三纪元三部曲名 Mistborn: Ghostbloods 误译为“血影”）', '2026-10-17 Ghostblood / Ghostbloods 统一为 鬼血会（用户确认单复数同译）', '2026-10-17 Hoid=须空（原台版“霍伊得”，源自第二纪元名词表；此前涉台版清理被漏，因大陆表该行格式异常未入 38 冲突）', '2026-10-17 第二批·以维基为准（用户口径）：Autonomy=自主、Odium=仇恨、Metallic Arts=金属技艺、Aramine=亚拉敏、Modicarm=摩迪卡、Sliver=残瑛（原表独盟/奥迪厄姆/金属艺术/碎裂等按红铜智库维基改正；Trell 注同步改「自主之化身」）', '2026-10-17 Sliver/Sliverism 辨析（用户口径 + 书中校对）：两者都保留。Sliver=残瑛（Cosmere 通用词：曾持 Shard 之力后失去的「载体」；书中独立用此义极少，正文多为其宗教短语 Sliver of Infinity）；Sliverism=碎裂教（宗教名）。两词条各加 note 供 LLM 区分。', '2026-10-17 Metalborn 书证核验（用户问询）：时代二「金属能力者」统称，书中标准译名为「金属之子」（旧影森森 9、悲悼护腕 18 处一致）；执法镕金(era2 首本) ch6 有一处松散译为「迷雾人」，以「金属之子」为准（词条 note 已注明）。', '2026-10-17 第三批·以译名表为准：Vindication=清辩（枪支名，维基 问证 已移动至 清辩 并保留重定向+重定向修正）；Wax=瓦克斯（补 note：Waxillium 的昵称，维基不动）；Valette Renoux=法蕾特·雷弩（补 note：纹/Vin 的化名，维基不动）。', '2026-10-17 第四批·大人/爵爷（纯姓氏化，用户口径）：Alernath=亚勒纳斯、Lord Stanton=斯坦顿（书证执法镕金ch1，维基史坦敦有误）、Peterus=佩特鲁斯、Shewrman=修尔曼——均为贵族姓氏、书中未提及名字（各加 note）；Jackstom Harms / Lord Harms 全名=杰克斯托姆·哈姆斯（旧影森森ch12『杰克斯托姆阁下』+哈姆斯），译名表改并维基已移到全名。维基已按纯姓氏/全名移动+重定向。', '2026-10-17 Pinnacle（用户口径）：两译名都对、都收入——Mistborn 藏金术师(Feruchemist)=巅峰；飓光志阿勒斯卡人破碎平原宫殿 The Pinnacle=巅宫。加 note+variants 区分，维基不动。', '2026-10-17 Rose Empire（用户口径）：维持维基「玫瑰帝国」，译名表蔷薇帝国→玫瑰帝国。核实：该词出自 Sel《皇帝的灵魂》，迷雾之子仅 tlm ch54 一次彩蛋提及（Moonlight=Shai 口述），无中译书证；另补 note 供 LLM 识别为三界宇宙跨作品词条。', '2026-10-17 Shadesmar（用户口径）：译名表取「裂影界」，维基不动。据英文维基补 note：裂影界=知界域（认知界 Cognitive Realm）的口语俗称（『Cognitive Realm, known colloquially as Shadesmar』），源自罗沙区称呼、后成三界宇宙标准；迷雾之子仅无中译的 SH/tlm 提及，译名分歧源自飓光志。', '2026-10-17 Rashek 全书检索（用户问询）：主流译法为「拉刹克」（时代一三本共百余处）；悲悼护腕 ch3 仅2处传统字形「拉剎克」。译名表拉剎克→拉刹克，与维基一致。', '2026-10-17 Origin（用户口径）：译名表收两义、维基不动——迷雾之子依蓝黛盆地开端的时代用「起源」（执法镕金 ch3/ch14 书证）；飓光志 Roshar 的起源用「飓源」。note 注明按作品/上下文取义，variants 区分。', '2026-10-18 译名表补全轮·caizheng 采证并入：新增 165、更新 3 条（源 state/glossary_caizheng/consolidated.json，168 条 ok；159 条不可采证已存 pending，见该文件）', '2026-10-19 译者译名表 6 份并入（scripts/glossary_xlsx_import.py）：新增 2954、补空 0、一致确认 253、与现表冲突 36（未覆盖，见 state/glossary_xlsx_import/conflicts.md）、新表互斥 54（已按优先级择一记入 note）；覆盖扩展至三界宙其他书系（飓光志/伊岚翠/破战者/无界秘典），pending 241 条待书证。', '2026-10-19 拆名专项：全名条目拆出裸名 208 条（名/姓各自入典，用户口径；提案与冲突见 state/glossary_xlsx_import/split_names.json）', '2026-10-19 口径：文件名仍为 mistborn.json（多脚本引用，暂不改）；表内容为全系列，按书拆分不做（跨世界串门频繁，切片已省 token，异义用 variants/note 治理）', \"2026-10-19 A类裁定（conflicts.md 表A 共36条）：默认 26 条改以新表为准（src 记 A类裁定2026-10-19:<旧值>，可回滚）；Felt/Red/Vet 加作品 variants（迷雾之子/飓光志 同词异人或异译，按作品取）；Hoid/Arcanum Unbounded 按用户 note 改写；Allomantic Agreement of '94/Book of the False Dawn 维持现值（=新表去书名号）；Pinnacle 维持已有 variants；Sixteen 删除（通用数词不作词条）；Misra 待定。规则：所有「作品内的作品」在译名表 zh 中不加书名号。\", '2026-10-19 A类后续修正（用户复核）：Arcanum Unbounded note 改为「真实世界的书」；Shum=束姆(迷雾人名)/黍麻(飓光志作物) 与 The Path=道(迷雾宗教)/宗师之路(白沙，不同宗教) 均改为作品 variants（zh 默认取迷雾之子义）。', '2026-10-19 书名号清理：作品内的作品 zh 去书名号 45 条（全表扫描 45/45 均为作品内作品、无真实书籍；回滚档 state/glossary_xlsx_import/booktitle_strip.json）。规则：作品内的作品在译名表中不加书名号。', '2026-10-19 B类裁定（用户25/54条）：改值 God Metal=神金、Spiritual Realm=灵界域、Shattering=破碎、Knights Radiant=光辉骑士、Singer=歌者、Lightweaver=织光骑士、Edgedancer=缘舞骑士（src 记 B类裁定2026-10-19:<旧值>）；维持 Ars Arcanum=秘典、Braize=庇雷、Dustmother=尘埃之母、Words of Radiance=光辉真言、Song=歌谣、Stormwall=飓幕；Aon/Unkalaki/gancho 补 note；Ati/Ire/Rira/toa/chasm/Dahad/Deo/Ene 八条改作品或语义 variants；battle 从表删除；余29条留 B 表待定。待复核：Edgedancer 中篇集名（原裁定 缘舞）与 Lightweaver 的 Yolish 织光师义。', '2026-10-19 B类复核修正：Deo 的「迪奥币」为货币（kind=currency，非人名）；Edgedancer 加 variants（阶职=缘舞骑士/短篇小说名=缘舞）；Lightweaver 主用织光骑士、尤伦（Yolish）语境用织光师。', '2026-10-19 Edgedancer 复核修正2：去 variants，内链默认译「缘舞骑士」，短篇名「缘舞」仅记 note。']\n2026-10-20 三分类（Elantris/TES/SA）采证100行裁定：97行采用（Svordish university 裁定用「斯沃旦大学」；Ana/Da 加「仅飓光志」note）；Highprince Sadeas (hog) 裁定不入表。新增 74 键，来源报告 state/missing_translation_report.md §1/§6。\n2026-10-20 Warbreaker 类排查裁定：§1/§6 共 33 行全部采信入表（新增 33 键），来源报告 state/missing_translation_report.md（合并版·第二部分）。2026-10-27 译者三项裁定：① Shu-Dereth/Shu-Korath/Shu-Keseg = 德雷西道宗/珂拉西道宗/珂西格道宗（shu-=path of，书内旧译「xxx教宗」作废）；② Aon「戴奥」重名拆分：Dao（稳定、保障）=多奥、Dio（坚贞、稳固）=戴奥，同名侍灵 Seon Dao 同改多奥（人物 Daora/Daorn 未裁定）；③ Lyndel=林德尔、Ledder=莱德尔（去消歧义括号）。维基同步已改。"
   },
   "terms": {
     "Abrem": {
@@ -9960,7 +9960,7 @@
     },
     "Ledder": {
       "zh": "莱德尔",
-      "note": "首现 RoW-22；士兵。",
+      "note": "首现 RoW-22；士兵。【译者 2026-10-27】Ledder 维持「莱德尔」（与 Lyndel=林德尔 区分）。",
       "src": "raw/飓光志译名表.xlsx#总表"
     },
     "Leef": {
@@ -10147,8 +10147,8 @@
       "src": "raw/飓光志译名表.xlsx#总表"
     },
     "Lyndel": {
-      "zh": "莱德尔",
-      "note": "首现 TWoK-47；亚马兰军士兵。",
+      "zh": "林德尔",
+      "note": "首现 TWoK-47；亚马兰军士兵。【译者 2026-10-27】Lyndel=林德尔；与 Ledder=莱德尔 中文名不再相同，无需消歧义。",
       "src": "raw/飓光志译名表.xlsx#总表"
     },
     "Lyon": {
@@ -16185,8 +16185,8 @@
       "src": "raw/伊岚翠译名表.xlsx#伊岚翠"
     },
     "Dao": {
-      "zh": "戴奥",
-      "note": "含义 稳定、保障；用例 Daora, Daorn→朵奥拉、戴奥恩",
+      "zh": "多奥",
+      "note": "含义 稳定、保障；用例 Daora, Daorn→朵奥拉、戴奥恩。【译者 2026-10-27】Aon「戴奥」重名拆分：本条（稳定、保障）改「多奥」，Dio（坚贞、稳固）维持「戴奥」；同名侍灵 Seon Dao 同改「多奥」；人物 Daora/Daorn 译名未裁定、维持 朵奥拉/戴奥恩。",
       "src": "raw/伊岚翠译名表.xlsx#艾欧符文表"
     },
     "Daora": {
@@ -16231,7 +16231,7 @@
     },
     "Dio": {
       "zh": "戴奥",
-      "note": "含义 坚贞、稳固；用例 Seon Dio, Diolen, Dion→侍灵、戴奥林、戴昂",
+      "note": "含义 坚贞、稳固；用例 Seon Dio, Diolen, Dion→侍灵、戴奥林、戴昂。【译者 2026-10-27】Aon「戴奥」重名拆分：本条（坚贞、稳固）维持「戴奥」，Dao（稳定、保障）改「多奥」。",
       "src": "raw/伊岚翠译名表.xlsx#艾欧符文表；raw/伊岚翠译名表.xlsx#伊岚翠"
     },
     "Seon Dio": {
@@ -16446,7 +16446,7 @@
     },
     "Dereth (Derethi)": {
       "zh": "德雷西",
-      "note": "德雷西道宗的创始人，笃信全人类终会在一国的统治之下实现统一。",
+      "note": "德雷西道宗的创始人，笃信全人类终会在一国的统治之下实现统一。 【辨析 2026-10-27】本条=人名 Dereth（道宗创立者）；宗教/道路名 Shu-Dereth = 德雷西道宗（见 Shu-Dereth 条），两者勿混。",
       "src": "raw/伊岚翠译名表.xlsx#伊岚翠"
     },
     "Diren": {
@@ -18606,13 +18606,16 @@
       "zh": "辛达棋"
     },
     "Shu-Dereth": {
-      "zh": "德雷西"
+      "zh": "德雷西道宗",
+      "note": "【译者 2026-10-27】shu- = path of（…of the path）。书中旧译「xxx教宗」作废，统一「xxx道宗」；勿再译「德雷西/珂拉西/珂西格教宗」。"
     },
     "Shu-Keseg": {
-      "zh": "珂西格教宗"
+      "zh": "珂西格道宗",
+      "note": "【译者 2026-10-27】shu- = path of（…of the path）。书中旧译「xxx教宗」作废，统一「xxx道宗」；勿再译「德雷西/珂拉西/珂西格教宗」。"
     },
     "Shu-Korath": {
-      "zh": "珂拉西教宗"
+      "zh": "珂拉西道宗",
+      "note": "【译者 2026-10-27】shu- = path of（…of the path）。书中旧译「xxx教宗」作废，统一「xxx道宗」；勿再译「德雷西/珂拉西/珂西格教宗」。"
     },
     "Skaze": {
       "zh": "御灵"
