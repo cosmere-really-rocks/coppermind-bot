@@ -454,4 +454,5 @@ coppermind/
 - **译名表**：4140 条（三界宙全系列）+ pending 归档体系；**2026-10-27 译者三裁定**落地（见「译名表补全」）。
 - **`艾欧符文` gallery 图名修复**：53 节对齐 EN，站上 32 + 新搬 21 = **53/53 实存**、渲染全出图、0 文件红链（账目 `state/aon_relink_plan.json`/`aon_existence.json`/`aon_fetch_result.json`）；本页 gallery 衬底已用页级 CSS 去除（`MediaWiki:Common.css`：皮肤 `var(--modal)=#222` 压黑线稿不可读）。
 - **`{{glossary ref}}` 本地化**：子页 `glossary`→`名词`、脚注改中文，132 处模板级生效（旧红链 0，`#O` 锚可解析）。
+- **图片说明中文化（2026-10-27）**：528 页 /1227 个 `{{Image}}` 英文说明**复扫 0 未译**——三件套：A 提示词规则 2.6（后续翻译页图注必译）+ crew 停用词；B 门禁新增 `3d [图片说明]` 专查（回归 98/98）；C 回填 `scripts/fix_image_captions.py`（**掩码不变量**只动说明 + 写前 parse 冒烟 + 逐条旧→新账本 `state/image_caption_fix_status.jsonl` 可逐条回滚；累计 878 对（875 脚本 +1 手工 +2 例文件名误译回滚 revid 30731/30732）。6 个提取/校验真 bug 的处置详见报告档 §10.5。
 - **复核注记**：`#var_final:en` 站点级复核**正常**（`{{en}}` 必定义 + `ensure_en_tag` 兜底；仅「同 parse 无定义」才泄 UNIQ，源码层 UNIQ/QINU 残留=0）——历史「35 UNIQ 页」问题不复现。
