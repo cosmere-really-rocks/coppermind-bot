@@ -88924,5 +88924,29 @@
       "files": [],
       "categories": []
     }
+  },
+  "Template:Sidequote": {
+    "revid": 119848,
+    "ts": "2020-04-19T08:46:28Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Sidequote",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "Rosharan date",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "book ref",
+        "for",
+        "quote",
+        "sidequote",
+        "t",
+        "{{{3"
+      ],
+      "files": [],
+      "categories": []
+    }
   }
 }
