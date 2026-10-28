@@ -88891,5 +88891,38 @@
       "files": [],
       "categories": []
     }
+  },
+  "Template:Rosharan date": {
+    "revid": 189716,
+    "ts": "2024-02-14T19:53:12Z",
+    "has_wikitext": true,
+    "is_redirect": false,
+    "target": null,
+    "missing": false,
+    "snapshot": "en_snapshot/Template:Rosharan date",
+    "assets": {
+      "templates": [
+        "FULLPAGENAME",
+        "Rosharan date",
+        "Rosharan numeric date",
+        "WhatLinksHere/{{FULLPAGENAME}}",
+        "date/no-args",
+        "for",
+        "number",
+        "t",
+        "{{number",
+        "{{{1",
+        "{{{2",
+        "{{{3",
+        "{{{4",
+        "{{{day",
+        "{{{missing-date",
+        "{{{month",
+        "{{{week",
+        "{{{year"
+      ],
+      "files": [],
+      "categories": []
+    }
   }
 }
