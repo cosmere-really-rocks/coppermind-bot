@@ -444,6 +444,7 @@ coppermind/
 8. **书封 200→300px 推送**（2026-10-2x 会话）：4 个原生模板 17 个书封进 `图像` 槽并 300px（convert 侧已提交 `ea295ac`），**页面/模板侧推送待用户批准**。
 9. **`Template:Character` en-version 标记复用**（决议 #3 注，⬜ 待讨论如何落地）。
 10. **`dialogue` 余 6 块待中译书证**（2026-10-28 已核对+回填，铁律=官方中文书逐字原文、禁 AI 翻）：EN 侧 21 块/14 页、站内 0 调用（`模板:Dialogue` 从未建）；drop 决议曾整删含内文 → 全量核对 = **7 块确丢已回填**（`{{Quote}}` 承载，暂不建 dialogue 模板，7 页渲染 0/0/0、引文 7/7 逐字过语料子串校验）+ **8 块已散文转述不动** + **6 块无语料不硬翻**（SA4×3、白沙×1、失落金属×1、EN 原文本身缺失×1），待对应官方中译本出版后回填；账 `state/dialogue_audit_20261028.json`/`dialogue_restore_20261028.json`。风暴光低频 pending 见 `rules/template_probe_resolution.md`。
+11. **`Rysn Ftori` EN 对话块系拼接稿，待与英文维基核实**（2026-10-28 dialogue 轮取证，⬜ 用户已去英文维基侧确认）：EN `Rysn Ftori` 页第 40 行 `{{dialogue|Rysn|You will take the trade…|Talik|Oh? And what makes you say this?|Rysn|Because Relu-na approves of boldness…|attr=Rysn and Talik{{book ref|wor|i|3}}}` **三句在书里拼不成一段**——① `"You will take the trade"`/`"You will trade with me"` 全英电子书 1915 文件 **0 命中**（最接近者实为另处 *"You'd trade with me if you respected me…"*）；② `"makes you say this"` 全语料仅 1 命中且在 `089_I-14_Taravangian`（不相干章）；③ `Relu-na approves of boldness` 一句**说话人安反**：书里是**塔里克对国王**所说（*"'Relu-na approves of boldness,' Talik said"*），莱丝那句是**顺绳下爬时喊的**（后接塔里克 *"difference between boldness and stupidity"*）。中书对应段有真原文（`zh_光辉真言/015_1-3_莱丝.html`「雷鲁拿赞赏胆识，」塔里克说 /「假如你尊重我，」莱丝说），但**不是这三句的中译** → 按铁律判 `LOST_NOT_FOUND` 不回填。核实回来后二选一：**改内容而非填内容**——用书里真实两处对白重写该块（中英两侧均可取逐字原文）并修 EN 说话人，或维持现状。取证 `state/dialogue_work/blk__Rysn_Ftori__0.txt`。
 
 ## ✅ 已完成摘要（详见过往小节 / git log / `state/` 档案）
 
