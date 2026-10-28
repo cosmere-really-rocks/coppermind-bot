@@ -436,8 +436,7 @@ coppermind/
 ## ⬜ 未决（按优先级）
 
 1. **批量写站治理**（原 #7/#8）：白名单/黑名单规则落地、redirect 批量搬运、模板与图片校验、图片黑名单；`batch.py` 已能串联 fetch→translate→write，但正式批量（样本推算约 450 页需新建）**前**必须先定范围与人工 review，避免覆盖真实内容。 另并入 #11 余项：5 条无目标红链待建页——dominance 行 EN 值（站内无统御区页）、`[[Painter]]s`、`[[司卡叛乱]]`、`[[塞芮]]`、`[[最后的升华]]`。
-2. **`Category:金属` ~20 词条改新字段**（原 #12）：新 `Infobox metal` 已上线并接入映射（commit `518613b`，旧参数已删）→ 逐词条改 `类型/属性/涉及书目` + `type-a/f/h`（取英文站同金属原文），见 `rules/metal_mapping_plan.md` §3。
-3. **金属 type 值口径**：现按英文原文直填（原 #12 口径）；`rules/metal_type_translation.md` 中译研究稿（Spiritual/Cognitive/Mental·Enhancement 等）待用户决定是否采用——影响 Harmonium/Trellium 2 篇与上条呈现。
+3. **金属 type/属性 值口径统一**（2026-10-28 验收轮取证，`state/metal_gaps_20261028.json`）：结构已全迁但**双有值 61 处中英混列**——同口径分裂三态：钢/铁/硬铝等**全中译**（`外部、推引、物理类`）、红铜/青铜/黄铜/电金/金/锌**半英形**（`Internal, Pulling, 精神类`）、天金/脉天金**无链接半英**（`God Metal合金`，对比和谐金 `[[神金]]`）；神金 类型/属性 已中译、银书目含坏链已修。`rules/metal_type_translation.md` 中译研究稿待拍板 → 拍板后按态归一（钢式全中 vs EN 直填二选一），影响全部 23 页呈现。
 4. **译名表未决批次**：B 类余 29 条 + `Misra` 待裁定；三分类采证 **80 行官方中译待裁定入表**（`state/missing_translation_report.md`）；xlsx 冲突 36 / 勘误 10 / 拆名冲突 12 —— `conflicts.md` 处理空列待填（填后勿重跑 report）；tlm 94 + 批 H pending 159 等中译出版（`pending_archive.md`，勿重跑）。
 5. **`三界宙系列` navbox 红链 115 处**（2026-10-27 `action=parse` 复核）：补目标页或裁剪导航条目。
 6. **`艾欧符文` 页 39 处 `''Examples:''` 英文残留**：属未翻译导语残留，按决议 #13/#9 处理（可译部分中文化）。
