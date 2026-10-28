@@ -443,7 +443,7 @@ coppermind/
 7. **`艾欧符文` 1 处畸形 `{{Quote|Fire, Warmth |Ars Arcanum{{book ref…`**：括号不闭合（pre-existing），需修复。
 8. **书封 200→300px 推送**（2026-10-2x 会话）：4 个原生模板 17 个书封进 `图像` 槽并 300px（convert 侧已提交 `ea295ac`），**页面/模板侧推送待用户批准**。
 9. **`Template:Character` en-version 标记复用**（决议 #3 注，⬜ 待讨论如何落地）。
-10. **低频待定模板**：`dialogue`（对话横幅）建否待定；风暴光低频 pending 见 `rules/template_probe_resolution.md`。
+10. **`dialogue` 余 6 块待中译书证**（2026-10-28 已核对+回填，铁律=官方中文书逐字原文、禁 AI 翻）：EN 侧 21 块/14 页、站内 0 调用（`模板:Dialogue` 从未建）；drop 决议曾整删含内文 → 全量核对 = **7 块确丢已回填**（`{{Quote}}` 承载，暂不建 dialogue 模板，7 页渲染 0/0/0、引文 7/7 逐字过语料子串校验）+ **8 块已散文转述不动** + **6 块无语料不硬翻**（SA4×3、白沙×1、失落金属×1、EN 原文本身缺失×1），待对应官方中译本出版后回填；账 `state/dialogue_audit_20261028.json`/`dialogue_restore_20261028.json`。风暴光低频 pending 见 `rules/template_probe_resolution.md`。
 
 ## ✅ 已完成摘要（详见过往小节 / git log / `state/` 档案）
 
